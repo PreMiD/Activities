@@ -41,7 +41,7 @@ presence.on('UpdateData', async () => {
     playgroundId = url.split('=').pop()
 
   if (
-    document.cookie.match(/(^| )sessionId=([^;]+)/)?.[1]
+    document.cookie.match(/(^| )sessionId=[^;]+/)?.[1]
     && playgroundId
   ) {
     info.playgroundId = playgroundId

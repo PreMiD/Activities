@@ -157,7 +157,8 @@ presence.on('UpdateData', async () => {
           {
             label: 'Join a team !',
             url: document
-              .querySelector<HTMLLinkElement>('.btn')!.getAttribute('href'),
+              .querySelector<HTMLLinkElement>('.btn')!
+              .getAttribute('href'),
           },
         ]
       }
@@ -218,5 +219,5 @@ presence.on('UpdateData', async () => {
     presence.setActivity(slideshow)
   else if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

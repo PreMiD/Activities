@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -276,7 +276,7 @@ presence.on('iFrameData', async (data2: unknown) => {
   const thumb = parseAvatarFromAttr(player?.getAttribute('style') ?? '', 'logo')
 
   if (!data.paused) {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       Math.floor(data.currentTime),
       Math.floor(data.duration),
     )

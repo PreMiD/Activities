@@ -1,4 +1,11 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
+import {
+  ActivityType,
+  Assets,
+  getTimestamps,
+  getTimestampsFromMedia,
+  StatusDisplayType,
+  timestampFromFormat,
+} from 'premid'
 
 let elapsed = Math.floor(Date.now() / 1000)
 let prevUrl = document.location.href
@@ -20,6 +27,31 @@ const presence = new Presence({
 })
 function getElement(query: string): string | undefined {
   return document.querySelector(query)?.textContent ?? undefined
+}
+function getMetaContent(query: string): string | undefined {
+  const content = document.querySelector<HTMLMetaElement>(query)?.content?.trim()
+
+  return content && content.length > 0 ? content : undefined
+}
+function getImageSource(...sources: (string | undefined)[]): string | undefined {
+  return sources.find(source => source && !source.startsWith('data:'))?.replace(
+    /-\d{1,3}x\d{1,3}(?=\.\w+$)/,
+    '-600x600',
+  )
+}
+function getChannelAvatar(): string | undefined {
+  return getImageSource(
+    document.querySelector<HTMLImageElement>(
+      'img[data-a-target="channel-avatar"], [data-a-target="channel-avatar"] img',
+    )?.src,
+    document.querySelector<HTMLImageElement>(
+      'img[data-a-target="user-avatar"], [data-a-target="user-avatar"] img',
+    )?.src,
+    document.querySelector<HTMLImageElement>(
+      '[class*=channel-info-content] img[class*=tw-image], [class*=channel-info-content] img[class*=image-avatar]',
+    )?.src,
+    document.querySelector<HTMLImageElement>('.channel-info-content .tw-avatar > img')?.src,
+  )
 }
 async function getStrings() {
   return presence.getStrings(
@@ -144,7 +176,7 @@ presence.on('UpdateData', async () => {
     logo,
     devLogo,
     buttons,
-    streamerTitle,
+    displayType,
   ] = await Promise.all([
     presence.getSetting<boolean>('browse'),
     presence.getSetting<boolean>('live'),
@@ -160,7 +192,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('logo'),
     presence.getSetting<number>('devLogo'),
     presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('streamerTitle'),
+    presence.getSetting<number>('displayType'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -467,7 +499,8 @@ presence.on('UpdateData', async () => {
           streamerinfo = getElement('.stream-info-card p > a')
         }
 
-        presenceData.state = streamerinfo
+        if (!privacy)
+          presenceData.state = streamerinfo
 
         if (getElement('.modview-dock-widget p') !== 'Offline') {
           presenceData.smallImageKey = Assets.Live
@@ -493,16 +526,10 @@ presence.on('UpdateData', async () => {
               ?.textContent
           const game = getElement('a[data-a-target=\'stream-game-link\']')
             || 'Just Chatting'
-          const profilePic = document
-            .querySelector<HTMLImageElement>(
-              '[class*=channel-info-content] [class*=tw-image]',
-            )
-            ?.src
-            ?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
-            ?? (logoArr[logo] || ActivityAssets.Logo)
-          if (streamer && streamerTitle && !privacy) {
-            presenceData.name = streamer
-          }
+          const profilePic = getImageSource(
+            getChannelAvatar(),
+            getMetaContent('meta[property="og:image"], meta[name="twitter:image"]'),
+          ) ?? (logoArr[logo] || ActivityAssets.Logo)
           presenceData.details = streamDetail
             .replace('%title%', title ?? '')
             .replace('%streamer%', streamer ?? '')
@@ -531,9 +558,7 @@ presence.on('UpdateData', async () => {
 
         if (showVideo && !live) {
           //* Video or Clips
-          const title = getElement('[data-a-target="stream-title"]')
-            ?.split('•')
-            .shift()
+          const title = getElement('title')?.replace(' - Twitch', '')
           const uploader = document.querySelector('.channel-info-content h1')?.textContent
             ?? document
               .querySelector('[class*="metadata-layout__support"]')
@@ -541,13 +566,10 @@ presence.on('UpdateData', async () => {
               ?.textContent
           const game = getElement('a[data-a-target=\'stream-game-link\']')
             || 'Just Chatting'
-          const profilePic = document
-            .querySelector<HTMLImageElement>(
-              '.channel-info-content .tw-avatar > .tw-image',
-            )
-            ?.src
-            ?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
-            ?? (logoArr[logo] || ActivityAssets.Logo)
+          const profilePic = getImageSource(
+            getMetaContent('meta[property="og:image"], meta[name="twitter:image"]'),
+            getChannelAvatar(),
+          ) ?? (logoArr[logo] || ActivityAssets.Logo)
           presenceData.details = vidDetail
             .replace('%title%', title ?? '')
             .replace('%uploader%', uploader ?? '')
@@ -590,6 +612,21 @@ presence.on('UpdateData', async () => {
         else if (showBrowsing && (!showVideo || !showLive)) {
           presenceData.details = strings.browse
           delete presenceData.state
+        }
+
+        switch (displayType) {
+          case 0: {
+            presenceData.statusDisplayType = StatusDisplayType.Name
+            break
+          }
+          case 1: {
+            presenceData.statusDisplayType = StatusDisplayType.Details
+            break
+          }
+          case 2: {
+            presenceData.statusDisplayType = StatusDisplayType.State
+            break
+          }
         }
       }
 
@@ -966,10 +1003,10 @@ presence.on('UpdateData', async () => {
   if (privacy || !buttons)
     delete presenceData.buttons
 
-  if (privacy)
-    delete presenceData.name
-
-  if (presenceData.details)
+  if (presenceData.details) {
     presence.setActivity(presenceData)
-  else presence.clearActivity()
+  }
+  else {
+    presence.clearActivity()
+  }
 })

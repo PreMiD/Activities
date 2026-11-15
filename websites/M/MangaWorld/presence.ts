@@ -91,7 +91,7 @@ presence.on('UpdateData', async () => {
     /* Ricerca per genere - Search by genre */
     const genre = searchParams.get('genre')!.split(' ')
     for (let i = 0; i < genre.length; i++)
-      genre[i] = genre[i]![0]!.toUpperCase() + genre[i]!.substr(1)
+      genre[i] = genre[i]![0]!.toUpperCase() + genre[i]!.slice(1)
     presenceData.smallImageKey = ActivityAssets.Tags
     presenceData.smallImageText = 'Ricerca per genere'
     presenceData.details = 'Sfogliando i contenuti del genere:'

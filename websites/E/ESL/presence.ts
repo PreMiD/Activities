@@ -406,7 +406,7 @@ presence.on('UpdateData', async () => {
         presence.setActivity(presenceData)
       }
       else {
-        presence.setActivity()
+        presence.clearActivity()
       }
 
       break
@@ -581,7 +581,7 @@ presence.on('UpdateData', async () => {
       }
       else if (admin) {
         if (admin.textContent === 'Admin') {
-          presence.setActivity()
+          presence.clearActivity()
         }
         else {
           const item = document.querySelector('head > title')
@@ -593,7 +593,7 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
-        presence.setActivity()
+        presence.clearActivity()
       }
 
       break
@@ -619,7 +619,7 @@ presence.on('UpdateData', async () => {
         presence.setActivity(presenceData)
       }
       else {
-        presence.setActivity()
+        presence.clearActivity()
       }
 
       break
@@ -761,7 +761,7 @@ presence.on('UpdateData', async () => {
       }
       else if (admin) {
         if (admin.textContent === 'Admin') {
-          presence.setActivity()
+          presence.clearActivity()
         }
         else {
           const item = document.querySelector('head > title')
@@ -788,6 +788,6 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
-      presence.setActivity()
+      presence.clearActivity()
   }
 })

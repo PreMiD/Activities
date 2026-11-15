@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "379076400394666004",
@@ -11,8 +11,8 @@
     "vi": "Zalo là một ứng dụng nhắn tin nhanh đa nền tảng của Việt Nam, được phát triển bởi VNG"
   },
   "url": "chat.zalo.me",
-  "regExp": "^https?:[/][/]chat[.]zalo[.]me[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]chat[.]zalo[.]me[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/Zalo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/Zalo/assets/thumbnail.png",
   "color": "#0068ff",

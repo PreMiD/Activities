@@ -20,7 +20,7 @@ presence.on('UpdateData', async () => {
   oldLang = newLang
   newLang = await presence.getSetting<string>('lang').catch(() => 'en')
   if (!strings || oldLang !== newLang)
-    strings = await getStrings(newLang)
+    strings = await getStrings()
   current = window.location
 
   if (current.hostname.split('.')[0] === 'bombmanual') {
@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
         break
         // Startpage, Unknown
       default:
-        return presence.setActivity()
+        return presence.clearActivity()
     }
   }
   else {
@@ -121,7 +121,7 @@ presence.on('UpdateData', async () => {
         break
         // Startpage, Unknown
       default:
-        return presence.setActivity()
+        return presence.clearActivity()
     }
   }
 
@@ -129,13 +129,12 @@ presence.on('UpdateData', async () => {
   previous = current
 })
 
-async function getStrings(lang: string) {
+async function getStrings() {
   return presence.getStrings(
     {
       reading: 'general.reading',
       page: 'general.page',
     },
-    lang,
   )
 }
 

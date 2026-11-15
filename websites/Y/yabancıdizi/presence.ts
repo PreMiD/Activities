@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '643593006821408778',
@@ -160,7 +160,7 @@ presence.on('UpdateData', async () => {
     )
 
     if (page.includes('/film') && movieTitle && movieTitle.textContent !== '') {
-      const [startTimestamp, endTimestamp] = presence.getTimestamps(
+      const [startTimestamp, endTimestamp] = getTimestamps(
         Math.floor(_video.currentTime),
         Math.floor(_video.duration),
       )
@@ -194,7 +194,7 @@ presence.on('UpdateData', async () => {
       && title.textContent !== ''
       && episode.textContent !== ''
     ) {
-      const [startTimestamp, endTimestamp] = presence.getTimestamps(
+      const [startTimestamp, endTimestamp] = getTimestamps(
         Math.floor(video.currentTime ?? 0),
         Math.floor(video.duration ?? 0),
       )
@@ -234,7 +234,7 @@ presence.on('UpdateData', async () => {
       && movieTitle
       && movieTitle.textContent !== ''
     ) {
-      const [startTimestamp, endTimestamp] = presence.getTimestamps(
+      const [startTimestamp, endTimestamp] = getTimestamps(
         Math.floor(video.currentTime ?? 0),
         Math.floor(video.duration ?? 0),
       )
@@ -268,7 +268,7 @@ presence.on('UpdateData', async () => {
       && episode
       && episode.textContent !== ''
     ) {
-      const [startTimestamp, endTimestamp] = presence.getTimestamps(
+      const [startTimestamp, endTimestamp] = getTimestamps(
         Math.floor(video.currentTime ?? 0),
         Math.floor(video.duration ?? 0),
       )

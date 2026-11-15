@@ -1,0 +1,34 @@
+{
+  "youku.watchingContent": {
+    "description": "Shown as the details line when Privacy Mode is on while a video plays",
+    "message": "Watching Content"
+  },
+  "youku.browsingYouku": {
+    "description": "Shown when browsing Youku without watching anything specific",
+    "message": "Browsing Youku"
+  },
+  "youku.homePage": {
+    "description": "Shown when on the Youku home page",
+    "message": "Home Page"
+  },
+  "youku.searchingContent": {
+    "description": "Shown as the details line when on the search page",
+    "message": "Searching Content"
+  },
+  "youku.lookingForVideos": {
+    "description": "Shown as the state line when on the search page",
+    "message": "Looking for videos"
+  },
+  "youku.browsingCategory": {
+    "description": "Shown when browsing a category or show landing page",
+    "message": "Browsing Category"
+  },
+  "youku.exploringShows": {
+    "description": "Shown as the state line on category / show pages",
+    "message": "Exploring shows"
+  },
+  "youku.exploringContent": {
+    "description": "Shown as the state line on miscellaneous Youku pages",
+    "message": "Exploring Content"
+  }
+}

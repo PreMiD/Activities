@@ -106,7 +106,7 @@ presence.on('UpdateData', async () => {
   // Article Writing
   else if (
     href.includes('hashnode.com/draft/')
-    && href.split('hashnode.com/draft/')[1]!.match(/^[a-z0-9]+$/i)
+    && /^[a-z0-9]+$/i.test(href.split('hashnode.com/draft/')[1]!)
   ) {
     presenceData.details = 'Editing an article:'
     presenceData.state = document.querySelector('#title-input')?.textContent || 'Untitled Article'
@@ -115,7 +115,7 @@ presence.on('UpdateData', async () => {
   // API Docs Writing
   else if (
     href.includes('hashnode.com/docs/')
-    && href.split('hashnode.com/docs/')[1]!.match(/^[a-z0-9/]+$/i)
+    && /^[a-z0-9/]+$/i.test(href.split('hashnode.com/docs/')[1]!)
   ) {
     presenceData.details = 'Editing API Docs:'
     presenceData.state = document.querySelector('section aside div div span')?.textContent || 'Unknown'

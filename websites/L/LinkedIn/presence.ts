@@ -183,7 +183,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing recent activity'
   }
   // Profile page section
-  else if (pathname.match(/\/in\/[A-Za-z0-9-]+\//)) {
+  else if (/\/in\/[A-Za-z0-9-]+\//.test(pathname)) {
     presenceData.details = 'Viewing a profile'
     const profileName = document.querySelector('span h1')?.textContent?.trim()
       || document.querySelector('.artdeco-entity-lockup__title')?.textContent?.trim()
@@ -200,7 +200,7 @@ presence.on('UpdateData', async () => {
     }
   }
   // Company page section
-  else if (pathname.match(/\/company\/[A-Za-z0-9-]+\//)) {
+  else if (/\/company\/[A-Za-z0-9-]+\//.test(pathname)) {
     presenceData.details = 'Viewing a company'
     if (!privacyMode) {
       presenceData.state = unEscapeHTML(
@@ -212,7 +212,7 @@ presence.on('UpdateData', async () => {
     }
   }
   // School page section
-  else if (pathname.match(/\/school\/[A-Za-z0-9-]+\//)) {
+  else if (/\/school\/[A-Za-z0-9-]+\//.test(pathname)) {
     presenceData.details = 'Viewing a school'
     if (!privacyMode) {
       presenceData.state = unEscapeHTML(

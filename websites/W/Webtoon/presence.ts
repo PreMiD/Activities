@@ -59,5 +59,5 @@ presence.on('UpdateData', async () => {
     presenceData.details = (await strings).browsing
     delete presenceData.smallImageKey
   }
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

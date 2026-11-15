@@ -46,5 +46,33 @@
   "recodive.contact": {
     "description": "A page name",
     "message": "Contact"
+  },
+  "recodive.manageAccount": {
+    "description": "A page name",
+    "message": "Manage Account"
+  },
+  "recodive.editingSecuritySettings": {
+    "description": "A page name",
+    "message": "Editing Security Settings"
+  },
+  "recodive.viewingBillingInformation": {
+    "description": "A page name",
+    "message": "Viewing Billing Information"
+  },
+  "recodive.editingAccountSettings": {
+    "description": "A page name",
+    "message": "Editing Account Settings"
+  },
+  "recodive.login": {
+    "description": "A page name",
+    "message": "Logging in"
+  },
+  "recodive.register": {
+    "description": "A page name",
+    "message": "Registering"
+  },
+  "recodive.forgotPassword": {
+    "description": "A page name",
+    "message": "Resetting Password"
   }
 }

@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '809093093600133165',
@@ -126,7 +126,7 @@ presence.on('UpdateData', async () => {
         /https:\/\/www\.tiktok\.com\/@.*\/video\/\d{19}/,
       )
       const creatorURLMatch = creatorURL.match(
-        /http(s)?:\/\/(www\.)?tiktok\.com\/@([\w.]{0,23}\w)(?:\/\S*)?\//,
+        /https?:\/\/(?:www\.)?tiktok\.com\/@[\w.]{0,23}\w(?:\/\S*)?\//,
       )?.[0]
       const paused = video
         ?.closest('div[data-e2e="feed-video"]')
@@ -171,7 +171,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (!paused && video?.duration && video?.currentTime) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       }
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? strings.paused : strings.playing
@@ -191,13 +191,13 @@ presence.on('UpdateData', async () => {
         video = {
           paused: !!document.querySelector('[aria-label="Pause"]')
             || !!document.querySelector('[class*=\'DivPlayIconContainer\']'),
-          currentTime: presence.timestampFromFormat(
+          currentTime: timestampFromFormat(
             document
               .querySelector('[class*=\'DivSeekBarTimeContainer\']')
               ?.textContent
               ?.split('/')[0] ?? '',
           ),
-          duration: presence.timestampFromFormat(
+          duration: timestampFromFormat(
             document
               .querySelector('[class*=\'DivSeekBarTimeContainer\']')
               ?.textContent
@@ -221,7 +221,7 @@ presence.on('UpdateData', async () => {
         ? strings.paused
         : strings.playing
       if (!video.paused) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
       }
       presenceData.buttons = [
         { label: strings.buttonViewTikTok, url: href },

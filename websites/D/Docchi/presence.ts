@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1204425198741491742',
@@ -151,7 +151,7 @@ presence.on('UpdateData', async () => {
               },
             ]
           }
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.current, video.duration)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.current, video.duration)
 
           presenceData.smallImageKey = Assets.Play
           presenceData.smallImageText = 'Odtwarzanie'
@@ -234,6 +234,6 @@ presence.on('UpdateData', async () => {
     delete presenceData.state
   }
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

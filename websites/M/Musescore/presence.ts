@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '629473655218241557',
@@ -189,7 +189,7 @@ presence.on('UpdateData', async () => {
           .textContent!
           .split('/')[1]!,
       ]);
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(time[0]!, time[1]!)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(time[0]!, time[1]!)
       presenceData.smallImageKey = Assets.Play
       presenceData.details = 'Listening to'
       presenceData.state = document.querySelector(

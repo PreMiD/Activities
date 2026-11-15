@@ -106,7 +106,7 @@ presence.on('UpdateData', async () => {
     || pdCache?.meetState !== presenceState // If cached presence setting state !== current presence setting state
     || (usePresenceName && pdCache.meetTitle !== presenceName) // If use presenceName && cached presence setting name !== current presence setting name
   ) {
-    meetTitle = meetTitle?.replace(/(\d{2}:\d{2})( )?((am)|(pm))?/g, '')
+    meetTitle = meetTitle?.replace(/\d{2}:\d{2} ?(?:am|pm)?/g, '')
     if (
       meetTitle?.toLowerCase()?.match(/[a-z]{3}-[a-z]{4}-[a-z]{3}/g)?.[0]
       && hideInviteCode

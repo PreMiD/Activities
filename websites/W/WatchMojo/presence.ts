@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '822457774574272592',
@@ -105,12 +105,12 @@ presence.on('UpdateData', async () => {
       startTimestamp: video?.paused
         ? null
         : video
-          ? presence.getTimestampsfromMedia(video)[0]
+          ? getTimestampsFromMedia(video)[0]
           : null,
       endTimestamp: video?.paused
         ? null
         : video
-          ? presence.getTimestampsfromMedia(video)[1]
+          ? getTimestampsFromMedia(video)[1]
           : null,
       buttons: [{ label: strings.buttonWatchVideo, url: document.URL }],
     },
@@ -161,10 +161,10 @@ presence.on('UpdateData', async () => {
       smallImageText: iframePau ? strings.pause : strings.play,
       startTimestamp: iframePau
         ? 0
-        : presence.getTimestamps(iframeCur, iframeDur)[0],
+        : getTimestamps(iframeCur, iframeDur)[0],
       endTimestamp: iframePau
         ? 0
-        : presence.getTimestamps(iframeCur, iframeDur)[1],
+        : getTimestamps(iframeCur, iframeDur)[1],
       buttons: [{ label: strings.buttonPlayTrivia, url: document.URL }],
     },
     '/blog/(\\d*)/(\\d*)/(\\d*)/': {

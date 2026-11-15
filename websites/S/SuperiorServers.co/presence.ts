@@ -14,46 +14,10 @@ presence.on('UpdateData', async () => {
       (document.location.pathname === '/' || !document.location.pathname)
       && document.location.pathname.includes('/staff')
     ) {
-      const DRPStaff = document
-        .querySelector('#RP_info')
-        ?.textContent
-        ?.substr(
-          (document.querySelector('#RP_info')?.textContent?.indexOf(' of') ?? 0) + 3,
-          document.querySelector('#RP_info')?.textContent?.indexOf(' entries'),
-        )
-        .replace(' entries', '')
-      const AllServersStaff = document
-        .querySelector('#NO_ID_info')
-        ?.textContent
-        ?.substr(
-          (document.querySelector('#NO_ID_info')?.textContent?.indexOf(' of') ?? 0)
-          + 3,
-          document
-            .querySelector('#NO_ID_info')
-            ?.textContent
-            ?.indexOf(' entries'),
-        )
-        .replace(' entries', '')
-      const MilRPStaff = document
-        .querySelector('#MilRP_info')
-        ?.textContent
-        ?.substr(
-          (document.querySelector('#MilRP_info')?.textContent?.indexOf(' of') ?? 0)
-          + 3,
-          document
-            .querySelector('#MilRP_info')
-            ?.textContent
-            ?.indexOf(' entries'),
-        )
-        .replace(' entries', '')
-      const SWRPStaff = document
-        .querySelector('#SWRP_info')
-        ?.textContent
-        ?.substr(
-          (document.querySelector('#SWRP_info')?.textContent?.indexOf(' of') ?? 0) + 3,
-          document.querySelector('#SWRP_info')?.textContent?.indexOf(' entries'),
-        )
-        .replace(' entries', '')
+      const DRPStaff = document.querySelector('#RP_info')?.textContent?.match(/of\s+(\d+)\s+entries/)?.[1]
+      const AllServersStaff = document.querySelector('#NO_ID_info')?.textContent?.match(/of\s+(\d+)\s+entries/)?.[1]
+      const MilRPStaff = document.querySelector('#MilRP_info')?.textContent?.match(/of\s+(\d+)\s+entries/)?.[1]
+      const SWRPStaff = document.querySelector('#SWRP_info')?.textContent?.match(/of\s+(\d+)\s+entries/)?.[1]
       const totalStaff = (
         Number.parseInt(DRPStaff ?? '')
         + Number.parseInt(SWRPStaff ?? '')
@@ -64,20 +28,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${totalStaff} total members`
     }
     if (document.location.pathname.includes('/bans')) {
-      const numBans = document
-        .querySelector('div.dataTables_info')
-        ?.textContent
-        ?.substr(
-          (document
-            .querySelector('div.dataTables_info')
-            ?.textContent
-            ?.indexOf('of ') ?? 0) + 3,
-          document
-            .querySelector('div.dataTables_info')
-            ?.textContent
-            ?.indexOf(' entries'),
-        )
-        .replace(' entries', '')
+      const numBans = document.querySelector('div.dataTables_info')?.textContent?.match(/of\s+(\d+)\s+entries/)?.[1]
       const currentPage = document.querySelector(
         '#bans_paginate > ul > li.paginate_button.active > a',
       )
@@ -145,38 +96,12 @@ presence.on('UpdateData', async () => {
       }
       else if (document.location.pathname.includes('/milrp')) {
         presenceData.details = 'Viewing MilRP GMs'
-        const GMs = document
-          .querySelector('#gamemasters_info')
-          ?.textContent
-          ?.substr(
-            (document
-              .querySelector('#gamemasters_info')
-              ?.textContent
-              ?.indexOf(' of') ?? 0) + 3,
-            document
-              .querySelector('#gamemasters_info')
-              ?.textContent
-              ?.indexOf(' entries'),
-          )
-          .replace(' entries', '')
+        const GMs = document.querySelector('#gamemasters_info')?.textContent?.match(/of\s+(\d+)\s+entries/)?.[1]
         presenceData.state = `${GMs} total members`
       }
       else if (document.location.pathname.includes('/cwrp')) {
         presenceData.details = 'Viewing CWRP GMs'
-        const GMs = document
-          .querySelector('#gamemasters_info')
-          ?.textContent
-          ?.substr(
-            (document
-              .querySelector('#gamemasters_info')
-              ?.textContent
-              ?.indexOf(' of') ?? 0) + 3,
-            document
-              .querySelector('#gamemasters_info')
-              ?.textContent
-              ?.indexOf(' entries'),
-          )
-          .replace(' entries', '')
+        const GMs = document.querySelector('#gamemasters_info')?.textContent?.match(/of\s+(\d+)\s+entries/)?.[1]
         presenceData.state = `${GMs} total members`
       }
     }
@@ -210,7 +135,7 @@ presence.on('UpdateData', async () => {
       let steamID32
       const steamID64 = BigInt(
         document.location.pathname
-          .substr(document.location.pathname.indexOf('/', 2))
+          .slice(document.location.pathname.indexOf('/', 2))
           .replace('/', '')
           .replace('/', ''),
       )

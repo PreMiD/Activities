@@ -1,3 +1,5 @@
+import { getTimestamps } from 'premid'
+
 const presence = new Presence({
   clientId: '808664560936026122',
 })
@@ -161,7 +163,7 @@ presence.on('UpdateData', async () => {
           if (/_/.test(currentWord))
             presenceData.state = `Current word: ${currentWord}`
         }
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(0, getTimeRemaining())
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(0, getTimeRemaining())
         break
       }
     }

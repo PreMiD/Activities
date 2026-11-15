@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '837985880408457217',
@@ -53,7 +53,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? 'Paused' : 'Playing';
 
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
     presenceData.buttons = [
       {
@@ -82,7 +82,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? 'Paused' : 'Playing';
 
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
     if (isSeries) {
       presenceData.state = `${findElement(
@@ -91,7 +91,7 @@ presence.on('UpdateData', async () => {
       )?.textContent?.replace('.', ':')} ${findElement('h3', 'so-name')
         ?.textContent
         ?.trim()
-        .replace(/(\d+)\./, '')}`
+        .replace(/\d+\./, '')}`
     }
     else {
       presenceData.state = 'Movie'

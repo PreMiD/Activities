@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1051110545723506718',
@@ -176,7 +176,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (!Number.isNaN(video.duration) && pathname.includes('/video')) {
-    const [startTimestamp, endTimestamp] = presence.getTimestamps(
+    const [startTimestamp, endTimestamp] = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration),
     )

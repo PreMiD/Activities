@@ -22,7 +22,10 @@ function placeURISeparator(str: string) {
 }
 
 presence.on('UpdateData', async () => {
-  const privacy = await presence.getSetting('privacy')
+  const [showButtons, privacy] = await Promise.all([
+    presence.getSetting<boolean>('buttons'),
+    presence.getSetting<boolean>('privacy'),
+  ])
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/logo.png',
     startTimestamp: browsingTimestamp,
@@ -96,5 +99,14 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.viewingMap
   }
 
+  const buttonUrl = presenceData?.buttons?.[0]?.url
+  const urlLength = typeof buttonUrl === 'string'
+    ? buttonUrl.length
+    : buttonUrl?.href?.length ?? 0
+
+  // The Activity does not refresh properly if the button link is too long
+  if (!showButtons || urlLength > 256) {
+    delete presenceData.buttons
+  }
   presence.setActivity(presenceData)
 })

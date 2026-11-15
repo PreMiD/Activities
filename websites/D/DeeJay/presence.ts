@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const presence = new Presence({
   clientId: '1434608019207098408',
 })
@@ -6,6 +8,38 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/D/DeeJay/assets/logo.png',
+}
+
+function truncate(text: string, max = 128): string {
+  return text.length > max ? `${text.slice(0, max - 3)}...` : text
+}
+
+function getPaginationState(pathname: string): string | undefined {
+  const pageNumbers = Array.from(
+    document.querySelectorAll<HTMLElement>('.nav-links .page-numbers'),
+  )
+    .map(page => Number.parseInt(page.textContent?.trim() ?? '', 10))
+    .filter(Number.isFinite)
+  const currentPage = Number.parseInt(
+    document.querySelector<HTMLElement>('.nav-links .page-numbers.current')?.textContent?.trim()
+    ?? pathname.match(/\/page\/(\d+)/)?.[1]
+    ?? '1',
+    10,
+  )
+  const totalPages = Math.max(...pageNumbers)
+
+  if (pageNumbers.length === 0 || !Number.isFinite(currentPage) || !Number.isFinite(totalPages))
+    return undefined
+
+  return `On page ${currentPage} from ${totalPages}`
+}
+
+function getPlaylistDate(pathname: string): string | undefined {
+  const [, year, month, day] = pathname.match(/\/playlist\/dettaglio\/(\d{4})-(\d{2})-(\d{2})/) ?? []
+  if (!year || !month || !day)
+    return undefined
+
+  return `${year}-${month}-${day}`
 }
 
 presence.on('UpdateData', async () => {
@@ -21,6 +55,12 @@ presence.on('UpdateData', async () => {
     hostedBy: 'deejay.hostedBy',
     viewingHighlights: 'deejay.viewingHighlights',
     viewingEpisodes: 'deejay.viewingEpisodes',
+    viewingPlaylist: 'general.viewPlaylist',
+    listeningToEpisode: 'deejay.listeningToEpisode',
+    viewingArticles: 'deejay.viewingArticles',
+    readingArticle: 'general.readingArticle',
+    viewingSeries: 'general.viewSeries',
+    listeningToPodcast: 'deejay.listeningToPodcast',
     viewingHosts: 'deejay.viewingHosts',
     viewingHost: 'deejay.viewingHost',
     viewingFrequencies: 'deejay.viewingFrequencies',
@@ -109,14 +149,89 @@ presence.on('UpdateData', async () => {
       { path: '/sunday-morning', name: 'Sunday Morning', hosts: '' },
     ]
 
-    for (const program of programs) {
-      if (pathname.includes(program.path)) {
+    const program = programs.find((program) => {
+      const programPath = `/programmi${program.path.replace(/\/$/, '')}`
+      return pathname === programPath || pathname.startsWith(`${programPath}/`)
+    })
+
+    if (program) {
+      const programPath = `/programmi${program.path.replace(/\/$/, '')}`
+      const subPath = pathname.slice(programPath.length).split('/').filter(Boolean)
+      const section = subPath[0]
+
+      if (section === 'puntate') {
+        const isEpisodePage = subPath.length > 1 && subPath[1] !== 'page'
+        const playerTitle = isEpisodePage
+          ? document.querySelector<HTMLElement>(
+              '.media-controls__info__title .info__title, h1',
+            )?.textContent?.trim()
+          : undefined
+        const episodeSlug = subPath.at(-1)
+        const episodeDate = episodeSlug?.match(/(\d{2})-(\d{2})-(\d{4})$/)
+        const episodeTitle = playerTitle
+          || (episodeDate
+            ? `Puntata del ${episodeDate[1]}/${episodeDate[2]}/${episodeDate[3]}`
+            : undefined)
+
+        if (isEpisodePage && episodeTitle) {
+          presenceData.details = `${strings.listeningToEpisode}: ${episodeTitle}`
+          presenceData.state = program.name
+
+          const audio = document.querySelector<HTMLVideoElement>('video')
+          if (audio && !audio.paused && Number.isFinite(audio.duration) && audio.duration > 0) {
+            const [startTimestamp, endTimestamp] = getTimestampsFromMedia(audio)
+            presenceData.startTimestamp = startTimestamp
+            presenceData.endTimestamp = endTimestamp
+          }
+        }
+        else {
+          presenceData.details = `${strings.viewingEpisodes}: ${program.name}`
+          presenceData.state = getPaginationState(pathname)
+        }
+      }
+      else if (section === 'highlights' || section === 'pillole') {
+        presenceData.details = `${strings.viewingHighlights}: ${program.name}`
+        presenceData.state = getPaginationState(pathname)
+      }
+      else if (section === 'playlist') {
+        const isPlaylistDetail = subPath[1] === 'dettaglio'
+        const playlistDate = isPlaylistDetail ? getPlaylistDate(pathname) : undefined
+
+        presenceData.details = `${strings.viewingPlaylist} ${program.name}`
+        presenceData.state = playlistDate ?? getPaginationState(pathname)
+      }
+      else {
         presenceData.details = `${strings.viewingProgram}: ${program.name}`
         if (program.hosts) {
           presenceData.state = `${strings.hostedBy}: ${program.hosts}`
         }
-        break
       }
+    }
+  }
+  else if (pathname.includes('/articoli')) {
+    const articlePath = pathname.split('/').filter(Boolean)
+    const isArticleDetail = articlePath.length > 1 && articlePath[1] !== 'page'
+    const articleTitle = isArticleDetail
+      ? document.querySelector<HTMLElement>(
+          'header.section h1.title.xlarge, article header h1.title.xlarge',
+        )?.textContent?.trim()
+      : undefined
+    const articleSubtitle = isArticleDetail
+      ? document.querySelector<HTMLElement>(
+          'header.section h2.text.xlarge, article header h2.text.xlarge',
+        )?.textContent?.trim()
+      : undefined
+
+    if (articleTitle) {
+      const shortArticleTitle = articleTitle.length > 25
+        ? `${articleTitle.slice(0, 25)}...`
+        : articleTitle
+      presenceData.details = `${strings.readingArticle} ${shortArticleTitle}`
+      presenceData.state = articleSubtitle ? truncate(articleSubtitle) : undefined
+    }
+    else {
+      presenceData.details = strings.viewingArticles
+      presenceData.state = getPaginationState(pathname)
     }
   }
   else if (pathname.includes('/highlights')) {
@@ -135,6 +250,7 @@ presence.on('UpdateData', async () => {
       { path: '/alessandro-prisco', name: 'Alessandro Prisco', desc: 'La prima a capire che la pigrizia non sarebbe stata tra le sue "qualità " fu sua madre, costretta al parto in un afoso pomeriggio di fine agosto con oltre due settimane di anticipo. "Esci!",...' },
       { path: '/andrea', name: 'Andrea Marchesi', desc: 'Andrea Marchesi (Cremona, 30 novembre 1973) fa il suo esordio radiofonico nel 1993 in una radio locale di Cremona, Studioradio, dove conduce il programma dance del pomeriggio "House-Party"...' },
       { path: '/antonio-visca', name: 'Antonio Visca', desc: 'Antonio Visca (Alessandria, 19 Gennaio 1975) si divide da sempre tra le sue grandi passioni: radio e tv. E ultimamente anche podcast! Dopo la Laurea in Economia Aziendale ha lavorato a Disne...' },
+      { path: '/carlo-lucarelli', name: 'Carlo Lucarelli', desc: 'Carlo Lucarelli è uno scrittore e narratore. Conduce il programma radiofonico "DeeGiallo" per Radio Deejay...' },
       { path: '/chiara-galeazzi', name: 'Chiara Galeazzi', desc: 'Chiara Galeazzi è nata a Milano nel 3 dicembre 1986. Nel 2010 ha iniziato a lavorare da VICE Italia dove è rimasta cinque anni come magazine editor, host di reportage e presentatrice del pro...' },
       { path: '/claudio-lauretta', name: 'Claudio Lauretta', desc: 'Imitatore, attore e comico visto a Striscia la Notizia, Markette, Zelig, Chiambretti Night, Glob, Quelli che il calcio, Italia\'s Got Talent, Le Iene e Colorado. Camaleontico e trasformista,...' },
       { path: '/daniele-bossari', name: 'Daniele Bossari', desc: '2018 Conduce Chi ha paura del buio? (Italia1) 2017 Vincitore del GF VIP (Canale5) 2016 - 2009 conduce il programma di prima serata Mistero (Italia1) 2016 - 2013 presenta i Radio Italia Live...' },
@@ -258,10 +374,34 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.includes('/podcast')) {
-    presenceData.details = strings.viewingPodcasts
-  }
-  else if (pathname.includes('/podcast')) {
-    presenceData.details = strings.viewingPodcast
+    const podcastTitle = document.querySelector<HTMLElement>(
+      '.episode-breadcrumb + h1.title.xlarge, .main-serie header h1.title.xlarge',
+    )?.textContent?.trim()
+    const podcastSeries = document.querySelector<HTMLElement>('.name-podcast a')?.textContent?.trim()
+    const isPodcastEpisode = Boolean(document.querySelector('.episode-breadcrumb'))
+
+    if (isPodcastEpisode && podcastTitle) {
+      presenceData.details = truncate(`${strings.listeningToPodcast}: ${podcastTitle}`)
+      presenceData.state = podcastSeries
+
+      const audio = document.querySelector<HTMLVideoElement>('video')
+      if (audio && !audio.paused && Number.isFinite(audio.duration) && audio.duration > 0) {
+        const [startTimestamp, endTimestamp] = getTimestampsFromMedia(audio)
+        presenceData.startTimestamp = startTimestamp
+        presenceData.endTimestamp = endTimestamp
+      }
+    }
+    else if (podcastTitle) {
+      const seriesStats = Array.from(document.querySelectorAll<HTMLElement>('.serie-dati li'))
+        .map(stat => stat.textContent?.trim())
+        .filter((stat): stat is string => Boolean(stat))
+
+      presenceData.details = `${strings.viewingSeries} ${podcastTitle}`
+      presenceData.state = seriesStats.join(' · ') || undefined
+    }
+    else {
+      presenceData.details = strings.viewingPodcasts
+    }
   }
   else if (pathname.includes('/argomenti')) {
     presenceData.details = strings.viewingTopics

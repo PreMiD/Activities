@@ -176,7 +176,7 @@ presence.on('UpdateData', async () => {
         .querySelector('[class=" x15w6uyq"]')
         ?.querySelector('span')
         ?.textContent
-      if (pathname.match(/\d{15}/g)) {
+      if (/\d{15}/.test(pathname)) {
         presenceData.details = privacyMode || !storyUser
           ? 'Viewing a story'
           : `Viewing ${storyUser}'s story`
@@ -961,5 +961,5 @@ presence.on('UpdateData', async () => {
   }
   if (presenceData.details || presenceData.name)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

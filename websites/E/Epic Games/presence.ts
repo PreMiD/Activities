@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const presence = new Presence({
   clientId: '749642170813907004',
 })
@@ -45,7 +47,7 @@ presence.on('UpdateData', async () => {
             presenceData.details = 'Viewing trailer of'
             if (!video.paused) {
               presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/1.png';
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
             }
             else {
               presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/2.png'
@@ -154,5 +156,5 @@ presence.on('UpdateData', async () => {
   }
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

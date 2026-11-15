@@ -435,7 +435,7 @@ presence.on('UpdateData', async () => {
     }
     default: {
       presenceData.details = 'Browsing'
-      presenceData.state = document.title?.match(/^(.*?)( \| Discogs)?$/)?.[1]
+      presenceData.state = document.title?.match(/^(.*?)(?: \| Discogs)?$/)?.[1]
     }
   }
 
@@ -448,6 +448,6 @@ presence.on('UpdateData', async () => {
   }
   else {
     slideshow.deleteAllSlides()
-    presence.setActivity()
+    presence.clearActivity()
   }
 })

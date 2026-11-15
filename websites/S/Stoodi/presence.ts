@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1043638037042712637',
@@ -9,7 +9,7 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Stoodi/assets/0.png',
 }
 presence.on('UpdateData', async () => {
-  const selector = document.querySelector
+  const selector = <E extends Element = Element>(s: string): E | null => document.querySelector<E>(s)
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     details: 'Vendo o Stoodi',
@@ -58,7 +58,7 @@ presence.on('UpdateData', async () => {
 
         delete presenceData.startTimestamp
         if (!player.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(player)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(player)
         }
       }
     }

@@ -18,7 +18,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Viewing component:'
         presenceData.state = `${pathnames[pathnames.length - 2]
           ?.replaceAll('-', ' ')
-          .replace(/(^\w|\s\w)/g, m => m.toUpperCase())} - ${
+          .replace(/^\w|\s\w/g, m => m.toUpperCase())} - ${
           document.querySelector('main .max-w-8xl h2')?.textContent
           || 'Unknown component'
         }`

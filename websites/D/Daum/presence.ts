@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 class DaumPresence extends Presence {
   constructor(presenceOptions: PresenceOptions) {
@@ -9,23 +9,23 @@ class DaumPresence extends Presence {
     const url = document.location.hostname
 
     switch (true) {
-      case !!url.match(/movie(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/movie(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM_MOVIE'
-      case !!url.match(/news(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/news(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM_NEWS'
-      case !!url.match(/sports(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/sports(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM_SPORTS'
-      case !!url.match(/entertain(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/entertain(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM_ENTERTAIN'
-      case !!url.match(/blog(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/blog(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM_BLOG'
-      case !!url.match(/auto(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/auto(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM_AUTO'
-      case !!url.match(/mail(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/mail(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM_MAIL'
-      case !!url.match(/(top\.)?cafe(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/(?:top\.)?cafe(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM_CAFE'
-      case !!url.match(/([a-z]+)(\.v)?\.daum\.([a-z0-9]+)/):
+      case !!url.match(/[a-z]+(?:\.v)?\.daum\.[a-z0-9]+/):
         return 'DAUM'
       default:
         break
@@ -34,7 +34,7 @@ class DaumPresence extends Presence {
 
   get isReadingArticle() {
     return !!document.location.hostname.match(
-      /([a-z]+)(\.v)\.daum\.([a-z0-9]+)/,
+      /[a-z]+\.v\.daum\.[a-z0-9]+/,
     )
   }
 }
@@ -144,7 +144,7 @@ presence.on('UpdateData', async () => {
             : Assets.Play
           presenceData.smallImageText = video.paused ? 'Paused' : 'Playing';
 
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
 
           presenceData.buttons = [
             {
@@ -183,7 +183,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video?.paused ? 'Paused' : 'Playing';
 
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video?.currentTime, video?.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video?.currentTime, video?.duration)
 
         presenceData.buttons = [
           {
@@ -252,7 +252,7 @@ presence.on('UpdateData', async () => {
             : Assets.Play
           presenceData.smallImageText = video.paused ? 'Paused' : 'Playing';
 
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
 
           presenceData.buttons = [
             {
@@ -277,7 +277,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video?.paused ? 'Paused' : 'Playing';
 
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video?.currentTime, video?.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video?.currentTime, video?.duration)
 
         presenceData.buttons = [
           {
@@ -305,7 +305,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video?.paused ? 'Paused' : 'Playing';
 
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video?.currentTime, video?.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video?.currentTime, video?.duration)
 
         presenceData.buttons = [
           {

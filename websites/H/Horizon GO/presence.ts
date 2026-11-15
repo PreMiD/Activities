@@ -3,7 +3,7 @@ const presence = new Presence({
 })
 
 presence.on('UpdateData', async () => {
-  const path = window.location.hash.substr(1)
+  const path = window.location.hash.slice(1)
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/Horizon%20GO/assets/logo.jpg',
   }

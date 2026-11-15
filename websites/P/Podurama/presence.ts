@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1234257543467892826',
@@ -37,7 +37,7 @@ presence.on('UpdateData', async () => {
 
   if (player) {
     const audioEl = document.querySelector('audio')!
-    const [startTS, endTS] = presence.getTimestampsfromMedia(audioEl)
+    const [startTS, endTS] = getTimestampsFromMedia(audioEl)
     presenceData.details = 'Listening to a Podcast'
     presenceData.state = player.querySelector('.episode-title')?.textContent
 

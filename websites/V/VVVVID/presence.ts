@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '639916600031707149',
@@ -72,7 +72,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = 'In pausa'
       }
       else {
-        const [startTimestamp, endTimestamp] = presence.getTimestamps(
+        const [startTimestamp, endTimestamp] = getTimestamps(
           time,
           time2,
         );
@@ -116,5 +116,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

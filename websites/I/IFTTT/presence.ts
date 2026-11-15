@@ -17,12 +17,12 @@ presence.on('UpdateData', async () => {
   oldLang = newLang
   newLang = await presence.getSetting<string>('lang').catch(() => 'en')
   if (!strings || oldLang !== newLang)
-    strings = await getStrings(newLang)
+    strings = await getStrings()
 
   switch (window.location.hostname) {
     case 'ift.tt': {
       // IFTTT URL Shortener (for the Help Center)
-      return presence.setActivity()
+      return presence.clearActivity()
     }
     case 'help.ifttt.com': {
       // IFTTT Help Center
@@ -58,7 +58,7 @@ presence.on('UpdateData', async () => {
           break
           // Unknown
         default:
-          return presence.setActivity()
+          return presence.clearActivity()
       }
 
       break
@@ -111,7 +111,7 @@ presence.on('UpdateData', async () => {
           break
           // Startpage, Unknown
         default:
-          return presence.setActivity()
+          return presence.clearActivity()
       }
 
       break
@@ -259,7 +259,7 @@ presence.on('UpdateData', async () => {
           // Startpage, Services, Unknown
         default:
           if (!document.querySelector<HTMLDivElement>('.brand-section'))
-            return presence.setActivity()
+            return presence.clearActivity()
 
           presenceData.details = document.querySelector<HTMLHeadingElement>('h1')?.textContent
           presenceData.state = document.querySelector<HTMLImageElement>(
@@ -275,13 +275,12 @@ presence.on('UpdateData', async () => {
   presence.setActivity(presenceData)
 })
 
-async function getStrings(lang: string) {
+async function getStrings() {
   return presence.getStrings(
     {
       search: 'general.searching',
       browsing: 'general.browsing',
       reading: 'general.reading',
     },
-    lang,
   )
 }

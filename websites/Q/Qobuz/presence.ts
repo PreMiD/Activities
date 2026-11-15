@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '921861694190407730',
@@ -54,12 +54,12 @@ presence.on('UpdateData', async () => {
   const fromPlaylist = !!document.querySelectorAll(
     'div[class="player__track-album"] a',
   )[2]
-  const currentTimeSec = presence.timestampFromFormat(
+  const currentTimeSec = timestampFromFormat(
     document.querySelector<HTMLElement>(
       'span[class="player__track-time-text"]',
     )?.textContent ?? '',
   )
-  const endTimeSec = presence.timestampFromFormat(
+  const endTimeSec = timestampFromFormat(
     document.querySelectorAll<HTMLElement>(
       'span[class="player__track-time-text"]',
     )[1]?.textContent ?? '',
@@ -88,7 +88,7 @@ presence.on('UpdateData', async () => {
     + playliststring
 
   if (currentTimeSec > 0 || !paused) {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTimeSec, endTimeSec)
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTimeSec, endTimeSec)
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.pause : strings.play
   }

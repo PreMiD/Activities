@@ -26,7 +26,7 @@ presence.on('UpdateData', () => {
     }
     case 'forum.warthunder.com': {
       presenceData.details = 'Viewing forums'
-      const searchPath = search.match(/\?(.*?)(?:&.*|$)/)
+      const searchPath = /\?.*?(?:&.*|$)/.test(search)
         ? search.match(/\?(.*?)(?:&.*|$)/)?.[1]
         : ''
       const searchParams = new URLSearchParams(search)
@@ -158,5 +158,5 @@ presence.on('UpdateData', () => {
   }
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

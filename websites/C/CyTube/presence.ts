@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '653639828826750976', // Contact if you want me to edit the discord assets/keys/whatever
@@ -140,7 +140,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.largeImageKey = currentService.imageKey;
 
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       Math.floor(data.currentTime),
       Math.floor(data.duration),
     )
@@ -202,5 +202,5 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Contacting Support'
     presenceData.startTimestamp = Math.floor(Date.now() / 1000)
   }
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

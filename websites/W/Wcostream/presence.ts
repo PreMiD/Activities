@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '936985014560755753',
@@ -54,7 +54,7 @@ presence.on('UpdateData', async () => {
         ?.src ?? ActivityAssets.Logo
     }
     delete presenceData.startTimestamp
-    const timeLeft = presence.timestampFromFormat(video.timeLeft)
+    const timeLeft = timestampFromFormat(video.timeLeft)
     // This is necessary to only use endTimestamp when video has finished loading
     if (Date.now() / 1000 >= Date.now() / 1000 + timeLeft)
       video.paused = true
@@ -83,7 +83,7 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [{ label: 'Watch Episode', url: document.URL }]
 
     if (!directVideo.paused) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(directVideo)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(directVideo)
     }
   }
   else if (pathname === '/') {

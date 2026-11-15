@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -98,7 +98,7 @@ presence.on('UpdateData', async () => {
             delete presenceData.endTimestamp
             presenceData.smallImageKey = Assets.Pause
           }
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
           presenceData.details = document.querySelector(
             '[class="vjs-top-bar-title"]',
           )?.textContent
@@ -135,5 +135,5 @@ presence.on('UpdateData', async () => {
     delete presenceData.buttons
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

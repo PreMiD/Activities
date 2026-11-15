@@ -18,8 +18,7 @@ const soundcloud = {
 window.addEventListener(
   'message',
   (event) => {
-    if (event.origin === 'https://w.soundcloud.com'
-    ) {
+    if (event.origin === 'https://w.soundcloud.com') {
       const data = JSON.parse(event.data)
       if (data.method === 'playProgress') {
         soundcloud.currentTime = (Math.ceil(data.value.currentPosition / 1000))

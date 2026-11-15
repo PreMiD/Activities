@@ -35,7 +35,7 @@ presence.on('UpdateData', async () => {
               .querySelector('h5[class=\'Content__title\']')
               ?.textContent
               ?.replace(
-                /(Episode \d+)|(Subtitle Indonesia)/g,
+                /Episode \d+|Subtitle Indonesia/g,
                 '',
               ),
         )

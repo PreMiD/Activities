@@ -1,32 +1,15 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 let video = {
   duration: 0,
   currentTime: 0,
   paused: true,
 }
-let currentLang = 'en'
-let strings: Awaited<ReturnType<typeof getStrings>>
 
 const presence = new Presence({
   clientId: '867411016836186112',
 })
-async function getStrings() {
-  return presence.getStrings(
-    {
-      play: 'general.playing',
-      pause: 'general.paused',
-      home: 'general.viewHome',
-      viewEpisode: 'general.buttonViewEpisode',
-      viewAnime: 'general.buttonViewAnime',
-      watchingAnime: 'general.watchingAnime',
-      browsing: 'general.browsing',
-      viewPage: 'general.viewPage',
-      searchFor: 'general.searchFor',
-    },
-    currentLang,
-  )
-}
+
 const pathArr = document.location.pathname.split('/')
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const pages: Record<string, PresenceData> = {
@@ -50,19 +33,24 @@ presence.on(
 )
 
 presence.on('UpdateData', async () => {
-  const [newLang, privacyMode, showTimestamps, showButtons] = await Promise.all(
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    home: 'general.viewHome',
+    viewEpisode: 'general.buttonViewEpisode',
+    viewAnime: 'general.buttonViewAnime',
+    watchingAnime: 'general.watchingAnime',
+    browsing: 'general.browsing',
+    viewPage: 'general.viewPage',
+    searchFor: 'general.searchFor',
+  })
+  const [privacyMode, showTimestamps, showButtons] = await Promise.all(
     [
-      presence.getSetting<string>('lang').catch(() => 'fr'),
       presence.getSetting<boolean>('privacy'),
       presence.getSetting<boolean>('timestamps'),
       presence.getSetting<boolean>('buttons'),
     ],
   )
-
-  if (currentLang !== newLang || !strings) {
-    currentLang = newLang
-    strings = await getStrings()
-  }
 
   let presenceData: PresenceData = {
     details: strings.home,
@@ -89,7 +77,7 @@ presence.on('UpdateData', async () => {
         && title
         && !!document.querySelector('li.active')
       ) {
-        const [startTimestamp, endTimestamp] = presence.getTimestamps(
+        const [startTimestamp, endTimestamp] = getTimestamps(
           video.currentTime,
           video.duration,
         )
@@ -170,5 +158,5 @@ presence.on('UpdateData', async () => {
   }
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

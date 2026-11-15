@@ -1,0 +1,50 @@
+{
+  "freetv.browsingFreeTV": {
+    "description": "Displayed when the user is browsing FreeTV.",
+    "message": "Browsing FreeTV"
+  },
+  "freetv.browsingFreeCine": {
+    "description": "Displayed when the user is browsing Free Ciné movies.",
+    "message": "Browsing Free Ciné"
+  },
+  "freetv.watchingFreeTV": {
+    "description": "Displayed when the user is watching a channel on FreeTV.",
+    "message": "Watching FreeTV"
+  },
+  "freetv.lookingForChannel": {
+    "description": "Displayed when the user is looking for a channel on FreeTV.",
+    "message": "Looking for a channel"
+  },
+  "freetv.browsingChannels": {
+    "description": "Displayed when the user is browsing channels on FreeTV.",
+    "message": "Browsing channels"
+  },
+  "freetv.browsingReplays": {
+    "description": "Displayed when the user is browsing replays on FreeTV.",
+    "message": "Browsing replays"
+  },
+  "freetv.browsingReplayCollections": {
+    "description": "Displayed when the user is browsing replay collections on FreeTV.",
+    "message": "Browsing replay collections"
+  },
+  "freetv.browsingVOD": {
+    "description": "Displayed when the user is browsing VOD content on FreeTV.",
+    "message": "Browsing VOD"
+  },
+  "freetv.browsingTVGuide": {
+    "description": "Displayed when the user is browsing the TV guide on FreeTV.",
+    "message": "Browsing TV Guide"
+  },
+  "freetv.browsingTheirList": {
+    "description": "Displayed when the user is browsing their list on FreeTV.",
+    "message": "Browsing their list"
+  },
+  "freetv.managingTheirSettings": {
+    "description": "Displayed when the user is managing their settings on FreeTV.",
+    "message": "Managing their settings"
+  },
+  "freetv.watchingAChannel": {
+    "description": "Displayed when the user is watching a channel on FreeTV.",
+    "message": "Watching a channel"
+  }
+}

@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const presence = new Presence({
   clientId: '834628404233240628',
 })
@@ -162,9 +164,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viendo el perfil de'
 
     if (
-      [...document.querySelectorAll('.SingleTab')].find(
-        tab => tab.textContent === 'Mi Portafolio',
-      )
+      [...document.querySelectorAll('.SingleTab')].some(tab => tab.textContent === 'Mi Portafolio')
     ) {
       presenceData.details = 'Viendo su perfil'
     }
@@ -231,7 +231,7 @@ presence.on('UpdateData', async () => {
         ?.className
         .includes('vjs-playing')
     ) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
   }
   else if (pathname.includes('/cursos/')) {

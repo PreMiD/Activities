@@ -55,7 +55,7 @@ presence.on('UpdateData', async () => {
     const [, path] = document.location.pathname.match(
       /^\/([a-z.]+)/i,
     ) ?? []
-    if (path && Object.prototype.hasOwnProperty.call(URLMap, path)) {
+    if (path && Object.hasOwn(URLMap, path)) {
       const [details, state] = URLMap[path]!
       presenceData.details = typeof details === 'function' ? details() : details
       presenceData.state = typeof state === 'function' ? state() : state
@@ -69,6 +69,6 @@ presence.on('UpdateData', async () => {
     }
   }
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

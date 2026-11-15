@@ -47,5 +47,5 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = getTimeStamp()
   }
 
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

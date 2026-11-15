@@ -1,6 +1,7 @@
 {
   "extends": "@total-typescript/tsconfig/tsc/dom/library",
   "compilerOptions": {
-    "typeRoots": ["@types"]
+    "typeRoots": ["@types"],
+    "types": ["premid"]
   }
 }

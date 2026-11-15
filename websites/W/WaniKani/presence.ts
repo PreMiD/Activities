@@ -224,7 +224,7 @@ presence.on('UpdateData', async () => {
           Object.assign(presenceData, getLessonPresence())
           break
         }
-        case pathname.match(/^\/(radicals|kanji|vocabulary)\/.+$/)?.input: {
+        case pathname.match(/^\/(?:radicals|kanji|vocabulary)\/.+$/)?.input: {
           const [, type] = pathname.split('/')
           let textDescription = document.querySelector<HTMLElement>(
             '.mnemonic-content',

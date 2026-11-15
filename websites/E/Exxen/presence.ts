@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '794408060847390760',
@@ -21,7 +21,7 @@ presence.on('UpdateData', async () => {
     const episode = episodeName?.split('.Bölüm')[0]?.split(' ')[
       (episodeName?.split('.Bölüm')[0]?.split(' ').length ?? 0) - 1
     ]
-    const [startTimestamp, endTimestamp] = presence.getTimestamps(
+    const [startTimestamp, endTimestamp] = getTimestamps(
       video.currentTime,
       video.duration,
     )

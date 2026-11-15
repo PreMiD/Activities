@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '821433038335377418',
@@ -64,7 +64,7 @@ presence.on('UpdateData', async () => {
         }
 
         if (video) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
         }
         if (video && video.paused) {
           delete presenceData.startTimestamp
@@ -124,7 +124,7 @@ presence.on('UpdateData', async () => {
         const movieData = JSON.parse(
           document.querySelector('[type="application/ld+json"]')?.textContent ?? '{}',
         )
-        const timestamps = presence.getTimestampsfromMedia(video)
+        const timestamps = getTimestampsFromMedia(video)
 
         presenceData = {
           ...presenceData,

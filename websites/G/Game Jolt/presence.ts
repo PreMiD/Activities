@@ -66,7 +66,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Fireside name: ${document
         .querySelector('#content > div > div > div > div > h2')
         ?.textContent
-        ?.replace(/(\t|\n)/g, '')
+        ?.replace(/\t|\n/g, '')
         ?.replace(firesideOwner ?? '', '')
         ?.slice(13)}`
       presenceData.buttons = [

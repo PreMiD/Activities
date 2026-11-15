@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 interface Assets2 {
   logo: string
   play: string
@@ -255,7 +257,7 @@ app.on('UpdateData', async () => {
 
           const data: PresenceData = {
             smallImageKey: video.paused ? Assets2.pause : Assets2.play,
-            endTimestamp: app.getTimestampsfromMedia(video).pop(),
+            endTimestamp: getTimestampsFromMedia(video).pop(),
           }
 
           if (video.paused)
@@ -369,5 +371,5 @@ app.on('UpdateData', async () => {
 
   if (app.data.details)
     app.setActivity(app.data)
-  else app.setActivity()
+  else app.clearActivity()
 })

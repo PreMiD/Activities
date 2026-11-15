@@ -17,7 +17,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing...'
     presenceData.startTimestamp = browsingTimestamp
 
-    presence.setActivity(presenceData, true)
+    presence.setActivity(presenceData)
   }
 
   if (document.querySelector('video.dplayer-video.dplayer-video-current')) {
@@ -34,6 +34,6 @@ presence.on('UpdateData', async () => {
     )?.textContent
     presenceData.startTimestamp = browsingTimestamp
 
-    presence.setActivity(presenceData, true)
+    presence.setActivity(presenceData)
   }
 })

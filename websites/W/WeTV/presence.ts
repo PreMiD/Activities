@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, getTimestampsFromMedia } from 'premid'
 
 enum ActivityAssets {
   Play = 'https://cdn.rcd.gg/PreMiD/websites/W/WeTV/assets/0.png',
@@ -50,6 +50,10 @@ presence.on('UpdateData', async () => {
         'div.play-sidebar__title',
       )?.textContent
 
+      // Mostra o nome do dorama no lugar do nome da aplicação
+      // (ao lado do ícone da atividade no Discord)
+      presenceData.name = presenceData.details
+
       presenceData.state = episodeNumber
         ? `Episode ${Number.parseInt(episodeNumber.textContent ?? '')}`
         : episodeTitle
@@ -59,7 +63,7 @@ presence.on('UpdateData', async () => {
       if (parsedData && await presence.getSetting<boolean>('showCover'))
         presenceData.largeImageKey = parsedData.coverInfo?.posterVt ?? '';
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       presenceData.smallImageKey = video.paused
         ? ActivityAssets.Pause

@@ -108,8 +108,8 @@ presence.on('UpdateData', async () => {
           .querySelector('#org-info')
           ?.querySelector('.ui.header')
           ?.textContent
-          ?.replace(/\s*(?=(shaare))/g, '')
-          .replace(/(?<=(shaare))\s*/g, '')
+          ?.replace(/\s*(?=shaare)/g, '')
+          .replace(/(?<=shaare)\s*/g, '')
         const [, orgName] = document.location.pathname.split('/')
         if (displayName === orgName)
           presenceData.details = `Viewing Organization: ${orgName}`
@@ -152,7 +152,7 @@ presence.on('UpdateData', async () => {
               ?.firstElementChild
               ?.textContent
               ?.match(/<strong>.*<\/strong>/)?.[0]
-              ?.replace(/(<strong>|<\/strong>)/g, '')})`
+              ?.replace(/<strong>|<\/strong>/g, '')})`
           }
         }
         else if (document.location.pathname.split('/')[3] === 'activity') {

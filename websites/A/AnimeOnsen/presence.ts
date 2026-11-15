@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeOnsen/assets/logo.png',
@@ -21,7 +21,7 @@ interface PlayerData {
 
 const presence = new Presence({ clientId: '826806766033174568' })
 const [, page] = document.location.pathname.split('/')
-const qs = document.querySelector.bind(document)
+const qs = <E extends Element = Element>(s: string): E | null => document.querySelector<E>(s)
 const initMillis = Date.now()
 const rpaImage = {
   general: {
@@ -46,7 +46,7 @@ function updateData() {
       time: {
         progress,
         duration,
-        snowflake: presence.getTimestamps(progress, duration),
+        snowflake: getTimestamps(progress, duration),
       },
       title: qs('span.ao-player-metadata-title')?.textContent ?? '',
       episode: Number(

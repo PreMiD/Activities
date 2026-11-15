@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1273851679191728160',
@@ -287,13 +287,13 @@ presence.on('UpdateData', async () => {
       const metadataText = document
         .querySelector('div[data-test="player-text"]')
         ?.querySelectorAll('a') ?? null
-      const currentTime = presence.timestampFromFormat(
+      const currentTime = timestampFromFormat(
         document.querySelector('div[aria-label="Seekbar Position"]')
           ?.textContent ?? '',
       )
-      const timestamps = presence.getTimestamps(
+      const timestamps = getTimestamps(
         currentTime,
-        presence.timestampFromFormat(
+        timestampFromFormat(
           document.querySelector('div[aria-label="Seekbar Duration"]')
             ?.textContent ?? '',
         ),
@@ -621,9 +621,9 @@ presence.on('UpdateData', async () => {
       const songDuration = document.querySelector(
         'span[aria-label="duration"][role="timer"][data-kind="caption-4"]',
       )
-      const timestamps = presence.getTimestamps(
-        presence.timestampFromFormat(songPosition?.textContent ?? ''),
-        presence.timestampFromFormat(songDuration?.textContent ?? ''),
+      const timestamps = getTimestamps(
+        timestampFromFormat(songPosition?.textContent ?? ''),
+        timestampFromFormat(songDuration?.textContent ?? ''),
       )
 
       presenceData.largeImageKey = playerArtwork

@@ -18,8 +18,11 @@ import { error, exit, prefix } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
 import { addSarifLog, SarifRuleId, writeSarifLog } from '../util/sarif.js'
 import { zipDir } from '../util/zipDir.js'
+import { ActivityTester, findTestFiles } from './ActivityTester.js'
 import { AssetsManager } from './AssetsManager.js'
 import { DependenciesManager } from './DependenciesManager.js'
+import { DevTestLoop, listenForKeys } from './testing/DevTestLoop.js'
+import { createReporter } from './testing/reporter.js'
 import { TypescriptCompiler } from './TypescriptCompiler.js'
 import { WebSocketServer } from './WebSocketServer.js'
 
@@ -30,6 +33,7 @@ export interface ActivityMetadata {
   logo: string
   thumbnail: string
   url: string | string[]
+  regExp: string
   iframe?: boolean
   iFrameRegExp?: string
   description: Record<string, string>
@@ -40,6 +44,7 @@ export class ActivityCompiler {
   dependencies: DependenciesManager
   ts: TypescriptCompiler
   ws: WebSocketServer | undefined
+  tests: DevTestLoop | undefined
   assetsManager: AssetsManager
 
   constructor(
@@ -122,7 +127,19 @@ export class ActivityCompiler {
   async watch({ validate, zip, sarif }: { validate: boolean, zip: boolean, sarif: boolean }) {
     await this.dependencies.installDependencies()
 
-    this.ws = new WebSocketServer(this.cwd)
+    const ws = new WebSocketServer(this.cwd)
+    this.ws = ws
+
+    this.tests = new DevTestLoop({
+      service: this.activity.service,
+      send: async () => {
+        await ws.send()
+      },
+      tester: new ActivityTester(this.cwd, this.activity.service, ws, createReporter(this.activity.service)),
+      hasTests: async () => (await findTestFiles(this.cwd)).length > 0,
+      log: line => console.log(line),
+    })
+    listenForKeys(this.tests)
 
     watch(this.cwd, {
       depth: 0,
@@ -175,7 +192,7 @@ export class ActivityCompiler {
     if (sarif) {
       await writeSarifLog()
     }
-    await this.ws?.send()
+    this.tests?.onBuild()
   }
 
   private async validate({ kill }: { kill: boolean }): Promise<boolean> {
@@ -302,6 +319,38 @@ export class ActivityCompiler {
       valid = false
     }
 
+    if (!metadata.iFrameRegExp && metadata.iframe) {
+      const message = `Expected iFrameRegExp to exist for activity ${metadata.service}, as metadata.iframe is true`
+      if (kill) {
+        exit(message)
+      }
+
+      error(message)
+      addSarifLog({
+        path: resolve(this.cwd, 'metadata.json'),
+        message,
+        ruleId: SarifRuleId.iframeRegexpCheck,
+        position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'iFrameRegExp'),
+      })
+      valid = false
+    }
+
+    if (metadata.iFrameRegExp && !metadata.iframe) {
+      const message = `Expected iFrameRegExp to not exist for activity ${metadata.service}, as metadata.iframe is false`
+      if (kill) {
+        exit(message)
+      }
+
+      error(message)
+      addSarifLog({
+        path: resolve(this.cwd, 'metadata.json'),
+        message,
+        ruleId: SarifRuleId.iframeRegexpCheck,
+        position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'iFrameRegExp'),
+      })
+      valid = false
+    }
+
     if (metadata.iFrameRegExp === '.*') {
       const message = `iFrameRegExp is not allowed to be .*, as it is a wildcard`
       if (kill) {
@@ -403,8 +452,59 @@ export class ActivityCompiler {
       valid = false
     }
 
-    // DNS validation for URLs
     const urls = Array.isArray(metadata.url) ? metadata.url : [metadata.url]
+
+    // regExp validation for URLs
+    {
+      let regex: RegExp | null = null
+      try {
+        regex = new RegExp(metadata.regExp)
+      }
+      catch {
+        const message = `Invalid regExp "${metadata.regExp}": failed to compile as a regular expression`
+        if (kill) {
+          exit(message)
+        }
+
+        error(message)
+        addSarifLog({
+          path: resolve(this.cwd, 'metadata.json'),
+          message,
+          ruleId: SarifRuleId.regExpUrlCheck,
+          position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'regExp'),
+        })
+        valid = false
+      }
+
+      if (regex) {
+        for (let i = 0; i < urls.length; i++) {
+          const url = urls[i]
+          const testUrl = `https://${url}/`
+          if (!regex.test(testUrl)) {
+            const message = `regExp "${metadata.regExp}" does not match URL "${testUrl}" (derived from url "${url}")`
+            if (kill) {
+              exit(message)
+            }
+
+            error(message)
+
+            const position = Array.isArray(metadata.url)
+              ? await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'url', i)
+              : await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'url')
+
+            addSarifLog({
+              path: resolve(this.cwd, 'metadata.json'),
+              message,
+              ruleId: SarifRuleId.regExpUrlCheck,
+              position,
+            })
+            valid = false
+          }
+        }
+      }
+    }
+
+    // DNS validation for URLs
 
     // Check all URLs in parallel for this activity
     const urlChecks = await Promise.all(

@@ -21,7 +21,6 @@ async function getStrings() {
       searchSomething: 'general.searchSomething',
       watching: 'general.watching',
     },
-    await presence.getSetting<string>('lang').catch(() => 'ru'),
   )
 }
 

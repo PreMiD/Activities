@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '917417055458852865',
@@ -137,14 +137,14 @@ presence.on('UpdateData', async () => {
         'button.vjs-play-control.vjs-control.vjs-button.vjs-paused',
       )
       if (!paused) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(
             document
               .querySelector('div.vjs-duration-display')
               ?.textContent
               ?.slice(14) ?? '',
           ),
-          presence.timestampFromFormat(
+          timestampFromFormat(
             document
               .querySelector('div.vjs-current-time-display')
               ?.textContent

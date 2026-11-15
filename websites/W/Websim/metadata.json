@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "1255528657058009088",
@@ -11,7 +11,7 @@
   },
   "url": "websim.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*websim[.]com[/]",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/thumbnail.png",
   "color": "#38bdf8",
@@ -20,7 +20,7 @@
     "ai"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?:\\/\\/[a-zA-Z0-9_-]+\\.c\\.websim\\.com\\/.*$",
+  "iFrameRegExp": "^https?[:][/][/][a-zA-Z0-9_-]+[.]c[.]websim[.]com[/]",
   "settings": [
     {
       "id": "showButtons",

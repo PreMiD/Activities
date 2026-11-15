@@ -9,17 +9,22 @@ async function getStrings() {
   return presence.getStrings(
     {
       buttonViewPage: 'general.buttonViewPage',
-      chapter: 'general.chapter',
       reading: 'general.reading',
+      readingADM: 'general.readingADM',
+      readingAPost: 'general.readingAPost',
       readingPost: 'general.readingPost',
+      readingArticle: 'general.readingArticle',
+      readingAnArticle: 'general.readingAnArticle',
       search: 'general.search',
       searchFor: 'general.searchFor',
       searchSomething: 'general.searchSomething',
-      viewHome: 'general.viewHome',
       view: 'general.view',
-      viewPage: 'general.viewPage',
+      viewACategory: 'general.viewACategory',
+      viewAProfile: 'general.viewAProfile',
+      viewCategory: 'general.viewCategory',
+      viewHome: 'general.viewHome',
+      viewProfile: 'general.viewProfile',
     },
-    await presence.getSetting<string>('lang').catch(() => 'ru'),
   )
 }
 
@@ -32,6 +37,16 @@ enum ActivityAssets {
 
 function textContent(tags: string) {
   return document.querySelector(tags)?.textContent?.trim()
+}
+
+function getDirectTextContent(selector: string): string | null {
+  const element = document.querySelector<HTMLElement>(selector)
+  return element
+    ? Array.from(element.childNodes)
+        .filter(node => node.nodeType === Node.TEXT_NODE)
+        .map(node => node.textContent?.trim() || '')
+        .join('')
+    : null
 }
 
 presence.on('UpdateData', async () => {
@@ -48,148 +63,140 @@ presence.on('UpdateData', async () => {
   ])
   const { pathname, href } = document.location
   const path = pathname.split('/')
+  const subTitle = getDirectTextContent('.tabs.tm-tabs_page-header .tab-link.active')
+    ?? getDirectTextContent('.tabs.tm-user__tabs .tab-link.active')
+    ?? getDirectTextContent('.tabs.tm-tabs_page-header .tm-navigation-dropdown__option_active > button')
 
   if (oldLang !== newLang || !strings) {
     oldLang = newLang
     strings = await getStrings()
   }
 
+  function getPostData(type: string): void {
+    switch (type) {
+      case 'articles':
+      case 'news':
+        presenceData.details = privacy ? strings.readingAnArticle : strings.readingArticle
+        presenceData.state = textContent('.tm-title')
+        presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
+          '.tm-user-info__userpic .tm-entity-image__pic',
+        )?.src ?? ActivityAssets.Logo
+        presenceData.smallImageKey = Assets.Reading
+        presenceData.smallImageText = strings.reading
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+        break
+
+      case 'posts':
+        presenceData.details = privacy ? strings.readingAPost : strings.readingPost
+        presenceData.state = document.querySelector('meta[property=\'og:title\']')?.getAttribute('content')
+        presenceData.smallImageKey = Assets.Reading
+        presenceData.smallImageText = strings.reading
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+        break
+    }
+  }
+
   switch (path[2]) {
-    case 'all':
-    case 'flows':
-    case 'news':
-    case 'hubs':
-    case 'companies':
     case 'feed':
-      presenceData.details = privacy
-        ? strings.viewHome
-        : `${strings.view} ${strings.chapter.toLowerCase()} ${textContent(
-          '.tm-section-name__text',
-        )}`
-      presenceData.state = document.querySelector(
-        '.tm-tabs__tab-link_active',
-      )?.firstChild?.textContent
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.view
-
-      if (path[3] === 't') {
-        presenceData.details = strings.reading
-        presenceData.state = textContent('.tm-article-snippet__title')
-        presenceData.smallImageKey = Assets.Reading
-        presenceData.smallImageText = strings.reading
-        presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
-          '.tm-entity-image__pic',
-        )?.src
-        presenceData.buttons = [
-          {
-            label: strings.buttonViewPage,
-            url: href,
-          },
-        ]
-      }
+      presenceData.details = strings.viewHome
       break
 
+    case 'all':
+    case 'articles':
+    case 'flows':
+    case 'hubs':
+    case 'news':
+    case 'posts':
+    case 'companies':
     case 'users':
-      presenceData.details = privacy
-        ? strings.viewHome
-        : `${strings.view} ${strings.chapter.toLowerCase()} ${textContent(
-          '.tm-section-name__text',
-        )}`
-      presenceData.state = document.querySelector(
-        '.tm-tabs__tab-link_active',
-      )?.firstChild?.textContent
+    {
+      presenceData.details = privacy ? strings.viewACategory : strings.viewCategory
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = strings.view
 
-      if (path[3]) {
-        presenceData.details = `${strings.viewPage} ${
-          !privacy ? textContent('.tm-user-card__title a') : ''
-        }`
-        presenceData.state = document.querySelector(
-          '.tm-tabs__tab-link_active',
-        )?.firstChild?.textContent
-        presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
-          '.tm-user-card__header-data .tm-entity-image__pic',
-        )?.src || ActivityAssets.Logo
-        presenceData.buttons = [
-          {
-            label: strings.buttonViewPage,
-            url: href,
-          },
-        ]
+      const categoryTitle = textContent('.tm-page__top > div > h1 > span') || textContent('.tm-page__top .tm-section-name__text')
+      if (categoryTitle) {
+        presenceData.state = `${categoryTitle}${subTitle ? ` – ${subTitle}` : ''}`
+      }
+      else {
+        switch (path[2]) {
+          case 'companies':
+            presenceData.details = privacy ? strings.viewAProfile : strings.viewProfile
+            presenceData.state = `${textContent('.tm-company-card__name > span')}${subTitle ? ` – ${subTitle}` : ''}`
+            presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
+              '.tm-company-profile-card .tm-entity-image__pic',
+            )?.src ?? ActivityAssets.Logo
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewPage,
+                url: href,
+              },
+            ]
+
+            if (path[4] && path[5] && !subTitle) {
+              getPostData(path[4])
+            }
+            break
+
+          case 'users':
+            presenceData.details = privacy ? strings.viewAProfile : strings.viewProfile
+            presenceData.state = `${textContent('.tm-user-card__title a')}${subTitle ? ` – ${subTitle}` : ''}`
+            presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
+              '.tm-user-card__header-data .tm-entity-image__pic',
+            )?.src ?? ActivityAssets.Logo
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewPage,
+                url: href,
+              },
+            ]
+            break
+
+          default:
+            getPostData(path[2])
+            break
+        }
       }
       break
-
-    case 'auth':
-      presenceData.details = `${strings.view} ${textContent(
-        '.tm-section-name__text',
-      )}`
-      presenceData.state = textContent('.tm-tabs__tab-link_active')
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.view
-      break
-
-    case 'hub':
-      presenceData.details = `${strings.view} хаб`
-      presenceData.state = textContent('.tm-hub-card__name span')
-      presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
-        '.tm-entity-image__pic',
-      )?.src
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.view
-      break
-
-    case 'company':
-      presenceData.details = `${strings.viewPage} ${
-        !privacy ? textContent('.tm-company-card__name') : ''
-      }`
-      presenceData.state = document.querySelector(
-        '.tm-tabs__tab-link_active',
-      )?.firstChild?.textContent
-      presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
-        '.tm-company-card__header .tm-entity-image__pic',
-      )?.src
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.view
-      presenceData.buttons = [
-        {
-          label: strings.buttonViewPage,
-          url: href,
-        },
-      ]
-
-      if (path[5]) {
-        presenceData.details = `${strings.reading} ${
-          !privacy ? textContent('.router-link-active') : ''
-        }`
-        presenceData.state = document.querySelector(
-          '.tm-article-snippet__title',
-        )?.firstChild?.textContent
-        presenceData.smallImageKey = Assets.Reading
-        presenceData.smallImageText = strings.reading
-      }
-      break
-
-    case 'post':
-      presenceData.details = strings.readingPost
-      presenceData.state = textContent('.tm-article-snippet__title')
-      presenceData.smallImageKey = Assets.Reading
-      presenceData.smallImageText = strings.reading
-      presenceData.buttons = [
-        {
-          label: strings.buttonViewPage,
-          url: href,
-        },
-      ]
-      break
+    }
 
     case 'search':
-      presenceData.details = privacy
-        ? strings.searchSomething
-        : strings.searchFor
-      presenceData.state = document.querySelector<HTMLInputElement>('input')?.value
+    {
+      const searchValue = document.querySelector<HTMLInputElement>('input')?.value
+      presenceData.details = strings.searchSomething
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = strings.search
+
+      if (searchValue && !privacy) {
+        presenceData.details = strings.searchFor
+        presenceData.state = searchValue
+      }
+      break
+    }
+
+    case 'conversations':
+    case 'tracker':
+      presenceData.details = strings.readingADM
+      presenceData.state = subTitle
+      presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = strings.reading
+      break
+
+    case 'sandbox':
+      presenceData.details = privacy ? strings.viewACategory : strings.viewCategory
+      presenceData.state = `${textContent('.tm-section-name__text')}${subTitle ? ` – ${subTitle}` : ''}`
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.view
       break
   }
 

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '806539630878261328',
@@ -71,7 +71,7 @@ presence.on('UpdateData', async () => {
     if (playback === true && !Number.isNaN(duration)) {
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? strings.pause : strings.play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(currentTime), Math.floor(duration))
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
       currentAnimeWatching = document.title
         .replace(' - Animelon', '')
         .split(' Episode ');

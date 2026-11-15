@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '813392002526871592',
@@ -70,7 +70,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = title?.join('：')
       presenceData.state = episodeTitle;
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       presenceData.largeImageKey = cover
         ? await shortenURL(

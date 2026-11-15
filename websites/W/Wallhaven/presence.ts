@@ -21,7 +21,7 @@ function getQuery() {
 const pages: PageContext[] = [
   {
     middleware: ref =>
-      !!ref.location.pathname.match(/\/(latest|toplist|hot|random)/gi),
+      !!ref.location.pathname.match(/\/(?:latest|toplist|hot|random)/gi),
     exec: (
       context,
       presenceData,
@@ -46,7 +46,7 @@ const pages: PageContext[] = [
   {
     middleware: ref =>
       ref.location.pathname === '/forums'
-      || !!ref.location.pathname.match(/\/forums((\/thread|\/board))/gi),
+      || !!ref.location.pathname.match(/\/forums(?:\/thread|\/board)/gi),
     exec: (
       context,
       data,
@@ -99,7 +99,7 @@ const pages: PageContext[] = [
     },
   },
   {
-    middleware: ref => !!ref.location.pathname.match(/\/w\/(\w+)/gi),
+    middleware: ref => !!ref.location.pathname.match(/\/w\/\w+/gi),
     exec: (
       context,
       data,
@@ -178,17 +178,17 @@ presence.on('UpdateData', async () => {
     if (result && !result?.details) {
       result.details = strings.browsing
 
-      presence.setActivity()
+      presence.clearActivity()
     }
     else if (result) {
       presence.setActivity(result)
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
 
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

@@ -23,7 +23,7 @@ presence.on('UpdateData', async () => {
   }
 
   function cleanTrackTitle(title: string): string {
-    if (!title.match(/[([|]/)) {
+    if (!/[([|]/.test(title)) {
       return title.trim()
     }
 

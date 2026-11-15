@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '835652520637890620',
@@ -12,7 +12,7 @@ presence.on('UpdateData', async () => {
   }
   const { pathname, search } = document.location
 
-  if (pathname === '/' && search.substr(0, 2) === '?q') {
+  if (pathname === '/' && search.slice(0, 2) === '?q') {
     presenceData.details = 'Searching:'
     presenceData.state = document.querySelector('.caption')?.textContent
     presenceData.smallImageKey = Assets.Search
@@ -56,7 +56,7 @@ presence.on('UpdateData', async () => {
     ]
   }
   else if (pathname.startsWith('/episode')) {
-    const elapsedTime = presence.timestampFromFormat(
+    const elapsedTime = timestampFromFormat(
       document.querySelector('#elapsedTime')?.textContent ?? '',
     )
 
@@ -71,10 +71,10 @@ presence.on('UpdateData', async () => {
         ?.classList
         .contains('fa-play-circle')
     ) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
         elapsedTime,
-        presence.timestampFromFormat(
-          document.querySelector('#remainingTime')?.textContent?.substr(1) ?? '',
+        timestampFromFormat(
+          document.querySelector('#remainingTime')?.textContent?.slice(1) ?? '',
         ) + elapsedTime,
       )
       presenceData.smallImageKey = Assets.Play

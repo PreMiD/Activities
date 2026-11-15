@@ -177,7 +177,7 @@ presence.on('UpdateData', async () => {
       default: {
         presenceData.details = 'Browsing'
         presenceData.state = document.title.match(
-          /^(.*?)( \| The Weather Channel)?$/,
+          /^(.*?)(?: \| The Weather Channel)?$/,
         )?.[1]
         break
       }
@@ -201,5 +201,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

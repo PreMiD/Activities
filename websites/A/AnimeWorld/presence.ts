@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '678265146883178519',
@@ -457,7 +457,7 @@ presence.on('UpdateData', async () => {
               ? `Ep. ${animenumber}｜In pausa`
               : `Ep. ${animenumber}｜In riproduzione`
             if (!paused) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
                 Math.floor(currentTime),
                 Math.floor(duration),
               )
@@ -504,7 +504,7 @@ presence.on('UpdateData', async () => {
               ? 'Film｜In pausa'
               : 'Film｜In riproduzione'
             if (!paused) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
                 Math.floor(currentTime),
                 Math.floor(duration),
               )
@@ -552,7 +552,7 @@ presence.on('UpdateData', async () => {
               ? `${oavnumber}° OAV｜In pausa`
               : `${oavnumber}° OAV｜In riproduzione`
             if (!paused) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
                 Math.floor(currentTime),
                 Math.floor(duration),
               )
@@ -603,7 +603,7 @@ presence.on('UpdateData', async () => {
               ? `${onanumber}° ONA｜In pausa`
               : `${onanumber}° ONA｜In riproduzione`
             if (!paused) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
                 Math.floor(currentTime),
                 Math.floor(duration),
               )
@@ -654,7 +654,7 @@ presence.on('UpdateData', async () => {
               ? `${specialnumber}° Special｜In pausa`
               : `${specialnumber}° Special｜In riproduzione`
             if (!paused) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
                 Math.floor(currentTime),
                 Math.floor(duration),
               )
@@ -702,7 +702,7 @@ presence.on('UpdateData', async () => {
               ? 'Preview｜In pausa'
               : 'Preview｜In riproduzione'
             if (!paused) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
                 Math.floor(currentTime),
                 Math.floor(duration),
               )

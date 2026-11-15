@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 interface PageAction {
   id: string
@@ -138,7 +138,7 @@ presence.on('UpdateData', async () => {
     if (!video || (video && video.ended))
       return presence.setActivity(presenceData)
 
-    const [startTimestamp, endTimestamp] = presence.getTimestamps(
+    const [startTimestamp, endTimestamp] = getTimestamps(
       Math.floor(video.elapsed),
       Math.floor(video.duration),
     )

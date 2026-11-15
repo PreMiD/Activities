@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({ clientId: '1035124482735607838' })
 const strings = presence.getStrings({
@@ -25,10 +25,10 @@ presence.on('UpdateData', async () => {
     )?.textContent
     const songPath = document.querySelector('#g_player > div.play > div.j-flag.words > a')?.getAttribute('href')
     const author = document.querySelector('#g_player > div.play > div.j-flag.words > span > span')?.textContent
-    const audioTime = presence.timestampFromFormat(document.querySelector('#g_player > div.play > div.m-pbar > span > em')!.textContent!)
-    const audioDuration = presence.timestampFromFormat(audioTimeLeft!.replace(/(.*)(?=\/)/, '').replace('/ ', ''))
+    const audioTime = timestampFromFormat(document.querySelector('#g_player > div.play > div.m-pbar > span > em')!.textContent!)
+    const audioDuration = timestampFromFormat(audioTimeLeft!.replace(/.*(?=\/)/, '').replace('/ ', ''))
 
-    const [startTimestamp, endTimestamp] = presence.getTimestamps(audioTime, audioDuration)
+    const [startTimestamp, endTimestamp] = getTimestamps(audioTime, audioDuration)
     const presenceData: PresenceData = {
       details: title,
       state: author,
@@ -51,7 +51,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (title && author)
-      presence.setActivity(presenceData, !paused)
+      presence.setActivity(presenceData)
   }
   else {
     presence.clearActivity()

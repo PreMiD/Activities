@@ -125,11 +125,9 @@ presence.on('UpdateData', async () => {
         .filter((i) => {
           const style = i.parentElement?.parentElement?.style.transform
           if (
-            Array.from(document.querySelectorAll('.coverToken')).find(
-              t =>
-                (t as HTMLElement).style.transform?.split('scale')[0]
-                === style?.split('scale')[0],
-            )
+            Array.from(document.querySelectorAll('.coverToken')).some(t =>
+              (t as HTMLElement).style.transform?.split('scale')[0]
+              === style?.split('scale')[0])
           ) {
             return false
           }

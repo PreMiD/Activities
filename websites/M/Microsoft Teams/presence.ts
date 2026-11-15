@@ -90,7 +90,7 @@ presence.on('UpdateData', async () => {
     const memberCount = document
       .querySelector('accordion-section:nth-child(2) span.toggle-number')
       ?.textContent
-      ?.match(/(\d+)/)
+      ?.match(/\d+/)
 
     if (document.querySelector('#video-button')) {
       presenceData.details = 'In a meeting'
@@ -117,5 +117,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

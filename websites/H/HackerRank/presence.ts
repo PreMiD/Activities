@@ -51,7 +51,7 @@ presence.on('UpdateData', () => {
     })`
   }
   else if (
-    document.location.pathname.match(/\/companies\/.*?\/jobs/g)
+    /\/companies\/.*?\/jobs/.test(document.location.pathname)
     && title !== 'Find Your Dream Job'
   ) {
     presenceData.details = 'Viewing a job:'

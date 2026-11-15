@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "562755652921982986",
@@ -11,7 +11,7 @@
   },
   "url": "rumble.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*rumble[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rumble/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rumble/assets/thumbnail.jpg",
   "color": "#85c742",

@@ -18,7 +18,7 @@ presence.on('UpdateData', async () => {
   }
   else if (
     pathname === '/search/'
-    && window.location.search.substr(0, 1) === '?'
+    && window.location.search.slice(0, 1) === '?'
   ) {
     presenceData.details = 'Searching: '
     presenceData.state = new URLSearchParams(search).get('name')

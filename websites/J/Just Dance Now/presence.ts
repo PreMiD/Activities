@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const presence = new Presence({
   clientId: '928372793438011433',
 })
@@ -63,7 +65,7 @@ presence.on('UpdateData', async () => {
       case 'dance': {
         presenceData.details = 'Playing'
         presenceData.state = songTitle;
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(
           document.querySelector<HTMLVideoElement>('#in-game_video')!,
         )
         if (cover)

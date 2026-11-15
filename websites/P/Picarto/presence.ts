@@ -38,7 +38,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (title && uploader)
-      presence.setActivity(presenceData, !video.paused)
+      presence.setActivity(presenceData)
   }
   else {
     presence.setActivity({

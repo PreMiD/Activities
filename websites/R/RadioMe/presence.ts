@@ -18,7 +18,7 @@ presence.on('UpdateData', async () => {
   oldLang = newLang
   newLang = await presence.getSetting<string>('lang').catch(() => 'en')
   if (!strings || oldLang !== newLang)
-    strings = await getStrings(newLang)
+    strings = await getStrings()
 
   switch (path[0]) {
     // Search
@@ -87,7 +87,7 @@ presence.on('UpdateData', async () => {
   presence.setActivity(presenceData)
 })
 
-async function getStrings(lang: string) {
+async function getStrings() {
   return presence.getStrings(
     {
       play: 'general.playing',
@@ -95,6 +95,5 @@ async function getStrings(lang: string) {
       search: 'general.searching',
       browsing: 'general.browsing',
     },
-    lang,
   )
 }

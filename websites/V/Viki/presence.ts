@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '614387676467953674',
@@ -306,7 +306,7 @@ presence.on('UpdateData', async () => {
 
   // Check if it can find the video
   if (video && !Number.isNaN(video.duration)) {
-    const timestamps = presence.getTimestamps(
+    const timestamps = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration),
     )
@@ -320,15 +320,39 @@ presence.on('UpdateData', async () => {
       startTimestamp: timestamps[0],
       endTimestamp: timestamps[1],
     }
-    const title = document.querySelector('#channel-link > span')?.textContent
-    presenceData.details = title?.split(': ').pop()
-    presenceData.state = title?.split(': ').shift()
+    // Usa o título da aba (document.title), que atualiza sempre,
+    // independente de mexer o mouse sobre o player.
+    // Formato: "Nome do Dorama - Episode 1 | Rakuten Viki" (varia por idioma)
+    const titleText = document.title
+    const withoutSuffix = titleText.split(' | ')[0] ?? titleText
+    const parts = withoutSuffix.split(' - ')
+    const showName = parts[0]?.trim()
+    const episodePart = parts.slice(1).join(' - ')
+    const episodeNumMatch = episodePart.match(/(\d+)/)
+
+    if (showName) {
+      presenceData.state = showName
+      presenceData.name = showName
+      presenceData.details = episodeNumMatch
+        ? `Episode ${episodeNumMatch[1]}`
+        : episodePart || undefined
+    }
+    else {
+      // Fallback pro formato antigo, caso volte a mudar
+      const title = document.querySelector('#channel-link > span')?.textContent
+      presenceData.details = title?.split(': ').pop()
+      presenceData.state = title?.split(': ').shift()
+
+      if (presenceData.state) {
+        presenceData.name = presenceData.state
+      }
+    }
 
     if (video.paused) {
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
 
-    presence.setActivity(presenceData, !video.paused)
+    presence.setActivity(presenceData)
   }
 })

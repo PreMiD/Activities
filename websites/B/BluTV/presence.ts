@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '664216462038401066',
@@ -10,8 +10,8 @@ const strings = presence.getStrings({
 })
 
 function seriesName(name: string): string {
-  return name.replace(/([^\W_][^\s-]*) */g, (text) => {
-    return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase()
+  return name.replace(/[^\W_][^\s-]* */g, (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
   })
 }
 
@@ -76,7 +76,7 @@ presence.on('UpdateData', async () => {
         ? (await strings).paused
         : (await strings).playing
 
-      const [startTimestamp, endTimestamp] = presence.getTimestamps(
+      const [startTimestamp, endTimestamp] = getTimestamps(
         Math.floor(video.currentTime),
         Math.floor(video.duration),
       )

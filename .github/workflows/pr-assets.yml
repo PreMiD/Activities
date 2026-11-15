@@ -1,0 +1,42 @@
+name: PR Assets
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-assets-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  pr-assets:
+    # The DiMerP app secrets only exist upstream — skip on forks.
+    if: github.repository_owner == 'PreMiD'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v3
+        id: generate-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      # SECURITY: no `ref:` on purpose — this checks out the trusted base
+      # branch, never fork code. All PR content is read via the GitHub API.
+      - name: Sparse checkout PR assets script
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github/scripts
+          sparse-checkout-cone-mode: false
+
+      - name: Post asset preview comment and sync labels
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            const { pathToFileURL } = require('node:url')
+            const script = pathToFileURL(`${process.env.GITHUB_WORKSPACE}/.github/scripts/pr-assets.mjs`)
+            const { default: run } = await import(script.href)
+            await run({ github, context, core })

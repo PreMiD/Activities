@@ -50,7 +50,7 @@ presence.on('UpdateData', async () => {
         document.querySelector('#insertScore')?.textContent ?? 0
       } | Mode: ${
         pathname
-          .match(/round(one|two|three|four|five)(daily)?/)?.[0]
+          .match(/round(?:one|two|three|four|five)(?:daily)?/)?.[0]
           .includes('daily')
           ? 'Daily'
           : 'Normal'

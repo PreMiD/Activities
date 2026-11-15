@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '614388233886760972',
@@ -56,7 +56,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = paused
         ? (await strings).pause
         : (await strings).play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(currentTime), Math.floor(duration))
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
 
       const views = document.querySelector(
         '#player > div.alert.alert-info.hidden-xs > div.media > div > p:nth-child(7)',

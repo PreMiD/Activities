@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 let elapsed = Math.floor(Date.now() / 1000)
 let prevUrl = document.location.href
@@ -91,7 +91,7 @@ presence.on('UpdateData', async () => {
         videoDateDIV.textContent.indexOf('∙') - 1,
       )}`;
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       presenceData.buttons = [
         { label: (await strings).buttonWatchVideo, url: prevUrl },
       ]
@@ -114,5 +114,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

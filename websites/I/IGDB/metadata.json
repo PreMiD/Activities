@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Kyrie",
@@ -22,7 +22,7 @@
   },
   "url": "www.igdb.com",
   "regExp": "^https?[:][/][/](www[.])?igdb[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/IGDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/IGDB/assets/thumbnail.png",
   "color": "#9146FF",

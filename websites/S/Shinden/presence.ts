@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '694885187116597309',
@@ -110,7 +110,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = serie
         presenceData.state = episode
 
-        const [startTimestamp, endTimestamp] = presence.getTimestamps(
+        const [startTimestamp, endTimestamp] = getTimestamps(
           Math.floor(currentTime),
           Math.floor(duration),
         )

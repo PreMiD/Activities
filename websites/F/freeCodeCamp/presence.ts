@@ -21,7 +21,7 @@ presence.on('UpdateData', () => {
   const details = (page: string, title: string) => {
     if (page === '/')
       return 'Viewing:'
-    if (page.match(/^\/news|^\/settings|^\/donate/))
+    if (/^\/news|^\/settings|^\/donate/.test(page))
       return 'Viewing page:'
     if (page.startsWith('/learn'))
       return arr.length === 1 ? 'Learning:' : `${capitalize(arr[1]!)}:`
@@ -31,7 +31,7 @@ presence.on('UpdateData', () => {
   const state = (page: string, title: string) => {
     if (page === '/')
       return 'The Main Page'
-    if (page.match(/^\/news|^\/settings|^\/donate/))
+    if (/^\/news|^\/settings|^\/donate/.test(page))
       return arr[1] ? title : capitalize(arr[0]!)
     if (page.startsWith('/learn')) {
       return arr[2]

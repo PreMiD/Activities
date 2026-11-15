@@ -52,7 +52,7 @@ presence.on('UpdateData', async () => {
   else if (path.split('/').length < 3) {
     presenceData.state = `📖 ${document.querySelector('._aemo2b3')?.textContent}`
   }
-  else if (path.match(/\/(?:[vae]|quiz)\//)) {
+  else if (/\/(?:[vae]|quiz)\//.test(path)) {
     const breadcrumbLinks = document.querySelectorAll('a[class="_j9iwqrr"]')
     const courseName = breadcrumbLinks[1]?.textContent || ' '
     const contentTitle

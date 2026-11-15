@@ -1,49 +1,626 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
+
+enum ListStatusId {
+  Watching = 0,
+  Planned = 1,
+  Watched = 2,
+  Abandoned = 3,
+  Favorites = 4,
+  Postponed = 5,
+}
+
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png',
+  Watching = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/0.png',
+  Planned = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/1.png',
+  Watched = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/2.png',
+  Abandoned = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/3.png',
+  Postponed = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/4.png',
+  Favorites = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/5.png',
+}
+
+const listStatusAssetMap: Record<ListStatusId, ActivityAssets> = {
+  [ListStatusId.Watching]: ActivityAssets.Watching,
+  [ListStatusId.Planned]: ActivityAssets.Planned,
+  [ListStatusId.Watched]: ActivityAssets.Watched,
+  [ListStatusId.Abandoned]: ActivityAssets.Abandoned,
+  [ListStatusId.Favorites]: ActivityAssets.Favorites,
+  [ListStatusId.Postponed]: ActivityAssets.Postponed,
+}
 
 const presence = new Presence({
-  clientId: '1045800378228281345',
+  clientId: '1140596411956744202',
 })
 
-let videoData = {
+interface VideoState {
+  duration: number
+  currentTime: number
+  paused: boolean
+}
+
+interface IframeData extends VideoState {
+  referrer?: string
+}
+
+let iframeVideo: VideoState = {
   duration: 0,
   currentTime: 0,
   paused: true,
-  hasData: false,
 }
 
-presence.on('iFrameData', (data: any) => {
-  videoData = { ...data, hasData: true }
+let lastPathname = document.location.pathname
+
+presence.on('iFrameData', (data: IframeData) => {
+  if (data.referrer) {
+    try {
+      const refUrl = new URL(data.referrer)
+      const currentUrl = new URL(document.location.href)
+
+      if (refUrl.origin !== currentUrl.origin)
+        return
+    }
+    catch {
+      // ignore parsing errors
+    }
+  }
+
+  iframeVideo = {
+    duration: data.duration ?? 0,
+    currentTime: data.currentTime ?? 0,
+    paused: data.paused ?? true,
+  }
 })
 
-presence.on('UpdateData', async () => {
-  const { pathname } = document.location
+function getSelectedListStatusAsset(): ActivityAssets | null {
+  const elements = document.querySelectorAll<HTMLElement>(
+    '[data-tooltip-id="anime-lists-tooltip"][style*="--color"]',
+  )
 
-  const presenceData: any = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.jpeg',
+  if (!elements.length)
+    return null
+
+  const activeIds: ListStatusId[] = []
+  elements.forEach((el) => {
+    const id = Number(el.dataset.id)
+    if (!Number.isNaN(id) && id in listStatusAssetMap) {
+      activeIds.push(id as ListStatusId)
+    }
+  })
+
+  if (activeIds.length === 0)
+    return null
+
+  const priorityOrder: ListStatusId[] = [
+    ListStatusId.Favorites,
+    ListStatusId.Watching,
+    ListStatusId.Planned,
+    ListStatusId.Postponed,
+    ListStatusId.Abandoned,
+    ListStatusId.Watched,
+  ]
+
+  for (const status of priorityOrder) {
+    if (activeIds.includes(status)) {
+      return listStatusAssetMap[status]
+    }
+  }
+
+  return null
+}
+
+function getKnownDuration(video: HTMLVideoElement): number {
+  const d = video.duration
+  if (Number.isFinite(d) && d > 0 && d !== Number.POSITIVE_INFINITY)
+    return d
+
+  try {
+    if (video.seekable?.length) {
+      const end = video.seekable.end(video.seekable.length - 1)
+      if (Number.isFinite(end) && end > 0)
+        return end
+    }
+  }
+  catch {
+    // ignore
+  }
+
+  try {
+    if (video.buffered?.length) {
+      const end = video.buffered.end(video.buffered.length - 1)
+      if (Number.isFinite(end) && end > 0)
+        return end
+    }
+  }
+  catch {
+    // ignore
+  }
+  return Number.NaN
+}
+
+function isVideoMostlyVisible(video: HTMLVideoElement): boolean {
+  const r = video.getBoundingClientRect()
+  if (r.width > 0 && r.height > 0)
+    return r.width >= 32 && r.height >= 18
+  return video.videoWidth > 0 && video.videoHeight > 0
+}
+
+function collectVideos(root: Document | ShadowRoot): HTMLVideoElement[] {
+  const out: HTMLVideoElement[] = []
+  for (const v of root.querySelectorAll('video')) out.push(v)
+
+  for (const el of root.querySelectorAll('*')) {
+    if (el.shadowRoot)
+      out.push(...collectVideos(el.shadowRoot))
+  }
+  return out
+}
+
+function pickBestVideoFromPage(): HTMLVideoElement | null {
+  const videos = collectVideos(document).filter(isVideoMostlyVisible)
+  if (!videos.length)
+    return null
+
+  const withDuration = videos.filter((v) => {
+    const d = getKnownDuration(v)
+    return Number.isFinite(d) && d > 0
+  })
+
+  if (!withDuration.length) {
+    const playing = videos.filter(v => !v.paused && v.currentTime > 0)
+    if (playing.length)
+      return playing[0] ?? null
+  }
+
+  const pool = withDuration.length ? withDuration : videos
+
+  return pool.reduce((a, b) => {
+    const da = getKnownDuration(a)
+    const db = getKnownDuration(b)
+    const ad = Number.isFinite(da) ? da : 0
+    const bd = Number.isFinite(db) ? db : 0
+    return bd >= ad ? b : a
+  })
+}
+
+function mainPageVideoState(): VideoState | null {
+  const video = pickBestVideoFromPage()
+  if (!video)
+    return null
+
+  const duration = getKnownDuration(video)
+
+  if ((!Number.isFinite(duration) || duration <= 0) && !video.paused) {
+    return {
+      duration: 0,
+      currentTime: video.currentTime,
+      paused: video.paused,
+    }
+  }
+
+  if (!Number.isFinite(duration) || duration <= 0)
+    return null
+
+  return {
+    duration,
+    currentTime: video.currentTime,
+    paused: video.paused,
+  }
+}
+
+function getPlaybackVideo(): VideoState | null {
+  if (iframeVideo.duration > 0 || !iframeVideo.paused)
+    return iframeVideo
+
+  return mainPageVideoState()
+}
+
+function isAnimeItemPage(pathname: string): boolean {
+  if (document.querySelector('.poster-block'))
+    return true
+
+  if (pathname.includes('/catalog/item/'))
+    return true
+
+  return (
+    /\/item\/\d+/i.test(pathname)
+    || /\/catalog\/\d+/i.test(pathname)
+    || /\/anime\//i.test(pathname)
+    || /\/watch\//i.test(pathname)
+    || /\/serial\//i.test(pathname)
+    || /\/title\//i.test(pathname)
+    || /\/release\//i.test(pathname)
+  )
+}
+
+function getProfileUserId(pathname: string): string | null {
+  const match = pathname.match(/^\/users\/id(\d+)\/?$/i)
+  return match?.[1] ?? null
+}
+
+function getProfileNickname(): string {
+  const nick = document.querySelector('span.k2[data-tooltip-id="old-nicks-t"]')
+    ?? document.querySelector('div.block-title span.second-marker')
+
+  return nick?.textContent?.trim() ?? ''
+}
+
+function getSvgImageHref(el: SVGImageElement): string | null {
+  return el.getAttribute('href') || el.getAttribute('xlink:href')
+}
+
+function findProfileAvatarSvgImage(): SVGImageElement | null {
+  const images = document.querySelectorAll<SVGImageElement>('image')
+  for (const img of images) {
+    const href = getSvgImageHref(img)
+    if (!href)
+      continue
+    if (href.includes('/users/big/') || href.includes('DefaultAva') || href.includes('no-photo')) {
+      return img
+    }
+  }
+  return null
+}
+
+function getProfileAvatarUrl(userId: string): string {
+  const svgImg = findProfileAvatarSvgImage()
+  if (svgImg) {
+    const href = getSvgImageHref(svgImg)
+    if (href)
+      return resolveAbsoluteUrl(href)
+  }
+
+  // fallback
+  return `https://static.yani.tv/users/big/${userId}.webp`
+}
+
+function episodeFromUrl(pathname: string, search: string): string {
+  const params = new URLSearchParams(search)
+  for (const key of ['episode', 'ep', 'serie', 's']) {
+    const v = params.get(key)
+    if (v && /^\d+$/.test(v))
+      return v
+  }
+
+  const m = pathname.match(/(?:episode|ep|ser(?:iya)?)[-_]?(\d+)/i)
+  if (m?.[1])
+    return m[1]
+
+  return ''
+}
+
+function getActiveEpisode(pathname: string, search: string): string {
+  const fromUrl = episodeFromUrl(pathname, search)
+  if (fromUrl)
+    return fromUrl
+
+  const oldBtn = document.querySelector('div[class*="pQCG"]')
+  if (oldBtn) {
+    const text = oldBtn.textContent?.trim()
+    if (text && !Number.isNaN(Number(text)))
+      return text
+  }
+
+  const activeSelectors = [
+    'div.wB div[data-selected="1"]',
+    '[aria-current="true"]',
+    '[aria-selected="true"]',
+    '[aria-current="page"]',
+    '[data-selected="1"]',
+    '[data-active="true"]',
+    '[data-current="true"]',
+    '.episodes-container .active',
+    '.episodes-list .active',
+    '.series-list .active',
+    '[class*="episode"][class*="active"]',
+    '[class*="Episode"][class*="Active"]',
+  ]
+
+  for (const sel of activeSelectors) {
+    const el = document.querySelector(sel)
+    if (el) {
+      const text = el.textContent?.trim()
+      if (text && text.length < 20) {
+        if (/^\d+$/.test(text))
+          return text
+        const num = text.match(/\d+/)
+        if (num)
+          return num[0]
+      }
+    }
+  }
+  return ''
+}
+
+function resolveAbsoluteUrl(url: string): string {
+  const t = url.trim()
+  if (t.startsWith('//'))
+    return `https:${t}`
+  if (t.startsWith('/'))
+    return `${location.origin}${t}`
+  if (t.startsWith('http://') || t.startsWith('https://'))
+    return t
+  return `${location.origin}/${t.replace(/^\//, '')}`
+}
+
+function isSkippableImageUrl(url: string): boolean {
+  const u = url.toLowerCase()
+  if (!u || u.length < 8)
+    return true
+  if (u.includes('favicon'))
+    return true
+  if (u.includes('icon-32') || u.includes('icon-16'))
+    return true
+  if (u.includes('gravatar'))
+    return true
+  if (/\bavatars?\b/.test(u) || /\bavatar[._/-]/i.test(u))
+    return true
+  return false
+}
+
+function posterUrlForDiscord(raw: string): string {
+  return resolveAbsoluteUrl(raw)
+}
+
+function applyPrivacy(data: Record<string, unknown>, strings: Record<string, string>): void {
+  data.details = strings.onSite
+  delete data.state
+  data.largeImageKey = ActivityAssets.Logo
+  data.largeImageText = 'YummyAnime'
+  delete data.smallImageKey
+  delete data.smallImageText
+  delete data.startTimestamp
+  delete data.endTimestamp
+  delete data.buttons
+}
+
+function imgEffectiveSrc(img: HTMLImageElement): string {
+  return (
+    img.getAttribute('src')
+    || img.getAttribute('data-src')
+    || img.getAttribute('data-lazy-src')
+    || img.getAttribute('data-original')
+    || img.currentSrc
+    || img.src
+    || ''
+  ).trim()
+}
+
+function applyPosterImage(presenceData: Record<string, unknown>): void {
+  const tryAssign = (img: HTMLImageElement | null | undefined): boolean => {
+    if (!img)
+      return false
+    const raw = imgEffectiveSrc(img)
+    if (!raw || isSkippableImageUrl(raw))
+      return false
+    presenceData.largeImageKey = posterUrlForDiscord(raw)
+    return true
+  }
+
+  if (
+    tryAssign(document.querySelector<HTMLImageElement>('div.poster-block img'))
+  ) {
+    return
+  }
+  const posterish = document.querySelectorAll<HTMLImageElement>(
+    'img[src*="imgproxy.yani.tv/posters"], img[data-src*="imgproxy.yani.tv/posters"]',
+  )
+  for (const img of posterish) {
+    if (tryAssign(img))
+      return
+  }
+
+  if (
+    tryAssign(
+      document.querySelector('div[class*="d4"] img') as HTMLImageElement,
+    )
+  ) {
+    return
+  }
+
+  if (
+    tryAssign(document.querySelector('[class*="d4"] img') as HTMLImageElement)
+  )
+    return
+
+  if (
+    tryAssign(
+      document.querySelector('main div[class*="d4"] img') as HTMLImageElement,
+    )
+  ) {
+    return
+  }
+
+  if (
+    tryAssign(
+      document.querySelector('img[itemprop="image"]') as HTMLImageElement,
+    )
+  ) {
+    return
+  }
+
+  for (const metaSel of [
+    'meta[property="og:image"]',
+    'meta[property="og:image:url"]',
+    'meta[property="og:image:secure_url"]',
+    'meta[name="twitter:image"]',
+    'meta[name="twitter:image:src"]',
+  ]) {
+    const content = document
+      .querySelector(metaSel)
+      ?.getAttribute('content')
+      ?.trim()
+    if (content && !isSkippableImageUrl(content)) {
+      presenceData.largeImageKey = posterUrlForDiscord(content)
+      return
+    }
+  }
+}
+
+function isPlayerBlockInView(): boolean {
+  const selectors = [
+    '#video',
+    'video',
+    '[class*="Player"]',
+    '[class*="player"]',
+    '[class*="VideoContainer"]',
+    '[class*="video-container"]',
+    '[id*="player"]',
+    '[id*="video"]',
+  ]
+  const viewHeight = Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight,
+  )
+  for (const sel of selectors) {
+    const els = document.querySelectorAll(sel)
+    for (const el of els) {
+      const rect = el.getBoundingClientRect()
+      if (rect.width < 400 || rect.height < 200)
+        continue
+      const centerY = rect.top + rect.height / 2
+      if (centerY > 0 && centerY < viewHeight) {
+        return true
+      }
+    }
+  }
+
+  const iframes = document.querySelectorAll('iframe')
+  for (const iframe of iframes) {
+    const src = iframe.src || iframe.getAttribute('data-src') || ''
+    if (
+      src.includes('video')
+      || src.includes('player')
+      || src.includes('stream')
+      || src.includes('yani')
+      || src.includes('sibnet')
+      || src.includes('vk.com')
+    ) {
+      const rect = iframe.getBoundingClientRect()
+      if (rect.width < 400 || rect.height < 200)
+        continue
+      const centerY = rect.top + rect.height / 2
+      if (centerY > 0 && centerY < viewHeight) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+presence.on('UpdateData', async () => {
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    mainPage: 'general.viewHome',
+    choosingAnime: 'yummyanime.choosingAnime',
+    watchingProfilePrefix: 'general.viewAProfile',
+    watchingProfileGeneric: 'general.viewAProfile',
+    onSite: 'general.browsing',
+    watchingAnime: 'general.watchingAnime',
+    watchingEpisodePrefix: 'general.viewEpisode',
+    watchingNoEpisode: 'general.watchingVid',
+    pausedEpisodePrefix: 'general.episode',
+    pausedNoEpisode: 'general.paused',
+    preparingEpisodePrefix: 'yummyanime.preparingEpisodePrefix',
+    readingDescription: 'yummyanime.readingDescription',
+    viewProfileButton: 'general.buttonViewProfile',
+    watchAnimeButton: 'general.buttonWatchAnime',
+    viewPageButton: 'general.buttonViewPage',
+  })
+  const [showButtons, isPrivacy] = await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('privacyMode'),
+  ])
+
+  if (lastPathname !== document.location.pathname) {
+    lastPathname = document.location.pathname
+    iframeVideo = {
+      duration: 0,
+      currentTime: 0,
+      paused: true,
+    }
+  }
+
+  const { pathname, search } = document.location
+
+  const presenceData: Record<string, unknown> = {
+    largeImageKey: ActivityAssets.Logo,
     largeImageText: 'YummyAnime',
     type: ActivityType.Watching,
   }
 
-  if (pathname === '/' || pathname === '/index.html') {
-    presenceData.details = 'На главной странице'
-    presenceData.state = 'Выбирает аниме'
+  if (pathname === '/') {
+    presenceData.details = strings.mainPage
+    presenceData.state = strings.choosingAnime
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+    }
     presence.setActivity(presenceData)
     return
   }
 
-  const isAnimePage = document.querySelector('.poster-block')
+  if (showButtons) {
+    presenceData.buttons = [
+      {
+        label: strings.viewPageButton,
+        url: document.location.href,
+      },
+    ]
+  }
 
-  if (!isAnimePage) {
-    presenceData.details = 'На сайте YummyAnime'
+  if (pathname.startsWith('/catalog') && !pathname.includes('/item/')) {
+    presenceData.details = strings.onSite
+    presenceData.state = strings.choosingAnime
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+    }
+    presence.setActivity(presenceData)
+    return
+  }
+
+  const profileUserId = getProfileUserId(pathname)
+  if (profileUserId) {
+    const nickname = getProfileNickname()
+    if (nickname) {
+      presenceData.details = nickname
+      presenceData.state = strings.watchingProfilePrefix
+    }
+    else {
+      presenceData.details = strings.watchingProfileGeneric
+      presenceData.state = ''
+    }
+    presenceData.largeImageKey = getProfileAvatarUrl(profileUserId)
+
+    delete presenceData.smallImageKey
+    delete presenceData.smallImageText
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
+
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: strings.viewProfileButton,
+          url: document.location.href,
+        },
+      ]
+    }
+
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+    }
+
+    presence.setActivity(presenceData)
+    return
+  }
+
+  if (!isAnimeItemPage(pathname)) {
+    presenceData.details = strings.onSite
 
     const pageTitle = document.querySelector('h1')?.textContent?.trim()
 
-    if (pageTitle) {
+    if (pageTitle)
       presenceData.state = pageTitle
-    }
-    else {
-      delete presenceData.state
-    }
+    else delete presenceData.state
 
     delete presenceData.startTimestamp
     delete presenceData.endTimestamp
@@ -53,82 +630,71 @@ presence.on('UpdateData', async () => {
   }
 
   const titleHeader = document.querySelector('h1')
-  if (titleHeader) {
+  if (titleHeader)
     presenceData.details = titleHeader.textContent?.trim()
-  }
-  else {
-    presenceData.details = 'Смотрит аниме'
+  else presenceData.details = strings.watchingAnime
+
+  applyPosterImage(presenceData)
+
+  const currentEpisode = getActiveEpisode(pathname, search)
+  const playback = getPlaybackVideo()
+
+  if (showButtons) {
+    presenceData.buttons = [
+      {
+        label: strings.watchAnimeButton,
+        url: document.location.href,
+      },
+    ]
   }
 
-  const posterImg = document.querySelector(
-    'div.poster-block img',
-  ) as HTMLImageElement
-  if (posterImg && posterImg.src) {
-    if (posterImg.src.startsWith('//')) {
-      presenceData.largeImageKey = `https:${posterImg.getAttribute('src')}`
-    }
-    else if (posterImg.src.startsWith('/')) {
-      presenceData.largeImageKey = `https://site.yummyani.me${posterImg.getAttribute('src')}`
-    }
-    else {
-      presenceData.largeImageKey = posterImg.src
-    }
-  }
-
-  const activeBtn = document.querySelector('div[class*="pQCG"]')
-  let currentEpisode = ''
-  if (activeBtn) {
-    const text = activeBtn.textContent?.trim()
-    if (text && !Number.isNaN(Number(text)))
-      currentEpisode = text
-  }
-
-  if (videoData.hasData) {
-    if (!videoData.paused) {
-      // === PLAY ===
+  if (playback && (playback.currentTime > 0 || !playback.paused)) {
+    if (!playback.paused) {
       presenceData.state = currentEpisode
-        ? `Смотрит серию: ${currentEpisode}`
-        : 'Смотрит видео'
+        ? `${strings.watchingEpisodePrefix} ${currentEpisode}`
+        : strings.watchingNoEpisode
 
-      const now = Date.now()
-      const remainingMs = (videoData.duration - videoData.currentTime) * 1000
+      if (playback.duration > 0) {
+        [presenceData.startTimestamp, presenceData.endTimestamp]
+          = getTimestamps(playback.currentTime, playback.duration)
+      }
+      else {
+        presenceData.startTimestamp = Date.now() - playback.currentTime * 1000
+        delete presenceData.endTimestamp
+      }
 
-      presenceData.endTimestamp = now + remainingMs
-
-      delete presenceData.startTimestamp
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = strings.play
     }
     else {
       presenceData.state = currentEpisode
-        ? `Серия ${currentEpisode} (Пауза)`
-        : 'На паузе'
+        ? `${strings.pausedEpisodePrefix} ${currentEpisode} (${strings.pause})`
+        : strings.pausedNoEpisode
 
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
+
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = strings.pause
     }
   }
   else {
-    const videoElement = document.querySelector('#video')
-    let isWatchingBlock = false
+    const smallImageKey = getSelectedListStatusAsset()
+    if (smallImageKey) {
+      presenceData.smallImageKey = smallImageKey
+    }
+    delete presenceData.smallImageText
 
-    if (videoElement) {
-      const rect = videoElement.getBoundingClientRect()
-      const viewHeight = Math.max(
-        document.documentElement.clientHeight,
-        window.innerHeight,
-      )
-      if (!(rect.bottom < 0 || rect.top - viewHeight >= 0))
-        isWatchingBlock = true
-    }
-
-    if (currentEpisode && isWatchingBlock) {
-      presenceData.state = `Готовится к просмотру: ${currentEpisode}`
-    }
-    else {
-      presenceData.state = 'Читает описание'
-    }
+    if (currentEpisode && isPlayerBlockInView())
+      presenceData.state = `${strings.preparingEpisodePrefix} ${currentEpisode}`
+    else presenceData.state = strings.readingDescription
 
     delete presenceData.startTimestamp
     delete presenceData.endTimestamp
+  }
+
+  if (isPrivacy) {
+    applyPrivacy(presenceData, strings)
   }
 
   presence.setActivity(presenceData)

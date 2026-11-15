@@ -10,148 +10,85 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/N/NekoAnime/assets/0.png',
 }
 
-async function videoActive() {
-  return !!document.querySelector('#MediaPage > div > div.head_player > div.vid-player')
+let animePageCache: {
+  text: string
+  animeTitle: string
+  episodeNumber: string
+  bannerAnime: string
+} = {
+  text: '',
+  animeTitle: '',
+  episodeNumber: '',
+  bannerAnime: ActivityAssets.Logo,
 }
 
-const animePageCache = new Map<string, string>()
+async function getBannerAnimer(urlTitulo: string) {
+  const res = await fetch(`https://nekoanime.mx${urlTitulo}`)
+  const html = await res.text()
 
-async function getAnimeInformation() {
-  const animeTitle = document.querySelector('#MediaPage > div > div.head_player > div.player_content > div.episode_info > h2')?.textContent
-  const episodeNumber = document.querySelector('#number')?.textContent
-
-  const currentTime = document.querySelector('.vjs-current-time-display')?.textContent
-  const totalTime = document.querySelector('.vjs-duration-display')?.textContent
-
-  const playButton = document.querySelector('.vjs-play-control')
-
-  let videoStatus = ''
-  if (playButton?.classList.contains('vjs-playing')) {
-    videoStatus = 'Reproduciendo'
-  }
-  else if (playButton?.classList.contains('vjs-paused')) {
-    videoStatus = 'Pausado'
-  }
-  else {
-    videoStatus = 'Desconocido'
-  }
-
-  const urlTitulo = document.querySelector('#MediaPage > div > div.head_player > div.player_content > div.anime_navigation > nav > a:nth-child(3)')?.getAttribute('href')
-  if (!urlTitulo) {
-    return {
-      animeTitle,
-      episodeNumber,
-      currentTime,
-      totalTime,
-      videoStatus,
-    }
-  }
-
-  let html: string
-  if (animePageCache.has(urlTitulo)) {
-    html = animePageCache.get(urlTitulo)!
-  }
-  else {
-    try {
-      const res = await fetch(`https://nekoanime.mx${urlTitulo}`)
-      html = await res.text()
-      animePageCache.set(urlTitulo, html)
-    }
-    catch (e) {
-      console.error('Error fetching anime page:', e)
-      html = ''
-    }
-  }
-
-  let bannerAnime: string | undefined
   if (html) {
     const parser = new DOMParser()
     const doc = parser.parseFromString(html, 'text/html')
-    const img = doc.querySelector('#InfoApp > div.anime_cont > div > div.left_cont > div.anim-cover > div > figure > img')?.getAttribute('src')
-    bannerAnime = img || undefined
+    const img = doc.querySelector('.anim-img')?.querySelector('img')?.getAttribute('src')
+    const bannerAnime = img
+    return bannerAnime || ActivityAssets.Logo
   }
+}
+
+async function getAnimeInformation(text: string) {
+  if (text === animePageCache.text && animePageCache.animeTitle !== '' && animePageCache.episodeNumber !== '') {
+    return {
+      animeTitle: animePageCache.animeTitle,
+      episodeNumber: animePageCache.episodeNumber,
+      bannerAnime: animePageCache.bannerAnime,
+    }
+  }
+  const animeTitle = document.querySelector('.episode_info > h2')?.textContent || ''
+  const episodeNumber = document.querySelector('#number')?.textContent || ''
+
+  const urlTitulo = document.querySelector('.anime_navigation')?.querySelector('nav')?.querySelector('a:nth-child(3)')?.getAttribute('href')
+  const bannerAnime = (urlTitulo ? await getBannerAnimer(urlTitulo) : null) || ActivityAssets.Logo
+
+  animePageCache = {
+    text,
+    animeTitle,
+    episodeNumber,
+    bannerAnime,
+  }
+
   return {
     animeTitle,
     episodeNumber,
-    currentTime,
-    totalTime,
-    videoStatus,
     bannerAnime,
   }
 }
 
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
-
-  if (pathname === '/') {
-    const presenceData: PresenceData = {
-      details: 'Navegando en NekoAnime',
-      state: 'Explorando Anime Miau!',
-      largeImageKey: ActivityAssets.Logo,
-      largeImageText: 'NekoAnime',
-      smallImageKey: Assets.Search,
-      smallImageText: 'Página principal',
-      type: ActivityType.Watching,
-      startTimestamp: browsingTimestamp,
-    }
-    presence.setActivity(presenceData)
-    return
-  }
-
-  if (pathname.startsWith('/search')) {
-    const presenceData: PresenceData = {
-      details: 'Buscando en NekoAnime',
-      state: 'Explorando Anime Miau!',
-      largeImageKey: ActivityAssets.Logo,
-      largeImageText: 'NekoAnime',
-      smallImageKey: Assets.Search,
-      smallImageText: 'Buscando…',
-      type: ActivityType.Watching,
-      startTimestamp: Math.floor(Date.now() / 1000),
-    }
-    presence.setActivity(presenceData)
-    return
-  }
-
-  const fichaAnimeRegex = /^\/[^/]+\/$/
-  if (fichaAnimeRegex.test(pathname)) {
-    const animeTitle = document.querySelector('#InfoApp > div.first_cont > div.img-cover > div.img-desc > h1')?.textContent?.trim()
-
-    const presenceData: PresenceData = {
-      details: `Revisando ${animeTitle || 'Un Anime'}`,
-      state: 'Explorando la descripción',
-      largeImageKey: ActivityAssets.Logo,
-      largeImageText: 'NekoAnime',
-      smallImageKey: Assets.Search,
-      smallImageText: 'Leyendo descripción',
-      type: ActivityType.Watching,
-      startTimestamp: browsingTimestamp,
-    }
-    presence.setActivity(presenceData)
-    return
-  }
-
-  const isVideoPage = await videoActive()
   const presenceData: PresenceData = {
-    details: 'Navegando en NekoAnime',
-    state: 'Explorando anime miau!',
+    details: 'NekoAnime',
+    state: 'Viendo Inicio!',
     largeImageKey: ActivityAssets.Logo,
     largeImageText: 'NekoAnime',
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
   }
 
-  if (isVideoPage) {
-    const animeData = await getAnimeInformation()
-    if (animeData.animeTitle) {
+  const videoElement = document.querySelector<HTMLVideoElement>('video.vjs-tech')
+  if (videoElement) {
+    const animeData = await getAnimeInformation(pathname)
+    if (animeData) {
       presenceData.name = animeData.animeTitle
-      presenceData.details = animeData.episodeNumber || 'Miau!'
-      delete presenceData.state
+      presenceData.details = animeData.animeTitle
+      presenceData.state = `${animeData.episodeNumber} [NekoAnime]`
       presenceData.type = ActivityType.Watching
-      if (animeData.videoStatus === 'Reproduciendo') {
+      presenceData.largeImageKey = animeData.bannerAnime
+      presenceData.largeImageText = animeData.animeTitle
+
+      if (!videoElement.paused) {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Reproduciendo'
-        const videoElement = document.querySelector<HTMLVideoElement>('video.vjs-tech')
+
         if (videoElement && !Number.isNaN(videoElement.duration)) {
           const [startTs, endTs] = getTimestampsFromMedia(videoElement)
           presenceData.startTimestamp = startTs
@@ -164,11 +101,31 @@ presence.on('UpdateData', async () => {
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
-      if (animeData.bannerAnime) {
-        presenceData.largeImageKey = animeData.bannerAnime
-        presenceData.largeImageText = animeData.animeTitle
-      }
     }
   }
+  else if (pathname.includes('/search')) {
+    presenceData.details = 'Viendo NekoAnime'
+    presenceData.state = 'Buscando Animes!'
+    presenceData.largeImageText = 'NekoAnime'
+    presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageText = 'Buscando…'
+
+    presence.setActivity(presenceData)
+    return
+  }
+
+  const descPage = document.querySelector('.anime_module')
+  if (descPage) {
+    presenceData.details = document.querySelector('.anim-title')?.textContent?.trim() || 'Viendo NekoAnime'
+    presenceData.state = document.querySelector('.synopsis')?.querySelector('p')?.textContent?.trim() || 'Revisando Descripcion'
+    presenceData.largeImageKey = document.querySelector('.anim-img')?.querySelector('img')?.getAttribute('src') || ActivityAssets.Logo
+    presenceData.largeImageText = document.querySelector('.anim-title')?.textContent?.trim() || 'NekoAnime'
+    presenceData.smallImageKey = Assets.Reading
+    presenceData.smallImageText = 'Leyendo Descripción'
+
+    presence.setActivity(presenceData)
+    return
+  }
+
   presence.setActivity(presenceData)
 })

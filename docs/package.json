@@ -9,9 +9,9 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
-    "vitepress": "^1.6.4",
-    "markdown-it": "^14.1.1",
-    "@types/node": "^25.2.3",
-    "typescript": "^5.9.3"
+    "@types/node": "^25.6.0",
+    "markdown-it": "^15.0.0",
+    "typescript": "^6.0.3",
+    "vitepress": "^2.0.0-alpha.19"
   }
 }

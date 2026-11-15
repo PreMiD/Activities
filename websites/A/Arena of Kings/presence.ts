@@ -3,11 +3,11 @@ const presence = new Presence({
 })
 
 presence.on('UpdateData', async () => {
-  const presenceData = await presence.getPageletiable<{ data: PresenceData }>(
+  const presenceData = (await presence.getPageVariable<{ PreMiD_PresenceData: { data: PresenceData } }>(
     'PreMiD_PresenceData',
-  )
+  )).PreMiD_PresenceData
 
   if (!presenceData)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData.data)
 })

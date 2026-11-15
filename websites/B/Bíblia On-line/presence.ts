@@ -331,8 +331,7 @@ presence.on('UpdateData', async () => {
 
   if (
     document.querySelector('[class*="card_container"]')
-    && document.querySelector('[class*="card_container"]')!.firstChild!
-      .textContent === 'Receba mais de Deus hoje:'
+    && document.querySelector('[class*="card_container"]')!.firstChild!.textContent === 'Receba mais de Deus hoje:'
   ) {
     presenceData.details = 'Página Inicial'
     const resultTl = searchTl(String(href.split('/')[3]))
@@ -413,18 +412,16 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Viewing
   }
   else if (
-    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!
-      .textContent === 'Versículos por Tema'
-      && document.querySelector('[class*="page_letter"]')
-      && document.querySelector('[class*="page_letter"]')!.firstChild!.textContent
-      === 'A'
+    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!.textContent === 'Versículos por Tema'
+    && document.querySelector('[class*="page_letter"]')
+    && document.querySelector('[class*="page_letter"]')!.firstChild!.textContent
+    === 'A'
   ) {
     presenceData.details = 'Lista de Versículos por Tema'
     presenceData.smallImageKey = Assets.Search
   }
   else if (
-    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!
-      .textContent === 'Livros'
+    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!.textContent === 'Livros'
   ) {
     presenceData.details = 'Lista de Livros'
     const result = searchTl(String(href.split('/')[3]))
@@ -432,9 +429,8 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Viewing
   }
   else if (
-    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!
-      .textContent === 'Versículos por Tema'
-      && !document.querySelector('[class*="page_letter"]')
+    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!.textContent === 'Versículos por Tema'
+    && !document.querySelector('[class*="page_letter"]')
   ) {
     presenceData.details = `Lendo Versículos sobre ${document.querySelector('[class*="hero_hero"]')!.textContent}`
     const result = searchTl(document.title.split('-')[2]!.trim())

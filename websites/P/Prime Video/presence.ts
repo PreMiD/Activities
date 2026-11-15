@@ -1,24 +1,33 @@
-import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType } from 'premid'
+import { getPlaybackMetadata, isMetadataLoading } from './api/metadata.js'
+import { ActivityAssets, CLIENT_ID, DETAIL_PATH } from './config/constants.js'
+import { applyBrowsingPresence } from './page/browsing.js'
+import { findBannerImage, findPageTitle, findPlayerVideo } from './page/dom.js'
+import { getPlaybackDisplay } from './player/display.js'
+import { applyPlayerPresence, resetElapsedTime } from './player/player.js'
+import { getLiveViewerTime } from './player/timeline.js'
+import { startTimelineTracking } from './player/timelineTracker.js'
 
 const presence = new Presence({
-  clientId: '705139844883677224',
-})
-
-const strings = presence.getStrings({
-  paused: 'general.paused',
-  playing: 'general.playing',
+  clientId: CLIENT_ID,
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png',
-}
+startTimelineTracking(presence)
 
 presence.on('UpdateData', async () => {
-  const { pathname } = document.location
-
-  const usePresenceName = await presence.getSetting<boolean>('usePresenceName')
+  const [usePresenceName, showCover, imageType, useMediaImage, time, strings] = await Promise.all([
+    presence.getSetting<boolean>('usePresenceName'),
+    presence.getSetting<boolean>('cover'),
+    presence.getSetting<number>('imageType'),
+    presence.getSetting<boolean>('useMediaImage'),
+    presence.getSetting<boolean>('time'),
+    presence.getStrings({
+      paused: 'general.paused',
+      playing: 'general.playing',
+    }),
+  ])
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -26,129 +35,48 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  const video = document.querySelector<HTMLVideoElement>('#dv-web-player video')
-    || document.querySelector<HTMLVideoElement>('#dv-web-player .atvwebplayersdk-video-surface video')
-    || document.querySelector<HTMLVideoElement>('video')
+  const video = findPlayerVideo()
+  const playerActive = !!video && !video.className.includes('tst') && window.getComputedStyle(document.body).overflow === 'hidden'
 
-  const title = document.querySelector('.atvwebplayersdk-player-container .fpqiyer .ffszj3z .f124tp54 h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt
+  // Page title and banner are only used by the player and the detail pages
+  const needsPageInfo = playerActive || document.location.pathname.includes(DETAIL_PATH)
+  const pageTitle = needsPageInfo ? findPageTitle() : undefined
+  const bannerImg = needsPageInfo && showCover ? findBannerImage() : undefined
 
-  const title2 = document.querySelector('.DVWebNode-detail-atf-wrapper .BaLbyy h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt
+  // Title and episode come from the playback API, even when the player overlay is hidden.
+  // While a new media is loading, the previous activity is kept.
+  const metadata = playerActive ? getPlaybackMetadata() : null
+  if (playerActive && !metadata && isMetadataLoading())
+    return
+  const viewerTime = video && !Number.isFinite(video.duration)
+    ? getLiveViewerTime(video, metadata?.schedule?.clockOffset ?? 0)
+    : undefined
+  const display = getPlaybackDisplay(metadata, viewerTime)
+  const contentTitle = display.title || pageTitle
 
-  const bannerImg = document.querySelector<HTMLImageElement>('.BNTHjF img')?.src
-
-  const subtitle = document.querySelector<HTMLElement>('.atvwebplayersdk-subtitle-text')
-
-  if (video && !video.className.includes('tst') && title) {
-    const contentTitle = title
-    if (usePresenceName) {
-      presenceData.name = contentTitle
-    }
-    presenceData.details = contentTitle
-
-    if (subtitle && subtitle.textContent && subtitle.textContent.trim() !== contentTitle?.trim()) {
-      presenceData.state = subtitle.textContent
-    }
-
-    if (bannerImg) {
-      presenceData.largeImageKey = bannerImg
-    }
-
-    if (video.paused) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = (await strings).paused
-      delete presenceData.startTimestamp
-    }
-    else {
-      const [unformattedCurrentTime, unformattedDuration] = document
-        .querySelector('.atvwebplayersdk-timeindicator-text')
-        ?.textContent
-        ?.trim()
-        .split(' / ') ?? [];
-      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-        timestampFromFormat(unformattedCurrentTime ?? ''),
-        timestampFromFormat(unformattedDuration ?? '')
-        + timestampFromFormat(unformattedCurrentTime ?? ''),
-      )
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = (await strings).playing
-    }
+  if (video && playerActive && contentTitle) {
+    applyPlayerPresence(presenceData, {
+      video,
+      display,
+      contentTitle,
+      viewerTime,
+      bannerImg,
+      usePresenceName,
+      showCover,
+      imageType,
+      useMediaImage,
+      strings,
+    })
   }
-  else if (video && !video.className.includes('tst') && title2) {
-    const contentTitle = title2
-
-    if (usePresenceName) {
-      presenceData.name = contentTitle
-    }
-    presenceData.details = contentTitle
-
-    if (subtitle && subtitle.textContent && subtitle.textContent.trim() !== contentTitle?.trim()) {
-      presenceData.state = subtitle.textContent
-    }
-
-    if (bannerImg) {
-      presenceData.largeImageKey = bannerImg
-    }
-
-    if (video.paused) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = (await strings).paused
-      delete presenceData.startTimestamp
-    }
-    else {
-      const [unformattedCurrentTime, unformattedDuration] = document
-        .querySelector('.atvwebplayersdk-timeindicator-text')
-        ?.textContent
-        ?.trim()
-        .split(' / ') ?? [];
-      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-        timestampFromFormat(unformattedCurrentTime ?? ''),
-        timestampFromFormat(unformattedDuration ?? '')
-        + timestampFromFormat(unformattedCurrentTime ?? ''),
-      )
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = (await strings).playing
-    }
+  else {
+    resetElapsedTime()
+    applyBrowsingPresence(presenceData, { pathname: document.location.pathname, pageTitle, bannerImg, showCover, imageType })
   }
 
-  if (pathname.includes('/storefront')) {
-    presenceData.details = 'Viewing Home'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/movie')) {
-    presenceData.details = 'Viewing Movies'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/tv')) {
-    presenceData.details = 'Viewing TV-Series'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/sports')) {
-    presenceData.details = 'Viewing Sports'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/categories')) {
-    presenceData.details = 'Viewing Categories'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/kids/')) {
-    presenceData.details = 'Viewing Movies for kids'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/search/') && document.querySelector('.av-refine-bar-summaries')) {
-    presenceData.details = 'Searching for:';
-    [presenceData.state] = document
-      .querySelector('.av-refine-bar-summaries')
-      ?.textContent
-      ?.split(/["„]/)[1]
-      ?.split(/[”"]/) ?? []
-    presenceData.smallImageKey = Assets.Search
-  }
-  else if (pathname.includes('/genre/')) {
-    presenceData.details = 'Viewing Genres'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('shop')) {
-    presenceData.details = 'Browsing the store...'
+  // Without any timestamp, Discord shows a timer that resets after ~1h10: the fixed start is kept
+  if (!time) {
+    presenceData.startTimestamp = browsingTimestamp
+    delete presenceData.endTimestamp
   }
 
   presence.setActivity(presenceData)

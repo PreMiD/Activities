@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1016312551958642698',
@@ -71,7 +71,7 @@ presence.on('UpdateData', async () => {
           + (Number.parseInt(duration[0]!.replace('(-', '')) * 60
             + Number.parseInt(duration[1]!.replace(')', '')))
           + 1;
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(document.querySelector('video.back')!)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(document.querySelector('video.back')!)
         if (nowTime <= Math.floor(Date.now() / 1000))
           presenceData.smallImageKey = Assets.Stop
       }
@@ -117,7 +117,7 @@ presence.on('UpdateData', async () => {
           + (Number.parseInt(duration[0]!.replace('(-', '')) * 60
             + Number.parseInt(duration[1]!.replace(')', '')))
           + 1;
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(document.querySelector('video.back')!)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(document.querySelector('video.back')!)
         if (nowTime <= Math.floor(Date.now() / 1000))
           presenceData.smallImageKey = Assets.Stop
       }

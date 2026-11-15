@@ -43,7 +43,6 @@ presence.on('UpdateData', async () => {
         button1: getMeta('button_1_Label'),
         button2: getMeta('button_2_Label'),
       },
-      oldLang,
     )
   }
 
@@ -106,7 +105,7 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
 
 interface LangStrings {

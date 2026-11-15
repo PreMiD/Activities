@@ -57,7 +57,7 @@ export function getId(): number | undefined {
   }
 
   for (const path of pathname.split('/')) {
-    if (path.match(/^\d+$/)) {
+    if (/^\d+$/.test(path)) {
       return Number(path)
     }
   }

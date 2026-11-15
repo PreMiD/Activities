@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Ahmad",
+    "id": "717168518000541746"
+  },
+  "service": "Shahid",
+  "altnames": [
+    "MBC Shahid",
+    "شاهد"
+  ],
+  "description": {
+    "ar": "شاهد من MBC هي أكبر منصة بث في العالم العربي، تضم مسلسلات وأفلام عربية وأعمال شاهد الأصلية وبرامج وقنوات MBC المباشرة.",
+    "en": "MBC Shahid is the Arab world's biggest streaming platform, with Arabic series, movies, Shahid Originals, shows and live MBC channels."
+  },
+  "url": "shahid.mbc.net",
+  "regExp": "^https?[:][/][/]shahid[.]mbc[.]net[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shahid/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shahid/assets/thumbnail.png",
+  "color": "#1E1E2D",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "arabic",
+    "series",
+    "movies",
+    "live"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamps",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-external-link-alt",
+      "value": true
+    }
+  ]
+}

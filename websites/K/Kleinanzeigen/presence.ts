@@ -451,7 +451,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.loggedOut
     presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/K/Kleinanzeigen/assets/9.png'
   }
-  else if (path.match(/^\/s-[^/]+\/c\d+$/)) {
+  else if (/^\/s-[^/]+\/c\d+$/.test(path)) {
     const categoryName = document.querySelector('h1')?.textContent?.trim()
     presenceData.details = strings.browsingCategory
     presenceData.state = categoryName || strings.browsingAds

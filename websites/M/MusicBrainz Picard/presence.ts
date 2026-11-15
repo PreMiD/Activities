@@ -24,7 +24,7 @@ presence.on('UpdateData', () => {
         }
         default: {
           presenseData.state = document.title.match(
-            /(.*?)( - MusicBrainz Picard$|$)/,
+            /(.*?)(?: - MusicBrainz Picard$|$)/,
           )?.[1]
         }
       }

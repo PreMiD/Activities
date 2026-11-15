@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '936448491373359105',
@@ -23,7 +23,7 @@ presence.on('UpdateData', async () => {
       ?.style
       ?.width
       ?.replace('px', '') as unknown as number
-    const timeElapsed = presence.timestampFromFormat(
+    const timeElapsed = timestampFromFormat(
       document.querySelector<HTMLSpanElement>('span.mejs-currenttime')
         ?.textContent ?? '',
     )
@@ -43,8 +43,8 @@ presence.on('UpdateData', async () => {
       .replace('%artist%', artist ?? '')
       .replace('%album%', album ?? '')
     if (!paused && time === 1) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-        presence.timestampFromFormat(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+        timestampFromFormat(
           document.querySelector<HTMLSpanElement>('span.mejs-duration')
             ?.textContent ?? '',
         ),

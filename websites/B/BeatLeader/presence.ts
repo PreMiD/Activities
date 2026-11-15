@@ -12,12 +12,12 @@ function simplifyKey(key: string): string {
   let result = key.replaceAll(' ', '')
   if (
     (result.includes('-PinkPlay_Controllable')
-      && !result.match(/(?:Standard|OneSaber|Lawless)-PinkPlay_Controllable/))
-    || result.match(/(Horizontal|Vertical|Inverted|Inverse)/)
+      && !/(?:Standard|OneSaber|Lawless)-PinkPlay_Controllable/.test(result))
+    || /Horizontal|Vertical|Inverted|Inverse/.test(result)
   ) {
     result = result.replace('-PinkPlay_Controllable', '')
   }
-  if (result.match(/Horizontal|Vertical|Inverted|Inverse/)) {
+  if (/Horizontal|Vertical|Inverted|Inverse/.test(result)) {
     let previous
     do {
       previous = result

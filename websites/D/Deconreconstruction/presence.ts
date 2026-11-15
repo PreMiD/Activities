@@ -121,12 +121,12 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 });
 
 (function () {
   function getPages() {
-    if (document.location.pathname.match(/^\/vasterror\/\d+$/)) {
+    if (/^\/vasterror\/\d+$/.test(document.location.pathname)) {
       fetch(
         'https://api.deconreconstruction.com/pages/count?story.name=vast-error&published_at_null=false',
       ).then(async (res) => {
@@ -134,7 +134,7 @@ presence.on('UpdateData', async () => {
       })
     }
 
-    if (document.location.pathname.match(/^\/thaumatrope\/haustoria\/\d+$/)) {
+    if (/^\/thaumatrope\/haustoria\/\d+$/.test(document.location.pathname)) {
       fetch(
         'https://api.deconreconstruction.com/pages/count?story.name=thaumatrope/haustoria&published_at_null=false',
       ).then(async (res) => {

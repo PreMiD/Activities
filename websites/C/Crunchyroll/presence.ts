@@ -9,13 +9,12 @@ enum ActivityAssets {
   OpenBook = 'https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/0.png',
 }
 
-let playback: boolean = false
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let iFrameVideo: boolean,
-  currentTime: number,
-  duration: number,
-  paused: boolean
+let currentTime: number
+let duration: number
+let paused: boolean
+let iFrameVideo = false
 
 interface iFrameData {
   iFrameVideoData: {
@@ -23,20 +22,21 @@ interface iFrameData {
     currTime: number
     dur: number
     paused: boolean
-  }
+  } | null
 }
 
-presence.on('iFrameData', (inc: unknown) => {
-  const data = inc as iFrameData
-  playback = data.iFrameVideoData !== null
-
-  if (playback) {
-    ({
-      iFrameVideo,
-      currTime: currentTime,
-      dur: duration,
-      paused,
-    } = data.iFrameVideoData)
+presence.on('iFrameData', (data: iFrameData) => {
+  if (data.iFrameVideoData) {
+    iFrameVideo = data.iFrameVideoData.iFrameVideo
+    currentTime = data.iFrameVideoData.currTime
+    duration = data.iFrameVideoData.dur
+    paused = data.iFrameVideoData.paused
+  }
+  else {
+    iFrameVideo = false
+    currentTime = 0
+    duration = Number.NaN
+    paused = true
   }
 })
 
@@ -74,8 +74,22 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('hideWhenPaused'),
   ])
 
+  let hasPlayback = false
+  const player
+    = document.querySelector<HTMLVideoElement>('#player-container video')
+      ?? document.querySelector<HTMLVideoElement>('video')
+  if (player !== null && !Number.isNaN(player.duration)) {
+    hasPlayback = true
+    currentTime = player.currentTime
+    duration = player.duration
+    paused = player.paused
+  }
+  else if (iFrameVideo) {
+    hasPlayback = true
+  }
+
   if (
-    iFrameVideo !== false
+    hasPlayback
     && !Number.isNaN(duration)
     && pathname.includes('/watch/')
   ) {

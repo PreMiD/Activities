@@ -1,3 +1,5 @@
+import { getTimestamps } from 'premid'
+
 const presence = new Presence({
   clientId: '827892428266274857',
 })
@@ -46,7 +48,7 @@ presence.on('UpdateData', async () => {
           presenceData.details = video.title
           presenceData.state = video.channel;
 
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         }
         else {
           presenceData.state = document.querySelector(

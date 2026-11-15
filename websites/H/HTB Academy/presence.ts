@@ -9,22 +9,20 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/HTB%20Academy/assets/logo.jpg',
   }
 
-  if (pathname === '/' || pathname === '/login') {
+  if (pathname === '/') {
     presenceData.details = 'Breaching into the Academy'
   }
 
   else if (pathname.includes('/dashboard')) {
     presenceData.details = 'Browsing the dashboard'
 
-    const off = document.querySelector('.redPercent')?.textContent || '0'
-    const def = document.querySelector('.bluePercent')?.textContent || '0'
-    const gen = document.querySelector('.greenPercent')?.textContent || '0'
+    const progress = document.querySelectorAll('.text-primary.font-mono.text-2xl.font-medium.inline-block')
 
-    presenceData.state = `Off: ${off}% | Def: ${def}% | Gen: ${gen}%`
-  }
+    const off = progress[0]?.textContent || '0'
+    const def = progress[1]?.textContent || '0'
+    const gen = progress[2]?.textContent || '0'
 
-  else if (pathname.includes('/exams')) {
-    presenceData.details = 'Browsing the exams'
+    presenceData.state = `Off: ${off} | Def: ${def} | Gen: ${gen}`
   }
 
   else if (pathname.includes('/paths')) {
@@ -35,22 +33,22 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing modules'
   }
 
-  else if (pathname.includes('/section')) {
-    const moduleName = document.querySelector('.page-title.mb-0.font-size-18.letter-spacing-1-2')?.textContent
-    const sectionElement = document.querySelector('.training-module > h1')
-    const sectionName = sectionElement?.textContent?.trim()
+  else if (pathname.includes('/section') && pathname.includes('/module')) {
+    const ModuleNameArray = document.querySelector('.grow main a')?.textContent?.trim()?.split(' ') ?? []
+    const moduleName = ModuleNameArray.slice(0, -1).join(' ') || 'Module'
+    const sectionName = document.querySelector('.text-4xl.text-primary.font-bold.mb-4')?.textContent || 'Section'
 
     presenceData.details = `Reading Module: ${moduleName}`
     presenceData.state = sectionName ? `Section: ${sectionName}` : ''
   }
 
-  else if (pathname.includes('/details')) {
-    const title = document.querySelector('.page-title-box .page-title')?.textContent?.trim()
+  else if (pathname.includes('/module')) {
+    const title = document.querySelector('.module-header-title')?.textContent
     presenceData.details = 'Reading details about module:'
     presenceData.state = title ? `"${title}"` : 'Unknown Module'
   }
 
-  else if (pathname.includes('/my-certificates')) {
+  else if (pathname.includes('/certificates')) {
     presenceData.details = 'Looking at certificates'
     presenceData.state = 'Admiration Mode'
   }

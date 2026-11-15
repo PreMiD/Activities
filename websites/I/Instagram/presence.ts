@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const presence = new Presence({
   clientId: '547436289960574977',
 })
@@ -52,7 +54,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (!privacySetting && video && video.duration) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       }
 
       presenceData.buttons = [

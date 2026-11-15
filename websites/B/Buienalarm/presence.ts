@@ -15,7 +15,7 @@ function sanitizeContent(content: string) {
   while (previousContent !== sanitizedContent) {
     previousContent = sanitizedContent
     sanitizedContent = sanitizedContent.replace(
-      /(<!-- {2})|( -->)|( HOST: )/g,
+      /<!-- {2}| -->| HOST: /g,
       '',
     )
   }
@@ -116,5 +116,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

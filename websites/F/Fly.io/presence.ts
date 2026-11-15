@@ -136,7 +136,7 @@ presence.on('UpdateData', async () => {
         default: {
           presenceData.details = 'Browsing'
           // eslint-disable-next-line regexp/optimal-quantifier-concatenation
-          presenceData.state = document.title.match(/^(.*)( · .*)?$/)?.[1]
+          presenceData.state = document.title.match(/^(.*)(?: · .*)?$/)?.[1]
           break
         }
       }
@@ -206,7 +206,7 @@ presence.on('UpdateData', async () => {
         }
         default: {
           // eslint-disable-next-line regexp/optimal-quantifier-concatenation
-          presenceData.state = document.title.match(/^(.*)( - Fly\.io)?$/)?.[1]
+          presenceData.state = document.title.match(/^(.*)(?: - Fly\.io)?$/)?.[1]
         }
       }
       break

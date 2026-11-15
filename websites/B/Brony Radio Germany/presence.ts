@@ -16,7 +16,7 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/logo.png'
 
     if (title)
-      presence.setActivity(presenceData, !audio.paused)
+      presence.setActivity(presenceData)
   }
   else {
     presence.setActivity({

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '630533580119998496',
@@ -21,7 +21,7 @@ presence.on('UpdateData', async () => {
     epNumber &&= `${(epNumber as HTMLElement).textContent?.replace('Season ', 'S').replace(' Ep ', ':E')} `
     epNumber ??= '';
 
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       Math.floor(player.currentTime),
       Math.floor(player.duration),
     )

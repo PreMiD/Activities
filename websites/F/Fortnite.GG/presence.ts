@@ -208,7 +208,7 @@ presence.on('UpdateData', async () => {
     }
 
     const shopState // determines if there is a current shop filter based on URL strings, or defaults to a generic message
-      = Object.keys(shopFilters).find(key => params.has(key))
+      = Object.keys(shopFilters).some(key => params.has(key))
         ? shopFilters[Object.keys(shopFilters).find(key => params.has(key))!]
         : `Looking at today's item shop`
 

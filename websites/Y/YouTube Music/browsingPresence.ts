@@ -23,7 +23,7 @@ export function createBrowsingPresence(
   if (pathname === '/explore')
     return { ...basePresence, details: strings.browsingExplore }
 
-  if (pathname.match(/\/library\//)) {
+  if (/\/library\//.test(pathname)) {
     const tabText = document.querySelector('#tabs .iron-selected .tab')?.textContent?.trim()
     return {
       ...basePresence,
@@ -32,7 +32,7 @@ export function createBrowsingPresence(
     }
   }
 
-  if (pathname.match(/^\/playlist/)) {
+  if (/^\/playlist/.test(pathname)) {
     if (privacyMode) {
       return {
         ...basePresence,
@@ -95,7 +95,7 @@ export function createBrowsingPresence(
     return playlistPresence
   }
 
-  if (pathname.match(/^\/search/)) {
+  if (/^\/search/.test(pathname)) {
     const searchValue = document.querySelector<HTMLInputElement>('.search-container input')?.value?.trim()
     return {
       ...basePresence,
@@ -112,7 +112,7 @@ export function createBrowsingPresence(
     }
   }
 
-  if (pathname.match(/^\/channel/)) {
+  if (/^\/channel/.test(pathname)) {
     const channelTitle = document.querySelector('#header .title')?.textContent?.trim()
     return {
       ...basePresence,
@@ -129,7 +129,7 @@ export function createBrowsingPresence(
     }
   }
 
-  if (pathname.match(/^\/new_releases/)) {
+  if (/^\/new_releases/.test(pathname)) {
     return {
       ...basePresence,
       details: strings.browsingNewReleases,
@@ -144,7 +144,7 @@ export function createBrowsingPresence(
     }
   }
 
-  if (pathname.match(/^\/charts/)) {
+  if (/^\/charts/.test(pathname)) {
     return {
       ...basePresence,
       details: strings.browsingCharts,
@@ -159,7 +159,7 @@ export function createBrowsingPresence(
     }
   }
 
-  if (pathname.match(/^\/moods_and_genres/)) {
+  if (/^\/moods_and_genres/.test(pathname)) {
     return {
       ...basePresence,
       details: strings.browsingMoodsGenres,
