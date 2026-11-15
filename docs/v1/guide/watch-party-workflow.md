@@ -38,6 +38,17 @@ if (typeof ctx.log === 'function')
   ctx.log('Player API changed')
 ```
 
+To test for a newer feature without checking a version, look at the runtime's capabilities (`ctx.runtime` is missing on older extensions):
+
+<!-- eslint-skip -->
+
+```typescript
+if (ctx.runtime?.capabilities.includes('hostChange'))
+  ctx.party.onHostChange?.(isHost => updateControls(isHost))
+```
+
+The capability names are listed in the [Sync Script Context reference](/v1/api/sync-script-context#runtime).
+
 Extensions before 2.15 ignore `version` and `minExtensionVersion`, so a script must never rely on a minimum version to stay off them.
 
 ## Releasing

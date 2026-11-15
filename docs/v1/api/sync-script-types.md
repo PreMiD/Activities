@@ -42,8 +42,17 @@ The main context object passed to sync script lifecycle hooks. See the [Sync Scr
 | `onCustomData`          | `(key: string, handler: (data: unknown) => void) => () => void`                                   | Listens, on followers, for custom data from the controller; returns an unsubscribe function.                      |
 | `mainworld`             | `MessagingNamespace`                                                                              | Messaging namespace for communicating with the main world context. See [MessagingNamespace](#messagingnamespace). |
 | `party`                 | `PartyState`                                                                                      | Reactive state of the current Watch Party session. See [PartyState](#partystate).                                 |
-| `runtime`               | `{ version: string, capabilities: string[] } \| undefined`                                        | The runtime version and capabilities. Missing before extension 2.15.                                              |
-| `log`                   | `((...args: unknown[]) => void) \| undefined`                                                     | Writes to the extension's debug log. Missing before extension 2.15.                                               |
+| `runtime`               | `SyncScriptRuntime \| undefined`                                                                  | The runtime version and capabilities. Missing before extension 2.15. See [SyncScriptRuntime](#syncscriptruntime). |
+| `log`                   | `((...args: unknown[]) => void) \| undefined`                                                     | Writes to the page's console, rate-limited. Missing before extension 2.15.                                        |
+
+## SyncScriptRuntime
+
+Also available as `SyncScript.runtime` before a script registers.
+
+| Property       | Type       | Description                                                                                                                                                                                     |
+| -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `version`      | `string`   | The extension version.                                                                                                                                                                          |
+| `capabilities` | `string[]` | Any of `fallbackOptOut`, `derivedEvents`, `log`, `hostChange`, `localNavigate`, `pageInfoType` and `errorContainment`. See the [runtime reference](/v1/api/sync-script-context#runtime). |
 
 ## TakeControlOptions
 

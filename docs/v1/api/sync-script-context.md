@@ -645,7 +645,23 @@ Extensions before 2.15 don't have these members, so check for them before use an
 readonly runtime?: { version: string, capabilities: string[] }
 ```
 
-The version of the sync script runtime and the optional capabilities it has. `undefined` on older extensions.
+The version of the sync script runtime and the capabilities it has. `undefined` on older extensions, and also available as `SyncScript.runtime` before registering. Check a capability instead of comparing versions:
+
+| Capability         | Meaning                                                                                       |
+| ------------------ | --------------------------------------------------------------------------------------------- |
+| `fallbackOptOut`   | `features({ fallback: false })` is honored.                                                   |
+| `derivedEvents`    | Ad and buffering reports are deduplicated and debounced by the runtime.                       |
+| `log`              | `ctx.log` exists.                                                                             |
+| `hostChange`       | `party.onHostChange` exists.                                                                  |
+| `localNavigate`    | `onNavigate` also fires on the controller and on a follower's own in-page navigation.         |
+| `pageInfoType`     | `setPageInfo` accepts `type` and `duration`.                                                  |
+| `errorContainment` | A throwing handler no longer stops the others, and a throwing `onRequest` rejects `request()`. |
+
+<!-- eslint-skip -->
+
+```typescript
+const canLog = ctx.runtime?.capabilities.includes('log')
+```
 
 ### log
 
@@ -655,7 +671,7 @@ The version of the sync script runtime and the optional capabilities it has. `un
 log?: (...args: unknown[]) => void
 ```
 
-Writes to the extension's debug log, so a script can explain what went wrong without logging to the page's console.
+Writes to the page's console under a `[PreMiD sync]` prefix, so a script can explain what went wrong. Rate-limited to 50 calls per 10 seconds; the rest are dropped.
 
 #### Example
 
