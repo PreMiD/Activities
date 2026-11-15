@@ -18,6 +18,8 @@ jobs:
       actions: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v6
@@ -33,8 +35,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Type check and build sync scripts
-        run: npx pmd sync-build --all
+      - name: Validate, type check and build sync scripts
+        run: npx pmd sync-build --all --validate
 
       - name: Upload analysis results to GitHub
         if: always()

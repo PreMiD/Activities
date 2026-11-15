@@ -14,6 +14,8 @@ import { WebSocketServer } from './WebSocketServer.js'
 export interface SyncScriptMetadata {
   service: string
   regExp: string
+  version: string
+  minExtensionVersion?: string
 }
 
 export class SyncScriptCompiler {

@@ -75,6 +75,7 @@ cli
   .option('--all', 'Build all sync scripts')
   .option('--kill', 'Kill on error', { default: true })
   .option('--zip', 'Zip the sync script')
+  .option('--validate', 'Also check that every changed script raised its version over the base branch')
   .action(syncBuild)
 
 cli

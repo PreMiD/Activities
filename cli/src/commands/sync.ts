@@ -1,3 +1,4 @@
+import type { SyncScriptMetadataAndFolder } from '../util/getSyncScripts.js'
 import { existsSync } from 'node:fs'
 import { cp, mkdir, readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
@@ -5,10 +6,56 @@ import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { confirm, input } from '@inquirer/prompts'
 import chalk from 'chalk'
+import isCI from 'is-ci'
 import { SyncScriptCompiler } from '../classes/SyncScriptCompiler.js'
+import { getBaseSha, getChangedPathsSince, readFileAtRef } from '../util/getChangedFiles.js'
 import { getSingleSyncScript, getSyncScripts } from '../util/getSyncScripts.js'
-import { exit, info, prefix, success } from '../util/log.js'
+import { error, exit, info, prefix, success } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
+import { checkVersionBumps, validateSyncScripts } from '../util/validateSyncScripts.js'
+
+function getVersionBumpErrors(scripts: SyncScriptMetadataAndFolder[]): string[] {
+  const base = getBaseSha()
+  if (!base) {
+    info('No base commit to compare against, skipping the version bump check')
+    return []
+  }
+
+  const paths = getChangedPathsSince(base, 'syncScripts')
+  if (!paths) {
+    if (isCI)
+      return [`Base commit ${base} is not available, check out the full history to compare versions`]
+    info(`Base commit ${base} is not available, skipping the version bump check`)
+    return []
+  }
+
+  const changedFolders = new Set(
+    paths
+      .map(path => path.split('/'))
+      .filter(parts => parts[0] === 'syncScripts' && parts.length > 2)
+      .map(parts => parts[1]!),
+  )
+
+  return checkVersionBumps(scripts, changedFolders, (folder) => {
+    const content = readFileAtRef(base, `syncScripts/${folder}/metadata.json`)
+    try {
+      return content ? JSON.parse(content) : undefined
+    }
+    catch {
+      return undefined
+    }
+  })
+}
+
+/** Prints every metadata problem and returns whether there were none. */
+export function validateAll(scripts: SyncScriptMetadataAndFolder[], { versions = false }: { versions?: boolean } = {}): boolean {
+  const errors = validateSyncScripts(scripts)
+  if (versions)
+    errors.push(...getVersionBumpErrors(scripts))
+  for (const message of errors)
+    error(message)
+  return errors.length === 0
+}
 
 export async function syncDev(service?: string) {
   const { metadata, folder } = await getSingleSyncScript('Select a sync script to develop', service)
@@ -22,7 +69,11 @@ export async function syncDev(service?: string) {
   await compiler.watch()
 }
 
-export async function syncBuild(service?: string, { all = false, kill = true, zip = false }: { all?: boolean, kill?: boolean, zip?: boolean } = {}) {
+export async function syncBuild(service?: string, { all = false, kill = true, zip = false, validate = false }: { all?: boolean, kill?: boolean, zip?: boolean, validate?: boolean } = {}) {
+  const valid = validateAll(await getSyncScripts(), { versions: validate })
+  if (!valid && kill)
+    exit('Sync script metadata is invalid')
+
   if (all) {
     const scripts = await getSyncScripts()
 
@@ -31,7 +82,7 @@ export async function syncBuild(service?: string, { all = false, kill = true, zi
 
     info(`Building ${scripts.length} sync scripts...`)
 
-    let allSuccess = true
+    let allSuccess = valid
     for (const script of scripts) {
       await cp(
         resolve(process.cwd(), 'cli/templates/sync-tsconfig.json'),
@@ -56,7 +107,7 @@ export async function syncBuild(service?: string, { all = false, kill = true, zi
 
   const compiler = new SyncScriptCompiler(folder, metadata)
   const isSuccess = await compiler.compile({ kill, zip })
-  process.exit(isSuccess ? 0 : 1)
+  process.exit(isSuccess && valid ? 0 : 1)
 }
 
 export async function syncRelease(service?: string) {
@@ -128,10 +179,10 @@ export async function syncNew(service?: string) {
 
   const regExp = await input({
     message: 'RegExp pattern for URL matching',
-    default: `^https?[:][/][/]([a-z0-9-]+[.])*${service!.toLowerCase().replaceAll(/\W/g, '')}[.]com[/]`,
+    default: `^https?[:][/][/]([a-z0-9-]{1,63}[.])?${service!.toLowerCase().replaceAll(/\W/g, '')}[.]com[/]`,
   }).catch(() => exit('Something went wrong.'))
 
-  const metadata = { service, regExp }
+  const metadata = { service, regExp, version: '1.0.0' }
 
   const templatesDir = resolve(fileURLToPath(import.meta.url), '../../../templates')
 

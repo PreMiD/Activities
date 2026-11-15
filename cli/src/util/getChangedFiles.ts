@@ -1,7 +1,8 @@
-import { execSync } from 'node:child_process'
+import { execFileSync, execSync } from 'node:child_process'
 import process from 'node:process'
 import { context } from '@actions/github'
 import gitDiffParser from 'gitdiff-parser'
+import isCI from 'is-ci'
 import { exit, info } from './log.js'
 
 export interface ChangedFile {
@@ -71,4 +72,62 @@ export function decodeUtf8Escapes(filePath: string): string {
 
   const bytes = new Uint8Array([...decodedPath].map(char => char.charCodeAt(0)))
   return new TextDecoder('utf-8').decode(bytes)
+}
+
+/** The commit the current change is compared against, or undefined when there is none to compare with. */
+export function getBaseSha(): string | undefined {
+  if (isCI) {
+    switch (context.eventName) {
+      case 'pull_request':
+      case 'pull_request_review':
+        return context.payload.pull_request?.base?.sha
+      case 'merge_group':
+        return context.payload.merge_group?.base_sha
+      case 'push':
+        return /^0+$/.test(context.payload.before ?? '') ? undefined : context.payload.before
+      default:
+        return undefined
+    }
+  }
+
+  try {
+    return execFileSync('git', ['merge-base', 'main', 'HEAD'], { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim() || undefined
+  }
+  catch {
+    return undefined
+  }
+}
+
+/** Files that differ between `base` and the working tree, or undefined when `base` is not available locally. */
+export function getChangedPathsSince(base: string, path: string): string[] | undefined {
+  try {
+    return execFileSync('git', ['diff', '--name-only', '--no-renames', base, '--', path], { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .split('\n')
+      .filter(line => line.length > 0)
+  }
+  catch {
+    return undefined
+  }
+}
+
+export function readFileAtRef(ref: string, path: string): string | undefined {
+  try {
+    return execFileSync('git', ['show', `${ref}:${path}`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()
+  }
+  catch {
+    return undefined
+  }
+}
+
+export function listFilesAtRef(ref: string, path: string): string[] | undefined {
+  try {
+    return execFileSync('git', ['ls-tree', '-r', '--name-only', ref, '--', path], { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .split('\n')
+      .filter(line => line.length > 0)
+  }
+  catch {
+    return undefined
+  }
 }
