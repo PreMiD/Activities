@@ -13,7 +13,7 @@ Defines the entry point for a sync script. The `setup` function receives a [Sync
 | Property     | Type                                               | Description                                                                 |
 | ------------ | -------------------------------------------------- | --------------------------------------------------------------------------- |
 | `setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called when the sync script is initialized; may return a teardown function. |
-| `onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called on a follower when the controller's navigation arrives.              |
+| `onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called when the page address changes during a party: a navigation from the controller, or a follower's own in-page navigation. Once per address. |
 
 ## SyncScriptHandle
 

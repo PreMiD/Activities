@@ -113,7 +113,7 @@ When a follower receives a navigation command:
 If a guest or member closes their party tab, they **automatically leave the party**. When the host closes it, the party stays open. A host who is the controller picks a new tab with the "Move party here" button, and followers wait until then.
 :::
 
-The sync script's `onNavigate` callback fires on followers when the controller's navigation arrives, at the same moment the extension starts moving the follower's tab. The new page may not have loaded yet, and a full page load runs `setup` again on the new page, so look for player elements in `setup` and use `onNavigate` only for work that has to happen when the controller moves on.
+The sync script's `onNavigate` callback fires once per address, on the controller and on a follower's own in-page navigation as well as when the controller's navigation arrives. On a follower it fires at the same moment the extension starts moving the tab. The new page may not have loaded yet, and a full page load runs `setup` again on the new page, so look for player elements in `setup` and use `onNavigate` only for work that has to happen when the controller moves on.
 
 On the controller, a change of the page address (including SPA navigation) restarts the sync script: the cleanup function runs and `setup` runs again. Repeats of the same address within 2 seconds are ignored.
 

@@ -24,7 +24,7 @@ Registers a sync script with the PreMiD extension. The `setup` function is calle
 | Parameter            | Type                                               | Description                                                                                            |
 | -------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `options.setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called on activation. Receives the context object. May return a cleanup function.                      |
-| `options.onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called on a follower when the controller's navigation arrives, before the tab has loaded the new page. |
+| `options.onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called when the page address changes during a party: a navigation from the controller, or a follower's own in-page navigation. Once per address. Extensions before 2.15 only call it on a follower when the controller's navigation arrives. |
 
 #### Returns
 

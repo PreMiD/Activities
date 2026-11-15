@@ -104,7 +104,7 @@ SyncScript.register({
   },
 
   onNavigate(ctx, url) {
-    // Called on a follower when the controller's navigation arrives
+    // Called when the page address changes, once per address
   },
 })
 ```
@@ -137,15 +137,14 @@ The cleanup function (returned from `setup`) runs when:
 
 ### When Does `onNavigate` Fire?
 
-`onNavigate` fires when:
+`onNavigate(ctx, url)` fires once per address when:
 
-1. **Follower receives a navigation URL** — The controller navigated to a new page, and the extension tells the sync script the new URL via `onNavigate(ctx, url)`. This fires **only on followers**, not the controller.
-2. **The call happens as the follower's tab starts moving** — `onNavigate` fires when the navigation arrives, not after the new page has loaded. The tab is usually reloaded right after, which runs `setup` again on the new page, so find and attach to the video element in `setup`. If the follower is asked before leaving for another site and stays, `onNavigate` has still fired.
+1. **The controller navigates** — It fires on the controller itself and, when the controller's navigation arrives, on followers.
+2. **A follower navigates in the page on their own** — For example a single-page app switching episodes.
 
-`onNavigate` does **not** fire for:
+On a follower, the call comes as the tab starts moving, not after the new page has loaded. The tab is usually reloaded right after, which runs `setup` again on the new page, so find and attach to the video element in `setup`. If the follower is asked before leaving for another site and stays, `onNavigate` has still fired.
 
-- The controller's own navigation (the controller restarts the script instead, see above)
-- Pages the follower loads or navigates to on their own
+Extensions before 2.15 only call it on a follower when the controller's navigation arrives, so don't rely on it for the controller or for a follower's own navigation.
 
 ::: warning
 `onNavigate` only fires while the sync script is active (i.e., a Watch Party is running). It is not a general-purpose navigation listener.
