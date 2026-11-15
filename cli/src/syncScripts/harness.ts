@@ -7,9 +7,19 @@ export const syncScriptsDir = resolve(import.meta.dirname, '../../../syncScripts
 
 /**
  * old: the stable 2.14 runtime surface (no runtime, no log, ad and buffering reports deduplicated).
- * new: adds ctx.runtime and ctx.log.
+ * new: adds ctx.runtime, ctx.log, SyncScript.runtime and party.onHostChange.
  */
 export type RuntimeFlavour = 'old' | 'new'
+
+export const newRuntimeCapabilities = [
+  'fallbackOptOut',
+  'derivedEvents',
+  'log',
+  'hostChange',
+  'localNavigate',
+  'pageInfoType',
+  'errorContainment',
+] as const
 
 export interface PageEnvironment {
   window?: Record<string, unknown>
@@ -91,6 +101,8 @@ export function runSyncScript(folder: string, flavour: RuntimeFlavour, page: Pag
 
   const handles: { options: any, reportPlayback: ReturnType<typeof vi.fn>, release: ReturnType<typeof vi.fn> }[] = []
 
+  const hostChangeHandlers = new Set<(isHost: boolean) => void>()
+
   const ctx: Record<string, any> = {
     features: vi.fn(),
     video: {
@@ -124,8 +136,12 @@ export function runSyncScript(folder: string, flavour: RuntimeFlavour, page: Pag
     party: { role: 'follower', paused: false, active: true, isHost: false },
   }
   if (flavour === 'new') {
-    ctx.runtime = { version: '2.15.0', capabilities: [] }
+    ctx.runtime = { version: '2.15.0', capabilities: [...newRuntimeCapabilities] }
     ctx.log = vi.fn()
+    ctx.party.onHostChange = vi.fn((handler: (isHost: boolean) => void) => {
+      hostChangeHandlers.add(handler)
+      return () => hostChangeHandlers.delete(handler)
+    })
   }
 
   const mainworldCtx = {
@@ -141,13 +157,16 @@ export function runSyncScript(folder: string, flavour: RuntimeFlavour, page: Pag
   }
 
   const cleanups: (() => void)[] = []
-  const register = (setupCtx: unknown) => ({
-    register: (definition: { setup: (ctx: any) => (() => void) | void }) => {
-      const cleanup = definition.setup(setupCtx)
+  let definition: { setup: (ctx: any) => (() => void) | void, onNavigate?: (ctx: any, url: string) => void } | null = null
+  const register = (setupCtx: unknown, runtime?: unknown) => ({
+    register: (registered: NonNullable<typeof definition>) => {
+      definition = registered
+      const cleanup = registered.setup(setupCtx)
       if (typeof cleanup === 'function')
         cleanups.push(cleanup)
       return { destroy: () => {} }
     },
+    ...(runtime ? { runtime } : {}),
   })
 
   const globals = { window, document, location, navigator }
@@ -166,7 +185,7 @@ export function runSyncScript(folder: string, flavour: RuntimeFlavour, page: Pag
     hasMainworld = false
   }
 
-  run(resolve(syncScriptsDir, folder, 'content.ts'), { SyncScript: register(ctx) })
+  run(resolve(syncScriptsDir, folder, 'content.ts'), { SyncScript: register(ctx, ctx.runtime) })
   if (hasMainworld)
     run(mainworldFile, { SyncMainworldScript: register(mainworldCtx) })
 
@@ -177,6 +196,13 @@ export function runSyncScript(folder: string, flavour: RuntimeFlavour, page: Pag
     location,
     bridged,
     handles,
+    /** Calls the script's onNavigate as the new runtime does, on the controller and on a follower's own navigation too. */
+    navigate: (url: string) => definition?.onNavigate?.(ctx, url),
+    /** Fires party.onHostChange handlers; only the new runtime has them. */
+    changeHost: (isHost: boolean) => {
+      ctx.party.isHost = isHost
+      for (const handler of hostChangeHandlers) handler(isHost)
+    },
     /** Messages the page-world script posted to the content script. */
     posted: toContent.sent,
     stop: () => cleanups.forEach(cleanup => cleanup()),
