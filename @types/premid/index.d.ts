@@ -974,7 +974,7 @@ declare global {
     subtitle?: string
     thumbnail?: string
     /** Ignored by extensions that predate it. */
-    type?: string
+    type?: 'video' | 'music' | 'live' | 'podcast'
     /** Length in seconds. Ignored by extensions that predate it. */
     duration?: number
   }
@@ -1038,6 +1038,8 @@ declare global {
     readonly active: boolean
     readonly isHost: boolean
     onRoleChange: (handler: (role: 'controller' | 'follower') => void) => () => void
+    /** Missing on extensions that predate it, so check it before use. */
+    onHostChange?: (handler: (isHost: boolean) => void) => () => void
     onPauseChange: (handler: (paused: boolean) => void) => () => void
     onActiveChange: (handler: (active: boolean) => void) => () => void
   }
@@ -1062,7 +1064,7 @@ declare global {
 
     party: PartyState
 
-    /** Writes to the extension's debug log. Missing on extensions that predate it, so check it before use. */
+    /** Rate-limited; shows in the page's console. Missing on extensions that predate it, so check it before use. */
     log?: (...args: unknown[]) => void
   }
 
@@ -1085,6 +1087,8 @@ declare global {
 
   const SyncScript: {
     register: (definition: SyncScriptDefinition) => SyncScriptHandle
+    /** Missing on extensions that predate it, so check it before use. */
+    readonly runtime?: SyncScriptRuntime
   }
 
   const SyncMainworldScript: {
