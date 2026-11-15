@@ -77,7 +77,8 @@ export async function deleteSyncScript(service: string, { apiUrl, apiKey }: Rele
       },
     })
 
-    if (!response.ok)
+    // Already gone, for example when a release is re-run.
+    if (!response.ok && response.status !== 404)
       return `delete failed: ${response.status} ${response.statusText}, ${await response.text()}`
 
     return true

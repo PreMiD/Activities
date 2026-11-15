@@ -6,7 +6,7 @@ import process from 'node:process'
 import { search } from '@inquirer/prompts'
 import { globby } from 'globby'
 import isCI from 'is-ci'
-import { decodeUtf8Escapes, getChangedFilesCi, getChangedFilesLocal } from './getChangedFiles.js'
+import { decodeUtf8Escapes, getBaseSha, getChangedFilesCi, getChangedFilesLocal, listFilesAtRef, readFileAtRef } from './getChangedFiles.js'
 import { exit } from './log.js'
 import { searchChoices } from './searchChoices.js'
 
@@ -28,9 +28,28 @@ export async function getSyncScripts(): Promise<SyncScriptMetadataAndFolder[]> {
   )).sort(({ metadata: a }, { metadata: b }) => a.service.localeCompare(b.service))
 }
 
+/** The services the base commit had sync scripts for, or undefined when the base is not available locally. */
+function getBaseServices(base: string): string[] | undefined {
+  const files = listFilesAtRef(base, 'syncScripts')
+  if (!files)
+    return undefined
+
+  return files
+    .filter(file => /^syncScripts\/[^/]+\/metadata\.json$/.test(file))
+    .flatMap((file) => {
+      try {
+        const service = JSON.parse(readFileAtRef(base, file) ?? '').service
+        return typeof service === 'string' ? [service] : []
+      }
+      catch {
+        return []
+      }
+    })
+}
+
 export async function getChangedSyncScripts(): Promise<{
   changed: SyncScriptMetadataAndFolder[]
-  deleted: { metadata: Pick<SyncScriptMetadata, 'service'>, folder: string }[]
+  deleted: { metadata: Pick<SyncScriptMetadata, 'service'> }[]
 }> {
   const changedFiles = (isCI ? await getChangedFilesCi() : getChangedFilesLocal())
     .map(file => ({
@@ -55,14 +74,27 @@ export async function getChangedSyncScripts(): Promise<{
       deletedFolders.add(folder)
   }
 
+  const changed = await Promise.all(
+    Array.from(scriptPaths).map(async (folder): Promise<SyncScriptMetadataAndFolder> => ({
+      metadata: JSON.parse(await readFile(resolve(folder, 'metadata.json'), 'utf-8')),
+      folder,
+    })),
+  )
+
+  // Comparing services rather than folders also catches renamed folders and a changed service name.
+  const base = getBaseSha()
+  const baseServices = base ? getBaseServices(base) : undefined
+  if (baseServices) {
+    const currentServices = new Set((await getSyncScripts()).map(script => script.metadata.service))
+    return {
+      changed,
+      deleted: baseServices.filter(service => !currentServices.has(service)).map(service => ({ metadata: { service } })),
+    }
+  }
+
   return {
-    changed: await Promise.all(
-      Array.from(scriptPaths).map(async (folder): Promise<SyncScriptMetadataAndFolder> => ({
-        metadata: JSON.parse(await readFile(resolve(folder, 'metadata.json'), 'utf-8')),
-        folder,
-      })),
-    ),
-    deleted: Array.from(deletedFolders, folder => ({ metadata: { service: basename(folder) }, folder })),
+    changed,
+    deleted: Array.from(deletedFolders, folder => ({ metadata: { service: basename(folder) } })),
   }
 }
 

@@ -75,4 +75,16 @@ describe('deleteSyncScript', () => {
     await expect(deleteSyncScript('Disney+', target)).resolves.toBe(true)
     expect(fetchMock.mock.calls[0]![0]).toBe('https://api.test/v6/sync-scripts/v1/Disney%2B')
   })
+
+  it('treats a script that is already gone as deleted', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('not found', { status: 404 })))
+
+    await expect(deleteSyncScript('Gone', target)).resolves.toBe(true)
+  })
+
+  it('reports other failures', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('nope', { status: 500, statusText: 'Internal Server Error' })))
+
+    await expect(deleteSyncScript('Gone', target)).resolves.toBe('delete failed: 500 Internal Server Error, nope')
+  })
 })
