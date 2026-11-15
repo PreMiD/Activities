@@ -61,6 +61,12 @@ describe('releaseSyncScript', () => {
 
     await expect(releaseSyncScript({ metadata, folder }, target)).resolves.toBe('upload failed: 400 Bad Request, bad')
   })
+
+  it('asks for a version bump when the API already has this or a newer version', async () => {
+    fetchMock.mockResolvedValue(new Response('version 1.2.0 is not higher than the released 1.2.0\n', { status: 409, statusText: 'Conflict' }))
+
+    await expect(releaseSyncScript({ metadata, folder }, target)).resolves.toBe('version 1.2.0 is not higher than the released version, raise "version" in metadata.json (API: version 1.2.0 is not higher than the released 1.2.0)')
+  })
 })
 
 describe('deleteSyncScript', () => {

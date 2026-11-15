@@ -57,6 +57,9 @@ export async function releaseSyncScript({ metadata, folder }: SyncScriptMetadata
       }),
     })
 
+    if (response.status === 409)
+      return `version ${metadata.version} is not higher than the released version, raise "version" in metadata.json (API: ${(await response.text()).trim()})`
+
     if (!response.ok)
       return `upload failed: ${response.status} ${response.statusText}, ${await response.text()}`
 
