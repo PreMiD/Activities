@@ -46,6 +46,7 @@ jobs:
         env:
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SYNC_SCRIPT_SIGNING_KEY: ${{ secrets.SYNC_SCRIPT_SIGNING_KEY }}
 
       - name: Release all sync scripts
         if: github.event_name == 'workflow_dispatch'
@@ -53,3 +54,4 @@ jobs:
         env:
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SYNC_SCRIPT_SIGNING_KEY: ${{ secrets.SYNC_SCRIPT_SIGNING_KEY }}

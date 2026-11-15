@@ -4,6 +4,7 @@ import { cp, readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import { SyncScriptCompiler } from '../classes/SyncScriptCompiler.js'
+import { computeSyncScriptSha256, signSyncScript, SYNC_SCRIPT_API_VERSION } from './syncScriptSigning.js'
 
 export interface ReleaseTarget {
   apiUrl: string
@@ -27,6 +28,18 @@ export async function releaseSyncScript({ metadata, folder }: SyncScriptMetadata
       ? await readFile(resolve(folder, 'dist', 'mainworld.js'), 'utf8')
       : undefined
 
+    const signingKey = process.env.SYNC_SCRIPT_SIGNING_KEY
+    const signature = signingKey
+      ? signSyncScript({
+          service: metadata.service,
+          regExp: metadata.regExp,
+          apiVersion: SYNC_SCRIPT_API_VERSION,
+          version: metadata.version,
+          minExtensionVersion: metadata.minExtensionVersion,
+          sha256: computeSyncScriptSha256(contentJs, mainworldJs),
+        }, signingKey)
+      : undefined
+
     const response = await fetch(`${apiUrl}/sync-scripts/v1`, {
       method: 'POST',
       headers: {
@@ -38,6 +51,9 @@ export async function releaseSyncScript({ metadata, folder }: SyncScriptMetadata
         contentJs,
         mainworldJs,
         regExp: metadata.regExp,
+        version: metadata.version,
+        minExtensionVersion: metadata.minExtensionVersion,
+        signature,
       }),
     })
 

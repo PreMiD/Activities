@@ -8,7 +8,7 @@ import { checkDns } from './commands/checkDns.js'
 import { mcp } from './commands/mcp.js'
 import { newActivity } from './commands/new.js'
 import { release } from './commands/release.js'
-import { syncBuild, syncDev, syncNew, syncRelease } from './commands/sync.js'
+import { syncBuild, syncDev, syncKeygen, syncNew, syncRelease } from './commands/sync.js'
 import { test } from './commands/test.js'
 import { updateAssets } from './commands/updateAssets.js'
 import { getCliPackageJson, getPackageJson } from './util/getPackageJson.js'
@@ -83,6 +83,10 @@ cli
   .option('--changed', 'Release the sync scripts changed since the base commit and delete removed ones')
   .option('--all', 'Release every sync script')
   .action(syncRelease)
+
+cli
+  .command('sync-keygen', 'Print a new Ed25519 key pair for signing sync scripts')
+  .action(syncKeygen)
 
 cli
   .command('update-assets', 'Update assets for all activities in CI')

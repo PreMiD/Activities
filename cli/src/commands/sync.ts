@@ -13,6 +13,7 @@ import { getChangedSyncScripts, getSingleSyncScript, getSyncScripts } from '../u
 import { error, exit, info, prefix, success } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
 import { deleteSyncScript, releaseSyncScript } from '../util/syncScriptRelease.js'
+import { generateSigningKeyPair } from '../util/syncScriptSigning.js'
 import { checkVersionBumps, validateSyncScripts } from '../util/validateSyncScripts.js'
 
 function getVersionBumpErrors(scripts: SyncScriptMetadataAndFolder[]): string[] {
@@ -202,4 +203,12 @@ export async function syncNew(service?: string) {
   success(
     `Sync script created successfully! ${chalk.grey(chalk.underline(resolve(path, 'metadata.json')))}\n${prefix} ${chalk.white('Please edit the metadata.json file and add the correct information.')}\n${prefix} ${chalk.white(`After that, run ${chalk.cyan(`pmd sync-dev "${service}"`)} to start developing.`)}`,
   )
+}
+
+export function syncKeygen() {
+  const { privateKey, publicKey } = generateSigningKeyPair()
+  console.log(`SYNC_SCRIPT_SIGNING_KEY=${privateKey}`)
+  console.log(`SYNC_SCRIPT_SIGNING_PUBLIC_KEY=${publicKey}`)
+  console.log(`VITE_SYNC_SCRIPT_PUBLIC_KEY=${publicKey}`)
+  info('Store SYNC_SCRIPT_SIGNING_KEY as an Activities repository secret, SYNC_SCRIPT_SIGNING_PUBLIC_KEY in the API environment and VITE_SYNC_SCRIPT_PUBLIC_KEY in the extension build. Never commit the private key.')
 }
