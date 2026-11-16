@@ -3,8 +3,8 @@ const presence = new Presence({
 })
 async function getStrings() {
   return presence.getStrings({
-    play: 'general.playing',
-    pause: 'general.paused',
+    browsing: 'general.browsing',
+    search: 'general.search',
     newPrompt: 'deepSeek.startingPrompt',
     talkingWithAi: 'deepSeek.talkingWithAi',
     aiTalking: 'deepSeek.aiTalking',
@@ -16,6 +16,24 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum Assets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/logo.png',
+  Talking = 'https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/0.png',
+  Reading = 'https://cdn.rcd.gg/PreMiD/resources/reading.png',
+  Search = 'https://cdn.rcd.gg/PreMiD/resources/search.png',
+  Viewing = 'https://cdn.rcd.gg/PreMiD/resources/viewing.png',
+  Writing = 'https://cdn.rcd.gg/PreMiD/resources/writing.png',
+}
+
+// The DeepThink and search toggles share DeepSeek's toggle button
+// component: an element with class "ds-toggle-button" that gains
+// "ds-toggle-button--selected" while enabled (confirmed in the app's
+// own JS/CSS bundles, 2026-11-17). The label tells the two apart.
+function isSearchModeOn(): boolean {
+  const labels = new Set(['Search', 'スマート検索', '联网搜索'])
+  for (const el of document.querySelectorAll('.ds-toggle-button--selected')) {
+    if (labels.has(el.textContent?.trim() ?? ''))
+      return true
+  }
+  return false
 }
 
 presence.on('UpdateData', async () => {
@@ -23,6 +41,7 @@ presence.on('UpdateData', async () => {
   const showTitle = await presence.getSetting<boolean>('showTitle')
 
   let presenceDetail: string, presenceState: string
+  let smallImageKey: string, smallImageText: string
 
   const strings = await getStrings()
 
@@ -31,26 +50,45 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/a/chat/s')) {
     presenceDetail = (showTitle
-      ? document.querySelector('div.d8ed659a')?.textContent
-      : strings?.talkingWithAi) ?? ''
+      ? document.querySelector('div.d8ed659a')?.textContent?.trim()
+      : undefined) || strings?.talkingWithAi || ''
   }
   else {
     presenceDetail = strings?.talkingWithAi ?? ''
   }
 
-  // Used for checking if the AI is currently responding
-
   // Checking if the user is currently typing a question
-  if (document.querySelector('#chat-input')?.textContent !== '')
+  if (document.querySelector('#chat-input')?.textContent !== '') {
     presenceState = strings?.askingQuestion ?? ''
-  else if (document.querySelector('div[class=\'f9bf7997 d7dc56a8\']'))
+    smallImageKey = Assets.Writing
+    smallImageText = strings?.askingQuestion ?? ''
+  }
+  // Used for checking if the AI is currently responding
+  else if (document.querySelector('div[class=\'f9bf7997 d7dc56a8\']')) {
     presenceState = strings?.aiTalking ?? ''
-  else if (document.querySelector('div.f9bf7997.d7dc56a8.c05b5566'))
+    smallImageKey = Assets.Talking
+    smallImageText = strings?.aiTalking ?? ''
+  }
+  else if (document.querySelector('div.f9bf7997.d7dc56a8.c05b5566')) {
     presenceState = strings?.readingResponse ?? ''
-  else presenceState = ''
+    smallImageKey = Assets.Reading
+    smallImageText = strings?.readingResponse ?? ''
+  }
+  else if (isSearchModeOn()) {
+    presenceState = ''
+    smallImageKey = Assets.Search
+    smallImageText = strings?.search ?? ''
+  }
+  else {
+    presenceState = ''
+    smallImageKey = Assets.Viewing
+    smallImageText = strings?.browsing ?? ''
+  }
 
   presence.setActivity({
     largeImageKey: Assets.Logo,
+    smallImageKey,
+    smallImageText,
     startTimestamp: browsingTimestamp,
     details: presenceDetail,
     state: presenceState,
