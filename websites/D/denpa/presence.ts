@@ -512,6 +512,64 @@ async function getService(id: number): Promise<ServiceInfo | null> {
   return serviceCache
 }
 
+// /live は入り方で URL の形が変わる: 番組表からは ?service=<複合ID> で開くが、
+// ナビの「ライブ」からはパラメータなしで開き、前回観ていた局を localStorage の
+// denpa_live_last から復元する。URL だけでは局を特定できないため、複数の手がかりで解決する
+function findServiceBySid(sid: number): ServiceInfo | null {
+  return servicesCache.find(s => s.id % 100000 === sid) ?? null
+}
+
+function readLastLiveServiceId(): number | null {
+  try {
+    const raw = localStorage.getItem('denpa_live_last')
+    if (!raw)
+      return null
+    if (/^\d+$/.test(raw))
+      return Number(raw)
+    const obj = JSON.parse(raw) as Record<string, unknown>
+    const v = obj.serviceId ?? obj.service_id ?? obj.id
+    return typeof v === 'number' ? v : null
+  }
+  catch {
+    return null
+  }
+}
+
+function readLiveServiceIdFromResources(): number | null {
+  try {
+    const entries = performance.getEntriesByType('resource')
+    for (let i = entries.length - 1; i >= 0; i--) {
+      const m = entries[i]!.name.match(/\/api\/services\/(\d+)\/live/)
+      if (m)
+        return Number(m[1])
+    }
+  }
+  catch { /* リソースタイミングが取れない環境では諦める */ }
+  return null
+}
+
+async function resolveLiveService(param: number): Promise<ServiceInfo | null> {
+  const candidates: number[] = []
+  if (Number.isInteger(param) && param > 0)
+    candidates.push(param)
+  const last = readLastLiveServiceId()
+  if (last)
+    candidates.push(last)
+  const perf = readLiveServiceIdFromResources()
+  if (perf)
+    candidates.push(perf)
+  for (const id of candidates) {
+    const exact = await getService(id)
+    if (exact)
+      return exact
+    // SID だけが渡ってきた場合は、複合 ID の下 5 桁と一致する局を探す
+    const bySid = findServiceBySid(id)
+    if (bySid)
+      return await getService(bySid.id) ?? bySid
+  }
+  return null
+}
+
 async function getRecording(id: number): Promise<RecordingInfo | null> {
   const cached = recordingCache.get(id)
   if (cached)
@@ -566,7 +624,7 @@ presence.on('UpdateData', async () => {
   // ***** テレビのライブ視聴 *****
   if (pathname === '/live') {
     const serviceId = Number(new URLSearchParams(search).get('service'))
-    const service = Number.isInteger(serviceId) && serviceId > 0 ? await getService(serviceId) : null
+    const service = await resolveLiveService(serviceId)
     const prog = service?.now ?? null
     presenceData.details = showProgram ? (prog?.title ?? 'ライブ視聴中') : 'ライブ視聴中'
     presenceData.state = service?.name ?? 'ライブ'
