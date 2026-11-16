@@ -348,4 +348,3 @@ export function getMccLiveData(privacy: boolean): Partial<PresenceData> {
   }
   return result
 }
-
