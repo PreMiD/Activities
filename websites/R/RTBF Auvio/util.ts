@@ -269,7 +269,8 @@ export function getPreferredTitle(baseTitle: string, baseSubtitle: string, useOn
   const playerTitle = getDomText('h1[class*=TitleDetails_title]', '')
 
   if (useOnlyLastBreadcrumb) {
-    return [detailTitle, playerTitle, baseTitle].some(currentTitle => normalizeTitle(currentTitle) === normalizeTitle(lastBreadcrumbTitle))
+    const normalizedBreadcrumb = normalizeTitle(lastBreadcrumbTitle)
+    return normalizedBreadcrumb && [detailTitle, playerTitle, baseTitle].some(currentTitle => normalizeTitle(currentTitle) === normalizedBreadcrumb)
       ? preferredSubtitle
       : baseTitle
   }

@@ -191,13 +191,13 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = usePrivacyMode ? ActivityAssets.Privacy : ActivityAssets.ListeningVOD
         presenceData.smallImageText = usePrivacyMode ? strings.privatePlay : strings.play
 
-        const durationParts = duration.split('/')
-        const validAudioDuration = durationParts.length === 2 && durationParts.every(part => /^\d+(?::\d+){1,2}$/.test(part.trim()))
+        const durationParts = duration.split('/').map(part => part.trim())
+        const validAudioDuration = durationParts.length === 2 && durationParts.every(part => /^\d+(?::\d+){1,2}$/.test(part))
         warnMissing('audio-time-format', !validAudioDuration, 'Podcast timing is unavailable or has an unexpected format.')
         if (validAudioDuration) {
           [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-            timestampFromFormat(duration.split('/')?.[0] ?? duration),
-            timestampFromFormat(duration.split('/')?.[1] ?? duration),
+            timestampFromFormat(durationParts[0]!),
+            timestampFromFormat(durationParts[1]!),
           )
         }
 
@@ -276,11 +276,11 @@ presence.on('UpdateData', async () => {
       const hasTrailerPlayer = exist('#ui-trailer-1')
         || exist('div[class*=WidgetMediaTrailer_trailerVideo]')
         || exist('div[class*=WidgetMediaTrailer_bottomBar]')
-      const hasPlayerControls = exist('#PlayerUIButtonPlayPause')
+      const videoPlayerSelector = '#vodPlayerContainer, #livePlayerContainer, [role="dialog"][aria-label="Player"], [class*=PlayerDialog_playerOverlay]'
+      const videoPlayer = document.querySelector(videoPlayerSelector)
+      const hasPlayerControls = !!videoPlayer?.querySelector('#PlayerUIButtonPlayPause')
         && (
-          exist('[class*=PlayerUI_BottomContainer]')
-          || exist('[class*=PlayerUI_bottomControls]')
-          || exist('[class*=PlayerUI_bottomTimebar]')
+          !!videoPlayer.querySelector('[class*=PlayerUI_BottomContainer], [class*=PlayerUI_bottomControls], [class*=PlayerUI_bottomTimebar]')
         )
       const hasPlayerDialog = exist('[role="dialog"][aria-label="Player"]')
         || exist('[class*=PlayerDialog_playerOverlay]')
@@ -327,11 +327,13 @@ presence.on('UpdateData', async () => {
 
         const metadatas = await safeFetchMetadata(`https://bff-service.rtbf.be/auvio/v1.23/pages/${pathParts[1]!}/${pathParts[2]!}`)
 
-        warnMissing('media-metadata', !!metadatas?.data && !metadatas.data.content, 'Media metadata has no content object.')
+        const content = metadatas?.data?.content
+        const hasContent = !!content && typeof content === 'object' && !Array.isArray(content) && Object.keys(content).length > 0
+        warnMissing('media-metadata', !!metadatas?.data && !hasContent, 'Media metadata has no usable content object.')
 
         let mediaType, mediaSubtype, description, image, channel, duration, category, scheduledFrom, scheduledTo, waitTime, remainingTime
         let shouldUsePreferredTitle = true
-        if (metadatas?.data) {
+        if (hasContent) {
           // Populating metadatas variables with API method
 
           mediaType = textOr(metadatas.data.pageType, textOr(metadatas.data.content?.pageType))
@@ -506,7 +508,7 @@ presence.on('UpdateData', async () => {
             else {
               scheduleData.state = strings.liveEnded // "Livestream has ended"
             }
-            slideshow.addSlide('04', scheduleData, 5000)
+            slideshow.addSlide('05', scheduleData, 5000)
           }
         }
         else {
@@ -547,7 +549,8 @@ presence.on('UpdateData', async () => {
 
           const videoArray = document.querySelectorAll<HTMLVideoElement>('div#vodPlayerContainer video, div#livePlayerContainer video')
           const video = videoArray[videoArray.length - 1] ?? null
-          const playPauseButton = document.querySelector<HTMLButtonElement>('#PlayerUIButtonPlayPause')
+          const activeVideoPlayer = video?.closest('#vodPlayerContainer, #livePlayerContainer') ?? videoPlayer
+          const playPauseButton = activeVideoPlayer?.querySelector<HTMLButtonElement>('#PlayerUIButtonPlayPause')
           const playPauseLabel = playPauseButton?.getAttribute('aria-label')?.toLowerCase() ?? ''
           const hasAdOverlay = exist('.ad-click-overlay')
             || exist('.ad-children-wrapper')
