@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Foxy",
+    "id": "1064801165201641592"
+  },
+  "service": "SAKURA",
+  "description": {
+    "en": "Displays what anime or cartoon you are watching on SAKURA.",
+    "fr": "Affiche l'anime ou le dessin animé que vous regardez sur SAKURA."
+  },
+  "url": "sakura.thefoxy.me",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*sakura[.]thefoxy[.]me|localhost)(:\\d{1,5})?([/]|$)",
+  "version": "1.0.0",
+  "logo": "https://sakura.thefoxy.me/icon.png",
+  "thumbnail": "https://sakura.thefoxy.me/banner-news.png",
+  "color": "#FF2D55",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "cartoons",
+    "streaming",
+    "sakura",
+    "manga"
+  ]
+}
