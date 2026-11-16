@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "TheSlowly",
@@ -13,7 +13,7 @@
   },
   "url": "www.bronyradiogermany.com",
   "regExp": "^https?[:][/][/](www[.])?bronyradiogermany[.]com[/]",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/thumbnail.png",
   "color": "#FF0000",

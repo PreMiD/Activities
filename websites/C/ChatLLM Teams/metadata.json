@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "621775934382669894",
@@ -16,7 +16,7 @@
   },
   "url": "apps.abacus.ai",
   "regExp": "^https?[:][/][/]apps[.]abacus[.]ai[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ChatLLM%20Teams/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ChatLLM%20Teams/assets/thumbnail.png",
   "color": "#4F46E5",

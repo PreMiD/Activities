@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "860122608682795028",
@@ -22,7 +22,7 @@
     "www.hipobuy.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?hipobuy[.]com[/]?",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hipobuy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hipobuy/assets/thumbnail.png",
   "color": "#FF6600",

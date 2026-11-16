@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Mullett",
+    "id": "234243657652240384"
+  },
+  "service": "Slumpgod",
+  "description": {
+    "en": "Anything Hip-hop, we have it: many different artists, and features to keep you interested!"
+  },
+  "url": "slumpgod.org",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*slumpgod[.]org[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Slumpgod/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Slumpgod/assets/thumbnail.png",
+  "color": "#8C1414",
+  "category": "music",
+  "tags": [
+    "music",
+    "hip-hop",
+    "rap"
+  ]
+}

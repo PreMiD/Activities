@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "thuongtr",
+    "id": "453380710024347658"
+  },
+  "service": "MineKeo Network",
+  "description": {
+    "en": "MineKeo Network is a Vietnamese Minecraft server. Vote for the server, check in daily for rewards and support the server on its website.",
+    "vi": "MineKeo Network là server Minecraft Việt Nam. Vote cho server, điểm danh hằng ngày nhận quà và ủng hộ server ngay trên website."
+  },
+  "url": "minekeo.com",
+  "regExp": "^https?[:][/][/](www[.])?minekeo[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MineKeo%20Network/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MineKeo%20Network/assets/thumbnail.jpg",
+  "color": "#E8A5D1",
+  "category": "games",
+  "tags": [
+    "minekeo",
+    "minecraft",
+    "minecraft-server",
+    "vietnam"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Ẩn trang đang xem",
+      "icon": "fa-solid fa-user-secret",
+      "value": false
+    }
+  ]
+}

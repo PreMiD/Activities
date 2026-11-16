@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "671037171611729920",
@@ -18,7 +18,7 @@
   },
   "url": "voirdrama.to",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voirdrama[.]to[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voirdrama/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voirdrama/assets/thumbnail.png",
   "color": "#c41f32",

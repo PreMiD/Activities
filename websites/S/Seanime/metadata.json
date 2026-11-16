@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Dynnx",
+    "id": "984604642015051776"
+  },
+  "service": "Seanime",
+  "description": {
+    "en": "Seanime is a media server with a web interface and desktop app for managing your local library, streaming anime and reading manga.",
+    "fr": "Seanime est un serveur multimédia avec une interface web et une application de bureau pour gérer votre bibliothèque locale, regarder des animes et lire des mangas."
+  },
+  "url": "seanime.app",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*seanime[.]app|localhost|(?:\\d{1,3}[.]){3}\\d{1,3}|[\\w-]+[.][\\w-]+[.]ts[.]net)(:\\d{1,5})?([/]|$)",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Seanime/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Seanime/assets/thumbnail.png",
+  "color": "#ff4c4c",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "video",
+    "media",
+    "player"
+  ],
+  "settings": [
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fa-solid fa-clock",
+      "value": true
+    },
+    {
+      "id": "timeOffset",
+      "if": {
+        "showTimestamp": true
+      },
+      "title": "Timestamp Offset (seconds)",
+      "icon": "fa-solid fa-stopwatch",
+      "value": "0",
+      "placeholder": "0"
+    }
+  ],
+  "allowURLOverrides": true
+}

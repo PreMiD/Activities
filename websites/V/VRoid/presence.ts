@@ -394,6 +394,6 @@ presence.on('UpdateData', () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })

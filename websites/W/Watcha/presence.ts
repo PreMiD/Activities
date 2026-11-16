@@ -371,5 +371,5 @@ app.on('UpdateData', async () => {
 
   if (app.data.details)
     app.setActivity(app.data)
-  else app.setActivity()
+  else app.clearActivity()
 })

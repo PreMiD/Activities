@@ -1,5 +1,6 @@
 import antfu from '@antfu/eslint-config'
 import eslintPluginJsonSchemaValidator from 'eslint-plugin-json-schema-validator'
+import premidPlugin from './eslint-rules/premid-plugin.mjs'
 
 export default antfu(
   {
@@ -13,8 +14,15 @@ export default antfu(
         'error',
         { newIsCapExceptions: ['iFrame'], capIsNew: false, newIsCap: true, properties: true },
       ],
-      // Documentation pages intentionally use multiple H1s and skipped heading
-      // levels for visual structure.
+    },
+  },
+  {
+    // Documentation pages intentionally use multiple H1s and skipped heading
+    // levels for visual structure. Since @antfu/eslint-config 8.3.0, markdown
+    // files are default-ignored in unscoped config blocks, so these overrides
+    // must be scoped to markdown files explicitly.
+    files: ['**/*.md'],
+    rules: {
       'markdown/no-multiple-h1': 'off',
       'markdown/heading-increment': 'off',
     },
@@ -72,6 +80,9 @@ export default antfu(
   },
   {
     files: ['websites/**/*.ts'],
+    plugins: {
+      premid: premidPlugin,
+    },
     languageOptions: {
       parser: await import('@typescript-eslint/parser'),
       parserOptions: {
@@ -80,6 +91,7 @@ export default antfu(
     },
     rules: {
       'ts/no-deprecated': 'error',
+      'premid/require-support-check': 'error',
     },
   },
 )

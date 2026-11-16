@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "54skyxenon",
@@ -12,7 +12,7 @@
   },
   "url": "leetcode.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*leetcode[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LeetCode/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LeetCode/assets/thumbnail.png",
   "color": "#f1a21a",

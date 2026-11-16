@@ -62,6 +62,31 @@ const url = await iframe.getUrl()
 console.log(url) // "https://example.com/embed/video"
 ```
 
+### execInPage
+
+::: tip Requires extension 2.14+
+Added in extension **2.14**. Guard the call with the bundled [`supports`](/v1/api/utility-functions#supports) helper (`supports(iframe, 'execInPage')`) so it degrades gracefully on older extensions.
+:::
+
+<!-- eslint-skip -->
+
+```typescript
+execInPage<T = unknown, A extends unknown[] = unknown[]>(fn: (...args: A) => T | Promise<T>, ...args: A): Promise<T>;
+execInPage<T = unknown>(spec: ExecInPageSpec): Promise<T>;
+```
+
+Runs code in the iframe page's own realm and resolves with its (serializable) return value. Behaves exactly like [`Presence#execInPage`](/v1/api/presence-class#execinpage) — see there for the full contract, the declarative `ExecInPageSpec` form, and examples.
+
+#### Example
+
+```typescript
+import { supports } from 'premid'
+
+if (supports(iframe, 'execInPage')) {
+  const duration = await iframe.execInPage(() => window.player.getDuration())
+}
+```
+
 ### on
 
 <!-- eslint-skip -->

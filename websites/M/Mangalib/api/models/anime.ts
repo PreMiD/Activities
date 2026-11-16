@@ -1,7 +1,7 @@
 import type { AgeRestriction, CommonData, Status } from './common.js'
 
 export interface AnimeData extends Omit<CommonData, 'stats'> {
-  ageRestriction: AgeRestriction
+  ageRestriction: AgeRestriction<'anime'>
   /**
    * Example: 18 января 1991 г.
    */
