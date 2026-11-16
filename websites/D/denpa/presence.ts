@@ -523,7 +523,7 @@ function findServiceBySid(sid: number): ServiceInfo | null {
 function readLiveServiceIdFromDom(): number | null {
   const el = document.querySelector('[data-testid="live-channel"][data-current="true"]')
   const v = el?.getAttribute('data-service')
-  const id = v ? Number(v) : NaN
+  const id = v ? Number(v) : Number.NaN
   return Number.isInteger(id) && id > 0 ? id : null
 }
 
