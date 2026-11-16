@@ -13,8 +13,8 @@
   "url": "sakura.thefoxy.me",
   "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*sakura[.]thefoxy[.]me|localhost)(:\\d{1,5})?([/]|$)",
   "version": "1.0.0",
-  "logo": "https://sakura.thefoxy.me/icon.png",
-  "thumbnail": "https://sakura.thefoxy.me/banner-news.png",
+  "logo": "https://sakura.thefoxy.me/icon-512.png",
+  "thumbnail": "https://sakura.thefoxy.me/banner.png",
   "color": "#FF2D55",
   "category": "anime",
   "tags": [
