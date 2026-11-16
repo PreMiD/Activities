@@ -513,51 +513,27 @@ async function getService(id: number): Promise<ServiceInfo | null> {
 }
 
 // /live は入り方で URL の形が変わる: 番組表からは ?service=<複合ID> で開くが、
-// ナビの「ライブ」からはパラメータなしで開き、前回観ていた局を localStorage の
-// denpa_live_last から復元する。URL だけでは局を特定できないため、複数の手がかりで解決する
+// ナビの「ライブ」からはパラメータなしの /live で開くため、URL だけでは局を特定できない。
+// 再生中の局はチャンネル一覧のボタンが data-current="true" と data-service=<複合ID> を
+// 持っているので (実機で確認済み)、それを最優先の手がかりにする
 function findServiceBySid(sid: number): ServiceInfo | null {
   return servicesCache.find(s => s.id % 100000 === sid) ?? null
 }
 
-function readLastLiveServiceId(): number | null {
-  try {
-    const raw = localStorage.getItem('denpa_live_last')
-    if (!raw)
-      return null
-    if (/^\d+$/.test(raw))
-      return Number(raw)
-    const obj = JSON.parse(raw) as Record<string, unknown>
-    const v = obj.serviceId ?? obj.service_id ?? obj.id
-    return typeof v === 'number' ? v : null
-  }
-  catch {
-    return null
-  }
-}
-
-function readLiveServiceIdFromResources(): number | null {
-  try {
-    const entries = performance.getEntriesByType('resource')
-    for (let i = entries.length - 1; i >= 0; i--) {
-      const m = entries[i]!.name.match(/\/api\/services\/(\d+)\/live/)
-      if (m)
-        return Number(m[1])
-    }
-  }
-  catch { /* リソースタイミングが取れない環境では諦める */ }
-  return null
+function readLiveServiceIdFromDom(): number | null {
+  const el = document.querySelector('[data-testid="live-channel"][data-current="true"]')
+  const v = el?.getAttribute('data-service')
+  const id = v ? Number(v) : NaN
+  return Number.isInteger(id) && id > 0 ? id : null
 }
 
 async function resolveLiveService(param: number): Promise<ServiceInfo | null> {
   const candidates: number[] = []
+  const dom = readLiveServiceIdFromDom()
+  if (dom)
+    candidates.push(dom)
   if (Number.isInteger(param) && param > 0)
     candidates.push(param)
-  const last = readLastLiveServiceId()
-  if (last)
-    candidates.push(last)
-  const perf = readLiveServiceIdFromResources()
-  if (perf)
-    candidates.push(perf)
   for (const id of candidates) {
     const exact = await getService(id)
     if (exact)
