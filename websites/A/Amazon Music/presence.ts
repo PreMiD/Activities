@@ -1,4 +1,4 @@
-import { Assets, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '808756700022702120',
@@ -12,7 +12,6 @@ async function getStrings() {
       viewPlaylist: 'general.buttonViewPlaylist',
       viewArtist: 'general.buttonViewArtist',
     },
-
   )
 }
 
@@ -22,6 +21,7 @@ let oldLang: string | null = null
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/Amazon%20Music/assets/logo.png',
+    type: ActivityType.Listening,
   }
   const [buttons, newLang, showPlaylist, cover] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
@@ -36,7 +36,9 @@ presence.on('UpdateData', async () => {
   }
 
   if (navigator.mediaSession.metadata) {
-    const paused = navigator.mediaSession.playbackState === 'paused'
+    const videos = [...document.querySelectorAll('video')].filter(v => v.duration > 0)
+    const video = videos.find(v => !v.paused) ?? videos[0]
+    const paused = !video || video.paused
 
     if (
       !document.querySelector(
@@ -84,21 +86,13 @@ presence.on('UpdateData', async () => {
     presenceData.state = navigator.mediaSession.metadata.artist
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.pause : strings.play
-    presenceData.endTimestamp = Date.now() / 1000
-      + timestampFromFormat(
-        document
-          .querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(2)')!
-          .textContent!
-          .match(/[0-9:]+/)![0],
-      )
+
+    if (video && !paused) {
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+    }
 
     if (cover) {
       presenceData.largeImageKey = navigator.mediaSession.metadata.artwork[0]?.src
-    }
-
-    if (paused) {
-      delete presenceData.startTimestamp
-      delete presenceData.endTimestamp
     }
 
     presence.setActivity(presenceData)

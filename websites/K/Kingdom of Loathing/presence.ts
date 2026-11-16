@@ -131,7 +131,7 @@ presence.on('iFrameData', async (inc: unknown) => {
       setActivity('Thinking carefully')
       break
     default:
-      presence.setActivity()
+      presence.clearActivity()
       break
   }
 })

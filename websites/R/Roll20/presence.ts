@@ -10,10 +10,7 @@ presence.on('UpdateData', async () => {
   }
   const hideDetails = await presence.getSetting<boolean>('hideDetails')
 
-  if (
-    document.location.pathname.endsWith('roll20.net')
-    || document.location.pathname.includes('/welcome')
-  ) {
+  if (document.location.pathname.includes('/welcome')) {
     presenceData.details = 'Viewing home page'
   }
   else if (document.location.pathname.includes('/editor')) {
@@ -111,5 +108,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

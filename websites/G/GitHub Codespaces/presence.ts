@@ -683,6 +683,6 @@ presence.on('UpdateData', async () => {
   }
 
   if (!presenceData.largeImageKey)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

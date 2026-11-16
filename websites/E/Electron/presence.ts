@@ -160,7 +160,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (!presenceData.details) {
-    presence.setActivity()
+    presence.clearActivity()
   }
   else {
     presenceData.state ??= 'Navigating...'

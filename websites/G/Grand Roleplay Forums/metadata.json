@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "galaxy338",
+    "id": "823400646765183016"
+  },
+  "service": "Grand Roleplay Forums",
+  "description": {
+    "en": "Grand Roleplay Forums is the official community forum for Grand RP GTA V."
+  },
+  "url": "gta5grand.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gta5grand[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Grand%20Roleplay%20Forums/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Grand%20Roleplay%20Forums/assets/thumbnail.png",
+  "color": "#ff4500",
+  "category": "games",
+  "tags": [
+    "gta",
+    "roleplay",
+    "grandrp",
+    "forums"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-slash",
+      "value": false
+    },
+    {
+      "id": "showServer",
+      "title": "Show Server Info",
+      "icon": "fas fa-server",
+      "value": true
+    }
+  ]
+}

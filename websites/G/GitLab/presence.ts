@@ -207,7 +207,7 @@ presence.on('UpdateData', async () => {
   if (!presenceData.details) {
     // This will fire if you do not set presence details
 
-    presence.setActivity()
+    presence.clearActivity()
   }
   else {
     // This will fire if you set presence details

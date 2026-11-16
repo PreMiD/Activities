@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
       break
       // Unknown
     default:
-      presence.setActivity()
+      presence.clearActivity()
       return
   }
 
