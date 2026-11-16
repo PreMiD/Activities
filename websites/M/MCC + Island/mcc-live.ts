@@ -213,15 +213,15 @@ export function getMccLiveData(privacy: boolean): Partial<PresenceData> {
     const panelGameNumber = Number(currentGame.number?.match(/^Game\s+(\d+)/i)?.[1]) || undefined
     const latestPanelGameNumber = selection.latestIndex !== undefined ? selection.latestIndex + 1 : undefined
     const previousLiveSnapshot = latestLiveSnapshot
-    const viewingPastGame = selection.selectedIndex !== undefined
+    const viewingPastGame = (selection.selectedIndex !== undefined
       && selection.latestIndex !== undefined
-      && selection.selectedIndex < selection.latestIndex
-      || Boolean(panelGameNumber && latestPanelGameNumber && panelGameNumber < latestPanelGameNumber)
-      || Boolean(previousLiveSnapshot
-        && previousLiveSnapshot.event === event
-        && panelGameNumber
-        && previousLiveSnapshot.panelGameNumber
-        && panelGameNumber < previousLiveSnapshot.panelGameNumber)
+      && selection.selectedIndex < selection.latestIndex)
+    || (Boolean(panelGameNumber && latestPanelGameNumber && panelGameNumber < latestPanelGameNumber))
+    || (Boolean(previousLiveSnapshot
+      && previousLiveSnapshot.event === event
+      && panelGameNumber
+      && previousLiveSnapshot.panelGameNumber
+      && panelGameNumber < previousLiveSnapshot.panelGameNumber))
 
     if (viewingPastGame) {
       if (previousLiveSnapshot?.data.details === 'Game Winners') {
