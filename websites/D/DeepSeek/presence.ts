@@ -16,7 +16,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum Assets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/logo.png',
-  Talking = 'https://i.imgur.com/fRpbklW.png',
+  Talking = 'https://i.imgur.com/l5SUX1w.png',
   Reading = 'https://cdn.rcd.gg/PreMiD/resources/reading.png',
   Search = 'https://cdn.rcd.gg/PreMiD/resources/search.png',
   Viewing = 'https://cdn.rcd.gg/PreMiD/resources/viewing.png',
