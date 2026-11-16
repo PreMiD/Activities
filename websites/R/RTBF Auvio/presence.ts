@@ -1,8 +1,9 @@
 import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 import {
   ActivityAssets,
-  checkStringLanguage,
+  clearTimestamps,
   cropPreset,
+  decodeImageUrl,
   exist,
   formatDuration,
   getChannel,
@@ -10,13 +11,19 @@ import {
   getDomAttribute,
   getDomText,
   getLocalizedAssets,
+  getPreferredTitle,
   getSetting,
-  getThumbnail,
   limitText,
+  normalizeTitle,
+  parseSchedule,
   presence,
+  resetWarnings,
   safeFetchMetadata,
   safeGetThumbnail,
   strings,
+  textOr,
+  updateStringLanguage,
+  warnMissing,
 } from './util.js'
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -28,44 +35,6 @@ let isMediaPlayer = false
 let audioPlayer = false
 let title = ''
 let subtitle = ''
-
-function normalizeTitle(value: string) {
-  return value
-    .toLowerCase()
-    .normalize('NFD')
-    .replaceAll(/[\u0300-\u036F]/g, '')
-    .replaceAll(/[^a-z0-9]+/g, ' ')
-    .trim()
-}
-
-function getPreferredTitle(baseTitle: string, baseSubtitle: string, useOnlyLastBreadcrumb = false) {
-  const detailSubtitle = getDomText('[class*=DetailsTitle_subtitle]', '')
-  const playerSubtitle = getDomText('[class*=TitleDetails_subtitle]', '')
-  const preferredSubtitle = baseSubtitle || detailSubtitle || playerSubtitle
-
-  if (!baseTitle || !preferredSubtitle)
-    return baseTitle
-
-  const lastBreadcrumbTitle = getDomText('[aria-current="page"], [class*=Breadcrumb_breadcrumb] > ul > li:last-child > span', '')
-  const detailTitle = getDomText('div[class*=DetailsTitle_title] > h1', '').replace(detailSubtitle, '')
-  const playerTitle = getDomText('h1[class*=TitleDetails_title]', '')
-
-  if (useOnlyLastBreadcrumb) {
-    return [detailTitle, playerTitle, baseTitle].some(currentTitle => normalizeTitle(currentTitle) === normalizeTitle(lastBreadcrumbTitle))
-      ? preferredSubtitle
-      : baseTitle
-  }
-
-  return [detailTitle, playerTitle, lastBreadcrumbTitle].some(currentTitle => normalizeTitle(currentTitle) === normalizeTitle(baseTitle))
-    ? preferredSubtitle
-    : baseTitle
-}
-
-function clearTimestamps(data: PresenceData) {
-  delete data.startTimestamp
-  delete data.endTimestamp
-}
-
 presence.on('UpdateData', async () => {
   const { href, pathname } = document.location
   const pathParts = pathname.split('/')
@@ -85,20 +54,21 @@ presence.on('UpdateData', async () => {
     useButtons,
   ] = [
     getSetting<string>('lang', 'en'),
-    getSetting<boolean>('usePresenceName'),
-    getSetting<boolean>('useChannelName'),
-    getSetting<boolean>('usePrivacyMode'),
-    getSetting<boolean>('usePoster'),
-    getSetting<number>('useButtons'),
+    getSetting<boolean>('usePresenceName', false),
+    getSetting<boolean>('useChannelName', false),
+    getSetting<boolean>('usePrivacyMode', true),
+    getSetting<boolean>('usePoster', false),
+    getSetting<boolean>('useButtons', false),
   ]
 
   // Update strings if user selected another language.
-  if (!checkStringLanguage(newLang))
+  if (!updateStringLanguage(newLang))
     return
   presenceData.smallImageText = strings.browsing
 
   if (oldPath !== pathname) {
     oldPath = pathname
+    resetWarnings()
     slideshow.deleteAllSlides()
     audioPlayer = false
   }
@@ -107,8 +77,8 @@ presence.on('UpdateData', async () => {
 
   switch (true) {
     case exist('#audioPlayerContainer')
-      && (exist('#PlayerUIButtonStop')
-        || document.querySelector('#PlayerUIButtonPlayPause')?.getAttribute('aria-label') === 'pause'): {
+      && !exist('[role="dialog"][aria-label="Player"]')
+      && (exist('#PlayerUIButtonStop') || exist('#audioPlayerContainer #PlayerUIButtonPlayPause')): {
       if (!audioPlayer) {
         slideshow.deleteAllSlides() // Clearing previous slides
         audioPlayer = true
@@ -120,6 +90,12 @@ presence.on('UpdateData', async () => {
       const firstLine = document.querySelector('[class*=PlayerUIAudio_titleText]')?.textContent ?? ''
       const secondLine = document.querySelector('[class*=PlayerUIAudio_subtitle]')?.textContent ?? ''
       const duration = document.querySelector('[class*=PlayerUIAudio_duration]')?.textContent ?? '0'
+      const audioLabel = document.querySelector('#audioPlayerContainer #PlayerUIButtonPlayPause')?.getAttribute('aria-label')?.toLowerCase() ?? ''
+      const audioPaused = audioLabel === 'lecture' || audioLabel === 'play'
+
+      warnMissing('audio-title', !firstLine.trim(), 'No audio player title found ([class*=PlayerUIAudio_titleText]).')
+      warnMissing('audio-duration', !exist('[class*=PlayerUIAudio_duration]'), 'No audio player duration element found ([class*=PlayerUIAudio_duration]).')
+      warnMissing('audio-label', !!audioLabel && !['lecture', 'play', 'pause'].includes(audioLabel), 'Unrecognized audio play/pause label.')
 
       if (duration === 'DIRECT' || exist('#PlayerUIAudioGoToLiveButton')) {
         /* ANCHOR: RADIO LIVE FEED
@@ -127,22 +103,28 @@ presence.on('UpdateData', async () => {
           NOTE: Direct radios are in the same place as podcasts, and play in the same audio player.
           The only difference is in the duration field, which is equal to “direct”, or the back to direct button if in deferred mode. */
 
-        const channelName = (firstLine.includes(' - ') ? firstLine.split(' - ')[0] : firstLine.match(/^\w+/)?.[0])!
-        const coverArt = decodeURIComponent(
-          document.querySelector('[class*=PlayerUIAudio_logoContainer]  > span > img')?.getAttribute('src')?.replace('/_next/image?url=', '').split('&w')[0] ?? '',
-        )
+        const coverArt = decodeImageUrl(document.querySelector('[class*=PlayerUIAudio_logoContainer] > span > img')?.getAttribute('src') ?? '')
+        const logoName = coverArt.split('?')[0]?.split('/').pop()?.replace(/\.[^.]+$/, '') ?? ''
+        const channelName = [firstLine.split(' - ')[0] ?? '', logoName, pathParts[1] === 'chaine' ? (pathParts[2] ?? '').replace(/-\d+$/, '') : '']
+          .find(name => getChannel(name).found) ?? ''
+        warnMissing('radio-channel', !channelName, 'No known radio channel could be identified from the player.')
 
         presenceData.name = usePrivacyMode || !usePresenceName ? strings.toARadio : getChannel(channelName).channel
         presenceData.type = ActivityType.Listening
 
-        presenceData.smallImageKey = usePrivacyMode
-          ? ActivityAssets.Privacy
-          : ActivityAssets.ListeningLive
-        presenceData.smallImageText = usePrivacyMode
-          ? strings.privatePlay
-          : strings.play
+        presenceData.smallImageKey = audioPaused
+          ? Assets.Pause
+          : usePrivacyMode
+            ? ActivityAssets.Privacy
+            : ActivityAssets.ListeningLive
+        presenceData.smallImageText = audioPaused
+          ? strings.pause
+          : usePrivacyMode
+            ? strings.privatePlay
+            : strings.play
 
-        presenceData.startTimestamp = browsingTimestamp
+        if (!audioPaused)
+          presenceData.startTimestamp = browsingTimestamp
 
         if (usePrivacyMode) {
           presenceData.details = strings.listeningTo.replace('{0}', ' ').replace('{1}', strings.aRadio)
@@ -161,7 +143,7 @@ presence.on('UpdateData', async () => {
             'https://ds.static.rtbf.be/default/',
           ) // Must not match default auvio image https://ds.static.rtbf.be/default/image/770x770/default-auvio_0.jpg
             ? getChannel(channelName).logo
-            : await getThumbnail(
+            : await safeGetThumbnail(
                 coverArt,
                 cropPreset.squared,
                 getChannel(channelName).color,
@@ -189,8 +171,9 @@ presence.on('UpdateData', async () => {
             songData.details = secondLine.length > 30 ? secondLine.slice(0, secondLine.slice(0, 30).lastIndexOf(' ')) : secondLine
             songData.state = secondLine.length > 30 ? secondLine.slice(songData.details.length).trim() : ''
           }
+          songData.details ||= firstLine || strings.toARadio
 
-          songData.largeImageKey = firstLine.includes(' - ') ? getChannel(channelName).logo : await getThumbnail(coverArt, cropPreset.squared, getChannel(channelName).color)
+          songData.largeImageKey = firstLine.includes(' - ') || !coverArt ? getChannel(channelName).logo : await safeGetThumbnail(coverArt, cropPreset.squared, getChannel(channelName).color)
           songData.largeImageText += ' - Radio'
 
           slideshow.addSlide('SONG', songData, 5000)
@@ -201,36 +184,46 @@ presence.on('UpdateData', async () => {
           EXAMPLE: https://auvio.rtbf.be/media/la-semaine-des-5-heures-la-semaine-des-5-heures-3318620
           Podcasts can be original programs or past broadcasts. */
 
-        presenceData.name = usePresenceName && !usePrivacyMode ? firstLine : strings.toAPodcast
+        presenceData.name = usePresenceName && !usePrivacyMode ? firstLine || strings.toAPodcast : strings.toAPodcast
         presenceData.type = ActivityType.Listening
 
         presenceData.details = !usePrivacyMode
-          ? firstLine
+          ? firstLine || strings.toAPodcast
           : strings.listeningTo.replace('{0}', ' ').replace('{1}', strings.aPodcast)
 
         presenceData.state = !usePrivacyMode ? secondLine : ''
 
-        presenceData.smallImageKey = usePrivacyMode
-          ? ActivityAssets.Privacy
-          : ActivityAssets.ListeningVOD
-        presenceData.smallImageText = usePrivacyMode
-          ? strings.privatePlay
-          : strings.play;
+        presenceData.smallImageKey = audioPaused
+          ? Assets.Pause
+          : usePrivacyMode
+            ? ActivityAssets.Privacy
+            : ActivityAssets.ListeningVOD
+        presenceData.smallImageText = audioPaused
+          ? strings.pause
+          : usePrivacyMode
+            ? strings.privatePlay
+            : strings.play
 
-        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-          timestampFromFormat(duration.split('/')?.[0] ?? duration),
-          timestampFromFormat(duration.split('/')?.[1] ?? duration),
-        )
+        const durationParts = duration.split('/')
+        const validAudioDuration = durationParts.length === 2 && durationParts.every(part => /^\d+(?::\d+){1,2}$/.test(part.trim()))
+        warnMissing('audio-time-format', !validAudioDuration, 'Podcast timing is unavailable or has an unexpected format.')
+        if (!audioPaused && validAudioDuration) {
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+            timestampFromFormat(duration.split('/')?.[0] ?? duration),
+            timestampFromFormat(duration.split('/')?.[1] ?? duration),
+          )
+        }
 
         if (usePoster) {
-          presenceData.largeImageKey = await getThumbnail(
-            decodeURIComponent(
-              // the url is a weird relative encoded link
-              document.querySelector('[class*=PlayerUIAudio_logoContainer]  > span > img')!.getAttribute('src')!.replace('/_next/image?url=', '').split('&w')[0]!,
-            ),
-            cropPreset.squared,
-            getChannel('default').color,
-          )
+          const imageSrc = document.querySelector('[class*=PlayerUIAudio_logoContainer] > span > img')?.getAttribute('src')
+          warnMissing('audio-image', !imageSrc, 'No podcast artwork found ([class*=PlayerUIAudio_logoContainer] > span > img).')
+          if (imageSrc) {
+            presenceData.largeImageKey = await safeGetThumbnail(
+              decodeImageUrl(imageSrc),
+              cropPreset.squared,
+              getChannel('default').color,
+            )
+          }
         }
         if (!usePrivacyMode)
           presenceData.largeImageText += ' - Podcasts'
@@ -240,11 +233,13 @@ presence.on('UpdateData', async () => {
     /* NOTE: RESEARCH PAGE
     EXAMPLE: https://auvio.rtbf.be/explorer */
     case ['explorer'].includes(pathParts[1]!): {
-      const searchQuery = (
-        document.querySelector(
+      const searchInput
+        = document.querySelector(
           'input[class*=PageContent_inputSearch]',
         ) as HTMLInputElement | null
-      )?.value ?? ''
+
+      warnMissing('search-input', !searchInput, 'No search input found (input[class*=PageContent_inputSearch]).')
+      const searchQuery = searchInput?.value ?? ''
 
       if (!usePrivacyMode && searchQuery !== '') {
         presenceData.details = strings.browsing
@@ -270,6 +265,8 @@ presence.on('UpdateData', async () => {
       'langues_sous_titres',
       'parametres_lecture',
     ].includes(pathParts[1]!): {
+      if (!usePrivacyMode)
+        warnMissing('account-title', !exist('h1[class*=UserGateway_title]'), 'No account page title found (h1[class*=UserGateway_title]).')
       presenceData.details = usePrivacyMode ? strings.browsing : getDomText('h1[class*=UserGateway_title]', strings.browsing)
       presenceData.state = usePrivacyMode ? strings.viewAPage : strings.viewAccount
 
@@ -302,12 +299,15 @@ presence.on('UpdateData', async () => {
         || exist('[class*=PlayerDialog_playerOverlay]')
         || exist('#livePlayerContainer')
         || exist('#vodPlayerContainer')
-      const hasVideoPlayer = hasPlayerDialog
+      const hasPlayerError = exist('[id="PlayerErrorComponent.back"]')
+      const hasVideoPlayer = hasPlayerDialog && !hasPlayerError
         && (
           exist('div#vodPlayerContainer video')
           || exist('div#livePlayerContainer video')
           || (!hasTrailerPlayer && hasPlayerControls)
         )
+
+      warnMissing('video-player', hasPlayerDialog && !hasPlayerError && !hasVideoPlayer, 'A player dialog is open but no video or player controls were found; it may still be loading.')
 
       if (usePrivacyMode) {
         presenceData.smallImageKey = ActivityAssets.Privacy
@@ -340,21 +340,20 @@ presence.on('UpdateData', async () => {
 
         const metadatas = await safeFetchMetadata(`https://bff-service.rtbf.be/auvio/v1.23/pages/${pathParts[1]!}/${pathParts[2]!}`)
 
+        warnMissing('media-metadata', !!metadatas?.data && !metadatas.data.content, 'Media metadata has no content object.')
+
         let mediaType, mediaSubtype, description, image, channel, duration, category, scheduledFrom, scheduledTo, waitTime, remainingTime
         let shouldUsePreferredTitle = true
         if (metadatas?.data) {
           // Populating metadatas variables with API method
 
-          mediaType = metadatas.data.pageType
-            ?? metadatas.data.content?.pageType
-            ?? ''
-          mediaSubtype = metadatas.data.content.type ?? ''
+          mediaType = textOr(metadatas.data.pageType, textOr(metadatas.data.content?.pageType))
+          mediaSubtype = textOr(metadatas.data.content?.type)
           shouldUsePreferredTitle = !['MOVIE', 'SERIE'].includes(mediaSubtype)
 
-          title = metadatas.data.content?.title ?? 'Auvio'
-          subtitle = metadatas.data.content?.subtitle
-            ?? metadatas.data.content?.media?.subtitle
-            ?? ''
+          title = textOr(metadatas.data.content?.title, 'Auvio')
+          warnMissing('media-title', title === 'Auvio' && !textOr(metadatas.data.content?.title), 'Media metadata has no usable title.')
+          subtitle = textOr(metadatas.data.content?.subtitle, textOr(metadatas.data.content?.media?.subtitle))
 
           if (title === subtitle)
             subtitle = ''
@@ -367,35 +366,32 @@ presence.on('UpdateData', async () => {
             }
           }
 
-          description = metadatas.data.content?.description?.length > 2
-            ? limitText(metadatas.data.content.description, 128)
-            : metadatas.data.content?.media?.description?.length > 2
-              ? limitText(metadatas.data.content.media.description, 128)
-              : 'Auvio'
+          description = limitText(textOr(metadatas.data.content?.description, textOr(metadatas.data.content?.media?.description, 'Auvio')), 128)
 
-          image = metadatas.data.content?.background?.m ?? ActivityAssets.Logo
+          image = textOr(metadatas.data.content?.background?.m, ActivityAssets.Logo)
 
-          channel = (metadatas.data.content?.channel ?? {})?.label ?? metadatas.data.content?.media?.channelLabel ?? ''
+          channel = textOr(metadatas.data.content?.channel?.label, textOr(metadatas.data.content?.media?.channelLabel))
 
           duration = metadatas.data.content?.duration
             ? formatDuration(metadatas.data.content.duration)
             : metadatas.data.content?.media?.duration
               ? formatDuration(metadatas.data.content.media.duration)
               : ''
+          warnMissing('media-duration', !!(metadatas.data.content?.duration ?? metadatas.data.content?.media?.duration) && !duration, 'Media duration has an unexpected format.')
 
-          category = metadatas.data.content?.category?.label ?? ''
+          category = textOr(metadatas.data.content?.category?.label)
           if (['film', 'films'].includes(normalizeTitle(category)))
             shouldUsePreferredTitle = false
 
-          scheduledFrom = metadatas.data.content?.scheduledFrom ?? new Date(browsingTimestamp).toISOString()
-          scheduledTo = metadatas.data.content?.scheduledTo ?? new Date(browsingTimestamp + 6000).toISOString()
+          scheduledFrom = parseSchedule(metadatas.data.content?.scheduledFrom)
+          scheduledTo = parseSchedule(metadatas.data.content?.scheduledTo)
 
-          if (scheduledFrom) {
-            waitTime = (new Date(scheduledFrom).getTime() / 1000) - browsingTimestamp
+          if (scheduledFrom !== null) {
+            waitTime = scheduledFrom - Math.floor(Date.now() / 1000)
           }
 
-          if (scheduledTo) {
-            remainingTime = (new Date(scheduledTo).getTime() / 1000) - browsingTimestamp
+          if (scheduledTo !== null) {
+            remainingTime = scheduledTo - Math.floor(Date.now() / 1000)
           }
         }
         else {
@@ -409,12 +405,15 @@ presence.on('UpdateData', async () => {
               .length;
             i++
           ) {
-            const data = JSON.parse(
-              document.querySelectorAll('script[type=\'application/ld+json\']')[i]?.textContent ?? '{}',
-            )
-            if (['Movie', 'Episode', 'BroadcastEvent', 'VideoObject'].includes(data['@type'])) {
-              mediaData = data
-              shouldUsePreferredTitle = !['Episode', 'Movie'].includes(data['@type'])
+            try {
+              const data = JSON.parse(document.querySelectorAll('script[type=\'application/ld+json\']')[i]?.textContent ?? '{}')
+              if (data && ['Movie', 'Episode', 'BroadcastEvent', 'VideoObject'].includes(data['@type'])) {
+                mediaData = data
+                shouldUsePreferredTitle = !['Episode', 'Movie'].includes(data['@type'])
+              }
+            }
+            catch {
+              warnMissing('invalid-jsonld', true, 'Media structured data could not be parsed.')
             }
           }
 
@@ -422,14 +421,15 @@ presence.on('UpdateData', async () => {
 
           subtitle = getDomText('[class*=DetailsTitle_subtitle]', '')
           title = getDomText('div[class*=DetailsTitle_title] > h1', 'Auvio').replace(subtitle, '') || 'Auvio'
-          description = mediaData?.description && mediaData.description.length > 2 ? limitText(mediaData.description, 128) : 'Auvio'
-          image = mediaData?.thumbnailUrl || ActivityAssets.Logo
+          warnMissing('fallback-title', title === 'Auvio', 'No media title was found in the page fallback.')
+          description = limitText(textOr(mediaData?.description, 'Auvio'), 128)
+          image = textOr(mediaData?.thumbnailUrl, ActivityAssets.Logo)
           channel = document.querySelectorAll('div[class*=DetailsTitle_channelCategory] > div')[0]?.textContent?.trim() ?? ''
           duration = formatDuration(mediaData?.duration ?? 0)
           category = getDomText('[class*=Breadcrumb_breadcrumb] > ul > li:last-child > span', '')
 
-          scheduledFrom = ''
-          scheduledTo = ''
+          scheduledFrom = null
+          scheduledTo = null
           waitTime = 0
           remainingTime = 0
         }
@@ -504,7 +504,7 @@ presence.on('UpdateData', async () => {
           }
 
           // SLIDE: Livestream Status
-          if (mediaType === 'LIVE') {
+          if (mediaType === 'LIVE' && (scheduledFrom || scheduledTo)) {
             const scheduleData = structuredClone(presenceData)
             if ((waitTime || -1) > 0) {
               scheduleData.state = strings.startsIn.replace('{0}', formatDuration(waitTime!)) // "Starts in 3h41"
@@ -565,14 +565,17 @@ presence.on('UpdateData', async () => {
           const hasAdOverlay = exist('.ad-click-overlay')
             || exist('.ad-children-wrapper')
             || exist('#ad')
-            || exist('.PlayerAdUI_clickInfo__Hb5uc')
-          const bAdCountdown = hasAdOverlay || exist('.PlayerAdUI_clickInfo__Hb5uc')
+            || exist('[class*=PlayerAdUI_clickInfo]')
+          const bAdCountdown = hasAdOverlay
           const playerPausedLabel = playPauseLabel.includes('pause')
             ? false
             : playPauseLabel.includes('lecture') || playPauseLabel.includes('play')
               ? true
               : null
           const isPaused = playerPausedLabel ?? video?.paused ?? false
+
+          warnMissing('video-element', !hasAdOverlay && !video, 'No video element found in #vodPlayerContainer or #livePlayerContainer.')
+          warnMissing('video-label', !hasAdOverlay && !!playPauseLabel && playerPausedLabel === null, 'Unrecognized video play/pause label; using the video paused state.')
 
           // BASE SLIDES
           if (usePresenceName)
@@ -627,8 +630,10 @@ presence.on('UpdateData', async () => {
                 clearTimestamps(presenceData)
               }
               else {
-                presenceData.startTimestamp = (new Date(scheduledFrom).getTime() / 1000)
-                presenceData.endTimestamp = (new Date(scheduledTo).getTime() / 1000)
+                if (scheduledFrom)
+                  presenceData.startTimestamp = scheduledFrom
+                if (scheduledTo)
+                  presenceData.endTimestamp = scheduledTo
               }
             }
             else { // Deferred
@@ -686,7 +691,7 @@ presence.on('UpdateData', async () => {
 
               clearTimestamps(presenceData)
             }
-            else if (video) {
+            else if (video && Number.isFinite(video.duration) && video.duration > 0 && Number.isFinite(video.currentTime)) {
               presenceData.smallImageKey = Assets.Play
               presenceData.smallImageText = strings.play
 
@@ -759,6 +764,7 @@ presence.on('UpdateData', async () => {
         // ANCHOR: CATEGORY AND CHANNEL PAGE
         const headingTitle = getDomText('h1', '')
         const breadcrumbTitle = getDomText('nav[aria-label="Fil d\'ariane"] > ul > li:nth-last-child(1) > span', '')
+        warnMissing('category-title', !headingTitle && !breadcrumbTitle, 'No category title or breadcrumb found (h1 or nav[aria-label="Fil d\'ariane"]).')
         const categoryTitle = headingTitle.length < 20 && headingTitle
           ? headingTitle
           : breadcrumbTitle || headingTitle || 'Auvio' // Last of breadcrumb list
@@ -787,33 +793,32 @@ presence.on('UpdateData', async () => {
         if (usePoster
           && !['podcasts'].includes(pathParts[1]!) // TO-DO: Podcast category can cause issues
         ) {
-          useSlideshow = true
-
-          const selector = exist('img[class*=TileProgramPoster_hoverPicture]')
+          const galleryElement = document.querySelector('.swiper-wrapper:has(:not(figure) img)') || document.querySelector('[class*=Mosaic_mosaic]')
+          const selector = galleryElement?.querySelector('img[class*=TileProgramPoster_hoverPicture]')
             ? 'img[class*=TileProgramPoster_hoverPicture]' // If programs cover art are in portrait
-            : exist('img[class*=TileMedia_hoverPicture]')
+            : galleryElement?.querySelector('img[class*=TileMedia_hoverPicture]')
               ? 'img[class*=TileMedia_hoverPicture]' // If programs cover art are in landscape
               : '[class*=TileMedia_mosaic] > span > img' // If the page is mot-cle
 
           // SLIDES: Samples of content in the category
-          const galleryElement = document.querySelector('.swiper-wrapper:has(:not(figure) img)') || document.querySelector('[class*=Mosaic_mosaic]')
+          const images = galleryElement?.querySelectorAll<HTMLImageElement>(selector) ?? []
+          warnMissing('gallery-images', !!galleryElement && images.length === 0, 'A gallery was found but no matching program or media images were found.')
           for (
             let index = 0;
-            index < galleryElement!.childElementCount;
+            index < images.length;
             index++
           ) {
-            const src = decodeURIComponent(
-              document.querySelectorAll(selector)[index]?.getAttribute('src')!.replace('/_next/image?url=', '').split('&w')[0] || '',
-            )
+            const src = decodeImageUrl(images[index]?.getAttribute('src') ?? '')
 
             // Sometimes url starts with data:image and it doesn't render well, so we take no risks
             if (!src.match('data:image') && src !== '') {
+              useSlideshow = true
               const sampleData = structuredClone(presenceData) // Deep copy
-              const mediaTitle = document.querySelectorAll(selector)[index]?.getAttribute('title') || index.toString()
+              const mediaTitle = images[index]?.getAttribute('title') || index.toString()
 
               sampleData.largeImageKey = await safeGetThumbnail(
                 src,
-                exist('img[class*=TileProgramPoster_hoverPicture]')
+                selector === 'img[class*=TileProgramPoster_hoverPicture]'
                   ? cropPreset.vertical
                   : cropPreset.horizontal,
                 getColor(categoryTitle || 'Auvio'),
