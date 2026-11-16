@@ -73,12 +73,20 @@ presence.on('UpdateData', async () => {
     audioPlayer = false
   }
 
+  const audioLabel = document.querySelector('#audioPlayerContainer #PlayerUIButtonPlayPause')?.getAttribute('aria-label')?.toLowerCase() ?? ''
+  const audioActive = exist('#audioPlayerContainer')
+    && !exist('[role="dialog"][aria-label="Player"]')
+    && (exist('#audioPlayerContainer #PlayerUIButtonStop') || audioLabel === 'pause')
+
+  if (audioPlayer && !audioActive) {
+    slideshow.deleteAllSlides()
+    audioPlayer = false
+  }
+
   let useSlideshow = false
 
   switch (true) {
-    case exist('#audioPlayerContainer')
-      && !exist('[role="dialog"][aria-label="Player"]')
-      && (exist('#PlayerUIButtonStop') || exist('#audioPlayerContainer #PlayerUIButtonPlayPause')): {
+    case audioActive: {
       if (!audioPlayer) {
         slideshow.deleteAllSlides() // Clearing previous slides
         audioPlayer = true
@@ -90,9 +98,6 @@ presence.on('UpdateData', async () => {
       const firstLine = document.querySelector('[class*=PlayerUIAudio_titleText]')?.textContent ?? ''
       const secondLine = document.querySelector('[class*=PlayerUIAudio_subtitle]')?.textContent ?? ''
       const duration = document.querySelector('[class*=PlayerUIAudio_duration]')?.textContent ?? '0'
-      const audioLabel = document.querySelector('#audioPlayerContainer #PlayerUIButtonPlayPause')?.getAttribute('aria-label')?.toLowerCase() ?? ''
-      const audioPaused = audioLabel === 'lecture' || audioLabel === 'play'
-
       warnMissing('audio-title', !firstLine.trim(), 'No audio player title found ([class*=PlayerUIAudio_titleText]).')
       warnMissing('audio-duration', !exist('[class*=PlayerUIAudio_duration]'), 'No audio player duration element found ([class*=PlayerUIAudio_duration]).')
       warnMissing('audio-label', !!audioLabel && !['lecture', 'play', 'pause'].includes(audioLabel), 'Unrecognized audio play/pause label.')
@@ -112,19 +117,9 @@ presence.on('UpdateData', async () => {
         presenceData.name = usePrivacyMode || !usePresenceName ? strings.toARadio : getChannel(channelName).channel
         presenceData.type = ActivityType.Listening
 
-        presenceData.smallImageKey = audioPaused
-          ? Assets.Pause
-          : usePrivacyMode
-            ? ActivityAssets.Privacy
-            : ActivityAssets.ListeningLive
-        presenceData.smallImageText = audioPaused
-          ? strings.pause
-          : usePrivacyMode
-            ? strings.privatePlay
-            : strings.play
-
-        if (!audioPaused)
-          presenceData.startTimestamp = browsingTimestamp
+        presenceData.smallImageKey = usePrivacyMode ? ActivityAssets.Privacy : ActivityAssets.ListeningLive
+        presenceData.smallImageText = usePrivacyMode ? strings.privatePlay : strings.play
+        presenceData.startTimestamp = browsingTimestamp
 
         if (usePrivacyMode) {
           presenceData.details = strings.listeningTo.replace('{0}', ' ').replace('{1}', strings.aRadio)
@@ -193,21 +188,13 @@ presence.on('UpdateData', async () => {
 
         presenceData.state = !usePrivacyMode ? secondLine : ''
 
-        presenceData.smallImageKey = audioPaused
-          ? Assets.Pause
-          : usePrivacyMode
-            ? ActivityAssets.Privacy
-            : ActivityAssets.ListeningVOD
-        presenceData.smallImageText = audioPaused
-          ? strings.pause
-          : usePrivacyMode
-            ? strings.privatePlay
-            : strings.play
+        presenceData.smallImageKey = usePrivacyMode ? ActivityAssets.Privacy : ActivityAssets.ListeningVOD
+        presenceData.smallImageText = usePrivacyMode ? strings.privatePlay : strings.play
 
         const durationParts = duration.split('/')
         const validAudioDuration = durationParts.length === 2 && durationParts.every(part => /^\d+(?::\d+){1,2}$/.test(part.trim()))
         warnMissing('audio-time-format', !validAudioDuration, 'Podcast timing is unavailable or has an unexpected format.')
-        if (!audioPaused && validAudioDuration) {
+        if (validAudioDuration) {
           [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
             timestampFromFormat(duration.split('/')?.[0] ?? duration),
             timestampFromFormat(duration.split('/')?.[1] ?? duration),
