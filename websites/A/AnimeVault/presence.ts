@@ -23,7 +23,10 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
     largeImageText: 'AnimeVault - bunbongonvl.online',
-    startTimestamp: browsingTimestamp,
+  }
+
+  if (showTimestamps) {
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   const pageFirstTitle = document.title ? (document.title.split('-')[0]?.trim() ?? '') : ''
@@ -73,6 +76,26 @@ presence.on('UpdateData', async () => {
       const roomTitle = document.querySelector('.wp-room-header h1')?.textContent?.trim() || 'Phòng chiếu VIP'
       presenceData.details = 'Phòng Xem Chung'
       presenceData.state = roomTitle
+
+      if (video && !Number.isNaN(video.duration) && video.duration > 0) {
+        if (showTimestamps) {
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+            Math.floor(video.currentTime),
+            Math.floor(video.duration),
+          )
+        }
+
+        if (video.paused) {
+          presenceData.smallImageKey = Assets.Pause
+          presenceData.smallImageText = 'Tạm dừng'
+          delete presenceData.startTimestamp
+          delete presenceData.endTimestamp
+        }
+        else {
+          presenceData.smallImageKey = Assets.Play
+          presenceData.smallImageText = 'Đang phát'
+        }
+      }
 
       if (showButtons) {
         presenceData.buttons = [
@@ -124,6 +147,11 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Trang chủ'
       break
     }
+  }
+
+  if (!showTimestamps) {
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
   }
 
   presence.setActivity(presenceData)
