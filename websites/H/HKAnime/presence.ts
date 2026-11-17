@@ -4,46 +4,59 @@ const presence = new Presence({
   clientId: '1572307039282012342',
 })
 
+// Get translated strings
+const strings = presence.getStrings({
+  browsing: 'general.browsing',
+  paused: 'general.paused',
+  watching: 'general.watching',
+  episode: 'general.episode',
+})
+
 presence.on('UpdateData', async () => {
-  // get the current URL
+  // Get translations
+  const translatedStrings = await strings
+
+  // Get the current URL
   const path = decodeURIComponent(
-    document.location.pathname
+    document.location.pathname,
   )
 
   const parts = path.split('/')
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    details: 'Browsing HKAnime',
+    details: `${translatedStrings.browsing.replace(/\.+$/, '').trim()} HKAnime`,
     state: 'Looking for anime to watch',
+    largeImageKey: 'https://i.imgur.com/4lKtB9R.png',
+    largeImageText: 'HKAnime',
   }
 
-  // check if user is watching an anime episode
+  // Check if user is watching an anime episode
   if (parts[1] === 'play' && parts[2]) {
     const animeTitle = parts[2]
 
-    // find the currently selected episode
+    // Find the currently selected episode
     const episodeElement = document.querySelector(
-      '#ep-list-container .eplist.active'
+      '#ep-list-container .eplist.active',
     )
 
-    // get the episode number
+    // Get the episode number
     const episodeNumber = episodeElement?.getAttribute(
-      'data-episode-number'
+      'data-episode-number',
     )
 
-    // get the episode title
+    // Get the episode title
     const episodeTitle = document.querySelector(
-      '#ep-list-container .eplist.active span:not(.playing-label)'
+      '#ep-list-container .eplist.active span:not(.playing-label)',
     )?.textContent?.trim()
 
-    // display the anime title
+    // Display the anime title
     presenceData.details = animeTitle
 
-    // hk anime thumbnail
+    // Get HKAnime's thumbnail
     const thumbnail = document
       .querySelector<HTMLMetaElement>(
-        'meta[property="og:image"]'
+        'meta[property="og:image"]',
       )
       ?.getAttribute('content')
 
@@ -52,44 +65,45 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageText = animeTitle
     }
 
-    // display episode number and title
+    // Display episode number and title
     if (episodeNumber) {
-      // remove other information from episode
+      // Remove release date from episode title
       const cleanTitle = episodeTitle
         ?.replace(/\s*\(\d{4}\/\d{2}\/\d{2}\)/g, '')
         .trim()
 
       presenceData.state = cleanTitle
         ? `EP${episodeNumber} ${cleanTitle}`
-        : `Episode ${episodeNumber}`
+        : `${translatedStrings.episode} ${episodeNumber}`
     }
     else {
-      presenceData.state = 'Watching anime'
+      presenceData.state = translatedStrings.watching
     }
   }
 
-  // hk anime video player
+  // Find the HKAnime video player
   const video = document.querySelector<HTMLVideoElement>(
-    'video.jw-video'
+    'video.jw-video',
   )
 
-  // detect if video is playing or paused
+  // Detect video playback and paused status
   if (video && parts[1] === 'play') {
     if (Number.isFinite(video.duration) && video.duration > 0) {
       if (video.paused) {
-        // paused status
-        presenceData.state = `Paused | ${presenceData.state}`
+        // Display paused status
+        presenceData.state
+          = `${translatedStrings.paused} | ${presenceData.state}`
       }
       else {
-        // video playback progress
+        // Calculate playback progress
         [
           presenceData.startTimestamp,
-          presenceData.endTimestamp
+          presenceData.endTimestamp,
         ] = getTimestampsFromMedia(video)
       }
     }
   }
 
-  // update rpc
+  // Update Discord Rich Presence
   presence.setActivity(presenceData)
 })
