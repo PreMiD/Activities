@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "866813505856471040",
+    "name": "hakuryu."
+  },
+  "service": "HKAnime",
+  "description": {
+    "en": "HKAnime is a Cantonese-dubbed anime streaming website."
+  },
+  "url": "hkanime.com",
+  "regExp": "^https?://(www\\.)?hkanime\\.com(/|$)",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/4lKtB9R.png",
+  "thumbnail": "https://i.imgur.com/Gfn9iQ2.png",
+  "color": "#A47DAB",
+  "category": "anime",
+  "tags": [
+    "anime"
+  ]
+}
