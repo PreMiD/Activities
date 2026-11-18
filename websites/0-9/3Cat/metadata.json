@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.11",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "876847664275263499",
@@ -13,7 +13,7 @@
     "www.3cat.cat",
     "3cat.cat"
   ],
-  "regExp": "^https?://(www[.])?3cat[.]cat/",
+  "regExp": "^https?[:][/][/](www[.])?3cat[.]cat[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/Imn9pvj.png",
   "thumbnail": "https://i.imgur.com/QhlwcWi.png",
@@ -26,7 +26,7 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?://([a-z0-9-]+[.])*(3cat|ccma)[.]cat/",
+  "iFrameRegExp": "^https?[:][/][/]([a-z0-9-]+[.])*(3cat|ccma)[.]cat[/]",
   "settings": [
     {
       "id": "buttons",

@@ -110,7 +110,7 @@ function metaIsFresh(): boolean {
     if (!ogUrl)
       return true
     const strip = (p: string) => p.replace(/\/+$/, '')
-    return strip(new URL(ogUrl, location.href).pathname) === strip(location.pathname)
+    return strip(new URL(ogUrl, document.location.href).pathname) === strip(document.location.pathname)
   }
   catch {
     return true
@@ -159,19 +159,19 @@ async function update() {
     setting('privacy'),
   ])
 
-  const path = location.pathname.replace(/\/+$/, '') || '/'
+  const path = document.location.pathname.replace(/\/+$/, '') || '/'
   const segs = path.split('/').filter(Boolean)
   if (path !== lastPath) {
     lastPath = path
     pageTimestamp = Math.floor(Date.now() / 1000)
   }
 
-  const shareUrl = `${location.origin}${location.pathname}`
+  const shareUrl = `${document.location.origin}${document.location.pathname}`
   const fresh = metaIsFresh()
   const h1 = clean(document.querySelector('h1')?.textContent)
   const ogTitle = fresh ? clean(meta('og:title')) : ''
   const ogImage = fresh ? meta('og:image') : ''
-  const coverImage = (showCover !== false && ogImage) ? new URL(ogImage, location.href).href : DEFAULT_IMAGE
+  const coverImage = (showCover !== false && ogImage) ? new URL(ogImage, document.location.href).href : DEFAULT_IMAGE
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
@@ -235,7 +235,7 @@ async function update() {
     applyMedia(presenceData, getMedia())
   }
   else if (isSearch) {
-    const params = new URLSearchParams(location.search)
+    const params = new URLSearchParams(document.location.search)
     const term = clean(
       params.get('text') ?? params.get('q') ?? params.get('cerca') ?? params.get('query')
       ?? document.querySelector<HTMLInputElement>('input[type="search"], input[name="text"], input[name="q"]')?.value,
