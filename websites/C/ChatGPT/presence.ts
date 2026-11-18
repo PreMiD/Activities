@@ -53,8 +53,10 @@ presence.on('UpdateData', async () => {
 
   let gptName = document.querySelector('button[data-testid=model-switcher-dropdown-button]')?.textContent?.trim()
     ?? [...document.querySelectorAll('span')]
-      .find(span => span.children.length === 0 && /^GPT-[\w.]+/.test(span.textContent?.trim() ?? ''))
-      ?.textContent?.trim()
+      .find(span => span.children.length === 0 && /^GPT-[\w.]+(?: [\w.]+)?/.test(span.textContent?.trim() ?? ''))
+      ?.textContent
+      ?.trim()
+      .match(/^GPT-[\w.]+(?: [\w.]+)?/)?.[0]
   let wordCount = 0
   for (const element of document.querySelectorAll(
     '[data-conversation-role="user"],[data-conversation-role="assistant"]',
