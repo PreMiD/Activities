@@ -10,7 +10,7 @@
     "en": "HKAnime is a Cantonese-dubbed anime streaming website."
   },
   "url": "hkanime.com",
-  "regExp": "^https?://(www\\.)?hkanime\\.com(/|$)",
+  "regExp": "^https?[:][/][/](www[.])?hkanime[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/4lKtB9R.png",
   "thumbnail": "https://i.imgur.com/Gfn9iQ2.png",
