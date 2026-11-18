@@ -2,7 +2,7 @@ import { ActivityType, Assets } from 'premid'
 import { categoryLabel, clamp, pickTitle } from './utils.js'
 
 const presence = new Presence({
-  clientId: '000000000000000000',
+  clientId: '1572552418951041184',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
