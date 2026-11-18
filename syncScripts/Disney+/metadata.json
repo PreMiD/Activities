@@ -1,0 +1,5 @@
+{
+  "service": "Disney+",
+  "regExp": "^https?[:][/][/]([a-z0-9-]{1,63}[.])?disneyplus[.]com[/]",
+  "version": "1.0.0"
+}

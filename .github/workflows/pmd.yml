@@ -18,6 +18,8 @@ jobs:
       actions: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v6
@@ -28,10 +30,17 @@ jobs:
       - name: Install pmd
         run: npm ci
 
+      - name: Test pmd and sync scripts
+        run: npm test
+        working-directory: cli
+
       - name: Validate metadata and build (changed files)
         run: npx pmd build --changed --no-kill --validate --sarif
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate, type check and build sync scripts
+        run: npx pmd sync-build --all --validate
 
       - name: Upload analysis results to GitHub
         if: always()

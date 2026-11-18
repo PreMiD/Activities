@@ -78,18 +78,40 @@ export default defineConfig({
             { text: 'Activity Forwarding', link: '/v1/guide/activity-forwarding' },
           ],
         },
+        {
+          text: 'Watch Party',
+          items: [
+            { text: 'Sync Script Guide', link: '/v1/guide/watch-party-sync-scripts' },
+            { text: 'Video Sync', link: '/v1/guide/watch-party-video' },
+            { text: 'Advanced Features', link: '/v1/guide/watch-party-advanced' },
+            { text: 'Sync Behavior', link: '/v1/guide/watch-party-behavior' },
+            { text: 'Developing and Releasing', link: '/v1/guide/watch-party-workflow' },
+          ],
+        },
       ],
       '/v1/api/': [
         {
-          text: 'API Reference',
+          text: 'Overview',
           items: [
-            { text: 'Overview', link: '/v1/api/' },
+            { text: 'API Reference', link: '/v1/api/' },
+          ],
+        },
+        {
+          text: 'Activities',
+          items: [
             { text: 'Presence Class', link: '/v1/api/presence-class' },
             { text: 'PresenceData Interface', link: '/v1/api/presence-data' },
             { text: 'metadata.json Structure', link: '/v1/api/metadata-json' },
             { text: 'Slideshow Class', link: '/v1/api/slideshow' },
             { text: 'iFrame Class', link: '/v1/api/iframe' },
             { text: 'Utility Functions', link: '/v1/api/utility-functions' },
+          ],
+        },
+        {
+          text: 'Watch Party',
+          items: [
+            { text: 'SyncScriptContext', link: '/v1/api/sync-script-context' },
+            { text: 'Sync Script Types', link: '/v1/api/sync-script-types' },
           ],
         },
       ],
@@ -102,6 +124,7 @@ export default defineConfig({
             { text: 'Activity with Settings', link: '/v1/examples/settings' },
             { text: 'Activity with iFrames', link: '/v1/examples/iframes' },
             { text: 'Activity with Slideshow', link: '/v1/examples/slideshow' },
+            { text: 'Watch Party Sync Script', link: '/v1/examples/watch-party' },
           ],
         },
       ],

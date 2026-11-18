@@ -1,0 +1,5 @@
+{
+  "service": "YouTube",
+  "regExp": "^https?[:][/][/](www|m|music)[.]youtube[.]com[/](?!shorts[/])",
+  "version": "1.0.0"
+}

@@ -1,0 +1,5 @@
+{
+  "service": "Netflix",
+  "regExp": "^https?[:][/][/]([a-z0-9-]{1,63}[.])?netflix[.]com[/]",
+  "version": "1.0.0"
+}

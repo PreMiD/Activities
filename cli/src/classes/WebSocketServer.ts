@@ -28,8 +28,13 @@ type TestMessage
 
 export class WebSocketServer implements TestRpc {
   readonly server: WSServer
+  private label: string
 
-  constructor(public cwd: string) {
+  constructor(
+    public cwd: string,
+    private readonly messageType: string = 'localPresence',
+  ) {
+    this.label = messageType === 'localSyncScript' ? 'sync script' : 'activity'
     this.server = new WSServer({ port: 3021 })
 
     this.server.on('connection', (socket) => {
@@ -60,6 +65,9 @@ export class WebSocketServer implements TestRpc {
             catch {}
           }
         }
+        else {
+          this.notify(message)
+        }
       })
 
       // A malformed frame or a reset socket emits 'error'. Without a listener that crashes a long-lived pmd process.
@@ -67,8 +75,10 @@ export class WebSocketServer implements TestRpc {
 
       socket.on('close', () => {
         info('Disconnected from the extension!')
-        if (!this.getOpenClient())
+        if (!this.getOpenClient()) {
           this.rejectPendingTests('Extension disconnected')
+          this.notify({ type: 'disconnected' })
+        }
       })
     })
   }
@@ -102,7 +112,7 @@ export class WebSocketServer implements TestRpc {
     const files = await readdir(distPath)
 
     const spinner = ora(
-      prefix + chalk.yellow(' Sending activity to the extension...'),
+      prefix + chalk.yellow(` Sending ${this.label} to the extension...`),
     ).start()
 
     let expectedCount = 0
@@ -139,7 +149,7 @@ export class WebSocketServer implements TestRpc {
       client.on('close', removeExpectedCount)
 
       client.send(JSON.stringify({
-        type: 'localPresence',
+        type: this.messageType,
         files: await Promise.all(files
           .filter(file => ['.json', '.js'].includes(extname(file)))
           .map(async (file) => {
@@ -164,12 +174,38 @@ export class WebSocketServer implements TestRpc {
       await new Promise(resolve => setTimeout(resolve, 100))
     }
 
-    spinner.succeed(prefix + chalk.greenBright(' Activity sent to the extension!'))
+    spinner.succeed(prefix + chalk.greenBright(` ${this.label[0].toUpperCase() + this.label.slice(1)} sent to the extension!`))
   }
 
   private nextTestId = 0
   private pendingTests = new Map<number, { resolve: (value: unknown) => void, reject: (error: Error) => void, timeout: NodeJS.Timeout }>()
   private testListeners = new Set<(event: TestEvent) => void>()
+  private messageListeners = new Set<(message: unknown) => void>()
+
+  private notify(message: unknown) {
+    for (const listener of this.messageListeners) {
+      try {
+        listener(message)
+      }
+      catch {}
+    }
+  }
+
+  /** Every other message the extension sends, such as a dev sync script's logs and reports, and `{ type: 'disconnected' }` once no extension is connected. */
+  onMessage(listener: (message: unknown) => void) {
+    this.messageListeners.add(listener)
+    return () => {
+      this.messageListeners.delete(listener)
+    }
+  }
+
+  broadcast(message: object) {
+    const data = JSON.stringify(message)
+    for (const client of this.server.clients) {
+      if (client.readyState === WebSocket.OPEN)
+        client.send(data)
+    }
+  }
 
   get isConnected(): boolean {
     return this.getOpenClient() !== undefined
