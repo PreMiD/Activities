@@ -1,3 +1,5 @@
+import { Assets } from 'premid'
+
 const presence = new Presence({
   clientId: '1333939310441009182',
 })
@@ -14,13 +16,9 @@ async function getStrings() {
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum Assets {
+enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/logo.png',
   Talking = 'https://i.imgur.com/l5SUX1w.png',
-  Reading = 'https://cdn.rcd.gg/PreMiD/resources/reading.png',
-  Search = 'https://cdn.rcd.gg/PreMiD/resources/search.png',
-  Viewing = 'https://cdn.rcd.gg/PreMiD/resources/viewing.png',
-  Writing = 'https://cdn.rcd.gg/PreMiD/resources/writing.png',
 }
 
 // The DeepThink and search toggles share DeepSeek's toggle button
@@ -66,7 +64,7 @@ presence.on('UpdateData', async () => {
   // Used for checking if the AI is currently responding
   else if (document.querySelector('div[class=\'f9bf7997 d7dc56a8\']')) {
     presenceState = strings?.aiTalking ?? ''
-    smallImageKey = Assets.Talking
+    smallImageKey = ActivityAssets.Talking
     smallImageText = strings?.aiTalking ?? ''
   }
   else if (document.querySelector('div.f9bf7997.d7dc56a8.c05b5566')) {
@@ -86,7 +84,7 @@ presence.on('UpdateData', async () => {
   }
 
   presence.setActivity({
-    largeImageKey: Assets.Logo,
+    largeImageKey: ActivityAssets.Logo,
     smallImageKey,
     smallImageText,
     startTimestamp: browsingTimestamp,
