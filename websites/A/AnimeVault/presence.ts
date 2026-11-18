@@ -5,23 +5,24 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://bunbongonvl.online/images/ado-chibi.png',
+  Logo = 'https://files.catbox.moe/ghuz3s.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+const defaultAdoLogo = `https://wsrv.nl/?url=${encodeURIComponent('https://bunbongonvl.online/images/ado-chibi.png')}&w=512&h=512&fit=cover&output=png`
 
 function formatImageUrl(rawUrl: string | null | undefined): string | null {
   if (!rawUrl || typeof rawUrl !== 'string')
     return null
   const trimmed = rawUrl.trim()
-  if (!trimmed || trimmed === document.location.href)
+  if (!trimmed)
     return null
 
   try {
     const url = new URL(trimmed, document.location.href)
     if (!url.protocol.startsWith('http'))
       return null
-    if (url.pathname === document.location.pathname)
+    if (url.origin === document.location.origin && url.pathname === document.location.pathname)
       return null
 
     // fit=cover lấp đầy hoàn hảo khung vuông 512x512 của Discord, không bị co dẹp
@@ -36,7 +37,7 @@ function getMovieThumbImage(): string | null {
   // 1. Thẻ video poster
   const video = document.querySelector<HTMLVideoElement>('video')
   const videoPoster = video?.getAttribute('poster') || video?.poster
-  if (videoPoster && /\.(?:jpe?g|png|webp|avif)/i.test(videoPoster)) {
+  if (videoPoster) {
     const formatted = formatImageUrl(videoPoster)
     if (formatted)
       return formatted
@@ -50,7 +51,7 @@ function getMovieThumbImage(): string | null {
   ]
   for (const selector of selectors) {
     const meta = document.querySelector<HTMLMetaElement>(selector)
-    if (meta?.content && /\.(?:jpe?g|png|webp|avif)/i.test(meta.content)) {
+    if (meta?.content) {
       const formatted = formatImageUrl(meta.content)
       if (formatted)
         return formatted
@@ -87,13 +88,16 @@ function cleanDiscordString(text: string | null | undefined, fallback: string): 
 
 function parseMovieHeading(heading: string, defaultTitle: string): { movieName: string, episodeStr: string } {
   const clean = (heading || defaultTitle).replace(/^(?:Xem Phim|Phim)\s+/i, '').trim()
-  const parts = clean.split(/\s*[-–—]\s*(?:tập|tap)?\s*/i)
-  if (parts.length >= 2 && parts[0] && parts[1]) {
-    const movieName = parts[0].trim()
-    const ep = parts[1].trim()
+
+  // Match episode pattern at the end: e.g. "Sword Art Online - Tập 1" or "Tenet - Full"
+  const epMatch = clean.match(/^(.*?)\s*[-–—]\s*(?:(?:tập|tap)\s*)?(\d+|full|hoàn tất.*)$/i)
+  if (epMatch && epMatch[1] && epMatch[2]) {
+    const movieName = epMatch[1].trim()
+    const ep = epMatch[2].trim()
     const episodeStr = /^tập\s*/i.test(ep) ? ep : `Tập ${ep}`
     return { movieName, episodeStr }
   }
+
   return { movieName: clean, episodeStr: '' }
 }
 
@@ -107,10 +111,11 @@ presence.on('UpdateData', async () => {
   ])
 
   const dynamicThumb = getMovieThumbImage()
+  const currentLogo = defaultAdoLogo || ActivityAssets.Logo
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: ActivityAssets.Logo,
+    largeImageKey: currentLogo,
     largeImageText: 'AnimeVault - bunbongonvl.online',
   }
 
@@ -125,7 +130,7 @@ presence.on('UpdateData', async () => {
       const heading = document.querySelector('h1')?.textContent?.trim() || ''
       const { movieName, episodeStr } = parseMovieHeading(heading, pageFirstTitle)
 
-      presenceData.largeImageKey = dynamicThumb || ActivityAssets.Logo
+      presenceData.largeImageKey = dynamicThumb || currentLogo
       presenceData.largeImageText = cleanDiscordString(movieName, 'AnimeVault')
       presenceData.details = cleanDiscordString(movieName, 'Đang xem phim')
       if (episodeStr) {
@@ -168,7 +173,7 @@ presence.on('UpdateData', async () => {
 
     case pathname.startsWith('/xem-chung/'): {
       const roomTitle = document.querySelector('.wp-room-header h1')?.textContent?.trim() || 'Phòng chiếu VIP'
-      presenceData.largeImageKey = dynamicThumb || ActivityAssets.Logo
+      presenceData.largeImageKey = dynamicThumb || currentLogo
       presenceData.details = 'Phòng Xem Chung'
       presenceData.state = cleanDiscordString(roomTitle, 'Phòng chiếu')
 
@@ -223,7 +228,7 @@ presence.on('UpdateData', async () => {
 
     case pathname.startsWith('/phim/'): {
       const movieTitle = document.querySelector('h1')?.textContent?.trim() || pageFirstTitle
-      presenceData.largeImageKey = dynamicThumb || ActivityAssets.Logo
+      presenceData.largeImageKey = dynamicThumb || currentLogo
       presenceData.largeImageText = cleanDiscordString(movieTitle, 'AnimeVault')
       presenceData.details = 'Thông tin phim'
       presenceData.state = cleanDiscordString(movieTitle, 'Chi tiết tác phẩm')
@@ -247,7 +252,7 @@ presence.on('UpdateData', async () => {
 
     default: {
       presenceData.details = 'Khám phá kho phim'
-      presenceData.state = pageFirstTitle || 'Trang chủ'
+      presenceData.state = cleanDiscordString(pageFirstTitle, 'Trang chủ')
       break
     }
   }
