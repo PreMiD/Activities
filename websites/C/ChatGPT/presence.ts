@@ -52,11 +52,14 @@ presence.on('UpdateData', async () => {
   )
 
   let gptName = document.querySelector('button[data-testid=model-switcher-dropdown-button]')?.textContent?.trim()
+    ?? [...document.querySelectorAll('span')]
+      .find(span => span.children.length === 0 && /^GPT-[\w.]+/.test(span.textContent?.trim() ?? ''))
+      ?.textContent?.trim()
   let wordCount = 0
   for (const element of document.querySelectorAll(
-    '[data-message-author-role="user"],[data-message-author-role="assistant"]',
+    '[data-conversation-role="user"],[data-conversation-role="assistant"]',
   )) {
-    const text = element.textContent
+    const text = (element.closest('div.group')?.textContent ?? element.textContent)
       ?.replace(/, |,\n|,|\. |\./g, ' ')
       // eslint-disable-next-line regexp/no-dupe-disjunctions
       .replace(/\d*|[/', ]/g, '')
@@ -72,7 +75,7 @@ presence.on('UpdateData', async () => {
   else if (document.location.hash.includes('#pricing')) {
     presenceData.details = strings.pricing
   }
-  else if (pathname.split('/')[1] === 'c') {
+  else if (pathname.split('/')[1] === 'c' || pathname.split('/')[1] === 'uc') {
     const chatPrivacy = new PrivacyUI(pathname.split('/')[2]!)
     // check if the document title is the default title. If so, get the chat title from the UI. Otherwise, get it from the document title
     if (document.title === 'ChatGPT' && showTitle && !chatPrivacy.getIsHidden()) {
@@ -90,7 +93,7 @@ presence.on('UpdateData', async () => {
           .replace(
             '{0}',
             `${Number(
-              document.querySelectorAll('[data-message-author-role="user"]')
+              document.querySelectorAll('[data-conversation-role="user"]')
                 .length,
             )}`,
           )
@@ -119,7 +122,7 @@ presence.on('UpdateData', async () => {
             .replace(
               '{0}',
               `${Number(
-                document.querySelectorAll('[data-message-author-role="user"]')
+                document.querySelectorAll('[data-conversation-role="user"]')
                   .length,
               )}`,
             )
@@ -148,7 +151,7 @@ presence.on('UpdateData', async () => {
             .replace(
               '{0}',
               `${Number(
-                document.querySelectorAll('[data-message-author-role="user"]')
+                document.querySelectorAll('[data-conversation-role="user"]')
                   .length,
               )}`,
             )
@@ -162,7 +165,7 @@ presence.on('UpdateData', async () => {
       .replace(
         '{0}',
         `${Number(
-          document.querySelectorAll('[data-message-author-role="user"]')
+          document.querySelectorAll('[data-conversation-role="user"]')
             .length,
         )}`,
       )
