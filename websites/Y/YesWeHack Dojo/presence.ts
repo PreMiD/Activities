@@ -8,6 +8,8 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+const LOGO = 'https://i.imgur.com/yMmxo1e.png'
+
 const ICONS = {
   reading: Assets.Reading,
   search: Assets.Search,
@@ -27,7 +29,7 @@ function buildPresence(data: ClassifiedPresence): PresenceData {
   const shared = {
     details: data.details,
     ...(data.state ? { state: data.state } : {}),
-    largeImageKey: Assets.Search,
+    largeImageKey: LOGO,
     smallImageKey: ICONS[data.icon],
     smallImageText: data.competing
       ? 'Competing'
