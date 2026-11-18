@@ -35,18 +35,24 @@ presence.on('UpdateData', async () => {
     '.ua-mcat-modal img',
   )?.src
 
-  // Attività predefinita con pulsante Discord
+  // Attività predefinita
   const presenceData: PresenceData = {
     details: 'Esplorando Universal Anime',
     state: 'Alla scoperta di anime e manga',
     startTimestamp: browsingTimestamp,
-    buttons: [
-      {
-        label: 'Visita Universal Anime',
-        url: 'https://universalanime.eu/',
-      },
-    ],
   }
+
+  // Filtri stagionali: leggiamo i controlli già presenti nel DOM React.
+  const seasonalSection = document.querySelector('.stagionali')
+  const selectedSeason = seasonalSection?.querySelector(
+    '.season-button[aria-pressed="true"] .season-name',
+  )?.textContent?.trim()
+  const selectedYear = seasonalSection?.querySelector<HTMLSelectElement>(
+    '#stagionali-year-select',
+  )?.value
+  const seasonalPage = seasonalSection?.querySelector(
+    '.anime-pagination span',
+  )?.textContent?.trim()
 
   // 1. Popup profilo
   if (profilePopup) {
@@ -74,13 +80,21 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // 4. Homepage
-  else if (path === '/' || path === '/#') {
+  // 4. Stagionali (stagione, anno e pagina cambiano dinamicamente)
+  else if (path.includes('#stagionali')) {
+    presenceData.details = 'Esplorando gli anime stagionali'
+    presenceData.state = selectedSeason && selectedYear
+      ? `${selectedSeason} ${selectedYear}${seasonalPage ? ` • ${seasonalPage}` : ''}`
+      : 'Consultando le stagioni anime'
+  }
+
+  // 5. Homepage
+  else if (path === '/' || path === '/#' || path.endsWith('#home')) {
     presenceData.details = 'Nella homepage'
     presenceData.state = 'Esplorando Universal Anime'
   }
 
-  // 5. Catalogo anime
+  // 6. Catalogo anime
   else if (
     path.includes('#catalogo')
     && !path.includes('#catalogo-manga')
@@ -89,7 +103,13 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Cercando nuovi anime'
   }
 
-  // 6. Catalogo manga
+  // 7. Libreria manga 3D
+  else if (path.includes('#libreria-3d')) {
+    presenceData.details = 'Libreria Manga 3D'
+    presenceData.state = 'Organizzando la collezione'
+  }
+
+  // 8. Catalogo manga
   else if (
     path.includes('#manga')
     || path.includes('#catalogo-manga')
@@ -98,13 +118,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Esplorando nuovi manga'
   }
 
-  // 7. Libreria manga 3D
-  else if (path.includes('#libreria-3d')) {
-    presenceData.details = 'Libreria Manga 3D'
-    presenceData.state = 'Organizzando la collezione'
-  }
-
-  // 8. Profilo tramite URL
+  // 9. Profilo tramite URL
   else if (
     path.includes('#profilo')
     || path.includes('/profilo')
@@ -113,7 +127,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Su Universal Anime'
   }
 
-  // 9. Lista personale
+  // 10. Lista personale
   else if (
     path.includes('#lista')
     || path.includes('/lista')
@@ -122,7 +136,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Gestendo la propria lista'
   }
 
-  // 10. Ricerca
+  // 11. Ricerca
   else if (
     path.includes('#ricerca')
     || path.includes('/ricerca')
