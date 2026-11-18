@@ -5,10 +5,97 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://files.catbox.moe/ghuz3s.png',
+  Logo = 'https://bunbongonvl.online/images/ado-chibi.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+function formatImageUrl(rawUrl: string | null | undefined): string | null {
+  if (!rawUrl || typeof rawUrl !== 'string')
+    return null
+  const trimmed = rawUrl.trim()
+  if (!trimmed || trimmed === document.location.href)
+    return null
+
+  try {
+    const url = new URL(trimmed, document.location.href)
+    if (!url.protocol.startsWith('http'))
+      return null
+    if (url.pathname === document.location.pathname)
+      return null
+
+    // fit=cover lấp đầy hoàn hảo khung vuông 512x512 của Discord, không bị co dẹp
+    return `https://wsrv.nl/?url=${encodeURIComponent(url.href)}&w=512&h=512&fit=cover&output=png`
+  }
+  catch {
+    return null
+  }
+}
+
+function getMovieThumbImage(): string | null {
+  // 1. Thẻ video poster
+  const video = document.querySelector<HTMLVideoElement>('video')
+  const videoPoster = video?.getAttribute('poster') || video?.poster
+  if (videoPoster && /\.(?:jpe?g|png|webp|avif)/i.test(videoPoster)) {
+    const formatted = formatImageUrl(videoPoster)
+    if (formatted)
+      return formatted
+  }
+
+  // 2. Thẻ meta og:image, twitter:image
+  const selectors = [
+    `meta[property='og:image']`,
+    `meta[name='twitter:image']`,
+    `meta[itemprop='image']`,
+  ]
+  for (const selector of selectors) {
+    const meta = document.querySelector<HTMLMetaElement>(selector)
+    if (meta?.content && /\.(?:jpe?g|png|webp|avif)/i.test(meta.content)) {
+      const formatted = formatImageUrl(meta.content)
+      if (formatted)
+        return formatted
+    }
+  }
+
+  // 3. Ảnh poster hoặc banner trong DOM
+  const images = Array.from(document.querySelectorAll<HTMLImageElement>('img'))
+  for (const img of images) {
+    const src = img.currentSrc || img.src || img.getAttribute('src') || ''
+    if (
+      src
+      && (src.includes('img.nguonc.com') || src.includes('phimimg.com') || src.includes('tmdb.org') || src.includes('/uploads/') || src.includes('poster') || src.includes('thumb'))
+      && !src.includes('ado-chibi')
+      && !src.includes('premid')
+    ) {
+      const formatted = formatImageUrl(src)
+      if (formatted)
+        return formatted
+    }
+  }
+
+  return null
+}
+
+function cleanDiscordString(text: string | null | undefined, fallback: string): string {
+  if (!text)
+    return fallback
+  const trimmed = text.trim()
+  if (trimmed.length < 2)
+    return fallback
+  return trimmed.length > 128 ? `${trimmed.slice(0, 125)}...` : trimmed
+}
+
+function parseMovieHeading(heading: string, defaultTitle: string): { movieName: string, episodeStr: string } {
+  const clean = (heading || defaultTitle).replace(/^(?:Xem Phim|Phim)\s+/i, '').trim()
+  const parts = clean.split(/\s*[-–—]\s*(?:tập|tap)?\s*/i)
+  if (parts.length >= 2 && parts[0] && parts[1]) {
+    const movieName = parts[0].trim()
+    const ep = parts[1].trim()
+    const episodeStr = /^tập\s*/i.test(ep) ? ep : `Tập ${ep}`
+    return { movieName, episodeStr }
+  }
+  return { movieName: clean, episodeStr: '' }
+}
 
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
@@ -18,6 +105,8 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('timestamps'),
   ])
+
+  const dynamicThumb = getMovieThumbImage()
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
@@ -34,9 +123,14 @@ presence.on('UpdateData', async () => {
   switch (true) {
     case pathname.startsWith('/xem/'): {
       const heading = document.querySelector('h1')?.textContent?.trim() || ''
-      const cleanTitle = heading.replace(/^(?:Xem Phim|Phim)\s+/i, '') || pageFirstTitle
+      const { movieName, episodeStr } = parseMovieHeading(heading, pageFirstTitle)
 
-      presenceData.details = cleanTitle || 'Đang xem phim'
+      presenceData.largeImageKey = dynamicThumb || ActivityAssets.Logo
+      presenceData.largeImageText = cleanDiscordString(movieName, 'AnimeVault')
+      presenceData.details = cleanDiscordString(movieName, 'Đang xem phim')
+      if (episodeStr) {
+        presenceData.state = cleanDiscordString(episodeStr, 'Đang phát')
+      }
 
       if (video && !Number.isNaN(video.duration) && video.duration > 0) {
         if (showTimestamps) {
@@ -57,7 +151,7 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageText = 'Đang phát'
         }
       }
-      else {
+      else if (!episodeStr) {
         presenceData.state = 'Đang tải trình phát...'
       }
 
@@ -74,8 +168,9 @@ presence.on('UpdateData', async () => {
 
     case pathname.startsWith('/xem-chung/'): {
       const roomTitle = document.querySelector('.wp-room-header h1')?.textContent?.trim() || 'Phòng chiếu VIP'
+      presenceData.largeImageKey = dynamicThumb || ActivityAssets.Logo
       presenceData.details = 'Phòng Xem Chung'
-      presenceData.state = roomTitle
+      presenceData.state = cleanDiscordString(roomTitle, 'Phòng chiếu')
 
       if (video && !Number.isNaN(video.duration) && video.duration > 0) {
         if (showTimestamps) {
@@ -128,8 +223,10 @@ presence.on('UpdateData', async () => {
 
     case pathname.startsWith('/phim/'): {
       const movieTitle = document.querySelector('h1')?.textContent?.trim() || pageFirstTitle
+      presenceData.largeImageKey = dynamicThumb || ActivityAssets.Logo
+      presenceData.largeImageText = cleanDiscordString(movieTitle, 'AnimeVault')
       presenceData.details = 'Thông tin phim'
-      presenceData.state = movieTitle || 'Chi tiết tác phẩm'
+      presenceData.state = cleanDiscordString(movieTitle, 'Chi tiết tác phẩm')
 
       if (showButtons) {
         presenceData.buttons = [
@@ -142,9 +239,15 @@ presence.on('UpdateData', async () => {
       break
     }
 
+    case pathname === '/' || pathname === '/home': {
+      presenceData.details = 'Đang xem trang chủ'
+      presenceData.state = 'Khám phá phim mới'
+      break
+    }
+
     default: {
       presenceData.details = 'Khám phá kho phim'
-      presenceData.state = 'Trang chủ'
+      presenceData.state = pageFirstTitle || 'Trang chủ'
       break
     }
   }
