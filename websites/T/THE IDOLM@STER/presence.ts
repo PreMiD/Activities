@@ -84,11 +84,9 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     name: 'THE IDOLM@STER',
-    type: ActivityType.Watching,
+    type: ActivityType.Playing,
     largeImageKey: LOGO,
-    largeImageText: 'THE IDOLM@STER',
     startTimestamp: browsingTimestamp,
-    smallImageKey: Assets.Reading,
   }
   const { hostname, pathname, href } = document.location
   const parts = pathname.split('/').filter(Boolean)
@@ -106,7 +104,6 @@ presence.on('UpdateData', async () => {
       const image = showIdolImage ? ogImage() : null
       if (image && image.includes('/character_main/')) {
         presenceData.largeImageKey = image
-        presenceData.largeImageText = name || 'アイドル名鑑'
         presenceData.smallImageKey = LOGO
         presenceData.smallImageText = 'アイドル名鑑'
       }
@@ -160,8 +157,13 @@ presence.on('UpdateData', async () => {
   const brand = BRANDS[first]
   const section = SECTIONS[first] ?? (parts[1] ? SECTIONS[parts[1]] : undefined)
 
+  // サイト内検索 (/search?q=...)
+  if (first === 'search') {
+    presenceData.details = 'ポータルで検索中'
+    presenceData.smallImageKey = Assets.Search
+  }
   // 記事ページ (/news/01_20212 など)
-  if ((first === 'news' || first === 'information') && parts[1]) {
+  else if ((first === 'news' || first === 'information') && parts[1]) {
     presenceData.details = section ?? 'ニュース'
     const title = pageTitle()
     if (showTitle && title)

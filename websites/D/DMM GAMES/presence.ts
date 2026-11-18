@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1565002054227726456',
@@ -22,8 +22,14 @@ function gameIcon(slug: string): string | null {
   if (cachedIcon?.slug === slug)
     return cachedIcon.url
   const html = document.body.innerHTML
+  // プレイ画面のゲーム本体 iframe (osapi ガジェット) の src
+  const frameSrc = document.querySelector<HTMLIFrameElement>(
+    'iframe[src*="osapi.dmm.com/gadgets/ifr"]',
+  )?.src
   const appId = html.match(/\/setting\/game\/detail\/(\d+)/)?.[1]
     ?? html.match(/app_id=(\d+)/)?.[1]
+    // iframe の src に含まれる aid パラメータがアプリ ID
+    ?? frameSrc?.match(/[?&]aid=(\d+)/)?.[1]
   const url = appId ? `https://media.games.dmm.com/freegame/app/${appId}/200.gif` : null
   // ページの読み込み途中でまだ見つからないときは覚えずに、次の更新でもう一度探す
   if (url)
@@ -63,9 +69,15 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = LOGO
         presenceData.smallImageText = 'DMM GAMES'
       }
+      else {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = 'プレイ中'
+      }
     }
     else {
       presenceData.details = 'ゲームをプレイ中'
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'プレイ中'
     }
     presenceData.startTimestamp = playingSince
     presence.setActivity(presenceData)
