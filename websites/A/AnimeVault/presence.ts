@@ -89,13 +89,19 @@ function cleanDiscordString(text: string | null | undefined, fallback: string): 
 function parseMovieHeading(heading: string, defaultTitle: string): { movieName: string, episodeStr: string } {
   const clean = (heading || defaultTitle).replace(/^(?:Xem Phim|Phim)\s+/i, '').trim()
 
-  // Match episode pattern at the end: e.g. "Sword Art Online - Tập 1" or "Tenet - Full"
-  const epMatch = clean.match(/^(.*?)\s*[-–—]\s*(?:(?:tập|tap)\s*)?(\d+|full|hoàn tất.*)$/i)
-  if (epMatch && epMatch[1] && epMatch[2]) {
-    const movieName = epMatch[1].trim()
-    const ep = epMatch[2].trim()
-    const episodeStr = /^tập\s*/i.test(ep) ? ep : `Tập ${ep}`
-    return { movieName, episodeStr }
+  const delimiters = [' — ', ' - ', ' – ', '—', '–', '-']
+  for (const delim of delimiters) {
+    const idx = clean.lastIndexOf(delim)
+    if (idx > 0) {
+      const movieName = clean.slice(0, idx).trim()
+      let ep = clean.slice(idx + delim.length).trim()
+      if (ep && (/^(?:\d+|full|hoàn tất)/i.test(ep) || /^tập/i.test(ep))) {
+        if (!/^tập/i.test(ep)) {
+          ep = `Tập ${ep}`
+        }
+        return { movieName, episodeStr: ep }
+      }
+    }
   }
 
   return { movieName: clean, episodeStr: '' }
