@@ -162,8 +162,10 @@ presence.on('UpdateData', async () => {
     }
     case 'article': {
       presenceData.smallImageKey = Assets.Reading
-      presenceData.details = `Reading: ${getTopic() ?? getHeading() ?? 'documentation'}`
-      presenceData.state = getHeading() ?? undefined
+      const heading = getHeading()
+      presenceData.details = `Reading: ${getTopic() ?? heading ?? 'documentation'}`
+      if (heading)
+        presenceData.state = heading
       break
     }
     case 'index': {
@@ -176,9 +178,15 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
       const segments = pathname.split('/').filter(Boolean)
       const pathIndex = segments.indexOf('learning-paths') + 1
-      const name = segments[pathIndex]?.replaceAll('-', ' ') ?? 'path'
-      presenceData.details = `Following learning path: ${name}`
-      presenceData.state = getHeading() ?? undefined
+      const slug = segments[pathIndex]
+      if (!slug) {
+        presenceData.details = 'Browsing: Learning paths'
+        break
+      }
+      presenceData.details = `Following learning path: ${slug.replaceAll('-', ' ')}`
+      const heading = getHeading()
+      if (heading)
+        presenceData.state = heading
       break
     }
     case 'dashboard': {
