@@ -5,6 +5,12 @@
     "id": "124220790001500161",
     "name": "infoblock"
   },
+  "contributors": [
+    {
+      "id": "962402530401345596",
+      "name": "Momorissa"
+    }
+  ],
   "service": "HaulFM",
   "description": {
     "de": "Streaming des ultimativen Soundtracks für virtuelle Trucker und Open-Road-Enthusiasten auf haul.fm.",
@@ -13,7 +19,7 @@
   },
   "url": "haul.fm",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*haul[.]fm[/]",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HaulFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HaulFM/assets/thumbnail.png",
   "color": "#070127",
@@ -25,5 +31,40 @@
     "ets2",
     "ats",
     "haulmp"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover Art",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "presenter",
+      "title": "Show Live Presenter",
+      "icon": "fas fa-microphone",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
   ]
 }
