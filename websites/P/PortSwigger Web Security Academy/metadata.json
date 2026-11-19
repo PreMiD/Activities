@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "000000000000000000",
+    "name": "diyoanggara"
+  },
+  "service": "PortSwigger Web Security Academy",
+  "description": {
+    "en": "PortSwigger Web Security Academy is a free online learning platform for web security, with interactive labs and guided learning paths."
+  },
+  "url": "portswigger.net",
+  "regExp": "^https?[:][/][/](?:www[.])?portswigger[.]net[/]web-security",
+  "version": "1.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PortSwigger%20Web%20Security%20Academy/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PortSwigger%20Web%20Security%20Academy/assets/thumbnail.png",
+  "color": "#FF6633",
+  "category": "other",
+  "tags": [
+    "web-security",
+    "cybersecurity",
+    "learning"
+  ],
+  "settings": [
+    {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fa-solid fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show view page button",
+      "icon": "fa-solid fa-link",
+      "value": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy mode",
+      "icon": "fa-solid fa-user-lock",
+      "value": false
+    },
+    {
+      "id": "showRank",
+      "title": "Show Hall of Fame rank",
+      "icon": "fa-solid fa-ranking-star",
+      "value": true
+    },
+    {
+      "id": "showProgress",
+      "title": "Show solved labs and progress",
+      "icon": "fa-solid fa-chart-simple",
+      "value": true
+    },
+    {
+      "id": "showLevel",
+      "title": "Show current level",
+      "icon": "fa-solid fa-award",
+      "value": true
+    },
+    {
+      "id": "showUsername",
+      "title": "Show username",
+      "icon": "fa-solid fa-user",
+      "value": true
+    },
+    {
+      "id": "showDifficulty",
+      "title": "Show lab difficulty",
+      "icon": "fa-solid fa-signal",
+      "value": false
+    }
+  ]
+}
