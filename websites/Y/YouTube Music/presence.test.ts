@@ -2,11 +2,8 @@ import type { Page } from 'premid/test'
 import { ActivityType, Assets } from 'premid'
 import { expect, test } from 'premid/test'
 
-// Both player bars are in the wild
-const playerBar = 'ytmusic-app ytmusic-player-bar, ytmusic-app ytmusic-miniplayer'
-
 const consentOrLogin = {
-  until: () => !!document.querySelector(playerBar),
+  until: () => !!document.querySelector('ytmusic-app ytmusic-player-bar, ytmusic-app ytmusic-miniplayer'),
 }
 
 // A pre-roll ad also plays in the video element, and the song can come up paused after it.
