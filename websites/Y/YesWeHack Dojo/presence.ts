@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1572552418951041184',
@@ -150,16 +150,18 @@ function classify(input: ClassifyInput): ClassifiedPresence {
     }
 
     if (segments.length === 2) {
+      const label = categoryLabel(second ?? '')
+
       return {
-        details: 'Browsing training modules',
-        state: categoryLabel(second ?? '') ?? 'All categories',
+        details: label ? `Browsing ${label} lessons` : 'Browsing training modules',
+        state: label ? 'Training modules' : 'All categories',
         competing: false,
         icon: 'reading',
       }
     }
 
     return {
-      details: pickTitle([lessonHeading, title], last) ?? 'Training module',
+      details: `Reading lesson: ${pickTitle([lessonHeading, title], last) ?? 'Training module'}`,
       state: categoryLabel(second ?? '') ?? 'Training module',
       competing: false,
       icon: 'reading',
@@ -170,7 +172,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
     return {
       details: segments.length === 1
         ? 'Browsing monthly challenges'
-        : pickTitle([challengeHeading, title], last) ?? 'Challenge of the month',
+        : `Solving ${pickTitle([challengeHeading, title], last) ?? 'monthly challenge'}`,
       state: 'Challenge of the month',
       competing: true,
       icon: 'search',
@@ -178,8 +180,12 @@ function classify(input: ClassifyInput): ClassifiedPresence {
   }
 
   if (first === 'challenge' && second === 'play') {
+    const challengeTitle = pickTitle([challengeHeading, title], last)
+
     return {
-      details: pickTitle([challengeHeading, title], last) ?? 'Official challenge',
+      details: challengeTitle
+        ? `Solving challenge: ${challengeTitle}`
+        : 'Solving an official challenge',
       state: 'Official challenge',
       competing: true,
       icon: 'search',
@@ -189,7 +195,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
   if (first === 'challenge' && second === 'tutorial') {
     return {
       details: 'Solving the tutorial',
-      state: 'Tutorial',
+      state: 'Guided challenge',
       competing: true,
       icon: 'search',
     }
@@ -197,7 +203,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
 
   if (first === 'challenge' && second === 'create') {
     return {
-      details: 'Creating a challenge',
+      details: 'Building a challenge',
       state: 'Challenge editor',
       competing: true,
       icon: 'search',
@@ -205,10 +211,10 @@ function classify(input: ClassifyInput): ClassifiedPresence {
   }
 
   if (first === 'user') {
+    const profileName = hideProfileName ? undefined : pickTitle([title])
+
     return {
-      details: hideProfileName
-        ? 'Viewing a Dojo profile'
-        : pickTitle([title]) ?? 'Viewing a Dojo profile',
+      details: profileName ? `Viewing ${profileName}` : 'Viewing a Dojo profile',
       state: 'Dojo profile',
       competing: false,
       icon: 'viewing',
@@ -217,6 +223,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
 
   return {
     details: 'Browsing Dojo',
+    state: 'Exploring',
     competing: false,
     icon: 'search',
   }
@@ -232,7 +239,7 @@ function challengeHeading(): string | null | undefined {
 }
 
 function buildPresence(data: ClassifiedPresence): PresenceData {
-  const shared = {
+  return {
     details: data.details,
     ...(data.state ? { state: data.state } : {}),
     largeImageKey: LOGO,
@@ -242,10 +249,6 @@ function buildPresence(data: ClassifiedPresence): PresenceData {
       : data.icon === 'reading' ? 'Learning' : 'Browsing',
     startTimestamp: browsingTimestamp,
   }
-
-  return data.competing
-    ? { ...shared, type: ActivityType.Competing }
-    : { ...shared, type: ActivityType.Watching }
 }
 
 presence.on('UpdateData', async () => {
