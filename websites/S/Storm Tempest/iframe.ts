@@ -14,5 +14,6 @@ iframe.on('UpdateData', async () => {
     paused: video.paused,
     currentTime: video.currentTime,
     duration: video.duration,
+    playbackRate: video.playbackRate,
   })
 })

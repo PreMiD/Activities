@@ -1,8 +1,9 @@
 import type { CodestoState } from '../config/types.js'
 import { ActivityType } from 'premid'
-import { ActivityAssets, browsingTimestamp, codestoIcons } from '../config/constants.js'
+import { ActivityAssets, codestoIcons } from '../config/constants.js'
 import { buildButtons, smallImageFor } from '../util/activity.js'
 import { clean, isVisible, queryText, textOf } from '../util/dom.js'
+import { getBrowsingTimestamp } from '../util/session.js'
 
 /** Returns the language icon for a file name, if it has one. */
 export function codestoIcon(file: string | undefined): ActivityAssets | undefined {
@@ -140,7 +141,7 @@ export function buildCodestoActivity(code: CodestoState, privacy: boolean): Pres
     ...(idle
       ? { smallImageKey: ActivityAssets.Moon, smallImageText: 'Idling' }
       : smallImageFor(undefined, Boolean(icon))),
-    startTimestamp: browsingTimestamp,
+    startTimestamp: getBrowsingTimestamp(),
     buttons: privacy
       ? buildButtons()
       : buildButtons({ label: 'Open Project', url: code.url }),

@@ -1,10 +1,11 @@
 import type { SectionState } from '../config/types.js'
 import { ActivityType } from 'premid'
-import { ActivityAssets, browsingTimestamp, gameNames, studySubjects, toolNames } from '../config/constants.js'
+import { ActivityAssets, gameNames, studySubjects, toolNames } from '../config/constants.js'
 import { buildButtons, smallImageFor } from '../util/activity.js'
 import { headingOr, prettify, safeDecode, textOf } from '../util/dom.js'
 import { getArtwork, teacherPhotos } from '../util/images.js'
 import { getPlayback, getPlaybackTimestamps, getVideo } from '../util/playback.js'
+import { getBrowsingTimestamp } from '../util/session.js'
 import { getAnimeTitle } from './watch.js'
 
 /** Finds the subject name shown on a Studysto teacher or lecture page. */
@@ -173,7 +174,7 @@ export function buildSectionActivity(section: SectionState, privacy: boolean): P
       ? ActivityAssets.Logo
       : section.image ?? ActivityAssets.Logo,
     ...smallImageFor(playback, !privacy && Boolean(section.image)),
-    startTimestamp: browsingTimestamp,
+    startTimestamp: getBrowsingTimestamp(),
     buttons: privacy
       ? buildButtons()
       : buildButtons({ label: section.buttonLabel, url: section.url }),

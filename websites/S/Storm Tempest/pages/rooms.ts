@@ -1,10 +1,11 @@
 import type { RoomState } from '../config/types.js'
 import { ActivityType } from 'premid'
-import { ActivityAssets, browsingTimestamp } from '../config/constants.js'
+import { ActivityAssets } from '../config/constants.js'
 import { buildButtons, distinctParts, smallImageFor } from '../util/activity.js'
 import { clean, latinDigits, textOf } from '../util/dom.js'
 import { getArtwork, usableImage } from '../util/images.js'
 import { getPlayback, getPlaybackTimestamps, getVideo } from '../util/playback.js'
+import { getBrowsingTimestamp } from '../util/session.js'
 
 /** Whether the current page is a watch-together room at `/r/<code>`. */
 export function isRoomPage(): boolean {
@@ -93,7 +94,7 @@ export function buildRoomActivity(room: RoomState, privacy: boolean): PresenceDa
       : room.image ?? ActivityAssets.Logo,
     ...smallImageFor(playback, !privacy && Boolean(room.image)),
     ...(party && { party }),
-    startTimestamp: browsingTimestamp,
+    startTimestamp: getBrowsingTimestamp(),
     buttons: privacy
       ? buildButtons()
       : buildButtons({ label: 'Join Room', url: room.url }),

@@ -20,8 +20,10 @@ export function getVideo(): HTMLVideoElement | undefined {
     return rect.width * rect.height
   }
 
-  return loaded.find(isMainPlayer)
-    ?? loaded.sort((a, b) => area(b) - area(a))[0]
+  const rank = (video: HTMLVideoElement): number =>
+    (isMainPlayer(video) ? 2 : 0) + (video.paused ? 0 : 1)
+
+  return loaded.sort((a, b) => rank(b) - rank(a) || area(b) - area(a))[0]
 }
 
 /** Whether `video` is in the viewport and big enough to be the main player rather than a preview. */
@@ -70,9 +72,12 @@ export function getPlaybackTimestamps(
     return {}
   }
 
+  const rate = playback.playbackRate && playback.playbackRate > 0
+    ? playback.playbackRate
+    : 1
   const [startTimestamp, endTimestamp] = getTimestamps(
-    Math.floor(playback.currentTime),
-    Math.floor(playback.duration),
+    Math.floor(playback.currentTime / rate),
+    Math.floor(playback.duration / rate),
   )
 
   return {

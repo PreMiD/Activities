@@ -1,8 +1,9 @@
 import type { PageState } from '../config/types.js'
 import { ActivityType } from 'premid'
-import { ActivityAssets, browsingTimestamp } from '../config/constants.js'
+import { ActivityAssets } from '../config/constants.js'
 import { buildButtons } from '../util/activity.js'
 import { clean, safeDecode } from '../util/dom.js'
+import { getBrowsingTimestamp } from '../util/session.js'
 import { stripEpisode } from './watch.js'
 
 /** Returns a display name for the current browsing page. */
@@ -135,7 +136,7 @@ export function buildPageActivity(page: PageState, privacy: boolean): PresenceDa
     details,
     state,
     largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp,
+    startTimestamp: getBrowsingTimestamp(),
     buttons: privacy ? buildButtons() : buildButtons(pageButton(page)),
   }
 }

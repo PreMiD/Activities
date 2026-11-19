@@ -30,8 +30,6 @@ export enum ActivityAssets {
   Docker = 'https://i.imgur.com/prrk2om.png',
 }
 
-export const browsingTimestamp = Math.floor(Date.now() / 1000)
-
 export const codestoIcons: Record<string, ActivityAssets> = {
   js: ActivityAssets.Js,
   mjs: ActivityAssets.Js,

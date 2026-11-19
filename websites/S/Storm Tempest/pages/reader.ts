@@ -1,9 +1,10 @@
 import type { ReadState } from '../config/types.js'
 import { ActivityType } from 'premid'
-import { ActivityAssets, browsingTimestamp } from '../config/constants.js'
+import { ActivityAssets } from '../config/constants.js'
 import { buildButtons, smallImageFor } from '../util/activity.js'
 import { latinDigits, prettify, queryText, safeDecode, textOf } from '../util/dom.js'
 import { getArtwork, getReaderCover } from '../util/images.js'
+import { getBrowsingTimestamp } from '../util/session.js'
 import { getAnimeTitle } from './watch.js'
 
 /** Parses `/<app>/<kind>/<source>/<slug>/<chapter>` for the manga, novel and book readers. */
@@ -192,7 +193,7 @@ export function buildReadActivity(read: ReadState, privacy: boolean): PresenceDa
     ...(!privacy && (read.page && read.pages
       ? { party: { partySize: read.page, maxPartySize: read.pages } }
       : read.position && { party: read.position })),
-    startTimestamp: browsingTimestamp,
+    startTimestamp: getBrowsingTimestamp(),
     buttons: privacy
       ? buildButtons()
       : buildButtons({ label: `Open ${read.kind}`, url: read.url }),

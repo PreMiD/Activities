@@ -1,10 +1,11 @@
 import type { WatchState } from '../config/types.js'
 import { ActivityType } from 'premid'
-import { ActivityAssets, browsingTimestamp } from '../config/constants.js'
+import { ActivityAssets } from '../config/constants.js'
 import { buildButtons, smallImageFor } from '../util/activity.js'
 import { clean, isVisible, latinDigits, prettify, queryAttr, queryText, safeDecode, textOf } from '../util/dom.js'
 import { getArtwork } from '../util/images.js'
 import { getPlayback, getPlaybackTimestamps, getVideo, isMainPlayer } from '../util/playback.js'
+import { getBrowsingTimestamp } from '../util/session.js'
 
 /** Whether `element` sits inside a group labelled as the player's server/source/provider switcher. */
 export function isInServerControl(element: Element): boolean {
@@ -62,6 +63,7 @@ export function sourceFromSelectedControl(): string | undefined {
       /^(?:watch|play|next|previous|episode|episodes|server|source|provider|stream|player|dub|sub|quality|auto|default)$/i.test(
         value,
       )
+      || /^(?:episode|ep\.?|الحلقة|حلقة)\s*[\d\u0660-\u0669]/i.test(value)
     ) {
       continue
     }
@@ -194,6 +196,14 @@ export function getEpisode(): string | undefined {
     return fromQuery
   }
 
+  const fromAttribute = latinDigits(
+    queryAttr(['[data-episode]'], 'data-episode') ?? '',
+  ).trim()
+
+  if (/^\d{1,4}(?:\.\d+)?$/.test(fromAttribute)) {
+    return fromAttribute
+  }
+
   const candidates = [
     document.location.pathname,
     document.location.search,
@@ -205,7 +215,6 @@ export function getEpisode(): string | undefined {
       '[aria-label*="Episode" i]',
       '[aria-label*="الحلقة"]',
     ]),
-    queryAttr(['[data-episode]'], 'data-episode'),
   ]
 
   for (const candidate of candidates) {
@@ -332,7 +341,7 @@ export function getWatchState(): WatchState {
   const totalEpisodes = getTotalEpisodes()
 
   return {
-    title: getAnimeTitle() ?? (slug ? prettify(slug) : 'Unknown Anime'),
+    title: getAnimeTitle() ?? (slug ? prettify(slug) : 'Unknown Title'),
     source: sourceFromUrl() ?? sourceFromSelectedControl(),
     episode,
     totalEpisodes:
@@ -379,7 +388,7 @@ export function buildWatchActivity(watch: WatchState, privacy: boolean): Presenc
             : path.startsWith('/movisto/') ? 'Open Movie' : 'Open Anime',
           url: watch.url,
         }),
-    ...(live && !playback?.paused && { startTimestamp: browsingTimestamp }),
+    ...(live && !playback?.paused && { startTimestamp: getBrowsingTimestamp() }),
     ...getPlaybackTimestamps(playback),
   }
 }

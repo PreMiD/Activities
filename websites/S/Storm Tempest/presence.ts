@@ -8,6 +8,7 @@ import { buildWatchActivity, getWatchState, isWatchPage } from './pages/watch.js
 import { applyOptions } from './util/activity.js'
 import { fetchCover, fetchTeacherPhoto, fetchTitleCover } from './util/images.js'
 import { setIframePlayback } from './util/playback.js'
+import { resetBrowsingTimestamp } from './util/session.js'
 
 const presence = new Presence({
   clientId: '1233213267053248633',
@@ -36,11 +37,11 @@ async function readSettings(): Promise<{ privacy: boolean, options: Options }> {
 }
 
 /** Picks the page's activity, fetching a missing cover only when `covers` is true, and returns how to build it for a privacy setting. */
-async function pickActivity(covers: boolean): Promise<(privacy: boolean) => PresenceData> {
+async function pickActivity(covers: boolean): Promise<{ build: (privacy: boolean) => PresenceData, watching: boolean }> {
   if (isCodestoWorkspace()) {
     const code = getCodestoState()
 
-    return privacy => buildCodestoActivity(code, privacy)
+    return { build: privacy => buildCodestoActivity(code, privacy), watching: false }
   }
 
   if (isRoomPage()) {
@@ -51,7 +52,7 @@ async function pickActivity(covers: boolean): Promise<(privacy: boolean) => Pres
         room.image = await fetchCover(room.titleHref)
       }
 
-      return privacy => buildRoomActivity(room, privacy)
+      return { build: privacy => buildRoomActivity(room, privacy), watching: false }
     }
   }
 
@@ -64,7 +65,7 @@ async function pickActivity(covers: boolean): Promise<(privacy: boolean) => Pres
       read.image ??= await fetchTitleCover()
     }
 
-    return privacy => buildReadActivity(read, privacy)
+    return { build: privacy => buildReadActivity(read, privacy), watching: false }
   }
 
   const section = getSectionState()
@@ -74,29 +75,41 @@ async function pickActivity(covers: boolean): Promise<(privacy: boolean) => Pres
       section.image = await fetchTeacherPhoto(section.teacher)
     }
 
-    return privacy => buildSectionActivity(section, privacy)
+    return { build: privacy => buildSectionActivity(section, privacy), watching: false }
   }
 
   if (isWatchPage()) {
     const watch = getWatchState()
-
     if (covers) {
       watch.image ??= await fetchTitleCover()
     }
 
-    return privacy => buildWatchActivity(watch, privacy)
+    return { build: privacy => buildWatchActivity(watch, privacy), watching: true }
   }
 
   const page = getPageState()
 
-  return privacy => buildPageActivity(page, privacy)
+  return { build: privacy => buildPageActivity(page, privacy), watching: false }
+}
+
+let wasWatching = false
+
+/** Starts a fresh browsing timer once the user stops watching. */
+function trackWatching(watching: boolean): void {
+  if (wasWatching && !watching) {
+    resetBrowsingTimestamp()
+  }
+
+  wasWatching = watching
 }
 
 /** Updates the presence with coding, reading, watching, tool, game or browsing activity on every refresh. */
 presence.on('UpdateData', async () => {
   const before = await readSettings()
-  const build = await pickActivity(!before.privacy && before.options.cover)
+  const { build, watching } = await pickActivity(!before.privacy && before.options.cover)
   const { privacy, options } = await readSettings()
+
+  trackWatching(watching)
 
   presence.setActivity(applyOptions(build(privacy), options))
 })

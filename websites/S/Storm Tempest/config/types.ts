@@ -47,6 +47,7 @@ export interface Playback {
   ended?: boolean
   currentTime: number
   duration: number
+  playbackRate?: number
 }
 
 export interface PageState {
