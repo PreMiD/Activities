@@ -8,7 +8,7 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const LOGO = 'https://i.imgur.com/yMmxo1e.png'
+const LOGO = 'https://i.imgur.com/Wo4reYe.jpeg'
 
 const ICONS = {
   reading: Assets.Reading,
