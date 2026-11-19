@@ -1,0 +1,60 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "theo.gfx",
+    "id": "550915127906664488"
+  },
+  "service": "zig~zag",
+  "altnames": [
+    "zigzag",
+    "zig-zag.fm"
+  ],
+  "description": {
+    "en": "zig~zag is a music discovery map: sail between islands of songs, gem the tracks you love and listen together with friends in boat parties."
+  },
+  "url": [
+    "www.zig-zag.fm",
+    "zig-zag.fm"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?zig-zag[.]fm[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/RVoWxox.png",
+  "thumbnail": "https://i.imgur.com/S6HLoYe.png",
+  "color": "#FFFFFF",
+  "category": "music",
+  "tags": [
+    "music",
+    "discovery",
+    "map",
+    "youtube",
+    "boat-party"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/](www[.])?youtube(-nocookie)?[.]com[/]embed[/]",
+  "settings": [
+    {
+      "id": "showParty",
+      "title": "Show boat party",
+      "icon": "fas fa-ship",
+      "value": true
+    },
+    {
+      "id": "showSailors",
+      "title": "Show who is aboard",
+      "icon": "fas fa-users",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show song time",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show buttons",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ]
+}
