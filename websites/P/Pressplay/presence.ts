@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1570463278058962964',
 })
 
-const LOGO = 'https://i.imgur.com/uPX8Y4N.png'
+const LOGO = 'https://i.imgur.com/4O4MFjr.png'
 // Shown when Privacy Mode and Hide Website Name enabled
 const HIDDEN_LOGO = 'https://i.imgur.com/LDonhZk.png'
 
