@@ -26,9 +26,9 @@
     "ga": "Is suíomh Gréasáin sruthú é Voiranime inar féidir leat féachaint ar VF agus VOSTFR anime.",
     "nl": "Voiranime is een streamingwebsite waar je VF- en VOSTFR-anime kunt bekijken."
   },
-  "url": "voir-anime.to",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voir-anime[.]to[/]",
-  "version": "1.0.2",
+  "url": "voiranime.cx",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voiranime[.]cx[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voiranime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voiranime/assets/thumbnail.png",
   "color": "#1a1920",
