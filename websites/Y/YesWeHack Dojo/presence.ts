@@ -1,5 +1,3 @@
-import { Assets } from 'premid'
-
 const presence = new Presence({
   clientId: '1572552418951041184',
 })
@@ -9,9 +7,17 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 const LOGO = 'https://i.imgur.com/Wo4reYe.jpeg'
 
 const ICONS = {
-  reading: Assets.Reading,
-  search: Assets.Search,
-  viewing: Assets.Viewing,
+  reading: 'https://i.imgur.com/ISdDisx.png',
+  search: 'https://i.imgur.com/v2jmsTL.png',
+  viewing: 'https://i.imgur.com/kW3Omjg.png',
+  solving: 'https://i.imgur.com/cf4WJcY.png',
+} as const
+
+const ICON_TEXT = {
+  reading: 'Learning',
+  search: 'Browsing',
+  viewing: 'Viewing',
+  solving: 'Challenging',
 } as const
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -26,12 +32,11 @@ const GENERIC_TITLES = new Set(['yeswehack - dojo', 'yeswehack', 'dojo'])
 
 const TITLE_SUFFIX = /\s+[-–]\s+(?:yeswehack dojo|dojo)$/i
 
-type PresenceIcon = 'reading' | 'search' | 'viewing'
+type PresenceIcon = 'reading' | 'search' | 'viewing' | 'solving'
 
 interface ClassifiedPresence {
   details: string
   state?: string
-  competing: boolean
   icon: PresenceIcon
 }
 
@@ -125,7 +130,6 @@ function classify(input: ClassifyInput): ClassifiedPresence {
   if (privacyMode) {
     return {
       details: 'Browsing Dojo',
-      competing: false,
       icon: 'search',
     }
   }
@@ -134,8 +138,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
     return {
       details: 'Improving bug hunting skills',
       state: 'Home',
-      competing: false,
-      icon: 'reading',
+      icon: 'search',
     }
   }
 
@@ -144,26 +147,23 @@ function classify(input: ClassifyInput): ClassifiedPresence {
       return {
         details: 'Browsing training modules',
         state: 'All categories',
-        competing: false,
-        icon: 'reading',
+        icon: 'search',
       }
     }
 
     if (segments.length === 2) {
-      const label = categoryLabel(second ?? '')
+      const label = categoryLabel(second ?? '') ?? pickTitle([], second)
 
       return {
         details: label ? `Browsing ${label} lessons` : 'Browsing training modules',
         state: label ? 'Training modules' : 'All categories',
-        competing: false,
-        icon: 'reading',
+        icon: 'search',
       }
     }
 
     return {
       details: `Reading lesson: ${pickTitle([lessonHeading, title], last) ?? 'Training module'}`,
       state: categoryLabel(second ?? '') ?? 'Training module',
-      competing: false,
       icon: 'reading',
     }
   }
@@ -174,8 +174,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
         ? 'Browsing monthly challenges'
         : `Solving ${pickTitle([challengeHeading, title], last) ?? 'monthly challenge'}`,
       state: 'Challenge of the month',
-      competing: true,
-      icon: 'search',
+      icon: segments.length === 1 ? 'search' : 'solving',
     }
   }
 
@@ -187,8 +186,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
         ? `Solving challenge: ${challengeTitle}`
         : 'Solving an official challenge',
       state: 'Official challenge',
-      competing: true,
-      icon: 'search',
+      icon: 'solving',
     }
   }
 
@@ -196,8 +194,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
     return {
       details: 'Solving the tutorial',
       state: 'Guided challenge',
-      competing: true,
-      icon: 'search',
+      icon: 'solving',
     }
   }
 
@@ -205,8 +202,7 @@ function classify(input: ClassifyInput): ClassifiedPresence {
     return {
       details: 'Building a challenge',
       state: 'Challenge editor',
-      competing: true,
-      icon: 'search',
+      icon: 'solving',
     }
   }
 
@@ -216,7 +212,6 @@ function classify(input: ClassifyInput): ClassifiedPresence {
     return {
       details: profileName ? `Viewing ${profileName}` : 'Viewing a Dojo profile',
       state: 'Dojo profile',
-      competing: false,
       icon: 'viewing',
     }
   }
@@ -224,7 +219,6 @@ function classify(input: ClassifyInput): ClassifiedPresence {
   return {
     details: 'Browsing Dojo',
     state: 'Exploring',
-    competing: false,
     icon: 'search',
   }
 }
@@ -244,9 +238,7 @@ function buildPresence(data: ClassifiedPresence): PresenceData {
     ...(data.state ? { state: data.state } : {}),
     largeImageKey: LOGO,
     smallImageKey: ICONS[data.icon],
-    smallImageText: data.competing
-      ? 'Competing'
-      : data.icon === 'reading' ? 'Learning' : 'Browsing',
+    smallImageText: ICON_TEXT[data.icon],
     startTimestamp: browsingTimestamp,
   }
 }
