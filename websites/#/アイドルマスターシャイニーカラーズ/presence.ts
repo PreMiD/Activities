@@ -1,161 +1,132 @@
+import { ActivityType, getTimestamps, supports } from 'premid'
+import { readGameStatus } from './game.js'
+import { getIdolPageDetails, getRouteDisplay, pageLabels } from './routes.js'
+
 const presence = new Presence({
   clientId: '1103931016525127792',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+let logo: Blob | null = null
 let iframeState: { pathname: string, hash: string } | null = null
-let lastDetails = ''
 
-presence.on('iFrameData', (data: any) => {
-  if (data && data.hash && data.hash.startsWith('#/')) {
-    iframeState = data
+presence.on('iFrameData', (data: unknown) => {
+  if (data && typeof data === 'object'
+    && 'pathname' in data && typeof data.pathname === 'string'
+    && 'hash' in data && typeof data.hash === 'string') {
+    iframeState = { pathname: data.pathname, hash: data.hash }
   }
 })
 
 presence.on('UpdateData', async () => {
+  if (!logo) {
+    try {
+      const response = await fetch('https://i.imgur.com/FZIYZxz.png')
+      if (!response.ok)
+        throw new Error(`HTTP ${response.status}`)
+
+      logo = await response.blob()
+    }
+    catch (error) {
+      presence.error(`Failed to load the activity logo: ${error}`)
+    }
+  }
+
   const { pathname: parentPath, hash: parentHash } = document.location
 
   const currentPath = iframeState?.pathname ?? parentPath
   const currentHash = iframeState?.hash ?? parentHash
 
-  const cleanHash = currentHash ? currentHash.split('?')[0] : ''
+  const cleanHash = currentHash.startsWith('#/') ? currentHash.split('?')[0] : ''
   const currentRoute = (cleanHash && cleanHash.length > 1) ? cleanHash.substring(1) : currentPath
+  const idolPage = getIdolPageDetails(currentRoute)
+  const routeDisplay = getRouteDisplay(currentRoute)
 
+  let { details, state } = routeDisplay
+
+  const status = supports(presence, 'execInPage')
+    ? await presence.execInPage(readGameStatus, currentRoute, !!idolPage).catch(() => null)
+    : null
+  if (status)
+    state = undefined
+
+  if (status && 'home' in status) {
+    details = pageLabels.home
+  }
+  else if (status && 'album' in status) {
+    details = pageLabels.album
+    state = status.album
+  }
+  else if (status && 'page' in status) {
+    let section = idolPage && status.page.startsWith(idolPage) ? status.page.slice(idolPage.length).trim() : status.page
+    if (idolPage && status.state && section === 'アイドル選択')
+      section = ''
+    const isRoutePage = routeDisplay.state && !status.state
+      && (status.page === routeDisplay.details || status.page === routeDisplay.state
+        || routeDisplay.details === pageLabels.fes || routeDisplay.details === pageLabels.matchLive)
+    if (idolPage) {
+      details = status.state && section ? `${idolPage} ／ ${section}` : idolPage
+      state = status.state || section || undefined
+    }
+    else {
+      details = isRoutePage ? routeDisplay.details : status.page
+      state = isRoutePage ? routeDisplay.state : status.state
+    }
+  }
+  else if (status && 'miniGame' in status) {
+    const miniGame = getRouteDisplay(status.miniGame.route)
+    details = miniGame.details
+    state = [miniGame.state, status.miniGame.section].filter(Boolean).join(' ／ ')
+  }
+  else if (status && 'fesUnit' in status) {
+    details = pageLabels.fes
+    state = pageLabels.fesUnit
+  }
+  else if (status && 'profilePage' in status) {
+    details = pageLabels.profile
+    state = status.profilePage
+  }
+  else if (status && 'stagePage' in status) {
+    details = status.stagePage.mode ? `${pageLabels.stage} ／ ${status.stagePage.mode}` : pageLabels.stage
+    state = status.stagePage.section === pageLabels.stage ? undefined : status.stagePage.section
+  }
+  else if (status && 'preparation' in status) {
+    details = `${pageLabels.preparation} ／ ${status.preparation.mode}`
+    state = status.preparation.stage
+  }
+  else if (status && 'communication' in status) {
+    details = status.communication.name
+    state = status.communication.title
+  }
+  else if (status && 'event' in status) {
+    details = status.episode ? status.event : pageLabels.event
+    state = status.episode
+      ? `${status.episode.chapter} ／ ${status.episode.title}`
+      : status.event
+  }
+  else if (status) {
+    details = status.scenario
+    state = `${status.idol} ／ ${status.stage}`
+  }
+
+  const playback = status && 'page' in status ? status.playback : undefined
   const presenceData: PresenceData = {
     name: 'シャニマス',
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/%23/%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%B7%E3%83%A3%E3%82%A4%E3%83%8B%E3%83%BC%E3%82%AB%E3%83%A9%E3%83%BC%E3%82%BA/assets/logo.png',
-    largeImageUrl: 'https://shinycolors.enza.fun/',
+    type: playback ? (playback.type === 'video' ? ActivityType.Watching : ActivityType.Listening) : undefined,
+    details,
+    state,
+    largeImageKey: logo,
+    largeImageUrl: 'https://shinycolors.idolmaster-official.jp/',
     startTimestamp: browsingTimestamp,
-    detailsUrl: `https://shinycolors.enza.fun${currentRoute}`,
   }
 
-  const pathMap: Record<string, PresenceData> = {
-    '/home': { details: 'ホーム画面' },
-    '/present': { details: 'プレゼント' },
-    '/shop': { details: 'ショップ' },
-    '/shop/premium': { details: 'プレミアムショップ' },
-    '/shop/skin': { details: '衣装ショップ' },
-    '/shop/game_event': { details: 'イベントショップ' },
-    '/shop/money': { details: 'マニーショップ' },
-    '/shop/piece': { details: 'ピースショップ' },
-    '/shop/staff_item_point': { details: 'シールショップ' },
-    '/shop/trade': { details: 'リサイクルショップ' },
-    '/shop/monthly_passport': { details: '283パスショップ' },
-    '/shop/shiny_passport': { details: 'シャイニーパスショップ' },
-    '/item': { details: 'アイテム一覧' },
-    '/album': { details: 'アルバムを閲覧中' },
-    '/homeDeck': { details: 'ホームユニットを編集中' },
-    '/comic': { details: '4コマ漫画を閲覧中' },
-    '/profile': { details: 'プロフィールを閲覧中' },
-    '/gasha': { details: 'ガシャ' },
-    '/idolPortal': { details: 'アイドル' },
-    '/unit': { details: 'ユニット編成' },
-    '/training': { details: 'トレーニング' },
-    '/evolution': { details: '特訓' },
-    '/exSkill': { details: 'Exスキル' },
-    '/idolRoad': { details: 'アイドルロード' },
-    '/idolList': { details: 'アイドル一覧' },
-    '/producerDesk': { details: 'Pデスク' },
-    '/producerDeskShop': { details: 'Pレベルショップ' },
-    '/producerLevel': { details: 'Pレベル' },
-    '/mission': { details: 'ミッションを閲覧中' },
-    '/workActivity': { details: '営業' },
-    '/produceReady': { details: 'プロデュース準備中' },
-    '/produce': { details: 'プロデュース中' },
-    '/autoPlaySchedule': { details: 'オートプロデュース設定中' },
-    '/matchLiveTop': { details: 'マッチライブ' },
-    '/matchLiveReady': { details: 'マッチライブ準備中' },
-    '/matchLiveConcert': { details: 'マッチライブをプレイ中' },
-    '/fesTop': { details: 'フェス' },
-    '/fesConcert': { details: 'フェスリハーサルをプレイ中' },
-    '/fesReady': { details: 'フェス準備中' },
-    '/fesMatchConcert': { details: 'グレードフェスをプレイ中' },
-    '/jewelCounter': { details: 'フェザージュエルミッション' },
-    '/help': { details: 'ヘルプを閲覧中' },
-    '/fesTours': { details: 'フェスツアーズをプレイ中' },
-    '/fesToursConcert': { details: 'フェスツアーズをプレイ中' },
-    '/mastersFes': { details: 'マスターズフェスをプレイ中' },
-    '/miniGamePortal': { details: 'ミニゲーム' },
-    '/daifugo': { details: '大富豪をプレイ中' },
-    '/characterProfile': { details: 'アイドルプロフィールを閲覧中' },
-    '/photo': { details: 'フォトモード' },
-    '/memoryBoost': { details: 'メモリーブースト' },
-  }
-
-  const prefixMap: Record<string, PresenceData> = {
-    '/collaboFes/': { details: 'コラボフェス' },
-    '/produceMarathon/': { details: 'プロデュースイベント' },
-  }
-
-  const pathDetails = pathMap[currentRoute]?.details
-  const matchedPrefix = Object.keys(prefixMap).find(prefix => currentRoute.includes(prefix))
-
-  if (typeof pathDetails !== 'undefined') {
-    presenceData.details = pathDetails
-  }
-  else if (typeof matchedPrefix !== 'undefined') {
-    const prefixDetails = prefixMap[matchedPrefix]?.details
-    if (typeof prefixDetails !== 'undefined') {
-      presenceData.details = prefixDetails
-    }
-  }
-  else if (currentRoute.includes('/idolAlbum/')) {
-    const idolNames: string[] = [
-      '櫻木真乃',
-      '風野灯織',
-      '八宮めぐる',
-      '月岡恋鐘',
-      '田中摩美々',
-      '白瀬咲耶',
-      '三峰結華',
-      '幽谷霧子',
-      '小宮果穂',
-      '園田智代子',
-      '西城樹里',
-      '杜野凛世',
-      '有栖川夏葉',
-      '大崎甘奈',
-      '大崎甜花',
-      '桑山千雪',
-      '芹沢あさひ',
-      '黛冬優子',
-      '和泉愛依',
-      '浅倉透',
-      '樋口円香',
-      '福丸小糸',
-      '市川雛菜',
-      '七草にちか',
-      '緋田美琴',
-      '斑鳩ルカ',
-      '鈴木羽那',
-      '郁田はるき',
-    ]
-
-    const parts = currentRoute.split('/')
-    const idStr = parts[parts.length - 1]
-    const albumIndex = Number(idStr) - 1
-
-    if (albumIndex >= 0 && albumIndex < idolNames.length) {
-      presenceData.details = `${idolNames[albumIndex]}のアルバムを閲覧中`
-    }
-
-    const otherId = Number(idStr)
-    const otherMap: Record<number, string> = {
-      91: '七草はづき',
-      801: 'ルビー',
-      802: '有馬かな',
-      803: 'MEMちょ',
-      804: '黒川あかね',
-    }
-    if (otherMap[otherId]) {
-      presenceData.details = `${otherMap[otherId]}のアルバムを閲覧中`
+  if (playback) {
+    delete presenceData.startTimestamp
+    if (!playback.paused) {
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(playback.position, playback.duration)
     }
   }
 
-  if (presenceData.details !== lastDetails) {
-    lastDetails = presenceData.details as string
-  }
-
-  presence.setActivity(presenceData)
+  await presence.setActivity(presenceData)
 })
