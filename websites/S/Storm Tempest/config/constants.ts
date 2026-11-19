@@ -1,5 +1,5 @@
 export enum ActivityAssets {
-  Logo = 'https://i.imgur.com/1RVb7Ke.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png',
   Keyboard = 'https://i.imgur.com/4p7Ug1d.png',
   Moon = 'https://i.imgur.com/PIzPrzi.png',
   Js = 'https://i.imgur.com/FH6KGTc.png',
