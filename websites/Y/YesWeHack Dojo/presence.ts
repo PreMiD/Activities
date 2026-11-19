@@ -96,7 +96,7 @@ function clamp(value: string, max = 128): string {
     return value
   }
 
-  return `${value.slice(0, max - 1).trimEnd()}...`
+  return `${value.slice(0, max - 3).trimEnd()}...`
 }
 
 function segmentsFromPathname(pathname: string): string[] {
