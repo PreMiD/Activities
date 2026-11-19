@@ -56,6 +56,7 @@ function normalize(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]/g, '')
 }
 
+// Slugs end in 5-character ID e.g. "blade-runner-2049-zjjzp"
 function titleFromSlug(rawSlug: string): string {
   let slug = rawSlug
   try {
@@ -69,7 +70,7 @@ function titleFromSlug(rawSlug: string): string {
     .filter(Boolean)
 
   const last = parts[parts.length - 1]
-  if (parts.length > 1 && last && /^[a-z0-9]{4,6}$/i.test(last) && /\d/.test(last))
+  if (parts.length > 1 && last && /^[a-z0-9]{5}$/i.test(last))
     parts.pop()
 
   return titleCase(parts.join(' ').trim())
