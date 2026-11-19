@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "denpa",
+  "description": {
+    "en": "denpa is a self-hosted TV recording server for watching live Japanese TV broadcasts and recorded programs in the browser.",
+    "ja": "denpa は、ブラウザでテレビのライブ視聴と録画番組の再生ができる、自宅サーバー型のテレビ録画サーバーです。"
+  },
+  "url": "127.0.0.1",
+  "regExp": "^https?://(localhost|127[.]0[.]0[.]1|\\[::1\\]|[a-z0-9-]+[.]local|192[.]168[.][0-9.]+|10[.][0-9.]+|172[.](1[6-9]|2[0-9]|3[01])[.][0-9.]+)(:[0-9]+)?[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/ldFA4Ah.png",
+  "thumbnail": "https://i.imgur.com/6xCOFVK.png",
+  "color": "#0B0C0F",
+  "category": "videos",
+  "tags": [
+    "tv",
+    "live",
+    "japan",
+    "dtv",
+    "recording"
+  ],
+  "settings": [
+    {
+      "id": "showProgram",
+      "title": "番組名を表示",
+      "icon": "fad fa-tv",
+      "value": true
+    },
+    {
+      "id": "timestamp",
+      "title": "経過・残り時間を表示",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "browsing",
+      "title": "視聴していないページも表示",
+      "icon": "fad fa-compass",
+      "value": true
+    }
+  ]
+}
