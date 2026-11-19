@@ -8,7 +8,7 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const LOGO = 'https://i.imgur.com/yMmxo1e.png'
+const LOGO = 'https://imgur.com/a/gqz1VNt'
 
 const ICONS = {
   reading: Assets.Reading,
@@ -43,9 +43,11 @@ function buildPresence(data: ClassifiedPresence): PresenceData {
 }
 
 presence.on('UpdateData', async () => {
-  const [showTimestamp, showButtons] = await Promise.all([
+  const [showTimestamp, showButtons, privacyMode, hideProfileName] = await Promise.all([
     presence.getSetting<boolean>('showTimestamp'),
     presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('privacyMode'),
+    presence.getSetting<boolean>('hideProfileName'),
   ])
 
   const pathname = document.location.pathname
@@ -54,6 +56,8 @@ presence.on('UpdateData', async () => {
     title: document.title,
     lessonHeading: lessonHeading(),
     challengeHeading: challengeHeading(),
+    privacyMode: Boolean(privacyMode),
+    hideProfileName: Boolean(hideProfileName),
   }))
 
   if (!showTimestamp) {

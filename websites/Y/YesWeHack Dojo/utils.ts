@@ -77,12 +77,29 @@ export interface ClassifyInput {
   title: string
   lessonHeading?: string | null
   challengeHeading?: string | null
+  privacyMode?: boolean
+  hideProfileName?: boolean
 }
 
 export function classify(input: ClassifyInput): ClassifiedPresence {
-  const { segments, title, lessonHeading, challengeHeading } = input
+  const {
+    segments,
+    title,
+    lessonHeading,
+    challengeHeading,
+    privacyMode,
+    hideProfileName,
+  } = input
   const [first, second] = segments
   const last = segments.at(-1)
+
+  if (privacyMode) {
+    return {
+      details: 'Browsing Dojo',
+      competing: false,
+      icon: 'search',
+    }
+  }
 
   if (segments.length === 0) {
     return {
@@ -160,7 +177,9 @@ export function classify(input: ClassifyInput): ClassifiedPresence {
 
   if (first === 'user') {
     return {
-      details: pickTitle([title]) ?? 'Viewing a Dojo profile',
+      details: hideProfileName
+        ? 'Viewing a Dojo profile'
+        : pickTitle([title]) ?? 'Viewing a Dojo profile',
       state: 'Dojo profile',
       competing: false,
       icon: 'viewing',

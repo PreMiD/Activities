@@ -34,6 +34,18 @@
       "title": "Show buttons",
       "icon": "fas fa-mouse-pointer",
       "value": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "hideProfileName",
+      "title": "Hide profile names",
+      "icon": "fas fa-eye-slash",
+      "value": false
     }
   ]
 }
