@@ -66,6 +66,48 @@ export function getLabTitle(): string | null {
     .trim() || null
 }
 
+export interface AccountStats {
+  rank: string | null
+  percent: string | null
+  solved: number | null
+  level: string | null
+  username: string | null
+}
+
+function text(selector: string): string | null {
+  return document.querySelector(selector)?.textContent?.trim() || null
+}
+
+export function getAccountStats(): AccountStats {
+  const rankMatch = text('#currentUserRank')?.match(/#\s*(\d+)/)
+  const statusText = text('#ajaxUserStatus')
+  const username = statusText?.split('You\'re showing as ')[1]?.trim() ?? null
+
+  const progressSelectors = [
+    '.apprentice-progress .radial-text-element__progress',
+    '.practitioner-progress .radial-text-element__progress',
+    '.expert-progress .radial-text-element__progress',
+  ]
+  const counts = progressSelectors.map(selector => Number.parseInt(text(selector) ?? '', 10))
+  const solved = counts.some(Number.isNaN) ? null : counts.reduce((sum, count) => sum + count, 0)
+
+  return {
+    rank: rankMatch?.[1] ?? null,
+    percent: text('#AcademyAccountStatusWidget .progress-with-percent text'),
+    solved,
+    level: text('[class^="lab-level-display__"]'),
+    username: username && username !== 'ANONYMOUS' ? username : null,
+  }
+}
+
+export function getLabDifficulty(): string | null {
+  return text('p.widget-container-labelevel span')
+}
+
+export function isLabSolved(): boolean {
+  return !!document.querySelector('.widgetcontainer-lab-status.is-solved') || text('span.lab-status-icon') === 'Solved'
+}
+
 export async function readSettings(): Promise<ActivitySettings> {
   const [
     showTimestamp,
@@ -114,6 +156,8 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Play
       const title = getLabTitle()
       presenceData.details = title ? `Solving Lab: '${title}'` : 'Solving a lab'
+      const difficulty = settings.showDifficulty ? getLabDifficulty() : null
+      presenceData.state = `${difficulty ? `${difficulty} · ` : ''}${isLabSolved() ? 'Solved' : 'In progress'}`
       break
     }
     case 'article': {
@@ -139,12 +183,32 @@ presence.on('UpdateData', async () => {
     }
     case 'dashboard': {
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.details = 'Browsing dashboard'
+      const stats = getAccountStats()
+      presenceData.details = settings.showUsername && stats.username
+        ? `Username: ${stats.username}`
+        : 'Browsing dashboard'
+
+      const parts: string[] = []
+      if (settings.showRank && stats.rank)
+        parts.push(`Rank: #${stats.rank}`)
+      if (settings.showLevel && stats.level)
+        parts.push(`Level: ${stats.level}`)
+      if (settings.showProgress && stats.solved !== null)
+        parts.push(`Solved: ${stats.solved}`)
+      if (settings.showProgress && stats.percent)
+        parts.push(stats.percent)
+      if (parts.length > 0)
+        presenceData.state = parts.join(' | ')
       break
     }
     case 'hallOfFame': {
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.details = 'Viewing Hall of Fame'
+      const stats = getAccountStats()
+      presenceData.details = settings.showUsername && stats.username
+        ? `Viewing Hall of Fame | Username: ${stats.username}`
+        : 'Viewing Hall of Fame'
+      if (settings.showRank && stats.rank)
+        presenceData.state = `Rank: #${stats.rank}`
       break
     }
     default: {
