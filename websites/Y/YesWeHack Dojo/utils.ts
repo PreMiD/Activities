@@ -59,8 +59,21 @@ export function segmentsFromPathname(pathname: string): string[] {
   return pathname.split('/').filter(Boolean)
 }
 
-export function shouldShowButton(pathname: string): boolean {
-  return segmentsFromPathname(pathname).length > 0
+export interface ButtonOptions {
+  privacyMode?: boolean
+  hideProfileName?: boolean
+}
+
+export function shouldShowButton(
+  pathname: string,
+  options: ButtonOptions = {},
+): boolean {
+  const segments = segmentsFromPathname(pathname)
+  if (segments.length === 0 || options.privacyMode) {
+    return false
+  }
+
+  return !(options.hideProfileName && segments[0] === 'user')
 }
 
 export type PresenceIcon = 'reading' | 'search' | 'viewing'

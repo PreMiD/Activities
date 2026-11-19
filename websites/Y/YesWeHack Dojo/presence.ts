@@ -64,7 +64,10 @@ presence.on('UpdateData', async () => {
     delete presenceData.startTimestamp
   }
 
-  if (showButtons && shouldShowButton(pathname)) {
+  if (showButtons && shouldShowButton(pathname, {
+    privacyMode: Boolean(privacyMode),
+    hideProfileName: Boolean(hideProfileName),
+  })) {
     presenceData.buttons = [
       {
         label: 'View page',
