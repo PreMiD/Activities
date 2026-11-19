@@ -64,7 +64,7 @@ function titleFromSlug(rawSlug: string): string {
   catch {}
 
   const parts = slug
-    .replace(/-(eng|english)-sub(bed)?$/i, '')
+    .replace(/-(?:eng|english)-sub(?:bed)?$/i, '')
     .split('-')
     .filter(Boolean)
 
@@ -79,7 +79,7 @@ function cleanPageTitle(text: string | null | undefined): string {
   return (text ?? '')
     .split(/\s[|–—-]\s/)[0]!
     .replace(/^watch\s+/i, '')
-    .replace(/\s+(online|free|full movie)$/i, '')
+    .replace(/\s+(?:online|free|full movie)$/i, '')
     .replace(/\s*\(\d{4}\)$/, '')
     .trim()
 }
@@ -96,7 +96,7 @@ function getTitle(slugTitle: string): string {
 }
 
 function getInfo() {
-  const match = /^[/]watch[/](movie|film|tv|series|show)-([^/]+)/i.exec(document.location.pathname)
+  const match = /^\/watch\/(movie|film|tv|series|show)-([^/]+)/i.exec(document.location.pathname)
   if (!match)
     return null
 
