@@ -2,8 +2,11 @@ import type { Page } from 'premid/test'
 import { ActivityType, Assets } from 'premid'
 import { expect, test } from 'premid/test'
 
+// Both player bars are in the wild
+const playerBar = 'ytmusic-app ytmusic-player-bar, ytmusic-app ytmusic-miniplayer'
+
 const consentOrLogin = {
-  until: () => !!document.querySelector('ytmusic-app ytmusic-player-bar'),
+  until: () => !!document.querySelector(playerBar),
 }
 
 // A pre-roll ad also plays in the video element, and the song can come up paused after it.
@@ -15,7 +18,10 @@ function playSong() {
     video.muted = true
     void video.play()
   }
-  const title = document.querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')?.textContent?.trim()
+  const title = document
+    .querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title, .ytmusicTrackInfoTitle')
+    ?.textContent
+    ?.trim()
   return !!video && !video.paused && !adShowing && !!title
 }
 
@@ -80,7 +86,8 @@ test('privacy mode hides the song title', { settings: { privacy: true } }, async
   await startPlayback(page)
 
   const title = await page.evaluate(() => {
-    return document.querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')
+    return document
+      .querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title, .ytmusicTrackInfoTitle')
       ?.textContent
       ?.trim() ?? ''
   })
