@@ -30,10 +30,17 @@ export function findSubject(): string | undefined {
 export function findTeacher(slug: string): string {
   const link = Array.from(document.querySelectorAll('a[href]')).find((anchor) => {
     const text = textOf(anchor)
-    const target = new URL(anchor.getAttribute('href') ?? '', document.location.href)
-      .pathname
-      .split('/')
-      .map(safeDecode)
+    let target: string[]
+
+    try {
+      target = new URL(anchor.getAttribute('href') ?? '', document.location.href)
+        .pathname
+        .split('/')
+        .map(safeDecode)
+    }
+    catch {
+      return false
+    }
 
     return (
       target[1] === 'studysto'
