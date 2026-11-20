@@ -12,24 +12,26 @@ const INDEX_NAMES: Record<string, string> = {
   '/all-materials': 'all materials',
 }
 
-export type PageKind = 'home' | 'lab' | 'article' | 'index' | 'learningPath' | 'dashboard' | 'hallOfFame' | 'other'
+const SETTING_KEYS = [
+  'showTimestamp',
+  'showButtons',
+  'privacyMode',
+  'showRank',
+  'showProgress',
+  'showLevel',
+  'showUsername',
+  'showDifficulty',
+] as const
 
-export interface ActivitySettings {
-  showTimestamp: boolean
-  showButtons: boolean
-  privacyMode: boolean
-  showRank: boolean
-  showProgress: boolean
-  showLevel: boolean
-  showUsername: boolean
-  showDifficulty: boolean
-}
+type PageKind = 'home' | 'lab' | 'article' | 'index' | 'learningPath' | 'dashboard' | 'hallOfFame' | 'other'
 
-export function clamp(value: string, max = 128): string {
+type ActivitySettings = Record<typeof SETTING_KEYS[number], boolean>
+
+function clamp(value: string, max = 128): string {
   return value.length > max ? `${value.slice(0, max - 1)}…` : value
 }
 
-export function getPageKind(pathname: string): PageKind {
+function getPageKind(pathname: string): PageKind {
   if (pathname === '/web-security' || pathname === '/web-security/')
     return 'home'
   if (Object.keys(INDEX_NAMES).some(path => pathname.includes(path)))
@@ -49,20 +51,20 @@ export function getPageKind(pathname: string): PageKind {
   return 'other'
 }
 
-export function getTopic(): string | null {
-  return document.querySelectorAll('ul.breadcrumb-list span[itemprop="name"]')[1]?.textContent?.trim() ?? null
+function getTopic(): string | null {
+  return text('ul.breadcrumb-list span[itemprop="name"]', 1)
 }
 
-export function getHeading(): string | null {
-  return document.querySelector('h1.heading-2')?.textContent?.trim() ?? null
+function getHeading(): string | null {
+  return text('h1.heading-2')
 }
 
-export function getBreadcrumbDepth(): number {
+function getBreadcrumbDepth(): number {
   return document.querySelectorAll('ul.breadcrumb-list li[itemprop="itemListElement"]').length
 }
 
 // Topic pages link straight to a heading, e.g. /web-security/sql-injection#what-is-sql-injection-sqli.
-export function getAnchoredSection(): string | null {
+function getAnchoredSection(): string | null {
   const id = decodeURIComponent(document.location.hash.slice(1))
   const target = id ? document.getElementById(id) : null
   return target?.matches('h1, h2, h3, h4, h5, h6')
@@ -70,20 +72,22 @@ export function getAnchoredSection(): string | null {
     : null
 }
 
-export function getLearningPathSection(): string | null {
+function getLearningPathSection(): string | null {
   return text('.learning-path-content-main-static h2')
 }
 
-export function getLabTitle(): string | null {
-  if (getPageKind(document.location.pathname) !== 'lab')
-    return null
+function getLearningPathName(): string | null {
+  return text('.learning-path-header-details strong') ?? text('h2.margin-top-tiny')
+}
+
+function getLabTitle(): string | null {
   return document.title
     .replace(/^Lab:\s*/, '')
     .replace(/\s*\|\s*Web Security Academy(?: - PortSwigger)?$/, '')
     .trim() || null
 }
 
-export interface AccountStats {
+interface AccountStats {
   rank: string | null
   percent: string | null
   solved: number | null
@@ -94,8 +98,8 @@ export interface AccountStats {
 const LEVEL_NAMES = new Set(['NEWBIE', 'APPRENTICE', 'PRACTITIONER', 'EXPERT'])
 const PROGRESS_LEVELS = ['apprentice', 'practitioner', 'expert']
 
-function text(selector: string): string | null {
-  return document.querySelector(selector)?.textContent?.trim() || null
+function text(selector: string, index = 0): string | null {
+  return document.querySelectorAll(selector)[index]?.textContent?.trim() || null
 }
 
 function progressCount(scope: ParentNode, level: string): number | null {
@@ -122,7 +126,7 @@ function getLevelProgressScope(): ParentNode {
     .find(card => card.querySelector('h3')?.textContent?.trim() === 'Level progress') ?? document
 }
 
-export function getAccountStats(): AccountStats {
+function getAccountStats(): AccountStats {
   const rankMatch = text('#currentUserRank')?.match(/#\s*(\d+)/)
   const statusText = text('#ajaxUserStatus')
   const username = statusText?.match(/showing as\s+([^\s[]+)/i)?.[1]?.trim() ?? null
@@ -141,7 +145,7 @@ export function getAccountStats(): AccountStats {
   }
 }
 
-export function formatAccountState(
+function formatAccountState(
   stats: AccountStats,
   settings: ActivitySettings,
   include: { level?: boolean, progress?: boolean },
@@ -160,44 +164,19 @@ export function formatAccountState(
   return parts.length > 0 ? parts.join(' | ') : undefined
 }
 
-export function getLabDifficulty(): string | null {
+function getLabDifficulty(): string | null {
   return text('p.widget-container-labelevel span')
 }
 
-export function isLabSolved(): boolean {
+function isLabSolved(): boolean {
   return !!document.querySelector('.widgetcontainer-lab-status.is-solved') || text('span.lab-status-icon') === 'Solved'
 }
 
-export async function readSettings(): Promise<ActivitySettings> {
-  const [
-    showTimestamp,
-    showButtons,
-    privacyMode,
-    showRank,
-    showProgress,
-    showLevel,
-    showUsername,
-    showDifficulty,
-  ] = await Promise.all([
-    presence.getSetting<boolean>('showTimestamp'),
-    presence.getSetting<boolean>('showButtons'),
-    presence.getSetting<boolean>('privacyMode'),
-    presence.getSetting<boolean>('showRank'),
-    presence.getSetting<boolean>('showProgress'),
-    presence.getSetting<boolean>('showLevel'),
-    presence.getSetting<boolean>('showUsername'),
-    presence.getSetting<boolean>('showDifficulty'),
-  ])
-  return {
-    showTimestamp,
-    showButtons,
-    privacyMode,
-    showRank,
-    showProgress,
-    showLevel,
-    showUsername,
-    showDifficulty,
-  }
+async function readSettings(): Promise<ActivitySettings> {
+  const values = await Promise.all(SETTING_KEYS.map(key => presence.getSetting<boolean>(key)))
+  return Object.fromEntries(
+    SETTING_KEYS.map((key, index) => [key, values[index]]),
+  ) as ActivitySettings
 }
 
 presence.on('UpdateData', async () => {
@@ -234,14 +213,14 @@ presence.on('UpdateData', async () => {
     case 'index': {
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Browsing'
-      const name = Object.entries(INDEX_NAMES).find(([path]) => pathname.includes(path))?.[1]
+      const [indexPath, indexName] = Object.entries(INDEX_NAMES).find(([path]) => pathname.includes(path)) ?? []
       const section = getAnchoredSection()
       // All-labs deep links read naturally as "Browsing <topic> labs", so keep it in details.
-      if (pathname.includes('/all-labs')) {
+      if (indexPath === '/all-labs') {
         presenceData.details = section ? `Browsing ${section} labs` : 'Browsing all labs'
         break
       }
-      presenceData.details = `Browsing ${name ?? 'the index'}`
+      presenceData.details = `Browsing ${indexName ?? 'the index'}`
       if (section)
         presenceData.state = `Section: ${section}`
       break
@@ -256,7 +235,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Browsing learning paths'
         break
       }
-      presenceData.details = `Following learning path: ${slug.replaceAll('-', ' ')}`
+      presenceData.details = `Following learning path: ${getLearningPathName() ?? slug.replaceAll('-', ' ')}`
       const section = getLearningPathSection()
       if (section)
         presenceData.state = `Section: ${section}`
