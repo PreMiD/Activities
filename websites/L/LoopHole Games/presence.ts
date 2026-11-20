@@ -40,7 +40,7 @@ presence.on('UpdateData', async () => {
   if (page?.game && page.kind === 'game') {
     presenceData.name = page.game
     presenceData.largeImageKey = page.image
-    presenceData.details = showDetails && page.details ? page.details : `Playing ${page.game}`
+    presenceData.details = showDetails && page.details ? page.details : 'On LoopHole Games'
     if (showDetails && page.state)
       presenceData.state = page.state
     presenceData.startTimestamp = Math.floor(page.since / 1000)
