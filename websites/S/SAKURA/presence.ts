@@ -26,15 +26,21 @@ presence.on('UpdateData', async () => {
             || state?.includes('Explore')
             || state?.includes('Consulte'))
 
-      const activity: any = {
-        type: isBrowsing ? ActivityType.Playing : ActivityType.Watching,
+      const common = {
         details,
         state: state || undefined,
         largeImageKey: largeImage || 'https://sakura.thefoxy.me/icon.png',
-        largeImageText: largeText || 'SAKURA',
         smallImageKey: smallImage || 'https://sakura.thefoxy.me/icon.png',
         smallImageText: smallText || 'SAKURA',
       }
+
+      const activity: PresenceData = isBrowsing
+        ? { ...common, type: ActivityType.Playing }
+        : {
+            ...common,
+            type: ActivityType.Watching,
+            largeImageText: largeText || 'SAKURA',
+          }
 
       if (start)
         activity.startTimestamp = Math.floor(Number(start))

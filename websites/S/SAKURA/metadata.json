@@ -7,11 +7,11 @@
   },
   "service": "SAKURA",
   "description": {
-    "en": "Displays what anime or cartoon you are watching on SAKURA.",
-    "fr": "Affiche l'anime ou le dessin animé que vous regardez sur SAKURA."
+    "en": "SAKURA is a free streaming platform for anime and cartoons, available in VF and VOSTFR.",
+    "fr": "SAKURA est une plateforme de streaming gratuite d'animes et de dessins animés en VF et VOSTFR."
   },
   "url": "sakura.thefoxy.me",
-  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*sakura[.]thefoxy[.]me|localhost)(:\\d{1,5})?([/]|$)",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*sakura[.]thefoxy[.]me|localhost)(:\\d{1,5})?[/]",
   "version": "1.0.0",
   "logo": "https://sakura.thefoxy.me/icon-512.png",
   "thumbnail": "https://sakura.thefoxy.me/banner.png",
