@@ -1,3 +1,5 @@
+import { Assets } from 'premid'
+
 const presence = new Presence({
   clientId: '1572552418951041184',
 })
@@ -6,19 +8,14 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const LOGO = 'https://i.imgur.com/Wo4reYe.jpeg'
 
-const ICONS = {
-  reading: 'https://i.imgur.com/ISdDisx.png',
-  search: 'https://i.imgur.com/v2jmsTL.png',
-  viewing: 'https://i.imgur.com/kW3Omjg.png',
-  solving: 'https://i.imgur.com/cf4WJcY.png',
-} as const
+type PresenceIcon = 'reading' | 'search' | 'viewing' | 'solving'
 
-const ICON_TEXT = {
-  reading: 'Learning',
-  search: 'Browsing',
-  viewing: 'Viewing',
-  solving: 'Challenging',
-} as const
+const ICONS: Record<PresenceIcon, { key: string, text: string }> = {
+  reading: { key: Assets.Reading, text: 'Learning' },
+  search: { key: Assets.Search, text: 'Browsing' },
+  viewing: { key: Assets.Viewing, text: 'Viewing' },
+  solving: { key: Assets.Play, text: 'Challenging' },
+}
 
 const CATEGORY_LABELS: Record<string, string> = {
   'vulnerabilities': 'Vulnerabilities',
@@ -32,7 +29,10 @@ const GENERIC_TITLES = new Set(['yeswehack - dojo', 'yeswehack', 'dojo'])
 
 const TITLE_SUFFIX = /\s+[-–]\s+(?:yeswehack dojo|dojo)$/i
 
-type PresenceIcon = 'reading' | 'search' | 'viewing' | 'solving'
+interface PrivacyOptions {
+  privacyMode: boolean
+  hideProfileName: boolean
+}
 
 interface ClassifiedPresence {
   details: string
@@ -40,22 +40,35 @@ interface ClassifiedPresence {
   icon: PresenceIcon
 }
 
-interface ClassifyInput {
+interface ClassifyInput extends PrivacyOptions {
   segments: string[]
   title: string
   lessonHeading?: string | null
   challengeHeading?: string | null
-  privacyMode?: boolean
-  hideProfileName?: boolean
 }
 
-interface ButtonOptions {
-  privacyMode?: boolean
-  hideProfileName?: boolean
+const EXPLORING: ClassifiedPresence = {
+  details: 'Browsing Dojo',
+  state: 'Exploring',
+  icon: 'search',
+}
+
+const PRIVATE: ClassifiedPresence = {
+  details: 'Browsing Dojo',
+  icon: 'search',
 }
 
 function categoryLabel(segment: string): string | undefined {
   return CATEGORY_LABELS[segment.trim().toLowerCase()]
+}
+
+function slugToTitle(slug: string): string | undefined {
+  const spaced = slug.replace(/[-_]+/g, ' ').trim()
+  if (!spaced) {
+    return undefined
+  }
+
+  return spaced.charAt(0).toUpperCase() + spaced.slice(1)
 }
 
 function cleanTitle(raw: string | null | undefined): string | undefined {
@@ -83,12 +96,7 @@ function pickTitle(
     }
   }
 
-  const fromSlug = fallbackSlug?.replace(/[-_]+/g, ' ').trim()
-  if (!fromSlug) {
-    return undefined
-  }
-
-  return fromSlug.charAt(0).toUpperCase() + fromSlug.slice(1)
+  return fallbackSlug ? slugToTitle(fallbackSlug) : undefined
 }
 
 function clamp(value: string, max = 128): string {
@@ -103,11 +111,7 @@ function segmentsFromPathname(pathname: string): string[] {
   return pathname.split('/').filter(Boolean)
 }
 
-function shouldShowButton(
-  pathname: string,
-  options: ButtonOptions = {},
-): boolean {
-  const segments = segmentsFromPathname(pathname)
+function shouldShowButton(segments: string[], options: PrivacyOptions): boolean {
   if (segments.length === 0 || options.privacyMode) {
     return false
   }
@@ -115,25 +119,97 @@ function shouldShowButton(
   return !(options.hideProfileName && segments[0] === 'user')
 }
 
-function classify(input: ClassifyInput): ClassifiedPresence {
-  const {
-    segments,
-    title,
-    lessonHeading,
-    challengeHeading,
-    privacyMode,
-    hideProfileName,
-  } = input
-  const [first, second] = segments
+function classifyLearn(input: ClassifyInput): ClassifiedPresence {
+  const { segments, lessonHeading, title } = input
+  const second = segments[1]
   const last = segments.at(-1)
 
-  if (privacyMode) {
+  if (segments.length === 1) {
     return {
-      details: 'Browsing Dojo',
+      details: 'Browsing training modules',
+      state: 'All categories',
       icon: 'search',
     }
   }
 
+  if (segments.length === 2) {
+    const label = categoryLabel(second ?? '') ?? slugToTitle(second ?? '')
+
+    return {
+      details: label ? `Browsing ${label} lessons` : 'Browsing training modules',
+      state: label ? 'Training modules' : 'All categories',
+      icon: 'search',
+    }
+  }
+
+  return {
+    details: `Reading lesson: ${pickTitle([lessonHeading, title], last) ?? 'Training module'}`,
+    state: categoryLabel(second ?? '') ?? 'Training module',
+    icon: 'reading',
+  }
+}
+
+function classifyMonthlyChallenge(input: ClassifyInput): ClassifiedPresence {
+  const { segments, challengeHeading, title } = input
+
+  return {
+    details: segments.length === 1
+      ? 'Browsing monthly challenges'
+      : `Solving ${pickTitle([challengeHeading, title], segments.at(-1)) ?? 'monthly challenge'}`,
+    state: 'Challenge of the month',
+    icon: segments.length === 1 ? 'search' : 'solving',
+  }
+}
+
+function classifyChallenge(input: ClassifyInput, variant: string | undefined): ClassifiedPresence {
+  switch (variant) {
+    case 'play': {
+      const challengeTitle = pickTitle(
+        [input.challengeHeading, input.title],
+        input.segments.at(-1),
+      )
+
+      return {
+        details: challengeTitle
+          ? `Solving challenge: ${challengeTitle}`
+          : 'Solving an official challenge',
+        state: 'Official challenge',
+        icon: 'solving',
+      }
+    }
+    case 'tutorial':
+      return {
+        details: 'Solving the tutorial',
+        state: 'Guided challenge',
+        icon: 'solving',
+      }
+    case 'create':
+      return {
+        details: 'Building a challenge',
+        state: 'Challenge editor',
+        icon: 'solving',
+      }
+    default:
+      return EXPLORING
+  }
+}
+
+function classifyProfile(input: ClassifyInput): ClassifiedPresence {
+  const profileName = input.hideProfileName ? undefined : pickTitle([input.title])
+
+  return {
+    details: profileName ? `Viewing ${profileName}` : 'Viewing a Dojo profile',
+    state: 'Dojo profile',
+    icon: 'viewing',
+  }
+}
+
+function classify(input: ClassifyInput): ClassifiedPresence {
+  if (input.privacyMode) {
+    return PRIVATE
+  }
+
+  const { segments } = input
   if (segments.length === 0) {
     return {
       details: 'Improving bug hunting skills',
@@ -142,84 +218,17 @@ function classify(input: ClassifyInput): ClassifiedPresence {
     }
   }
 
-  if (first === 'learn') {
-    if (segments.length === 1) {
-      return {
-        details: 'Browsing training modules',
-        state: 'All categories',
-        icon: 'search',
-      }
-    }
-
-    if (segments.length === 2) {
-      const label = categoryLabel(second ?? '') ?? pickTitle([], second)
-
-      return {
-        details: label ? `Browsing ${label} lessons` : 'Browsing training modules',
-        state: label ? 'Training modules' : 'All categories',
-        icon: 'search',
-      }
-    }
-
-    return {
-      details: `Reading lesson: ${pickTitle([lessonHeading, title], last) ?? 'Training module'}`,
-      state: categoryLabel(second ?? '') ?? 'Training module',
-      icon: 'reading',
-    }
-  }
-
-  if (first === 'challenge-of-the-month') {
-    return {
-      details: segments.length === 1
-        ? 'Browsing monthly challenges'
-        : `Solving ${pickTitle([challengeHeading, title], last) ?? 'monthly challenge'}`,
-      state: 'Challenge of the month',
-      icon: segments.length === 1 ? 'search' : 'solving',
-    }
-  }
-
-  if (first === 'challenge' && second === 'play') {
-    const challengeTitle = pickTitle([challengeHeading, title], last)
-
-    return {
-      details: challengeTitle
-        ? `Solving challenge: ${challengeTitle}`
-        : 'Solving an official challenge',
-      state: 'Official challenge',
-      icon: 'solving',
-    }
-  }
-
-  if (first === 'challenge' && second === 'tutorial') {
-    return {
-      details: 'Solving the tutorial',
-      state: 'Guided challenge',
-      icon: 'solving',
-    }
-  }
-
-  if (first === 'challenge' && second === 'create') {
-    return {
-      details: 'Building a challenge',
-      state: 'Challenge editor',
-      icon: 'solving',
-    }
-  }
-
-  if (first === 'user') {
-    const profileName = hideProfileName ? undefined : pickTitle([title])
-
-    return {
-      details: profileName ? `Viewing ${profileName}` : 'Viewing a Dojo profile',
-      state: 'Dojo profile',
-      icon: 'viewing',
-    }
-  }
-
-  return {
-    details: 'Browsing Dojo',
-    state: 'Exploring',
-    icon: 'search',
+  switch (segments[0]) {
+    case 'learn':
+      return classifyLearn(input)
+    case 'challenge-of-the-month':
+      return classifyMonthlyChallenge(input)
+    case 'challenge':
+      return classifyChallenge(input, segments[1])
+    case 'user':
+      return classifyProfile(input)
+    default:
+      return EXPLORING
   }
 }
 
@@ -233,12 +242,14 @@ function challengeHeading(): string | null | undefined {
 }
 
 function buildPresence(data: ClassifiedPresence): PresenceData {
+  const icon = ICONS[data.icon]
+
   return {
-    details: data.details,
-    ...(data.state ? { state: data.state } : {}),
+    details: clamp(data.details),
+    ...(data.state ? { state: clamp(data.state) } : {}),
     largeImageKey: LOGO,
-    smallImageKey: ICONS[data.icon],
-    smallImageText: ICON_TEXT[data.icon],
+    smallImageKey: icon.key,
+    smallImageText: icon.text,
     startTimestamp: browsingTimestamp,
   }
 }
@@ -251,41 +262,31 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('hideProfileName'),
   ])
 
-  const pathname = document.location.pathname
+  const privacy: PrivacyOptions = {
+    privacyMode: Boolean(privacyMode),
+    hideProfileName: Boolean(hideProfileName),
+  }
+
+  const segments = segmentsFromPathname(document.location.pathname)
   const presenceData = buildPresence(classify({
-    segments: segmentsFromPathname(pathname),
+    segments,
     title: document.title,
     lessonHeading: lessonHeading(),
     challengeHeading: challengeHeading(),
-    privacyMode: Boolean(privacyMode),
-    hideProfileName: Boolean(hideProfileName),
+    ...privacy,
   }))
 
   if (!showTimestamp) {
     delete presenceData.startTimestamp
   }
 
-  if (showButtons && shouldShowButton(pathname, {
-    privacyMode: Boolean(privacyMode),
-    hideProfileName: Boolean(hideProfileName),
-  })) {
+  if (showButtons && shouldShowButton(segments, privacy)) {
     presenceData.buttons = [
       {
         label: 'View page',
         url: document.location.href,
       },
     ]
-  }
-
-  if (!presenceData.details) {
-    presence.clearActivity()
-    return
-  }
-
-  presenceData.details = clamp(String(presenceData.details))
-
-  if (presenceData.state) {
-    presenceData.state = clamp(String(presenceData.state))
   }
 
   presence.setActivity(presenceData)
