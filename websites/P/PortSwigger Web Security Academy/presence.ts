@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1573085782820913223',
@@ -7,9 +7,9 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const INDEX_NAMES: Record<string, string> = {
-  '/all-labs': 'All labs',
-  '/all-topics': 'All topics',
-  '/all-materials': 'All materials',
+  '/all-labs': 'all labs',
+  '/all-topics': 'all topics',
+  '/all-materials': 'all materials',
 }
 
 export type PageKind = 'home' | 'lab' | 'article' | 'index' | 'learningPath' | 'dashboard' | 'hallOfFame' | 'other'
@@ -146,22 +146,23 @@ presence.on('UpdateData', async () => {
   const pageKind = getPageKind(pathname)
 
   const presenceData: PresenceData = {
-    type: ActivityType.Watching,
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/PortSwigger%20Web%20Security%20Academy/assets/logo.png',
-    largeImageText: 'PortSwigger Web Security Academy',
-  }
+    largeImageText: 'PortSwigger Academy',
+  } as PresenceData
 
   switch (pageKind) {
     case 'lab': {
       presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'Solving'
       const title = getLabTitle()
-      presenceData.details = title ? `Solving Lab: '${title}'` : 'Solving a lab'
+      presenceData.details = title ? `Solving Lab: ${title}` : 'Solving a lab'
       const difficulty = settings.showDifficulty ? getLabDifficulty() : null
       presenceData.state = `${difficulty ? `${difficulty} · ` : ''}${isLabSolved() ? 'Solved' : 'In progress'}`
       break
     }
     case 'article': {
       presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = 'Reading'
       const heading = getHeading()
       presenceData.details = `Reading: ${getTopic() ?? heading ?? 'documentation'}`
       if (heading)
@@ -170,17 +171,19 @@ presence.on('UpdateData', async () => {
     }
     case 'index': {
       presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = 'Browsing'
       const name = Object.entries(INDEX_NAMES).find(([path]) => pathname.includes(path))?.[1] ?? 'topics'
-      presenceData.details = `Browsing: ${name}`
+      presenceData.details = `Browsing ${name}`
       break
     }
     case 'learningPath': {
       presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = 'Reading'
       const segments = pathname.split('/').filter(Boolean)
       const pathIndex = segments.indexOf('learning-paths') + 1
       const slug = segments[pathIndex]
       if (!slug) {
-        presenceData.details = 'Browsing: Learning paths'
+        presenceData.details = 'Browsing learning paths'
         break
       }
       presenceData.details = `Following learning path: ${slug.replaceAll('-', ' ')}`
@@ -191,12 +194,13 @@ presence.on('UpdateData', async () => {
     }
     case 'dashboard': {
       presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = 'Browsing'
       const stats = getAccountStats()
-      presenceData.details = settings.showUsername && stats.username
-        ? `Username: ${stats.username}`
-        : 'Browsing dashboard'
+      presenceData.details = 'Browsing the dashboard'
 
       const parts: string[] = []
+      if (settings.showUsername && stats.username)
+        parts.push(`Username: ${stats.username}`)
       if (settings.showRank && stats.rank)
         parts.push(`Rank: #${stats.rank}`)
       if (settings.showLevel && stats.level)
@@ -211,16 +215,22 @@ presence.on('UpdateData', async () => {
     }
     case 'hallOfFame': {
       presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = 'Browsing'
       const stats = getAccountStats()
-      presenceData.details = settings.showUsername && stats.username
-        ? `Viewing Hall of Fame | Username: ${stats.username}`
-        : 'Viewing Hall of Fame'
+      presenceData.details = 'Looking at the Hall of Fame'
+
+      const parts: string[] = []
+      if (settings.showUsername && stats.username)
+        parts.push(`Username: ${stats.username}`)
       if (settings.showRank && stats.rank)
-        presenceData.state = `Rank: #${stats.rank}`
+        parts.push(`Rank: #${stats.rank}`)
+      if (parts.length > 0)
+        presenceData.state = parts.join(' | ')
       break
     }
     default: {
       presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = 'Browsing'
       presenceData.details = 'Browsing PortSwigger Academy'
     }
   }
