@@ -50,6 +50,15 @@ export interface Playback {
   playbackRate?: number
 }
 
+export interface PomodoroState {
+  phase: 'focus' | 'short' | 'long'
+  session?: number
+  area: 'Studysto' | 'Plansto'
+  endsAt: number
+  length: number
+  url: string
+}
+
 export interface PageState {
   name: string
   url: string

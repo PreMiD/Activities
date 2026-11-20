@@ -1,11 +1,12 @@
 import type { Options, Playback } from './config/types.js'
 import { buildPageActivity, getPageState } from './pages/browsing.js'
 import { buildCodestoActivity, getCodestoState, isCodestoWorkspace } from './pages/codesto.js'
+import { buildPomodoroActivity, getPomodoroState } from './pages/pomodoro.js'
 import { buildReadActivity, getReadState, parseReadPath } from './pages/reader.js'
 import { buildRoomActivity, getRoomState, isRoomPage } from './pages/rooms.js'
 import { buildSectionActivity, getSectionState } from './pages/section.js'
 import { buildWatchActivity, getWatchState, isWatchPage } from './pages/watch.js'
-import { applyOptions } from './util/activity.js'
+import { applyOptions, samePresence } from './util/activity.js'
 import { fetchCover, fetchTeacherPhoto, fetchTitleCover } from './util/images.js'
 import { setIframePlayback } from './util/playback.js'
 import { resetBrowsingTimestamp } from './util/session.js'
@@ -68,6 +69,12 @@ async function pickActivity(covers: boolean): Promise<{ build: (privacy: boolean
     return { build: privacy => buildReadActivity(read, privacy), watching: false }
   }
 
+  const pomodoro = getPomodoroState()
+
+  if (pomodoro) {
+    return { build: privacy => buildPomodoroActivity(pomodoro, privacy), watching: false }
+  }
+
   const section = getSectionState()
 
   if (section) {
@@ -92,6 +99,9 @@ async function pickActivity(covers: boolean): Promise<{ build: (privacy: boolean
   return { build: privacy => buildPageActivity(page, privacy), watching: false }
 }
 
+const HEARTBEAT_MS = 15_000
+let lastData: PresenceData | undefined
+let lastSentAt = 0
 let wasWatching = false
 
 /** Starts a fresh browsing timer once the user stops watching. */
@@ -116,5 +126,13 @@ presence.on('UpdateData', async () => {
 
   trackWatching(watching)
 
-  presence.setActivity(applyOptions(build(privacy), options))
+  const data = applyOptions(build(privacy), options)
+
+  if (lastData && Date.now() - lastSentAt < HEARTBEAT_MS && samePresence(lastData, data)) {
+    return
+  }
+
+  lastData = data
+  lastSentAt = Date.now()
+  presence.setActivity(data)
 })

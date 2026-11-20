@@ -16,6 +16,18 @@ export function distinctParts(title: string | undefined, parts: (string | undefi
     .join(' • ')
 }
 
+/** Whether two activities would look the same on Discord, ignoring a drift of up to two seconds in their timestamps. */
+export function samePresence(a: PresenceData, b: PresenceData): boolean {
+  const close = (x?: number, y?: number): boolean =>
+    x === y || (x !== undefined && y !== undefined && Math.abs(x - y) <= 2)
+  const strip = (data: PresenceData): string =>
+    JSON.stringify({ ...data, startTimestamp: undefined, endTimestamp: undefined })
+
+  return strip(a) === strip(b)
+    && close(a.startTimestamp as number | undefined, b.startTimestamp as number | undefined)
+    && close(a.endTimestamp as number | undefined, b.endTimestamp as number | undefined)
+}
+
 /** Builds the single button to the current item, or none when there is nothing specific to open. */
 export function buildButtons(item?: ButtonData): [ButtonData] | undefined {
   return item ? [item] : undefined
