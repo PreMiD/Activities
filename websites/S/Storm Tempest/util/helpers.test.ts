@@ -144,7 +144,7 @@ describe('library and channel pages', () => {
   })
 
   it('reads the channel logo beside the channel name', () => {
-    const img = { getAttribute: () => 'https://cdn.example.com/logo.png' }
+    const img = { getAttribute: () => 'https://cdn.example.com/channel-logo' }
     const h1 = { parentElement: { parentElement: { querySelector: () => img } } }
 
     vi.stubGlobal('document', {
@@ -152,7 +152,7 @@ describe('library and channel pages', () => {
       querySelectorAll: () => [{ parentElement: null }, h1],
     })
     expect(getChannelLogo()).toBe(
-      `https://wsrv.nl/?url=${encodeURIComponent('https://cdn.example.com/logo.png')}&w=512&h=512&fit=contain&cbg=f4f5f8&output=png`,
+      `https://wsrv.nl/?url=${encodeURIComponent('https://cdn.example.com/channel-logo')}&w=512&h=512&fit=contain&cbg=f4f5f8&output=png`,
     )
 
     vi.stubGlobal('document', {
