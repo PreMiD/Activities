@@ -2,11 +2,16 @@ import type { Playback } from '../config/types.js'
 import { getTimestamps } from 'premid'
 import { isVisible } from './dom.js'
 
-let iframePlayback: (Playback & { at: number }) | undefined
+let iframePlayback: (Playback & { at: number, route: string }) | undefined
 
-/** Remembers the playback state sent by the embedded player, stamped with the time it arrived. */
+/** The current page's path and query, which identifies the player that is on screen. */
+function currentRoute(): string {
+  return `${document.location.pathname}${document.location.search}`
+}
+
+/** Remembers the playback state sent by the embedded player, stamped with the time it arrived and the page it belongs to. */
 export function setIframePlayback(data: Playback): void {
-  iframePlayback = { ...data, at: Date.now() }
+  iframePlayback = { ...data, at: Date.now(), route: currentRoute() }
 }
 
 /** Returns the first loaded, unfinished `<video>` element on the page. */
@@ -47,7 +52,11 @@ export function getPlayback(video: HTMLVideoElement | undefined): Playback | und
     return video
   }
 
-  if (iframePlayback && Date.now() - iframePlayback.at < 5000) {
+  if (
+    iframePlayback
+    && iframePlayback.route === currentRoute()
+    && Date.now() - iframePlayback.at < 5000
+  ) {
     return iframePlayback
   }
 
