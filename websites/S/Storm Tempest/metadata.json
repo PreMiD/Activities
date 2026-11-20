@@ -30,7 +30,7 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?[:][/][/]",
+  "iFrameRegExp": "^https[:][/][/]",
   "settings": [
     {
       "id": "privacy",
