@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Zen",
@@ -13,7 +13,7 @@
   },
   "url": "otakudesu.blog",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*otakudesu[.]blog[/]",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/thumbnail.png",
   "color": "#ffffff",

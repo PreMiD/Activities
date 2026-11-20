@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "thatdevjon",
@@ -16,7 +16,7 @@
     "www.virginmedia.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?virginmedia[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Virgin%20Media/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Virgin%20Media/assets/thumbnail.png",
   "color": "#ed0000",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "वाह्य",
@@ -17,7 +17,7 @@
     "community.w2g.tv"
   ],
   "regExp": "^https?[:][/][/](community[.])?w2g[.]tv[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Watch2Gether/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Watch2Gether/assets/thumbnail.png",
   "color": "#facb3d",

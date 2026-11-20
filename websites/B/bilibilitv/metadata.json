@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Eason",
@@ -21,7 +21,7 @@
     "studio.bilibili.tv"
   ],
   "regExp": "^https?[:][/][/](www|studio)[.]bilibili[.]tv[/]",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/bilibilitv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/bilibilitv/assets/thumbnail.png",
   "color": "#2e62ff",
