@@ -57,6 +57,23 @@ export function getHeading(): string | null {
   return document.querySelector('h1.heading-2')?.textContent?.trim() ?? null
 }
 
+export function getBreadcrumbDepth(): number {
+  return document.querySelectorAll('ul.breadcrumb-list li[itemprop="itemListElement"]').length
+}
+
+// Topic pages link straight to a heading, e.g. /web-security/sql-injection#what-is-sql-injection-sqli.
+export function getAnchoredSection(): string | null {
+  const id = decodeURIComponent(document.location.hash.slice(1))
+  const target = id ? document.getElementById(id) : null
+  return target?.matches('h1, h2, h3, h4, h5, h6')
+    ? target.textContent?.trim() || null
+    : null
+}
+
+export function getLearningPathSection(): string | null {
+  return text('.learning-path-content-main-static h2')
+}
+
 export function getLabTitle(): string | null {
   if (getPageKind(document.location.pathname) !== 'lab')
     return null
@@ -208,15 +225,25 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = 'Reading'
       const heading = getHeading()
       presenceData.details = `Reading: ${getTopic() ?? heading ?? 'documentation'}`
-      if (heading)
-        presenceData.state = heading
+      // A hash names the heading being read; otherwise only topic sub-pages name a section.
+      const section = getAnchoredSection() ?? (getBreadcrumbDepth() >= 3 ? heading : null)
+      if (section)
+        presenceData.state = `Section: ${section}`
       break
     }
     case 'index': {
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Browsing'
       const name = Object.entries(INDEX_NAMES).find(([path]) => pathname.includes(path))?.[1]
+      const section = getAnchoredSection()
+      // All-labs deep links read naturally as "Browsing <topic> labs", so keep it in details.
+      if (pathname.includes('/all-labs')) {
+        presenceData.details = section ? `Browsing ${section} labs` : 'Browsing all labs'
+        break
+      }
       presenceData.details = `Browsing ${name ?? 'the index'}`
+      if (section)
+        presenceData.state = `Section: ${section}`
       break
     }
     case 'learningPath': {
@@ -230,9 +257,9 @@ presence.on('UpdateData', async () => {
         break
       }
       presenceData.details = `Following learning path: ${slug.replaceAll('-', ' ')}`
-      const heading = getHeading()
-      if (heading)
-        presenceData.state = heading
+      const section = getLearningPathSection()
+      if (section)
+        presenceData.state = `Section: ${section}`
       break
     }
     case 'dashboard': {
