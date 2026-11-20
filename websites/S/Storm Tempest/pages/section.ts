@@ -29,9 +29,11 @@ export function findSubject(): string | undefined {
 /** Finds the teacher's display name from a link to their page, falling back to the URL slug. */
 export function findTeacher(slug: string): string {
   const link = Array.from(document.querySelectorAll('a[href]')).find((anchor) => {
-    const href = safeDecode(anchor.getAttribute('href') ?? '')
     const text = textOf(anchor)
-    const target = new URL(href, document.location.href).pathname.split('/')
+    const target = new URL(anchor.getAttribute('href') ?? '', document.location.href)
+      .pathname
+      .split('/')
+      .map(safeDecode)
 
     return (
       target[1] === 'studysto'
