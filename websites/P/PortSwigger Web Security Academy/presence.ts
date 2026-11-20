@@ -32,7 +32,7 @@ export function clamp(value: string, max = 128): string {
 export function getPageKind(pathname: string): PageKind {
   if (pathname === '/web-security' || pathname === '/web-security/')
     return 'home'
-  if (pathname.includes('/all-topics') || pathname.includes('/all-labs') || pathname.includes('/all-materials'))
+  if (Object.keys(INDEX_NAMES).some(path => pathname.includes(path)))
     return 'index'
   if (pathname.includes('/learning-paths'))
     return 'learningPath'
@@ -44,7 +44,7 @@ export function getPageKind(pathname: string): PageKind {
   const segments = pathname.split('/').filter(Boolean)
   if (segments.at(-1)?.startsWith('lab-'))
     return 'lab'
-  if (segments.length >= 3)
+  if (segments.length >= 2)
     return 'article'
   return 'other'
 }
@@ -98,6 +98,25 @@ export function getAccountStats(): AccountStats {
     level: text('[class^="lab-level-display__"]'),
     username: username && username !== 'ANONYMOUS' ? username : null,
   }
+}
+
+export function formatAccountState(
+  stats: AccountStats,
+  settings: ActivitySettings,
+  include: { level?: boolean, progress?: boolean },
+): string | undefined {
+  const parts: string[] = []
+  if (settings.showUsername && stats.username)
+    parts.push(`Username: ${stats.username}`)
+  if (settings.showRank && stats.rank)
+    parts.push(`Rank: #${stats.rank}`)
+  if (include.level && settings.showLevel && stats.level)
+    parts.push(`Level: ${stats.level}`)
+  if (include.progress && settings.showProgress && stats.solved !== null)
+    parts.push(`Solved: ${stats.solved}`)
+  if (include.progress && settings.showProgress && stats.percent)
+    parts.push(stats.percent)
+  return parts.length > 0 ? parts.join(' | ') : undefined
 }
 
 export function getLabDifficulty(): string | null {
@@ -172,8 +191,8 @@ presence.on('UpdateData', async () => {
     case 'index': {
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Browsing'
-      const name = Object.entries(INDEX_NAMES).find(([path]) => pathname.includes(path))?.[1] ?? 'topics'
-      presenceData.details = `Browsing ${name}`
+      const name = Object.entries(INDEX_NAMES).find(([path]) => pathname.includes(path))?.[1]
+      presenceData.details = `Browsing ${name ?? 'the index'}`
       break
     }
     case 'learningPath': {
@@ -198,19 +217,9 @@ presence.on('UpdateData', async () => {
       const stats = getAccountStats()
       presenceData.details = 'Browsing the dashboard'
 
-      const parts: string[] = []
-      if (settings.showUsername && stats.username)
-        parts.push(`Username: ${stats.username}`)
-      if (settings.showRank && stats.rank)
-        parts.push(`Rank: #${stats.rank}`)
-      if (settings.showLevel && stats.level)
-        parts.push(`Level: ${stats.level}`)
-      if (settings.showProgress && stats.solved !== null)
-        parts.push(`Solved: ${stats.solved}`)
-      if (settings.showProgress && stats.percent)
-        parts.push(stats.percent)
-      if (parts.length > 0)
-        presenceData.state = parts.join(' | ')
+      const state = formatAccountState(stats, settings, { level: true, progress: true })
+      if (state)
+        presenceData.state = state
       break
     }
     case 'hallOfFame': {
@@ -219,13 +228,9 @@ presence.on('UpdateData', async () => {
       const stats = getAccountStats()
       presenceData.details = 'Looking at the Hall of Fame'
 
-      const parts: string[] = []
-      if (settings.showUsername && stats.username)
-        parts.push(`Username: ${stats.username}`)
-      if (settings.showRank && stats.rank)
-        parts.push(`Rank: #${stats.rank}`)
-      if (parts.length > 0)
-        presenceData.state = parts.join(' | ')
+      const state = formatAccountState(stats, settings, {})
+      if (state)
+        presenceData.state = state
       break
     }
     default: {
@@ -238,7 +243,8 @@ presence.on('UpdateData', async () => {
   if (settings.showTimestamp)
     presenceData.startTimestamp = browsingTimestamp
 
-  if (settings.showButtons) {
+  // Contribution guidelines forbid a button that redirects to the main page.
+  if (settings.showButtons && pageKind !== 'home' && pageKind !== 'other') {
     presenceData.buttons = [
       {
         label: 'View page',
