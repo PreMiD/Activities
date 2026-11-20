@@ -1,3 +1,5 @@
+import { ActivityType } from 'premid'
+
 const presence = new Presence({
   clientId: '1571240539536367626',
 })
@@ -29,8 +31,8 @@ presence.on('UpdateData', async () => {
   const { LH_PRESENCE: page } = await presence.getPageVariable<{ LH_PRESENCE?: LoopHolePage }>('LH_PRESENCE')
 
   const presenceData: PresenceData = {
+    type: ActivityType.Playing,
     largeImageKey: LOGO,
-    largeImageText: 'LoopHole Games',
     details: 'Browsing the arcade',
     startTimestamp: browsingTimestamp,
   }
@@ -38,7 +40,6 @@ presence.on('UpdateData', async () => {
   if (page?.game && page.kind === 'game') {
     presenceData.name = page.game
     presenceData.largeImageKey = page.image
-    presenceData.largeImageText = page.game
     presenceData.details = showDetails && page.details ? page.details : `Playing ${page.game}`
     if (showDetails && page.state)
       presenceData.state = page.state
@@ -59,7 +60,6 @@ presence.on('UpdateData', async () => {
   }
   else if (page?.game && page.kind === 'gamepage') {
     presenceData.largeImageKey = page.image
-    presenceData.largeImageText = page.game
     presenceData.details = 'Looking at a game'
     presenceData.state = page.game
     if (showButtons)
