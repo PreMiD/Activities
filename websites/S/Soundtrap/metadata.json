@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "476295168950009856",
+    "name": "staelh"
+  },
+  "service": "Soundtrap",
+  "description": {
+    "en": "Create, record and produce music online with Soundtrap.",
+    "fr": "Créez, enregistrez et produisez de la musique en ligne avec Soundtrap."
+  },
+  "url": "soundtrap.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*soundtrap[.]com[/]",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Soundtrap/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Soundtrap/assets/thumbnail.jpeg",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "music",
+    "audio",
+    "production"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}

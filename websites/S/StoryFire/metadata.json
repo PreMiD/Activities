@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Snazzah",
@@ -12,7 +12,7 @@
   },
   "url": "storyfire.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*storyfire[.]com[/]",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StoryFire/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StoryFire/assets/thumbnail.png",
   "color": "#fc9000",

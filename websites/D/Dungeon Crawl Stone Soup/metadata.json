@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "impsy",
@@ -19,7 +19,7 @@
     "lazy-life.ddo.jp"
   ],
   "regExp": "^https?[:][/][/]((crawl)[.]akrasiac[.]org|(crawl)[.]project357[.]org|(cbro)[.]berotato[.]org|(crawl)[.]xtahua[.]com|underhound[.]eu|webzook[.]net|(lazy-life)[.]ddo[.]jp)[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dungeon%20Crawl%20Stone%20Soup/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dungeon%20Crawl%20Stone%20Soup/assets/thumbnail.png",
   "color": "#f00f0f",

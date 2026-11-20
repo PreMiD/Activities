@@ -1,4 +1,11 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import type { RouteContext } from './routes/index.js'
+
+import { ActivityAssets } from './constants.js'
+import { route } from './routes/index.js'
+import {
+  getState,
+  updateState,
+} from './state/presence-state.js'
 
 const presence = new Presence({
   clientId: '1507679791053144114',
@@ -9,42 +16,6 @@ interface IframeVideoState {
   duration: number
   paused: boolean
   referrer?: string
-}
-
-enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/0.png',
-  Thumbnail = 'https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/1.png',
-}
-
-let browsingTimestamp = Math.floor(Date.now() / 1000)
-let lastMode = 'browse'
-let lastPlaybackHref = ''
-let lastPlaybackRead = 0
-let playbackState: {
-  currentTime: number
-  duration: number
-  sampledAt: number
-  paused: boolean
-  stagnantSamples: number
-} = {
-  currentTime: 0,
-  duration: 0,
-  sampledAt: 0,
-  paused: false,
-  stagnantSamples: 0,
-}
-let iframePlayback: IframeVideoState = {
-  currentTime: 0,
-  duration: 0,
-  paused: true,
-}
-
-function setMode(mode: string): void {
-  if (mode !== lastMode && mode !== 'watch') {
-    browsingTimestamp = Math.floor(Date.now() / 1000)
-  }
-
-  lastMode = mode
 }
 
 function cleanText(text?: string | null): string {
@@ -131,7 +102,7 @@ function detectPageRoute(): 'home' | 'search' | 'schedule' | 'anime' | 'watch' |
 }
 
 function getAnimeTitle(): string {
-  const headingTitle = cleanText(document.querySelector('h2[title]')?.textContent)
+  const headingTitle = cleanText(document.querySelector('h1[data-anime-title]')?.textContent)
   const ogTitle = getMetaContent('meta[property="og:title"]')
     .replace(/^Watch\s+/i, '')
     .replace(/\s+Episode\s+\d+\s+Online Free\s+\|\s+Re:ANIME$/i, '')
@@ -282,12 +253,14 @@ presence.on('iFrameData', (data: IframeVideoState) => {
     }
   }
 
-  iframePlayback = {
-    currentTime: data.currentTime ?? 0,
-    duration: data.duration ?? 0,
-    paused: data.paused ?? true,
-    referrer: data.referrer,
-  }
+  updateState({
+    iframePlayback: {
+      currentTime: data.currentTime ?? 0,
+      duration: data.duration ?? 0,
+      paused: data.paused ?? true,
+      referrer: data.referrer,
+    },
+  })
 })
 
 function getDurationFromPage(): number {
@@ -425,46 +398,49 @@ function getPlaybackState(href: string): {
   paused: boolean
 } {
   const now = Date.now()
+  const state = getState()
 
-  if (iframePlayback.duration > 0 || iframePlayback.currentTime > 0) {
+  if (state.iframePlayback.duration > 0 || state.iframePlayback.currentTime > 0) {
     return {
-      currentTime: iframePlayback.currentTime,
-      duration: iframePlayback.duration,
-      paused: iframePlayback.paused,
+      currentTime: state.iframePlayback.currentTime,
+      duration: state.iframePlayback.duration,
+      paused: state.iframePlayback.paused,
     }
   }
 
-  if (href !== lastPlaybackHref) {
-    lastPlaybackHref = href
-    lastPlaybackRead = 0
-    playbackState = {
-      currentTime: 0,
-      duration: 0,
-      sampledAt: now,
-      paused: false,
-      stagnantSamples: 0,
-    }
+  if (href !== state.lastPlaybackHref) {
+    updateState({
+      lastPlaybackHref: href,
+      lastPlaybackRead: 0,
+      playbackState: {
+        currentTime: 0,
+        duration: 0,
+        sampledAt: now,
+        paused: false,
+        stagnantSamples: 0,
+      },
+    })
   }
 
-  if (now - lastPlaybackRead > 3000) {
-    lastPlaybackRead = now
+  if (now - state.lastPlaybackRead > 3000) {
+    updateState({ lastPlaybackRead: now })
 
     const sampled = readPlaybackStateFromPage()
-    const predictedCurrentTime = playbackState.sampledAt > 0 && !playbackState.paused
-      ? playbackState.currentTime + (now - playbackState.sampledAt) / 1000
+    const predictedCurrentTime = state.playbackState.sampledAt > 0 && !state.playbackState.paused
+      ? state.playbackState.currentTime + (now - state.playbackState.sampledAt) / 1000
       : 0
     const difference = sampled.currentTime - predictedCurrentTime
-    const sampleDidNotMove = Math.abs(sampled.currentTime - playbackState.currentTime) <= 0.15
+    const sampleDidNotMove = Math.abs(sampled.currentTime - state.playbackState.currentTime) <= 0.15
 
     let stagnantSamples = sampleDidNotMove && sampled.currentTime > 0
-      ? playbackState.stagnantSamples + 1
+      ? state.playbackState.stagnantSamples + 1
       : 0
     let nextCurrentTime = predictedCurrentTime > 0
       ? predictedCurrentTime
       : sampled.currentTime
     let paused = stagnantSamples >= 2 && Math.abs(difference) <= 2
 
-    const shouldAcceptCheckpoint = playbackState.currentTime <= 0
+    const shouldAcceptCheckpoint = state.playbackState.currentTime <= 0
       || Math.abs(difference) >= 8
       || difference >= 12
 
@@ -476,174 +452,88 @@ function getPlaybackState(href: string): {
     else if (paused) {
       nextCurrentTime = sampled.currentTime > 0
         ? sampled.currentTime
-        : playbackState.currentTime
+        : state.playbackState.currentTime
     }
 
-    playbackState = {
-      currentTime: nextCurrentTime,
-      duration: sampled.duration || playbackState.duration,
-      sampledAt: now,
-      paused: iframePlayback.duration > 0 || iframePlayback.currentTime > 0
-        ? iframePlayback.paused
-        : paused,
-      stagnantSamples,
-    }
+    updateState({
+      playbackState: {
+        currentTime: nextCurrentTime,
+        duration: sampled.duration || state.playbackState.duration,
+        sampledAt: now,
+        paused: state.iframePlayback.duration > 0 || state.iframePlayback.currentTime > 0
+          ? state.iframePlayback.paused
+          : paused,
+        stagnantSamples,
+      },
+    })
   }
 
-  const elapsedSeconds = playbackState.sampledAt > 0
-    ? (now - playbackState.sampledAt) / 1000
+  const currentState = getState()
+  const elapsedSeconds = currentState.playbackState.sampledAt > 0
+    ? (now - currentState.playbackState.sampledAt) / 1000
     : 0
 
   const currentTime = Math.min(
-    playbackState.currentTime + (playbackState.paused ? 0 : elapsedSeconds),
-    playbackState.duration || Number.POSITIVE_INFINITY,
+    currentState.playbackState.currentTime + (currentState.playbackState.paused ? 0 : elapsedSeconds),
+    currentState.playbackState.duration || Number.POSITIVE_INFINITY,
   )
 
   return {
     currentTime,
-    duration: playbackState.duration,
-    paused: playbackState.paused,
+    duration: currentState.playbackState.duration,
+    paused: currentState.playbackState.paused,
   }
 }
 
 presence.on('UpdateData', async () => {
-  const [privacy, showButtons] = await Promise.all([
+  const [privacy, showButtons, displayType] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('buttons'),
+    presence.getSetting<number>('displayType'),
   ])
   const resolvedUrl = getResolvedPageUrl()
   const href = resolvedUrl.href
-  const route = detectPageRoute()
+  const routeName = detectPageRoute()
   const animeTitle = getAnimeTitle()
   const poster = getPoster()
 
-  if (route === 'home') {
-    setMode('browse')
-    const presenceData: PresenceData = {
-      largeImageKey: ActivityAssets.Logo,
-    }
-    presenceData.details = 'Browsing Re:ANIME'
-    presenceData.state = 'Home'
-    presenceData.startTimestamp = browsingTimestamp
-    presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = 'Browsing'
-
-    presence.setActivity(presenceData)
-    return
+  const context: RouteContext = {
+    presence,
+    privacy,
+    showButtons,
+    displayType,
+    href,
+    resolvedUrl,
+    animeTitle,
+    poster,
+    get browsingTimestamp() {
+      return getState().browsingTimestamp
+    },
   }
-  else if (route === 'search') {
-    setMode('browse')
-    const presenceData: PresenceData = {
-      largeImageKey: ActivityAssets.Logo,
-    }
-    presenceData.details = 'Searching anime'
-    if (!privacy)
-      presenceData.state = getSearchQuery() || 'Looking for something to watch'
-    presenceData.startTimestamp = browsingTimestamp
-    presenceData.smallImageKey = Assets.Search
-    presenceData.smallImageText = 'Searching'
 
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (route === 'schedule') {
-    setMode('browse')
-    const presenceData: PresenceData = {
-      largeImageKey: ActivityAssets.Logo,
-    }
-    presenceData.details = 'Viewing schedule'
-    presenceData.state = 'Upcoming releases'
-    presenceData.startTimestamp = browsingTimestamp
-    presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = 'Browsing'
-
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (route === 'anime') {
-    setMode('detail')
-    const presenceData: PresenceData = {
-      largeImageKey: privacy
-        ? ActivityAssets.Logo
-        : poster || ActivityAssets.Logo,
-    }
-    presenceData.details = privacy ? 'Browsing anime' : animeTitle
-    if (!privacy)
-      presenceData.state = 'Viewing anime details'
-    presenceData.startTimestamp = browsingTimestamp
-    presenceData.smallImageKey = Assets.Reading
-    presenceData.smallImageText = 'Reading details'
-
-    if (showButtons && !privacy) {
-      presenceData.buttons = [
-        {
-          label: 'View Anime',
-          url: href,
-        },
-      ]
-    }
-
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (route === 'watch') {
-    setMode('watch')
-
+  // Add route-specific data
+  if (routeName === 'watch') {
     const { episode, language } = getWatchContext()
     const episodeLabel = getCurrentEpisodeLabel()
-    const parts = [getWatchingStateLabel(episodeLabel), language].filter(Boolean)
     const detailUrl = getAnimeDetailUrl()
     const seasonEpisodeText = getSeasonEpisodeText(episode)
     const { currentTime, duration, paused } = getPlaybackState(href)
 
-    const presenceData: PresenceData = {
-      type: ActivityType.Watching,
-      largeImageKey: privacy ? ActivityAssets.Logo : poster || ActivityAssets.Logo,
-      largeImageText: privacy ? 'Re:Anime' : seasonEpisodeText || 'Re:Anime',
-      details: privacy ? 'Watching Anime' : animeTitle,
-      smallImageKey: paused ? Assets.Pause : Assets.Play,
-      smallImageText: paused ? 'Paused' : 'Watching',
-    }
-    if (!privacy)
-      presenceData.state = parts.join(' | ')
-
-    if (!paused && currentTime > 0 && duration > 0) {
-      [presenceData.startTimestamp, presenceData.endTimestamp]
-        = getTimestamps(currentTime, duration)
-    }
-
-    if (showButtons && !privacy) {
-      presenceData.buttons = [
-        {
-          label: 'Watch Episode',
-          url: href,
-        },
-        detailUrl
-          ? {
-              label: 'View Anime',
-              url: detailUrl,
-            }
-          : undefined,
-      ].filter(Boolean) as [ButtonData, ButtonData?]
-    }
-
-    presence.setActivity(presenceData)
-    return
+    Object.assign(context, {
+      episode,
+      language,
+      episodeLabel,
+      watchingStateLabel: getWatchingStateLabel(episodeLabel),
+      detailUrl,
+      seasonEpisodeText,
+      currentTime,
+      duration,
+      paused,
+    })
   }
-  else {
-    setMode('browse')
-    const presenceData: PresenceData = {
-      largeImageKey: ActivityAssets.Logo,
-    }
-    presenceData.details = 'Browsing Re:ANIME'
-    if (!privacy)
-      presenceData.state = cleanText(document.title) || 'Exploring'
-    presenceData.startTimestamp = browsingTimestamp
-    presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = 'Browsing'
-    presence.setActivity(presenceData)
-    return
+  else if (routeName === 'search') {
+    context.searchQuery = getSearchQuery()
   }
 
-  presence.clearActivity()
+  route(routeName, context)
 })

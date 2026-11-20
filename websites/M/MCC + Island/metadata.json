@@ -1,0 +1,109 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "kispintyi",
+    "id": "506801862738182172"
+  },
+  "service": "MCC + Island",
+  "altnames": [
+    "MC Championship",
+    "MCC Island",
+    "Minecraft Championship"
+  ],
+  "description": {
+    "en": "MC Championship is a Minecraft mini-game tournament, and MCC Island is a free-to-play multiplayer server for Minecraft: Java Edition. The associated websites feature event news, community forums, and event leaderboards. The unofficial, community-run MCC Island Wiki provides information about MCC Island. Lighthouse, MCCI Hub, and MCC Island Stats provide MCC Island player statistics. ReafyStats provides MC Championship player and event statistics, while Radar maps fishing spots on MCC Island."
+  },
+  "url": [
+    "mcchampionship.com",
+    "mccisland.net",
+    "mcc.live",
+    "mccisland.wiki",
+    "stats.sirarchibald.dev",
+    "lighthouse.gay",
+    "mccihub.net",
+    "stats.derniklaas.de",
+    "radar.themysterys.com",
+    "reafystats.com"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(mcchampionship[.]com|mccisland[.]net|mcc[.]live|mccisland[.]wiki|stats[.]sirarchibald[.]dev|lighthouse[.]gay|mccihub[.]net|stats[.]derniklaas[.]de|radar[.]themysterys[.]com|reafystats[.]com)[/]",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MCC%20%2B%20Island/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MCC%20%2B%20Island/assets/thumbnail.png",
+  "color": "#F0443E",
+  "category": "games",
+  "tags": [
+    "minecraft",
+    "mcc",
+    "mcc-island",
+    "minecraft-championship",
+    "forums",
+    "wiki",
+    "mcci-wiki",
+    "mcc-island-wiki",
+    "lighthouse",
+    "mcci-stats",
+    "mccihub",
+    "radar",
+    "reafystats",
+    "mcc-stats"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show how long the page has been open"
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-mouse-pointer",
+      "value": true,
+      "description": "Show buttons and clickable images for public pages and forum authors. Links are disabled in Privacy Mode and on private bug reports.",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "mccLogo",
+      "title": "Minecraft Championship Logo",
+      "icon": "fad fa-icons",
+      "value": 0,
+      "values": [
+        "MCC Red",
+        "MCC(I) Transparent Icon",
+        "MCC Initials + Icon",
+        "MCC Initials"
+      ]
+    },
+    {
+      "id": "mcciLogo",
+      "title": "MCC Island Logo",
+      "icon": "fad fa-icons",
+      "value": 1,
+      "values": [
+        "MCCI Blue",
+        "MCC Island",
+        "MCC(I) Transparent Icon"
+      ]
+    },
+    {
+      "id": "wikiLogo",
+      "title": "MCCI Wiki Logo",
+      "icon": "fad fa-icons",
+      "value": 0,
+      "values": [
+        "MCCI Wiki Logo",
+        "MCCI Wiki Logo (Transparent)"
+      ]
+    }
+  ]
+}

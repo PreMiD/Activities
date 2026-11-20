@@ -1,5 +1,5 @@
 import type { MediaDataGetter } from './dataGetter.js'
-import { getTimestamps, timestampFromFormat } from 'premid'
+import { getTimestamps } from 'premid'
 
 export interface Settings {
   showButtons: boolean
@@ -10,35 +10,27 @@ export interface Settings {
   privacyMode: boolean
   displayType: number
   links: boolean
+  timestampType: number
 }
 
 export function updateSongTimestamps(
   dataGetter: MediaDataGetter,
 ): [number, number] {
-  const times = dataGetter.getCurrentAndTotalTime()
+  const times = dataGetter.getPlaybackTimes()
 
   if (!times) {
     return [0, 0]
   }
 
-  const [currTimes, totalTimes] = times
-
-  if (currTimes && totalTimes) {
-    return getTimestamps(
-      timestampFromFormat(currTimes),
-      timestampFromFormat(totalTimes),
-    )
-  }
-
-  return [0, 0]
+  return getTimestamps(Math.floor(times[0]), Math.floor(times[1]))
 }
 
 export function createMediaIdentifier(
   title?: string,
   artist?: string,
-  timeText?: string,
+  watchId?: string,
 ): string {
-  return `${title || ''}${artist || ''}${timeText || ''}`
+  return `${title || ''}${artist || ''}${watchId || ''}`
 }
 
 export async function getSettings(presence: Presence): Promise<Settings> {
@@ -51,6 +43,7 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     privacyMode,
     displayType,
     links,
+    timestampType,
   ] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('timestamps'),
@@ -60,6 +53,7 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<number>('displayType'),
     presence.getSetting<boolean>('links'),
+    presence.getSetting<number>('timestampType'),
   ])
 
   return {
@@ -71,5 +65,6 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     privacyMode,
     displayType,
     links,
+    timestampType,
   }
 }

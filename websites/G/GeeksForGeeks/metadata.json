@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "973156162793005117",
@@ -11,7 +11,7 @@
   },
   "url": "geeksforgeeks.org",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*geeksforgeeks[.]org[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GeeksForGeeks/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GeeksForGeeks/assets/thumbnail.png",
   "color": "#2F8D46",

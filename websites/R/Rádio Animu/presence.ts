@@ -8,37 +8,36 @@ const strings = presence.getStrings({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let artist: string, title: string, anime: string, artwork: string, playing: boolean
-
-presence.on(
-  'iFrameData',
-  (data: {
-    playing: boolean
-    artist: string
-    title: string
-    anime: string
-    artwork: string
-  }) => {
-    ({ playing } = data)
-    if (playing)
-      ({ artist, title, anime, artwork } = data)
-  },
-)
-
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/R/R%C3%A1dio%20Animu/assets/logo.png',
     startTimestamp: browsingTimestamp,
   } as PresenceData
 
-  if (playing) {
+  const player = document.querySelector('#animu-player')
+  const song = player?.shadowRoot?.querySelector('.ap-musica-texto')?.textContent?.trim()
+
+  // if the player is playing, set the presence to listening with the song details
+  if (player?.classList.contains('ap-tocando')) {
     presenceData.type = ActivityType.Listening
-    presenceData.details = artist
-    presenceData.state = title
+    const separatorIndex = song?.indexOf(' - ') ?? -1
+    if (separatorIndex > 0) {
+      presenceData.details = song?.slice(0, separatorIndex)
+      presenceData.state = song?.slice(separatorIndex + 3)
+    }
+    else {
+      presenceData.details = song
+    }
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = (await strings).play
-    presenceData.largeImageKey = artwork
-    presenceData.largeImageText = anime
+    presenceData.largeImageKey = player.shadowRoot
+      ?.querySelector<HTMLImageElement>('.ap-capa img')
+      ?.src
+      ?? presenceData.largeImageKey
+    presenceData.largeImageText = player.shadowRoot
+      ?.querySelector('.ap-anime')
+      ?.textContent
+      ?.trim()
     presenceData.statusDisplayType = StatusDisplayType.Details
   }
   else if (document.location.pathname.includes('/grade/')) {

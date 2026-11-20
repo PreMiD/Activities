@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "582396294715408436",
+    "name": "lucas.mro"
+  },
+  "service": "Lost Dramas",
+  "description": {
+    "en": "Watch dramas on Lost Dramas, a Portuguese-language drama streaming site.",
+    "pt": "Assista doramas no Lost Dramas, um site de doramas em português."
+  },
+  "url": "lostdramas.blogspot.com",
+  "regExp": "^https?[:][/][/]lostdramas[.]blogspot[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lost%20Dramas/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lost%20Dramas/assets/thumbnail.png",
+  "color": "#8B5CF6",
+  "category": "videos",
+  "tags": [
+    "dorama",
+    "drama",
+    "streaming",
+    "portuguese"
+  ],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-mouse-pointer",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover Image",
+      "icon": "fad fa-images",
+      "value": true
+    }
+  ]
+}
