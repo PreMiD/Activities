@@ -1,0 +1,52 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "Yukiteru",
+    "id": "977621557310525460"
+  },
+  "service": "Mirainime",
+  "description": {
+    "en": "Mirainime is an Indonesian anime streaming site with subtitles, airing schedule, community forum and watch history.",
+    "id": "Mirainime adalah situs streaming anime subtitle Indonesia dengan jadwal rilis, forum komunitas, dan riwayat tontonan."
+  },
+  "url": [
+    "mirainime.com",
+    "www.mirainime.com"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?mirainime[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/toBOGDT.png",
+  "thumbnail": "https://i.imgur.com/clloPvs.png",
+  "color": "#a855f7",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "indonesia",
+    "sub-indo"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showEpisodeTitle",
+      "title": "Show episode title",
+      "icon": "fas fa-closed-captioning",
+      "value": true
+    }
+  ]
+}
