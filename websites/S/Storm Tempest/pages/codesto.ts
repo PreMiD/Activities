@@ -68,8 +68,8 @@ export function getCodestoFile(): string | undefined {
   }
 
   const tabElement = document.querySelector(
-    '#wsTabs [aria-selected="true"], #wsTabs .active, #wsTabs [class*="active"], [role="tab"][aria-selected="true"]',
-  )
+    '#wsTabs [aria-selected="true"], [role="tab"][aria-selected="true"]',
+  ) ?? document.querySelector('#wsTabs .active')
   const fromTab = tabElement ? fileNameIn(tabElement) : undefined
 
   if (fromTab) {
@@ -126,7 +126,7 @@ export function getCodestoState(): CodestoState {
 
 /** Builds the presence shown while working in a Codesto project, like an editor. */
 export function buildCodestoActivity(code: CodestoState, privacy: boolean): PresenceData {
-  const icon = codestoIcon(code.file)
+  const icon = privacy ? undefined : codestoIcon(code.file)
   const idle = !code.file && !code.running
 
   return {

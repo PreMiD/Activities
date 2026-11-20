@@ -92,9 +92,9 @@ export function getPageState(): PageState {
   }
 
   const params = new URLSearchParams(document.location.search)
-  const query = clean(
-    ['q', 'query', 'search'].map(key => params.get(key)).find(Boolean),
-  )
+  const query = ['q', 'query', 'search']
+    .map(key => clean(params.get(key)))
+    .find(Boolean)
 
   return query
     ? { name: getPageName(), url, kind: 'search', subject: query }

@@ -7,6 +7,16 @@ import { getArtwork, usableImage } from '../util/images.js'
 import { getPlayback, getPlaybackTimestamps, getVideo } from '../util/playback.js'
 import { getBrowsingTimestamp } from '../util/session.js'
 
+/** Reads a show's title from its link: its own text, or the first element when the title is wrapped. */
+function titleOf(link: Element): string | undefined {
+  const own = Array.from(link.childNodes)
+    .filter(node => node.nodeType === Node.TEXT_NODE)
+    .map(node => node.textContent)
+    .join(' ')
+
+  return clean(own) ?? textOf(link.firstElementChild)
+}
+
 /** Whether the current page is a watch-together room at `/r/<code>`. */
 export function isRoomPage(): boolean {
   return /^\/r\/[a-z0-9]{8}\/?$/i.test(document.location.pathname)
@@ -55,7 +65,7 @@ export function getRoomState(): RoomState | undefined {
     joined: true,
     hosting: (buttons?.length ?? 0) >= 3,
     name: textOf(heading),
-    title: clean(link?.firstChild?.textContent),
+    title: link ? titleOf(link) : undefined,
     episode: clean(
       textOf(document.querySelector('h2[dir="auto"]'))?.split(' · ')[0],
     ),

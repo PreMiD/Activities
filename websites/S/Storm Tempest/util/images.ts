@@ -107,22 +107,28 @@ export function fetchCover(
   return request
 }
 
+/** Builds the cache key of a teacher, scoped by source so two sources can share an id. */
+export function teacherKey(source: string, id: string): string {
+  return `${source}/${id}`
+}
+
 export const teacherPhotos = new Map<string, string>()
 
 export const teacherRequests = new Map<string, Promise<string | undefined>>()
 
 /** Finds the teacher's photo from one seen earlier, the site's API, or the teacher's page. */
 export async function fetchTeacherPhoto(teacher: { source: string, id: string }): Promise<string | undefined> {
-  const known = teacherPhotos.get(teacher.id)
+  const key = teacherKey(teacher.source, teacher.id)
+  const known = teacherPhotos.get(key)
 
   if (known) {
     return known
   }
 
-  let request = teacherRequests.get(teacher.id)
+  let request = teacherRequests.get(key)
 
   if (!request) {
-    request = fetch(`/v1/studysto/sources/${teacher.source}/titles/${teacher.id}`)
+    request = fetch(`/v1/studysto/sources/${teacher.source}/titles/${teacher.id}`, { signal: AbortSignal.timeout(8000) })
       .then(response => (response.ok ? response.json() : undefined))
       .then(data =>
         usableImage((data as { cover?: string } | undefined)?.cover, document.location.href),
@@ -138,16 +144,16 @@ export async function fetchTeacherPhoto(teacher: { source: string, id: string })
       )
       .then((photo) => {
         if (photo) {
-          teacherPhotos.set(teacher.id, photo)
+          teacherPhotos.set(key, photo)
         }
         else {
-          setTimeout(() => teacherRequests.delete(teacher.id), 30_000)
+          setTimeout(() => teacherRequests.delete(key), 30_000)
         }
 
         return photo
       })
 
-    teacherRequests.set(teacher.id, request)
+    teacherRequests.set(key, request)
   }
 
   return request

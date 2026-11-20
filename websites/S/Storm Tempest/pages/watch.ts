@@ -242,14 +242,9 @@ export function stripEpisode(value: string): string {
 /** Finds the title of the show being watched, ignoring generic site titles. */
 export function getAnimeTitle(): string | undefined {
   const candidates = [
-    queryAttr(
-      [
-        'meta[property="og:title"]',
-        'meta[name="twitter:title"]',
-      ],
-      'content',
-    ),
-    queryText([
+    queryAttr(['meta[property="og:title"]'], 'content'),
+    queryAttr(['meta[name="twitter:title"]'], 'content'),
+    ...[
       'main a[href*="/title/"]',
       'main h1',
       'article h1',
@@ -257,7 +252,7 @@ export function getAnimeTitle(): string | undefined {
       '[class*="anime-title"]',
       '[class*="show-title"]',
       '[class*="series-title"]',
-    ]),
+    ].map(selector => queryText([selector])),
     document.title,
   ]
 
@@ -283,14 +278,15 @@ export function getAnimeTitle(): string | undefined {
 
 /** Whether the current page is a watch/episode page or shows a main player. */
 export function isWatchPage(): boolean {
-  const url
-    = `${document.location.pathname}${document.location.search}`.toLowerCase()
+  const path = document.location.pathname.toLowerCase()
+  const params = new URLSearchParams(document.location.search)
 
   if (
-    /\/watch\b/.test(url)
-    || /\/episode\b/.test(url)
-    || /\/play\b/.test(url)
-    || /[?&](?:episode|ep)=/i.test(url)
+    /\/watch\b/.test(path)
+    || /\/episode\b/.test(path)
+    || /\/play\b/.test(path)
+    || params.has('episode')
+    || params.has('ep')
   ) {
     return true
   }

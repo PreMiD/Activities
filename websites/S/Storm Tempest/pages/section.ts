@@ -3,7 +3,7 @@ import { ActivityType } from 'premid'
 import { ActivityAssets, gameNames, studySubjects, toolNames } from '../config/constants.js'
 import { buildButtons, smallImageFor } from '../util/activity.js'
 import { headingOr, prettify, safeDecode, textOf } from '../util/dom.js'
-import { getArtwork, teacherPhotos } from '../util/images.js'
+import { getArtwork, teacherKey, teacherPhotos } from '../util/images.js'
 import { getPlayback, getPlaybackTimestamps, getVideo } from '../util/playback.js'
 import { getBrowsingTimestamp } from '../util/session.js'
 import { getAnimeTitle } from './watch.js'
@@ -31,9 +31,12 @@ export function findTeacher(slug: string): string {
   const link = Array.from(document.querySelectorAll('a[href]')).find((anchor) => {
     const href = safeDecode(anchor.getAttribute('href') ?? '')
     const text = textOf(anchor)
+    const target = new URL(href, document.location.href).pathname.split('/')
 
     return (
-      href.startsWith(`/studysto/t/${slug}`)
+      target[1] === 'studysto'
+      && target[2] === 't'
+      && target[3] === slug
       && Boolean(text)
       && (text?.length ?? 0) <= 40
       && !/back|رجوع|عودة/i.test(text ?? '')
@@ -121,7 +124,9 @@ export function getSectionState(): SectionState | undefined {
     const image = getArtwork(undefined) ?? findMainImage()
 
     if (image && segments[2]) {
-      teacherPhotos.set(segments[2], image)
+      const source = new URLSearchParams(document.location.search).get('source') ?? ''
+
+      teacherPhotos.set(teacherKey(source, segments[2]), image)
     }
 
     return {
