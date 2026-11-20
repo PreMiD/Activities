@@ -74,28 +74,52 @@ export interface AccountStats {
   username: string | null
 }
 
+const LEVEL_NAMES = new Set(['NEWBIE', 'APPRENTICE', 'PRACTITIONER', 'EXPERT'])
+const PROGRESS_LEVELS = ['apprentice', 'practitioner', 'expert']
+
 function text(selector: string): string | null {
   return document.querySelector(selector)?.textContent?.trim() || null
+}
+
+function progressCount(scope: ParentNode, level: string): number | null {
+  const value = Number.parseInt(
+    scope.querySelector(`.${level}-progress .radial-text-element-progress, .${level}-progress .radial-text-element__progress`)?.textContent?.trim() ?? '',
+    10,
+  )
+  return Number.isNaN(value) ? null : value
+}
+
+function sumCounts(counts: Array<number | null>): number | null {
+  let total = 0
+  for (const count of counts) {
+    if (count === null)
+      return null
+    total += count
+  }
+  return total
+}
+
+function getLevelProgressScope(): ParentNode {
+  // The dashboard repeats the same rings under "Exam preparation steps", so count only this card.
+  return [...document.querySelectorAll('.container-cards-charcoal-rounded')]
+    .find(card => card.querySelector('h3')?.textContent?.trim() === 'Level progress') ?? document
 }
 
 export function getAccountStats(): AccountStats {
   const rankMatch = text('#currentUserRank')?.match(/#\s*(\d+)/)
   const statusText = text('#ajaxUserStatus')
-  const username = statusText?.split('You\'re showing as ')[1]?.trim() ?? null
+  const username = statusText?.match(/showing as\s+([^\s[]+)/i)?.[1]?.trim() ?? null
 
-  const progressSelectors = [
-    '.apprentice-progress .radial-text-element__progress',
-    '.practitioner-progress .radial-text-element__progress',
-    '.expert-progress .radial-text-element__progress',
-  ]
-  const counts = progressSelectors.map(selector => Number.parseInt(text(selector) ?? '', 10))
-  const solved = counts.some(Number.isNaN) ? null : counts.reduce((sum, count) => sum + count, 0)
+  const scope = getLevelProgressScope()
+  const solved = sumCounts(PROGRESS_LEVELS.map(level => progressCount(scope, level)))
 
   return {
     rank: rankMatch?.[1] ?? null,
-    percent: text('#AcademyAccountStatusWidget .progress-with-percent text'),
+    percent: text('.progress-with-percent text'),
     solved,
-    level: text('[class^="lab-level-display__"]'),
+    level: [...document.querySelectorAll('[class*="lab-level-"]')]
+      .map(element => element.textContent?.trim() ?? '')
+      .find(name => LEVEL_NAMES.has(name)) ?? null,
     username: username && username !== 'ANONYMOUS' ? username : null,
   }
 }
