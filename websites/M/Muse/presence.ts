@@ -112,10 +112,17 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  // ポッドキャスト再生中はメディア要素からそのまま取る (標準パターン)。
+  // メディア再生中はメディア要素からそのまま取る (標準パターン)。
+  // 対象はライブラリのメディア/ポッドキャストと、スレッド内の生成動画だけに限る。
+  // トップ画面などの装飾・自動再生の動画を拾うと通常表示より先に割り込んで
+  // 「Video」と誤表示するため、ページで限定する。
   // アプリが <audio> を使っていない場合は media が null で通常表示に落ちる
   const media = document.querySelector<HTMLMediaElement>('audio, video')
-  if (media && ((first === 'library' && segments[1] === 'podcasts') || !media.paused)) {
+  const isPodcasts = first === 'library' && segments[1] === 'podcasts'
+  const isMediaContext = isPodcasts
+    || (first === 'library' && segments[1] === 'media')
+    || first === 'thread'
+  if (media && isMediaContext && (isPodcasts || !media.paused)) {
     const isVideo = media instanceof HTMLVideoElement
       || (first === 'library' && segments[1] === 'media')
     const mediaTitle = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
