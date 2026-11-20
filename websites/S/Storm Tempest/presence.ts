@@ -105,9 +105,14 @@ function trackWatching(watching: boolean): void {
 
 /** Updates the presence with coding, reading, watching, tool, game or browsing activity on every refresh. */
 presence.on('UpdateData', async () => {
+  const href = document.location.href
   const before = await readSettings()
   const { build, watching } = await pickActivity(!before.privacy && before.options.cover)
   const { privacy, options } = await readSettings()
+
+  if (document.location.href !== href) {
+    return
+  }
 
   trackWatching(watching)
 
