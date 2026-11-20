@@ -149,13 +149,15 @@ describe('library and channel pages', () => {
 
     vi.stubGlobal('document', {
       location: { href: 'https://stormy.rest/tvsto/watch/s/c' },
-      querySelector: () => h1,
+      querySelectorAll: () => [{ parentElement: null }, h1],
     })
-    expect(getChannelLogo()).toBe('https://cdn.example.com/logo.png')
+    expect(getChannelLogo()).toBe(
+      `https://wsrv.nl/?url=${encodeURIComponent('https://cdn.example.com/logo.png')}&w=512&h=512&fit=contain&cbg=f4f5f8&output=png`,
+    )
 
     vi.stubGlobal('document', {
       location: { href: 'https://stormy.rest/tvsto/watch/s/c' },
-      querySelector: () => null,
+      querySelectorAll: () => [],
     })
     expect(getChannelLogo()).toBeUndefined()
   })

@@ -5,7 +5,7 @@ import { buildButtons, smallImageFor } from '../util/activity.js'
 import { clean, isVisible, latinDigits, prettify, queryAttr, queryText, safeDecode, textOf } from '../util/dom.js'
 import { getArtwork, usableImage } from '../util/images.js'
 import { getPlayback, getPlaybackTimestamps, getVideo, isMainPlayer } from '../util/playback.js'
-import { getBrowsingTimestamp } from '../util/session.js'
+import { getChannelTimestamp } from '../util/session.js'
 
 /** Whether `element` sits inside a group labelled as the player's server/source/provider switcher. */
 export function isInServerControl(element: Element): boolean {
@@ -331,12 +331,18 @@ export function getTotalEpisodes(): string | undefined {
 
 /** Finds the live channel's logo, shown beside its name on a Live TV page. */
 export function getChannelLogo(): string | undefined {
-  const row = document.querySelector('main h1')?.parentElement?.parentElement
+  const logo = Array.from(document.querySelectorAll('main h1'))
+    .map(heading => heading.parentElement?.parentElement?.querySelector('img')?.getAttribute('src'))
+    .find(Boolean)
+  const image = usableImage(logo, document.location.href)
 
-  return usableImage(
-    row?.querySelector('img')?.getAttribute('src'),
-    document.location.href,
-  )
+  if (!image || !logo) {
+    return undefined
+  }
+
+  const original = new URL(logo, document.location.href).href
+
+  return `https://wsrv.nl/?url=${encodeURIComponent(original)}&w=512&h=512&fit=contain&cbg=f4f5f8&output=png`
 }
 
 /** Collects the title, source, episode, artwork and video of the current watch page. */
@@ -396,7 +402,8 @@ export function buildWatchActivity(watch: WatchState, privacy: boolean): Presenc
             : path.startsWith('/movisto/') ? 'Open Movie' : 'Open Anime',
           url: watch.url,
         }),
-    ...(live && !playback?.paused && { startTimestamp: getBrowsingTimestamp() }),
-    ...getPlaybackTimestamps(playback),
+    ...(live
+      ? { startTimestamp: getChannelTimestamp() }
+      : getPlaybackTimestamps(playback)),
   }
 }

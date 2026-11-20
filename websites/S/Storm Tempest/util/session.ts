@@ -31,6 +31,19 @@ export function getBrowsingTimestamp(): number {
   return start
 }
 
+let channel: { key: string, start: number } | undefined
+
+/** Returns when the current live channel was opened, in seconds, so its timer counts normally and restarts on another channel. */
+export function getChannelTimestamp(): number {
+  const key = document.location.pathname
+
+  if (channel?.key !== key) {
+    channel = { key, start: Math.floor(Date.now() / 1000) }
+  }
+
+  return channel.start
+}
+
 /** Forgets when browsing began, so the next browsing page starts a fresh timer after watching. */
 export function resetBrowsingTimestamp(): void {
   start = undefined
