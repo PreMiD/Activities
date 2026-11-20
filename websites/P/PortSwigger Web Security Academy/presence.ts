@@ -31,8 +31,15 @@ function clamp(value: string, max = 128): string {
   return value.length > max ? `${value.slice(0, max - 1)}…` : value
 }
 
+const ACADEMY_ROOT = '/web-security'
+
+// The metadata matches the whole domain, so check the path before publishing.
+function isAcademyPath(pathname: string): boolean {
+  return pathname === ACADEMY_ROOT || pathname.startsWith(`${ACADEMY_ROOT}/`)
+}
+
 function getPageKind(pathname: string): PageKind {
-  if (pathname === '/web-security' || pathname === '/web-security/')
+  if (pathname === ACADEMY_ROOT || pathname === `${ACADEMY_ROOT}/`)
     return 'home'
   if (Object.keys(INDEX_NAMES).some(path => pathname.includes(path)))
     return 'index'
@@ -65,7 +72,14 @@ function getBreadcrumbDepth(): number {
 
 // Topic pages link straight to a heading, e.g. /web-security/sql-injection#what-is-sql-injection-sqli.
 function getAnchoredSection(): string | null {
-  const id = decodeURIComponent(document.location.hash.slice(1))
+  let id: string
+  try {
+    id = decodeURIComponent(document.location.hash.slice(1))
+  }
+  catch {
+    // A malformed fragment such as #% is not a heading, so the page still publishes.
+    return null
+  }
   const target = id ? document.getElementById(id) : null
   return target?.matches('h1, h2, h3, h4, h5, h6')
     ? target.textContent?.trim() || null
@@ -180,8 +194,15 @@ async function readSettings(): Promise<ActivitySettings> {
 }
 
 presence.on('UpdateData', async () => {
-  const settings = await readSettings()
   const { pathname } = document.location
+
+  // Burp Suite docs and the rest of portswigger.net are not the academy.
+  if (!isAcademyPath(pathname)) {
+    presence.clearActivity()
+    return
+  }
+
+  const settings = await readSettings()
   const pageKind = getPageKind(pathname)
 
   const presenceData: PresenceData = {
