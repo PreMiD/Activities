@@ -247,7 +247,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Checking Out The Daily Mix'
     presenceData.startTimestamp = now
   }
-    else if (pathname.includes('/notice')) {
+  else if (pathname.includes('/notice')) {
     presenceData.details = 'Reading Notices'
     presenceData.startTimestamp = now
   }
