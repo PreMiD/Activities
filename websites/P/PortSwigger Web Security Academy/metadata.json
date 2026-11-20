@@ -10,10 +10,10 @@
     "en": "PortSwigger Web Security Academy is a free online learning platform for web security, with interactive labs and guided learning paths."
   },
   "url": "portswigger.net",
-  "regExp": "^https?[:][/][/](?:www[.])?portswigger[.]net[/]web-security",
+  "regExp": "^https?[:][/][/](?:www[.])?portswigger[.]net[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PortSwigger%20Web%20Security%20Academy/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PortSwigger%20Web%20Security%20Academy/assets/thumbnail.png",
+  "logo": "https://i.imgur.com/jQH4vOH.png",
+  "thumbnail": "https://i.imgur.com/CH6GEWw.png",
   "color": "#FF6633",
   "category": "other",
   "tags": [

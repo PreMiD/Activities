@@ -189,7 +189,7 @@ presence.on('UpdateData', async () => {
   const pageKind = getPageKind(pathname)
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/PortSwigger%20Web%20Security%20Academy/assets/logo.png',
+    largeImageKey: 'https://i.imgur.com/jQH4vOH.png',
     largeImageText: 'PortSwigger Academy',
   } as PresenceData
 
