@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Foxy",
+    "id": "1064801165201641592"
+  },
+  "service": "SAKURA",
+  "description": {
+    "en": "SAKURA is a free streaming platform for anime and cartoons, available in VF and VOSTFR.",
+    "fr": "SAKURA est une plateforme de streaming gratuite d'animes et de dessins animés en VF et VOSTFR."
+  },
+  "url": "sakura.thefoxy.me",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*sakura[.]thefoxy[.]me|localhost)(:\\d{1,5})?[/]",
+  "version": "1.0.0",
+  "logo": "https://sakura.thefoxy.me/icon-512.png",
+  "thumbnail": "https://sakura.thefoxy.me/banner.png",
+  "color": "#FF2D55",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "cartoons",
+    "streaming",
+    "manga"
+  ]
+}
