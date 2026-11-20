@@ -3,7 +3,7 @@ import { ActivityType } from 'premid'
 import { ActivityAssets } from '../config/constants.js'
 import { buildButtons, smallImageFor } from '../util/activity.js'
 import { clean, isVisible, latinDigits, prettify, queryAttr, queryText, safeDecode, textOf } from '../util/dom.js'
-import { getArtwork } from '../util/images.js'
+import { getArtwork, usableImage } from '../util/images.js'
 import { getPlayback, getPlaybackTimestamps, getVideo, isMainPlayer } from '../util/playback.js'
 import { getBrowsingTimestamp } from '../util/session.js'
 
@@ -329,6 +329,16 @@ export function getTotalEpisodes(): string | undefined {
   return undefined
 }
 
+/** Finds the live channel's logo, shown beside its name on a Live TV page. */
+export function getChannelLogo(): string | undefined {
+  const row = document.querySelector('main h1')?.parentElement?.parentElement
+
+  return usableImage(
+    row?.querySelector('img')?.getAttribute('src'),
+    document.location.href,
+  )
+}
+
 /** Collects the title, source, episode, artwork and video of the current watch page. */
 export function getWatchState(): WatchState {
   const video = getVideo()
@@ -345,7 +355,9 @@ export function getWatchState(): WatchState {
         ? totalEpisodes
         : undefined,
     url: document.location.href,
-    image: getArtwork(video),
+    image: document.location.pathname.startsWith('/tvsto/')
+      ? getChannelLogo() ?? getArtwork(video)
+      : getArtwork(video),
     video,
   }
 }

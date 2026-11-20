@@ -87,6 +87,16 @@ export function prettify(slug: string): string {
     .trim()
 }
 
+/** Runs `read` and returns undefined instead of throwing, so one broken page reader cannot stop the whole activity. */
+export function safely<T>(read: () => T): T | undefined {
+  try {
+    return read()
+  }
+  catch {
+    return undefined
+  }
+}
+
 /** Reads the name from the page title, such as "Name · Subject · storm", before the page has drawn its heading. */
 export function titleName(): string | undefined {
   const name = clean(

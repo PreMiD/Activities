@@ -1,5 +1,5 @@
 import type { Options, Playback } from './config/types.js'
-import { buildPageActivity, getPageState } from './pages/browsing.js'
+import { buildFallbackActivity, buildPageActivity, getPageState } from './pages/browsing.js'
 import { buildCodestoActivity, getCodestoState, isCodestoWorkspace } from './pages/codesto.js'
 import { buildPomodoroActivity, getPomodoroState } from './pages/pomodoro.js'
 import { buildReadActivity, getReadState, parseReadPath } from './pages/reader.js'
@@ -7,6 +7,7 @@ import { buildRoomActivity, getRoomState, isRoomPage } from './pages/rooms.js'
 import { buildSectionActivity, getSectionState } from './pages/section.js'
 import { buildWatchActivity, getWatchState, isWatchPage } from './pages/watch.js'
 import { applyOptions, samePresence } from './util/activity.js'
+import { safely } from './util/dom.js'
 import { fetchCover, fetchTeacherPhoto, fetchTitleCover } from './util/images.js'
 import { setIframePlayback } from './util/playback.js'
 import { resetBrowsingTimestamp } from './util/session.js'
@@ -40,13 +41,15 @@ async function readSettings(): Promise<{ privacy: boolean, options: Options }> {
 /** Picks the page's activity, fetching a missing cover only when `covers` is true, and returns how to build it for a privacy setting. */
 async function pickActivity(covers: boolean): Promise<{ build: (privacy: boolean) => PresenceData, watching: boolean }> {
   if (isCodestoWorkspace()) {
-    const code = getCodestoState()
+    const code = safely(getCodestoState)
 
-    return { build: privacy => buildCodestoActivity(code, privacy), watching: false }
+    if (code) {
+      return { build: privacy => buildCodestoActivity(code, privacy), watching: false }
+    }
   }
 
   if (isRoomPage()) {
-    const room = getRoomState()
+    const room = safely(getRoomState)
 
     if (room) {
       if (covers && !room.image && room.titleHref) {
@@ -57,11 +60,10 @@ async function pickActivity(covers: boolean): Promise<{ build: (privacy: boolean
     }
   }
 
-  const readPath = parseReadPath()
+  const readPath = safely(parseReadPath)
+  const read = readPath ? safely(() => getReadState(readPath)) : undefined
 
-  if (readPath) {
-    const read = getReadState(readPath)
-
+  if (read) {
     if (covers) {
       read.image ??= await fetchTitleCover()
     }
@@ -69,13 +71,13 @@ async function pickActivity(covers: boolean): Promise<{ build: (privacy: boolean
     return { build: privacy => buildReadActivity(read, privacy), watching: false }
   }
 
-  const pomodoro = getPomodoroState()
+  const pomodoro = safely(getPomodoroState)
 
   if (pomodoro) {
     return { build: privacy => buildPomodoroActivity(pomodoro, privacy), watching: false }
   }
 
-  const section = getSectionState()
+  const section = safely(getSectionState)
 
   if (section) {
     if (covers && section.teacher) {
@@ -85,8 +87,9 @@ async function pickActivity(covers: boolean): Promise<{ build: (privacy: boolean
     return { build: privacy => buildSectionActivity(section, privacy), watching: false }
   }
 
-  if (isWatchPage()) {
-    const watch = getWatchState()
+  const watch = safely(isWatchPage) ? safely(getWatchState) : undefined
+
+  if (watch) {
     if (covers) {
       watch.image ??= await fetchTitleCover()
     }
@@ -94,9 +97,12 @@ async function pickActivity(covers: boolean): Promise<{ build: (privacy: boolean
     return { build: privacy => buildWatchActivity(watch, privacy), watching: true }
   }
 
-  const page = getPageState()
+  const page = safely(getPageState)
 
-  return { build: privacy => buildPageActivity(page, privacy), watching: false }
+  return {
+    build: privacy => page ? buildPageActivity(page, privacy) : buildFallbackActivity(),
+    watching: false,
+  }
 }
 
 const HEARTBEAT_MS = 15_000
@@ -126,7 +132,10 @@ presence.on('UpdateData', async () => {
 
   trackWatching(watching)
 
-  const data = applyOptions(build(privacy), options)
+  const data = applyOptions(
+    safely(() => build(privacy)) ?? buildFallbackActivity(),
+    options,
+  )
 
   if (lastData && Date.now() - lastSentAt < HEARTBEAT_MS && samePresence(lastData, data)) {
     return

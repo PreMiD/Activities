@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { countLibraryItems } from '../pages/browsing.js'
 import { getPomodoroState } from '../pages/pomodoro.js'
 import { extractChapter, parseCount } from '../pages/reader.js'
-import { extractEpisode, stripEpisode } from '../pages/watch.js'
+import { extractEpisode, getChannelLogo, stripEpisode } from '../pages/watch.js'
 import { distinctParts, samePresence } from './activity.js'
-import { latinDigits, prettify, safeDecode, titleName } from './dom.js'
+import { latinDigits, prettify, safeDecode, safely, titleName } from './dom.js'
 
 describe('numbers in any language', () => {
   it('converts Arabic digits and the decimal separator', () => {
@@ -110,5 +111,52 @@ describe('study timer', () => {
     openPage('/plansto/study', { phase: 'long', endsAt: Date.now() + 600_000, round: 0 })
 
     expect(getPomodoroState()).toMatchObject({ phase: 'long', area: 'Plansto', session: undefined, length: 900 })
+  })
+})
+
+describe('robustness', () => {
+  it('returns undefined instead of throwing', () => {
+    expect(safely(() => 5)).toBe(5)
+    expect(safely(() => {
+      throw new Error('page changed')
+    })).toBeUndefined()
+  })
+})
+
+describe('library and channel pages', () => {
+  afterEach(() => vi.unstubAllGlobals())
+
+  it('counts the saved titles, preferring the saved section', () => {
+    const list = (n: number): unknown => ({ querySelectorAll: () => ({ length: n }) })
+
+    vi.stubGlobal('document', {
+      querySelector: (selector: string) => selector.includes('saved-title') ? list(12) : list(3),
+    })
+    expect(countLibraryItems()).toBe(12)
+
+    vi.stubGlobal('document', {
+      querySelector: (selector: string) => selector.includes('saved-title') ? null : list(3),
+    })
+    expect(countLibraryItems()).toBe(3)
+
+    vi.stubGlobal('document', { querySelector: () => null })
+    expect(countLibraryItems()).toBe(0)
+  })
+
+  it('reads the channel logo beside the channel name', () => {
+    const img = { getAttribute: () => 'https://cdn.example.com/logo.png' }
+    const h1 = { parentElement: { parentElement: { querySelector: () => img } } }
+
+    vi.stubGlobal('document', {
+      location: { href: 'https://stormy.rest/tvsto/watch/s/c' },
+      querySelector: () => h1,
+    })
+    expect(getChannelLogo()).toBe('https://cdn.example.com/logo.png')
+
+    vi.stubGlobal('document', {
+      location: { href: 'https://stormy.rest/tvsto/watch/s/c' },
+      querySelector: () => null,
+    })
+    expect(getChannelLogo()).toBeUndefined()
   })
 })

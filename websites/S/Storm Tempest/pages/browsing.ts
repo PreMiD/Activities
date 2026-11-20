@@ -77,6 +77,14 @@ export function getPageName(): string {
   return 'Storm Tempest'
 }
 
+/** Counts the saved titles listed on a library or favorites page. */
+export function countLibraryItems(): number {
+  const list = document.querySelector('section[aria-labelledby="saved-title"] ul')
+    ?? document.querySelector('main ul')
+
+  return list?.querySelectorAll(':scope > li').length ?? 0
+}
+
 /** Collects the name and URL of the current browsing page, noting a search query or a profile. */
 export function getPageState(): PageState {
   const url = document.location.href
@@ -88,6 +96,20 @@ export function getPageState(): PageState {
       url,
       kind: 'profile',
       subject: safeDecode(second),
+    }
+  }
+
+  if (second?.toLowerCase() === 'library' || (first?.toLowerCase() === 'tvsto' && second?.toLowerCase() === 'favorites')) {
+    const count = countLibraryItems()
+    const unit = first?.toLowerCase() === 'studysto'
+      ? 'teacher'
+      : first?.toLowerCase() === 'tvsto' ? 'channel' : 'title'
+
+    return {
+      name: getPageName().split(' • ')[0] ?? 'Library',
+      url,
+      kind: 'library',
+      subject: count ? `${count} ${unit}${count === 1 ? '' : 's'}` : undefined,
     }
   }
 
@@ -115,9 +137,24 @@ export function pageButton(page: PageState): ButtonData | undefined {
     return { label: 'View Results', url: page.url }
   }
 
+  if (page.kind === 'library') {
+    return { label: 'Open Library', url: page.url }
+  }
+
   const name = page.name.split(' • ').pop() ?? page.name
 
   return { label: `Open ${name}`.slice(0, 32), url: page.url }
+}
+
+/** Builds the plain presence used when a page's own reader fails, so the activity never disappears. */
+export function buildFallbackActivity(): PresenceData {
+  return {
+    type: ActivityType.Watching,
+    details: 'Browsing Storm Tempest',
+    state: 'Storm Tempest',
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: getBrowsingTimestamp(),
+  }
 }
 
 /** Builds the presence shown while browsing, keeping the elapsed time fixed. */
@@ -126,10 +163,14 @@ export function buildPageActivity(page: PageState, privacy: boolean): PresenceDa
     ? 'Viewing a profile'
     : page.kind === 'search'
       ? privacy ? 'Searching Storm Tempest' : `Searching ${page.name}`
-      : privacy ? 'Browsing Storm Tempest' : `Browsing ${page.name}`
+      : page.kind === 'library'
+        ? privacy ? 'Browsing a library' : `Browsing ${page.name} library`
+        : privacy ? 'Browsing Storm Tempest' : `Browsing ${page.name}`
   const state = privacy || !page.subject
     ? 'Storm Tempest'
-    : page.kind === 'profile' ? `@${page.subject}` : `"${page.subject}"`
+    : page.kind === 'profile'
+      ? `@${page.subject}`
+      : page.kind === 'library' ? page.subject : `"${page.subject}"`
 
   return {
     type: ActivityType.Watching,

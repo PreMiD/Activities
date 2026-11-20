@@ -62,7 +62,7 @@ export interface PomodoroState {
 export interface PageState {
   name: string
   url: string
-  kind?: 'search' | 'profile'
+  kind?: 'search' | 'profile' | 'library'
   subject?: string
 }
 
