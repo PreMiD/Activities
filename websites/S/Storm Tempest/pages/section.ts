@@ -2,7 +2,7 @@ import type { SectionState } from '../config/types.js'
 import { ActivityType } from 'premid'
 import { ActivityAssets, gameNames, studySubjects, toolNames } from '../config/constants.js'
 import { buildButtons, smallImageFor } from '../util/activity.js'
-import { headingOr, prettify, safeDecode, textOf } from '../util/dom.js'
+import { headingOr, prettify, safeDecode, textOf, titleName } from '../util/dom.js'
 import { getArtwork, teacherKey, teacherPhotos } from '../util/images.js'
 import { getPlayback, getPlaybackTimestamps, getVideo } from '../util/playback.js'
 import { getBrowsingTimestamp } from '../util/session.js'
@@ -139,7 +139,7 @@ export function getSectionState(): SectionState | undefined {
     }
 
     return {
-      details: `Studying with ${headingOr(findTeacher(third))}`,
+      details: `Studying with ${headingOr(titleName() ?? findTeacher(third))}`,
       state: subject ? `${subject} • Studysto` : 'Studysto',
       privateDetails: 'Studying',
       privateState: 'Studysto',

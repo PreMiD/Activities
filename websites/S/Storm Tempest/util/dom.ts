@@ -87,7 +87,18 @@ export function prettify(slug: string): string {
     .trim()
 }
 
-/** Returns the page heading when it is short enough to be a name, else `fallback`. */
+/** Reads the name from the page title, such as "Name · Subject · storm", before the page has drawn its heading. */
+export function titleName(): string | undefined {
+  const name = clean(
+    document.title.replace(/\s*[·|-]\s*storm\s*$/i, '').split(' · ')[0],
+  )
+
+  return name && !/^(?:storm|studysto|loading…?|editor)$/i.test(name)
+    ? name
+    : undefined
+}
+
+/** Returns the page's main heading, or `fallback` when it has none or it is too long to be a name. */
 export function headingOr(fallback: string): string {
   const heading = textOf(document.querySelector('main h1'))
 

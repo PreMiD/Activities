@@ -3,7 +3,7 @@ import { getPomodoroState } from '../pages/pomodoro.js'
 import { extractChapter, parseCount } from '../pages/reader.js'
 import { extractEpisode, stripEpisode } from '../pages/watch.js'
 import { distinctParts, samePresence } from './activity.js'
-import { latinDigits, prettify, safeDecode } from './dom.js'
+import { latinDigits, prettify, safeDecode, titleName } from './dom.js'
 
 describe('numbers in any language', () => {
   it('converts Arabic digits and the decimal separator', () => {
@@ -47,6 +47,18 @@ describe('titles and text', () => {
   it('does not repeat the show title in a status line', () => {
     expect(distinctParts('Marrow', ['Marrow', 'Episode 2', 'episode 2', 'Room'])).toBe('Episode 2 • Room')
     expect(distinctParts(undefined, [undefined, 'A'])).toBe('A')
+  })
+})
+
+describe('name from the page title', () => {
+  afterEach(() => vi.unstubAllGlobals())
+
+  it('keeps the spaces of a teacher name and ignores generic titles', () => {
+    vi.stubGlobal('document', { title: 'حيدر عبد الائمه · الرياضيات · storm' })
+    expect(titleName()).toBe('حيدر عبد الائمه')
+
+    vi.stubGlobal('document', { title: 'storm' })
+    expect(titleName()).toBeUndefined()
   })
 })
 
