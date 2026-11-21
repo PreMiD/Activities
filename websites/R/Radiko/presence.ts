@@ -1,80 +1,218 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '736620343279484959',
 })
-async function getStrings() {
-  return presence.getStrings(
-    {
-      play: 'general.playing',
-      pause: 'general.paused',
-      browsing: 'general.browsing',
-    },
 
-  )
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/logo.png'
+// 旧版からある Radiko 固有のブラウジング用アイコン (水色の丸)
+const BROWSING_ICON = 'https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/0.png'
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+interface Program {
+  ft: string
+  to: string
+  title: string
+  pfm: string
+  img: string | null
 }
-let strings: Awaited<ReturnType<typeof getStrings>>
-// Pre-declare variable
-let oldLang: string | null = null
-let radioStation = ''
-let startTimeStamp = Date.now()
+
+interface Station {
+  name: string
+  programs: Program[]
+  fetchedAt: number
+}
+
+const stations = new Map<string, Station>()
+const pending = new Map<string, Promise<void>>()
+// 取得に失敗した局は 5 分間再試行しない（UpdateData のたびに fetch が走るのを防ぐ）
+const failedAt = new Map<string, number>()
+// 再生中に別のページへ移動しても、最後に聴いていた局を覚えておく
+let lastLive: { station: string, timefree: string | null } | null = null
+
+function loadStation(id: string): void {
+  const cached = stations.get(id)
+  const lastFailed = failedAt.get(id)
+  if ((cached && Date.now() - cached.fetchedAt < 60 * 60 * 1000) || pending.has(id) || (lastFailed && Date.now() - lastFailed < 5 * 60 * 1000))
+    return
+  pending.set(id, (async () => {
+    try {
+      const res = await fetch(`https://radiko.jp/v3/program/station/weekly/${id}.xml`)
+      if (!res.ok) {
+        failedAt.set(id, Date.now())
+        return
+      }
+      const xml = new DOMParser().parseFromString(await res.text(), 'text/xml')
+      const programs: Program[] = [...xml.querySelectorAll('prog')].map(prog => ({
+        ft: prog.getAttribute('ft') ?? '',
+        to: prog.getAttribute('to') ?? '',
+        title: prog.querySelector('title')?.textContent?.trim() ?? '',
+        pfm: prog.querySelector('pfm')?.textContent?.trim() ?? '',
+        img: prog.querySelector('img')?.textContent?.trim() || null,
+      }))
+      stations.set(id, {
+        name: xml.querySelector('station > name')?.textContent?.trim() ?? id,
+        programs,
+        fetchedAt: Date.now(),
+      })
+      failedAt.delete(id)
+    }
+    catch {
+      failedAt.set(id, Date.now())
+    }
+    finally {
+      pending.delete(id)
+    }
+  })())
+}
+
+// radiko の時刻表記 (JST, yyyyMMddHHmmss) と UNIX 時間の変換
+function toUnix(time: string): number {
+  const m = time.match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/)
+  if (!m)
+    return 0
+  return Math.floor(Date.parse(`${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}+09:00`) / 1000)
+}
+
+function formatDate(time: string): string {
+  const m = time.match(/^\d{4}(\d{2})(\d{2})(\d{2})(\d{2})/)
+  return m ? `${Number(m[1])}/${Number(m[2])} ${m[3]}:${m[4]}` : ''
+}
+
+function findProgram(station: Station | undefined, unix: number): Program | undefined {
+  return station?.programs.find(p => toUnix(p.ft) <= unix && unix < toUnix(p.to))
+}
+
+function isPlaying(): boolean | null {
+  const media = document.querySelector<HTMLMediaElement>('audio, video')
+  if (media && !Number.isNaN(media.duration))
+    return !media.paused
+  const player = document.querySelector<HTMLElement>('#stream-player')
+  if (player && player.style.display === 'block')
+    return !!document.querySelector('.icon--play-02.on')
+  return null
+}
+
+function readElapsed(): number | null {
+  for (const el of document.querySelectorAll('.player-area .start')) {
+    const m = el.textContent?.trim().match(/^(\d{1,2}):(\d{2}):(\d{2})$/)
+    if (m)
+      return Number(m[1]) * 3600 + Number(m[2]) * 60 + Number(m[3])
+  }
+  const media = document.querySelector<HTMLMediaElement>('audio, video')
+  return media && !Number.isNaN(media.duration) && Number.isFinite(media.currentTime) ? Math.floor(media.currentTime) : null
+}
+
+function cut(text: string, max = 120): string {
+  return text.length > max ? `${text.slice(0, max)}…` : text
+}
 
 presence.on('UpdateData', async () => {
-  const [codeChannel] = document.location.hash.split('/').slice(-1)
-  // code
-  const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/logo.png',
-    buttons: [
-      { label: `Listen to ${codeChannel}`, url: document.location.href },
-    ],
-  }
-  const [newLang, isTimeVisible] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [showProgram, showImage, isTimeVisible, showButtons] = await Promise.all([
+    presence.getSetting<boolean>('showProgram'),
+    presence.getSetting<boolean>('showImage'),
     presence.getSetting<boolean>('isTimeVisible'),
+    presence.getSetting<boolean>('buttons'),
   ])
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
-  // In Radio
-  if (
-    (document.querySelector('#stream-player') as HTMLElement).style.display
-    === 'block'
-  ) {
-    // If play
-    if (document.querySelector('.icon--play-02')?.classList.contains('on')) {
-      // This logic make timestamp can't changed.
-      if (codeChannel && codeChannel !== radioStation) {
-        radioStation = codeChannel
-        startTimeStamp = Date.now()
-      }
+  const { hash } = document.location
+  const live = hash.match(/^#!\/live\/([\w-]+)/)
+  const timefree = hash.match(/^#!\/ts\/([\w-]+)\/(\d{14})/)
+  const playing = isPlaying()
+  if (live || timefree)
+    lastLive = { station: (live?.[1] ?? timefree?.[1])!, timefree: timefree?.[2] ?? null }
+  else if (!playing)
+    lastLive = null
+  const stationId = lastLive?.station
+  const timefreeTime = lastLive?.timefree ?? null
 
-      presenceData.details = `Listening to ${radioStation} channel.`
-      presenceData.state = document.querySelector(
-        '#now-programs-list > h1',
-      )?.textContent
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = strings.play
-      presenceData.startTimestamp = isTimeVisible ? startTimeStamp : null
+  if (stationId && playing !== null) {
+    const presenceData: PresenceData = {
+      type: ActivityType.Listening,
+      largeImageKey: LOGO,
+      largeImageText: 'radiko',
+    }
+    loadStation(stationId)
+    const station = stations.get(stationId)
+    const stationName = station?.name ?? stationId
+    const program = timefreeTime
+      ? station?.programs.find(p => p.ft === timefreeTime) ?? findProgram(station, toUnix(timefreeTime))
+      : findProgram(station, Math.floor(Date.now() / 1000))
+
+    if (showProgram && program?.title) {
+      presenceData.details = cut(program.title)
+      presenceData.state = cut(program.pfm ? `${stationName}｜${program.pfm}` : stationName)
     }
     else {
-      // If pause
-      if (codeChannel !== '___PAUSED___') {
-        radioStation = '___PAUSED___'
-        startTimeStamp = Date.now()
-      }
-
-      presenceData.details = 'Paused.'
-      presenceData.state = `${codeChannel} channel.`
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = strings.pause
+      presenceData.details = stationName
+      presenceData.state = timefreeTime ? 'タイムフリー' : 'ライブで聴いています'
     }
+    if (timefreeTime && program)
+      presenceData.largeImageText = `タイムフリー：${formatDate(program.ft)} 放送`
+    if (showImage && program?.img)
+      presenceData.largeImageKey = program.img
+    if (!playing) {
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = '一時停止中'
+    }
+    else if (timefreeTime) {
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = '再生中'
+    }
+    else {
+      presenceData.smallImageKey = Assets.Live
+      presenceData.smallImageText = 'ライブ'
+    }
+
+    if (playing && isTimeVisible) {
+      if (!timefreeTime && program) {
+        presenceData.startTimestamp = toUnix(program.ft)
+        presenceData.endTimestamp = toUnix(program.to)
+      }
+      else if (timefreeTime && program) {
+        // radiko の音声は <audio> を通らないので、再生バーの経過時間 (例: 00:12:34) を読む
+        const elapsed = readElapsed()
+        if (elapsed !== null) {
+          const now = Math.floor(Date.now() / 1000)
+          presenceData.startTimestamp = now - elapsed
+          presenceData.endTimestamp = now - elapsed + (toUnix(program.to) - toUnix(program.ft))
+        }
+      }
+    }
+    if (showButtons) {
+      presenceData.buttons = timefreeTime
+        ? [{ label: 'タイムフリーで聴く', url: `https://radiko.jp/#!/ts/${stationId}/${timefreeTime}` }]
+        : [{ label: `${cut(stationName, 20)} を聴く`, url: `https://radiko.jp/#!/live/${stationId}` }]
+    }
+    presence.setActivity(presenceData)
+    return
+  }
+
+  const presenceData: PresenceData = {
+    largeImageKey: LOGO,
+    startTimestamp: browsingTimestamp,
+    smallImageKey: BROWSING_ICON,
+    smallImageText: 'ブラウジング中',
+  }
+  if (hash.startsWith('#!/search')) {
+    presenceData.details = '番組を検索しています'
+    presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageText = '検索中'
+  }
+  else if (hash.startsWith('#!/timeshift') || hash.startsWith('#!/ts')) {
+    presenceData.details = 'タイムフリーの番組を探しています'
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.smallImageText = 'タイムフリー'
+  }
+  else if (hash.startsWith('#!/timetable') || hash.startsWith('#!/live')) {
+    presenceData.details = '番組表を見ています'
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.smallImageText = '番組表'
+  }
+  else if (hash.startsWith('#!/mypage')) {
+    presenceData.details = 'マイページを見ています'
   }
   else {
-    // Idling state
-    presenceData.details = 'Idling'
-    presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/0.png'
-    presenceData.smallImageText = strings.browsing
+    presenceData.details = '聴く番組を選んでいます'
   }
 
   presence.setActivity(presenceData)

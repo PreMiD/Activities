@@ -1,0 +1,14 @@
+{
+  "crazygames.playAGame": {
+    "description": "Display when the user is playing a game",
+    "message": "Playing a game"
+  },
+  "crazygames.viewAllTags": {
+    "description": "Display when the user is viewing all tags",
+    "message": "Viewing all tags"
+  },
+  "crazygames.viewGameTag": {
+    "description": "Display when the user is viewing a game tag",
+    "message": "Viewing game tag:"
+  }
+}

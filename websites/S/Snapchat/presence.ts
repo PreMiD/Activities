@@ -38,5 +38,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details && window.location.pathname.split('/')[1])
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

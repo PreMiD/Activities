@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Chihiro Fujisaki",
@@ -9,12 +9,9 @@
   "description": {
     "en": "picoCTF is a free computer security education program with original content in a capture-the-flag format."
   },
-  "url": [
-    "picoctf.org",
-    "play.picoctf.org"
-  ],
+  "url": "picoctf.org",
   "regExp": "^https?[:][/][/](play[.])?picoctf[.]org[/]",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/picoCTF/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/picoCTF/assets/thumbnail.png",
   "color": "#9b1e33",

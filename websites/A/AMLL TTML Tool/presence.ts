@@ -8,229 +8,164 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AMLL%20TTML%20Tool/assets/logo.png',
 }
 
+interface PresenceSnapshot {
+  version: 1
+  mode: 'edit' | 'sync' | 'preview'
+  title: string
+  artist: string
+  currentLine: number | null
+  totalLines: number
+  playing: boolean
+  positionSeconds: number
+  durationSeconds: number
+  playbackRate: number
+  projectElapsedSeconds?: number
+}
+
 const strings = presence.getStrings({
   playing: 'general.playing',
   paused: 'general.paused',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+const modeLabels: Record<PresenceSnapshot['mode'], string> = {
+  edit: 'Editing',
+  sync: 'Syncing',
+  preview: 'Previewing',
+}
 
-async function updatePresence() {
+const truncateDiscordText = (value: string) => [...value].slice(0, 128).join('')
+
+function readSnapshot(): PresenceSnapshot | null {
+  const content = document.querySelector<HTMLMetaElement>(
+    'meta[name="amll-discord-presence"]',
+  )?.content
+  if (!content)
+    return null
+
+  try {
+    const snapshot = JSON.parse(content) as PresenceSnapshot
+    if (snapshot.version !== 1 || !(snapshot.mode in modeLabels))
+      return null
+    return snapshot
+  }
+  catch {
+    return null
+  }
+}
+
+function parseDisplayedTime(value: string): number {
+  return value.split(':').reduce((total, part) => total * 60 + (Number.parseFloat(part) || 0), 0)
+}
+
+function readLegacySnapshot(): PresenceSnapshot {
+  const modeControl = [...document.querySelectorAll('.rt-SegmentedControlRoot')]
+    .find(control => control.querySelectorAll('.rt-SegmentedControlItem').length === 3)
+  const modeItems = [...(modeControl?.querySelectorAll('.rt-SegmentedControlItem') ?? [])]
+  const activeModeIndex = modeItems.findIndex(item =>
+    item.getAttribute('aria-checked') === 'true'
+    || item.getAttribute('data-state') === 'on',
+  )
+  const mode: PresenceSnapshot['mode'] = activeModeIndex === 1
+    ? 'sync'
+    : activeModeIndex === 2
+      ? 'preview'
+      : 'edit'
+
+  const projectButton = [...document.querySelectorAll<HTMLButtonElement>('button')]
+    .find(button => /\.(?:ttml|lrc|txt)\b/i.test(button.textContent ?? ''))
+  const title = (projectButton?.textContent ?? '')
+    .trim()
+    .replace(/\.(?:ttml|lrc|txt)\s*$/i, '')
+
+  const renderedLines = [...document.querySelectorAll<HTMLElement>('[data-lyric-line-id]')]
+  const uniqueLineIds = new Set(renderedLines.map(line => line.dataset.lyricLineId).filter(Boolean))
+  const selectedLine = document.querySelector<HTMLElement>(
+    '[class*="_selected_"] [data-lyric-line-id], [class*="_selected_"][data-lyric-line-id]',
+  )
+  const selectedId = selectedLine?.dataset.lyricLineId
+  const selectedIndex = selectedId ? [...uniqueLineIds].indexOf(selectedId) : -1
+  const legacySelectedIndex = Number.parseInt(
+    document.querySelector('div[class*="_selected_"]')?.firstChild?.textContent ?? '',
+  )
+  const totalLines = uniqueLineIds.size || document.querySelectorAll(
+    'div[class*="lyricLine_"], div[class*="lyricLineContainer"]',
+  ).length
+
+  const timeLabels = [...document.querySelectorAll<HTMLElement>('.rt-Text')]
+    .map(element => element.textContent?.trim() ?? '')
+    .filter(value => /^(?:\d+:)?\d+:\d+(?:\.\d+)?$/.test(value))
+  const positionSeconds = parseDisplayedTime(timeLabels[0] ?? '0:00')
+  const durationSeconds = parseDisplayedTime(timeLabels.at(-1) ?? '0:00')
+  const playPauseButton = [...document.querySelectorAll<HTMLButtonElement>('button.rt-IconButton')]
+    .find((button) => {
+      const path = button.querySelector('svg path')?.getAttribute('d')
+      return path?.startsWith('M17.22') || path?.startsWith('M5 2')
+    })
+  const playing = playPauseButton
+    ?.querySelector('svg path')
+    ?.getAttribute('d')
+    ?.startsWith('M5 2') ?? false
+
+  return {
+    version: 1,
+    mode,
+    title,
+    artist: '',
+    currentLine: selectedIndex >= 0
+      ? selectedIndex + 1
+      : Number.isNaN(legacySelectedIndex) ? null : legacySelectedIndex,
+    totalLines,
+    playing,
+    positionSeconds,
+    durationSeconds,
+    playbackRate: 1,
+  }
+}
+
+presence.on('UpdateData', async () => {
+  // The fork publishes a stable contract. The upstream/base editor does not,
+  // so only it falls back to the isolated DOM compatibility adapter.
+  const bridgeSnapshot = readSnapshot()
+  const snapshot = bridgeSnapshot ?? readLegacySnapshot()
   const currentStrings = await strings
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
     largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp,
+    largeImageText: 'AMLL TTML Tool',
   }
 
-  // 1. Determine Mode (Edit / Sync / Preview)
-  let modeAction = 'Editing'
-  const modeButtons = Array.from(document.querySelectorAll('.rt-SegmentedControlItem'))
-  const activeIndex = modeButtons.findIndex(btn =>
-    btn.getAttribute('aria-checked') === 'true'
-    || btn.getAttribute('data-state') === 'on',
-  )
+  const subject = snapshot.title || 'Untitled lyrics'
+  const progress = snapshot.currentLine
+    ? `Line ${snapshot.currentLine} of ${snapshot.totalLines}`
+    : snapshot.totalLines > 0
+      ? `${snapshot.totalLines} lines`
+      : 'No lyrics yet'
 
-  if (activeIndex === 1) {
-    modeAction = 'Syncing'
+  presenceData.details = truncateDiscordText(`${modeLabels[snapshot.mode]} ${subject}`)
+  presenceData.state = truncateDiscordText(snapshot.artist
+    ? `${snapshot.artist} • ${progress}`
+    : progress)
+
+  if (snapshot.playing && snapshot.durationSeconds > snapshot.positionSeconds) {
+    presenceData.smallImageKey = Assets.Play
+    presenceData.smallImageText = currentStrings.playing
+    const rate = Math.max(0.01, snapshot.playbackRate)
+    const [start, end] = getTimestamps(
+      snapshot.positionSeconds / rate,
+      snapshot.durationSeconds / rate,
+    )
+    presenceData.startTimestamp = start
+    presenceData.endTimestamp = end
   }
-  else if (activeIndex === 2) {
-    modeAction = 'Previewing'
+  else if (snapshot.durationSeconds > 0) {
+    presenceData.smallImageKey = Assets.Pause
+    presenceData.smallImageText = currentStrings.paused
+    if (snapshot.projectElapsedSeconds)
+      presenceData.startTimestamp = Math.floor(Date.now() / 1000 - snapshot.projectElapsedSeconds)
   }
-  else {
-    modeAction = 'Editing'
-  }
-
-  // 2. Find the current operating filename
-  let filename = 'Untitled'
-  const ghostButtons = document.querySelectorAll('button.rt-variant-ghost.rt-Button, button.rt-Button')
-  for (const btn of Array.from(ghostButtons)) {
-    const text = btn.textContent || ''
-    if (text.includes('.ttml') || text.includes('.lrc') || text.includes('.txt')) {
-      filename = text.trim()
-      break
-    }
-  }
-
-  // 3. Count lines & get current active line
-  let totalLines = 0
-  let currentLineIndex = 0
-  let songTitle = ''
-  let songArtist = ''
-
-  try {
-    const db = await new Promise<IDBDatabase | null>((resolve) => {
-      const req = indexedDB.open('amll-autosave-db')
-      req.onsuccess = _e => resolve((_e.target as any).result)
-      req.onerror = () => resolve(null)
-    })
-
-    if (db) {
-      const storeName = db.objectStoreNames.contains('projects') ? 'projects' : (db.objectStoreNames.contains('autosave') ? 'autosave' : null)
-      if (storeName) {
-        const results = await new Promise<any[]>((resolve) => {
-          try {
-            const tx = db.transaction(storeName, 'readonly')
-            const getReq = tx.objectStore(storeName).getAll()
-            getReq.onsuccess = () => resolve(getReq.result)
-            getReq.onerror = () => resolve([])
-          }
-          catch {
-            resolve([])
-          }
-        })
-
-        if (results && results.length > 0) {
-          results.sort((a, b) => (b.lastModified || b.timestamp || 0) - (a.lastModified || a.timestamp || 0))
-
-          // Try to match current project by name
-          const currentProject = results.find(r => r.name && filename.includes(r.name)) || results[0]
-          const data = currentProject?.latestState || currentProject?.data
-
-          if (data) {
-            totalLines = (data.lyricLines || []).filter((l: any) => !l.isBG).length
-            const metadata = data.metadata || []
-            const titleMeta = metadata.find((m: any) => m.key === 'title')
-            if (titleMeta && titleMeta.value) {
-              songTitle = Array.isArray(titleMeta.value) ? titleMeta.value.join(', ') : titleMeta.value
-            }
-
-            const artistMeta = metadata.find((m: any) => m.key === 'artist')
-            if (artistMeta && artistMeta.value) {
-              songArtist = Array.isArray(artistMeta.value) ? artistMeta.value.join(', ') : artistMeta.value
-            }
-          }
-        }
-      }
-    }
-  }
-  catch {
-    // Ignore IDB errors
+  else if (snapshot.projectElapsedSeconds) {
+    presenceData.startTimestamp = Math.floor(Date.now() / 1000 - snapshot.projectElapsedSeconds)
   }
 
-  // Determine current line index from DOM
-  const selectedLine = document.querySelector('div[class*="_selected_"]')
-  if (selectedLine) {
-    const lineNumText = selectedLine.firstChild?.textContent?.trim()
-    if (lineNumText)
-      currentLineIndex = Number.parseInt(lineNumText)
-  }
-  else {
-    // Preview mode: Look for the active line
-    const activeLine = document.querySelector('div[class*="_lineActive_"]')
-    if (activeLine) {
-      const lineGroup = activeLine.closest('[class*="_lineGroup_"]')
-      if (lineGroup && lineGroup.parentElement) {
-        const siblings = Array.from(lineGroup.parentElement.children)
-        currentLineIndex = siblings.indexOf(lineGroup) + 1
-      }
-      else {
-        const siblings = Array.from(activeLine.parentElement?.children || [])
-        currentLineIndex = siblings.indexOf(activeLine) + 1
-      }
-    }
-  }
-
-  if (totalLines === 0) {
-    totalLines = document.querySelectorAll('div[class*="lyricLine_"], div[class*="lyricLineContainer"]').length
-  }
-
-  // Setting details and state
-  if (songTitle || songArtist) {
-    const trackInfo = [songTitle, songArtist].filter(Boolean).join(' - ')
-    presenceData.details = `Listening to ${trackInfo}`
-    filename = `[${modeAction}] ${filename}`
-  }
-  else {
-    presenceData.details = `${modeAction} lyrics`
-  }
-
-  let stateStr = filename
-  if (totalLines > 0 && currentLineIndex > 0) {
-    stateStr += ` | Line ${currentLineIndex} out of ${totalLines}`
-  }
-  else if (totalLines > 0) {
-    stateStr += ` | ${totalLines} lines total`
-  }
-  presenceData.state = stateStr
-  presenceData.largeImageText = 'AMLL TTML Tool'
-
-  // 4. Audio playback status
-  const timeLabels = Array.from(document.querySelectorAll('.rt-Text')).filter(el =>
-    /^(?:\d+:)?\d+:\d+(?:\.\d+)?$/.test((el.textContent || '').trim()),
-  )
-
-  const playPauseBtn = Array.from(document.querySelectorAll('button.rt-IconButton')).find((btn) => {
-    const d = btn.querySelector('svg path')?.getAttribute('d')
-    return d?.startsWith('M17.22') || d?.startsWith('M5 2')
-  })
-
-  if (timeLabels.length >= 2 && playPauseBtn) {
-    const parseTime = (str: string) => {
-      const parts = str.split(':').map(v => Number.parseFloat(v) || 0)
-      if (parts.length === 3) {
-        const [h = 0, m = 0, s = 0] = parts
-        return (h * 3600) + (m * 60) + s
-      }
-      if (parts.length === 2) {
-        const [m = 0, s = 0] = parts
-        return (m * 60) + s
-      }
-      return parts[0] || 0
-    }
-
-    const currentTime = parseTime(timeLabels[0]?.textContent || '0:00')
-    const duration = parseTime(timeLabels[timeLabels.length - 1]?.textContent || '0:00')
-
-    const path = playPauseBtn.querySelector('svg path')?.getAttribute('d')
-    const isPlaying = path?.startsWith('M5 2')
-
-    if (isPlaying && duration > 0) {
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = currentStrings.playing
-
-      // Use the native PreMiD helper for timestamps
-      const [start, end] = getTimestamps(currentTime, duration)
-      presenceData.startTimestamp = start
-      presenceData.endTimestamp = end
-    }
-    else if (!isPlaying && duration > 0) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = currentStrings.paused
-      delete presenceData.startTimestamp
-    }
-  }
-  else {
-    const audioEl = document.querySelector('audio')
-    if (audioEl && audioEl.duration > 0 && !audioEl.paused) {
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = currentStrings.playing
-
-      const [start, end] = getTimestamps(audioEl.currentTime, audioEl.duration)
-      presenceData.startTimestamp = start
-      presenceData.endTimestamp = end
-    }
-    else if (audioEl && audioEl.duration > 0 && audioEl.paused) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = currentStrings.paused
-      delete presenceData.startTimestamp
-    }
-  }
-
-  if (presenceData.state) {
-    presence.setActivity(presenceData)
-  }
-  else {
-    presence.clearActivity()
-  }
-}
-
-presence.on('UpdateData', updatePresence)
-
-// Manual trigger for responsiveness
-document.addEventListener('click', () => setTimeout(updatePresence, 100))
-document.addEventListener('keydown', (e) => {
-  if ([' ', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
-    setTimeout(updatePresence, 100)
-  }
+  presence.setActivity(presenceData)
 })

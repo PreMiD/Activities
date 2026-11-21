@@ -15,6 +15,13 @@ const strings = presence.getStrings({
   buttonViewShow: 'general.buttonViewShow',
 })
 
+// Retire le suffixe « — Bourges Télévision » / « - Bourges Télévision » du titre de l'onglet
+function getPageTitle(): string | undefined {
+  return document.title
+    .replace(/\s[—-]\s*Bourges Télévision$/, '')
+    .trim() || undefined
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/Bourges%20T%C3%A9l%C3%A9vision/assets/logo.png',
@@ -32,9 +39,8 @@ presence.on('UpdateData', async () => {
   }
   // Page : Regard un replay en cours de lecture  /replay/watch/*
   else if (pathname.startsWith('/replay/watch/')) {
-    const episodeTitle = document.querySelector<HTMLElement>(
-      'h1[data-v-24a19c48]',
-    )?.textContent?.trim()
+    const episodeTitle = document.querySelector<HTMLElement>('h1')?.textContent?.trim()
+      || getPageTitle()?.replace(/^Replay\s-\s/, '')
 
     presenceData.details = (await strings).watching
     presenceData.state = episodeTitle ?? 'Un épisode en replay'
@@ -60,21 +66,23 @@ presence.on('UpdateData', async () => {
       ? (await strings).paused
       : (await strings).watching
 
-    presenceData.buttons = [
-      {
-        label: (await strings).buttonWatchVideo,
-        url: href,
-      },
-    ]
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: (await strings).buttonWatchVideo,
+          url: href,
+        },
+      ]
+    }
   }
   // Page : Collection / émission  /replay/collection/*
   else if (pathname.startsWith('/replay/collection/')) {
     const showTitle = document.querySelector<HTMLElement>(
-      'h1.text-4xl',
+      'h1',
     )?.textContent?.trim()
 
     presenceData.details = (await strings).view
-    presenceData.state = showTitle ?? 'Une émission'
+    presenceData.state = showTitle || 'Une émission'
 
     if (showButtons) {
       presenceData.buttons = [
@@ -88,17 +96,20 @@ presence.on('UpdateData', async () => {
   // Page : Tous les replays  /replay/*  (liste, recent, catégorie…)
   else if (pathname.startsWith('/replay')) {
     presenceData.details = (await strings).browse
-    presenceData.state = 'Catalogue Replay'
+    presenceData.state = document.querySelector<HTMLElement>('h1')?.textContent?.trim()
+      || 'Catalogue Replay'
   }
   // Page : Direct
   else if (pathname.startsWith('/direct')) {
+    const pageText = document.body.textContent ?? ''
+    const isLoading = pageText.includes('Chargement du direct')
     const isOffline = Array.from(document.querySelectorAll('h2')).some(el =>
       el.textContent?.includes('Nous ne diffusons pas'),
     )
 
-    if (isOffline) {
+    if (isLoading || isOffline) {
       presenceData.details = (await strings).view
-      presenceData.state = 'Direct (Hors ligne)'
+      presenceData.state = isOffline ? 'Direct (Hors ligne)' : 'Le direct'
     }
     else {
       presenceData.details = (await strings).watching
@@ -123,11 +134,15 @@ presence.on('UpdateData', async () => {
       }
     }
   }
-  // Toute autre page (la-chaine, programmation…)
-  else {
-    const pageTitle = document.querySelector('title')?.textContent?.trim()
+  // Page : La chaîne (titre d'onglet non exploitable)
+  else if (pathname.startsWith('/la-chaine')) {
     presenceData.details = (await strings).view
-    presenceData.state = pageTitle ?? 'bourgestelevision.fr'
+    presenceData.state = 'La chaîne'
+  }
+  // Toute autre page (programmation, mentions légales, CGU…)
+  else {
+    presenceData.details = (await strings).view
+    presenceData.state = getPageTitle() ?? 'bourgestelevision.fr'
   }
 
   presence.setActivity(presenceData)

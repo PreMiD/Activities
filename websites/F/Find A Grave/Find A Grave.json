@@ -6,5 +6,33 @@
   "find_a_grave.browsingCemeteries": {
     "description": "When looking at a cemetery page",
     "message": "Browsing Cemeteries"
+  },
+  "find_a_grave.recentlyAdded": {
+    "description": "When looking at recently added memorials",
+    "message": "Viewing Recently Added Memorials"
+  },
+  "find_a_grave.famousMemorials": {
+    "description": "When browsing famous memorials",
+    "message": "Browsing Famous Memorials"
+  },
+  "find_a_grave.newListings": {
+    "description": "When browsing new listings",
+    "message": "Browsing New Listings"
+  },
+  "find_a_grave.necrology": {
+    "description": "When viewing necrology",
+    "message": "Viewing Necrology"
+  },
+  "find_a_grave.interestingMonument": {
+    "description": "When viewing an interesting monument",
+    "message": "Viewing Interesting Monument"
+  },
+  "find_a_grave.interestingEpitaph": {
+    "description": "When viewing an interesting epitaph",
+    "message": "Viewing Interesting Epitaph"
+  },
+  "find_a_grave.contribute": {
+    "description": "When looking at the contribute page",
+    "message": "Contributing"
   }
 }

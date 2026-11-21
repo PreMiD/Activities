@@ -1,16 +1,7 @@
-enum PresenceClients {
-  X = '802958757909889054',
-  Twitter = '1172850898624581652',
-}
-
-let presence = new Presence({
-  clientId: PresenceClients.X,
+const presence = new Presence({
+  clientId: '802958757909889054',
 })
-let twitterCheck: boolean
 
-const presences: { [key in PresenceClients]?: Presence } = {
-  [PresenceClients.X]: presence,
-}
 function capitalize(text: string): string {
   return text
     .replace(/[[{(_)}\]]/g, ' ')
@@ -19,19 +10,6 @@ function capitalize(text: string): string {
       return str.charAt(0).toUpperCase() + str.slice(1)
     })
     .join(' ')
-}
-
-function setClient(clientId: PresenceClients) {
-  presence.clearActivity()
-  if (presences[clientId]) {
-    presence = presences[clientId]
-    presence.setActivity()
-  }
-  else {
-    presence = new Presence({ clientId })
-    presences[clientId] = presence
-  }
-  presence.info('Switched presence client!')
 }
 
 function stripText(element: HTMLElement, id = 'None', log = true): string | null {
@@ -91,15 +69,6 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('time'),
     presence.getSetting<boolean>('twitter'),
   ])
-
-  if (!twitter && twitterCheck !== twitter) {
-    twitterCheck = twitter
-    setClient(PresenceClients.X)
-  }
-  else if (twitterCheck !== twitter) {
-    twitterCheck = twitter
-    setClient(PresenceClients.Twitter)
-  }
 
   if (oldLang !== newLang || !strings) {
     oldLang = newLang
@@ -195,11 +164,14 @@ presence.on('UpdateData', async () => {
   }
 
   const presenceData: PresenceData = {
+    name: twitter
+      ? 'Twitter'
+      : 'X.com',
     details: title,
     state: info,
-    largeImageKey: !twitter
-      ? 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/0.png'
-      : 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/1.png',
+    largeImageKey: twitter
+      ? 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/1.png'
+      : 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/0.png',
   }
   if (privacy === 1) {
     delete presenceData.state
