@@ -48,6 +48,7 @@ async function getStrings() {
   })
 }
 let strings: Awaited<ReturnType<typeof getStrings>> | null = null
+let oldLang: string | null = null
 
 function readWatching(): Watching | null {
   const raw = document.querySelector<HTMLMetaElement>('meta[name="phasma-presence"]')?.content
@@ -84,7 +85,12 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('browsing'),
     presence.getSetting<boolean>('privacy'),
   ])
-  strings ??= await getStrings()
+  // reload the translated strings when the language setting changes
+  const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
+  if (oldLang !== newLang || !strings) {
+    oldLang = newLang
+    strings = await getStrings()
+  }
   const { pathname, search, href } = document.location
   const presenceData: PresenceData = {
     type: ActivityType.Watching,

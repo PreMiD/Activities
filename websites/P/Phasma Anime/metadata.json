@@ -23,6 +23,10 @@
   ],
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
       "id": "cover",
       "title": "Show the anime's cover",
       "icon": "fad fa-images",
