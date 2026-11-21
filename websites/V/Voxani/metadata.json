@@ -17,7 +17,7 @@
   },
   "url": "voxani.live",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voxani[.]live[/]",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voxani/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voxani/assets/thumbnail.png",
   "color": "#000000",
@@ -27,6 +27,8 @@
     "video",
     "streaming"
   ],
+  "iframe": true,
+  "iFrameRegExp": "^https://(?:aniembed\\.se/e/[1-9]\\d*/[1-9]\\d*|megaplay\\.buzz/stream/(?:(?:ani|mal)/[1-9]\\d*/[1-9]\\d*(?:\\.\\d+)?|s-2/[1-9]\\d*)/(?:sub|dub))(?:\\?[^#]*)?$",
   "settings": [
     {
       "id": "showPresenceButtons",
