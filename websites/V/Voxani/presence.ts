@@ -110,13 +110,14 @@ let lastPath = ''
 
 const embedPattern = new RegExp(metadata.iFrameRegExp)
 const maxPlaybackAge = 15_000
+const lastFrameSamples = new WeakMap<HTMLIFrameElement, { url: string, documentStartedAt: number, sampledAt: number }>()
 let newestFrameDocument = 0
 let embed: {
   element: HTMLIFrameElement
   url: URL
   episode: string
   direct?: FramePlayback
-  fallback?: FramePlayback
+  fallback?: FramePlayback & { reportsPlaying: boolean }
   anchor?: { sample: FramePlayback, start: number, end: number }
 } | undefined
 
@@ -164,15 +165,15 @@ presence.on('iFrameData', (data: unknown) => {
     return
   }
 
-  if (sample.documentStartedAt === embed.direct?.documentStartedAt) {
-    if (sample.sampledAt <= embed.direct.sampledAt)
-      return
+  // Query-only navigation can reset presence while the same iframe keeps playing.
+  const previous = lastFrameSamples.get(embed.element)
+  if (sample.documentStartedAt < newestFrameDocument || (sample.documentStartedAt === newestFrameDocument
+    && (previous?.documentStartedAt !== sample.documentStartedAt || previous.url !== embed.url.href
+      || sample.sampledAt <= previous.sampledAt))) {
+    return
   }
-  else {
-    if (sample.documentStartedAt <= newestFrameDocument)
-      return
-    newestFrameDocument = sample.documentStartedAt
-  }
+  newestFrameDocument = sample.documentStartedAt
+  lastFrameSamples.set(embed.element, { url: embed.url.href, documentStartedAt: sample.documentStartedAt, sampledAt: sample.sampledAt })
   embed.direct = sample
 })
 
@@ -254,6 +255,7 @@ window.addEventListener('message', (event: MessageEvent<unknown>) => {
     seeks: (previous?.seeks ?? 0) + Number(kind === 'seeked' && (!previous || !isTime(currentTime)
       || Math.abs(currentTime - previous.currentTime) >= 0.75)),
     rate,
+    reportsPlaying: isAniEmbed && (kind === 'play' || kind === 'progress') && timing.paused === false,
   }
 })
 
@@ -273,12 +275,12 @@ function updateEmbedPlayback(element: HTMLIFrameElement, presenceData: PresenceD
 
   const now = Date.now()
   const direct = embed.direct
-  const fallback = embed.fallback
+  const fallback = isFresh(embed.fallback, now) && (!(direct?.paused || direct?.ended) || embed.fallback.sampledAt > direct.sampledAt)
+    ? embed.fallback
+    : undefined
   const sample = isFresh(direct, now) && direct.readyState > 0
-    ? direct
-    : isFresh(fallback, now) && (!(direct?.paused || direct?.ended) || fallback.sampledAt > direct.sampledAt)
-      ? fallback
-      : undefined
+    ? (direct.paused || direct.ended) && fallback?.reportsPlaying ? fallback : direct
+    : fallback
   if (!sample || sample.ended || sample.readyState === 0) {
     embed.anchor = undefined
     return
@@ -289,7 +291,11 @@ function updateEmbedPlayback(element: HTMLIFrameElement, presenceData: PresenceD
     presenceData.smallImageText = 'Paused'
     return
   }
-  if (sample.buffering || sample.rate <= 0)
+  if (sample.buffering) {
+    embed.anchor = undefined
+    return
+  }
+  if (sample.rate <= 0)
     return
 
   presenceData.smallImageKey = Assets.Play
