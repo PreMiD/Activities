@@ -291,12 +291,10 @@ function updateEmbedPlayback(element: HTMLIFrameElement, presenceData: PresenceD
     presenceData.smallImageText = 'Paused'
     return
   }
-  if (sample.buffering) {
+  if (sample.buffering || sample.rate <= 0) {
     embed.anchor = undefined
     return
   }
-  if (sample.rate <= 0)
-    return
 
   presenceData.smallImageKey = Assets.Play
   presenceData.smallImageText = 'Playing'
