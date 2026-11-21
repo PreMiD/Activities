@@ -101,10 +101,10 @@ presence.on('UpdateData', async () => {
       presenceData.details = pageName() || strings.watchingAnime
     }
     else {
-      const episode = `${strings.episode} ${w.episode}${w.total ? ` / ${w.total}` : ''}`
+      const episode = `${strings.episode} ${w.episode}${w.total ? ` / ${w.total}` : ''}${w.dub ? ' · Dub' : ''}`
       presenceData.details = w.season ? `${w.title} · ${strings.season} ${w.season}` : w.title
       presenceData.state = w.playing
-        ? `${episode}${w.dub ? ' · Dub' : ''}`
+        ? episode
         : `${episode} · ${strings.pause} ${clock(w.position)}${w.duration ? ` / ${clock(w.duration)}` : ''}`
       if (showCover && w.poster) {
         presenceData.largeImageKey = w.poster
