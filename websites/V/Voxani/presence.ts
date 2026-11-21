@@ -1,4 +1,6 @@
+import type { FramePlayback } from './iframe.js'
 import { ActivityType, Assets, getTimestamps } from 'premid'
+import metadata from './metadata.json' with { type: 'json' }
 
 const presence = new Presence({
   clientId: '1481368310590210119',
@@ -106,101 +108,210 @@ function cleanTabText(raw: string): string {
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 let lastPath = ''
 
-// ── Embed Player (Player4Me) postMessage Tracking ───────────────────────────
-let embedCurrentTime = 0
-let embedDuration = 0
-let embedIsPlaying = false
-let lastEmbedTimeUpdate = 0
-let embedListenerAttached = false
-let lastEmbedSrc = ''
+const embedPattern = new RegExp(metadata.iFrameRegExp)
+const maxPlaybackAge = 15_000
+let newestFrameDocument = 0
+let embed: {
+  element: HTMLIFrameElement
+  url: URL
+  episode: string
+  direct?: FramePlayback
+  fallback?: FramePlayback
+  anchor?: { sample: FramePlayback, start: number, end: number }
+} | undefined
 
-function resetEmbedState() {
-  embedCurrentTime = 0
-  embedDuration = 0
-  embedIsPlaying = false
-  lastEmbedTimeUpdate = 0
+function getActiveEmbed(): HTMLIFrameElement | undefined {
+  const frames = document.querySelectorAll<HTMLIFrameElement>('.video-player-container iframe[src]')
+  const knownFrames = [...frames].filter(frame => embedPattern.test(frame.src))
+  return knownFrames.length === 1 ? knownFrames[0] : undefined
 }
 
-function parseEmbedMessage(data: unknown): any {
-  if (!data)
-    return null
-  if (typeof data === 'string') {
+function isActiveEmbed(): boolean {
+  return Boolean(embed?.element.isConnected && embed.element.src === embed.url.href
+    && embed.episode === document.location.pathname + document.location.search)
+}
+
+function isTime(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0
+}
+
+function isFresh(sample: FramePlayback | undefined, now: number): sample is FramePlayback {
+  return Boolean(sample && sample.sampledAt <= now && now - sample.sampledAt <= maxPlaybackAge)
+}
+
+presence.on('iFrameData', (data: unknown) => {
+  if (!embed || !isActiveEmbed() || !data || typeof data !== 'object')
+    return
+
+  const sample = data as FramePlayback
+  if (typeof sample.url !== 'string' || !embedPattern.test(sample.url))
+    return
+
+  const url = new URL(sample.url)
+  if (url.origin !== embed.url.origin || url.pathname !== embed.url.pathname
+    || (url.searchParams.get('lang') ?? 'sub') !== (embed.url.searchParams.get('lang') ?? 'sub')) {
+    return
+  }
+
+  if (!isTime(sample.sampledAt) || !isFresh(sample, Date.now())
+    || !isTime(sample.documentStartedAt) || sample.documentStartedAt === 0
+    || Math.floor(sample.documentStartedAt) > sample.sampledAt
+    || !isTime(sample.currentTime) || (sample.duration !== null
+      && (!isTime(sample.duration) || sample.duration === 0 || sample.currentTime > sample.duration + 1))
+    || typeof sample.paused !== 'boolean' || typeof sample.ended !== 'boolean' || typeof sample.buffering !== 'boolean'
+    || !Number.isInteger(sample.readyState) || sample.readyState < 0 || sample.readyState > 4
+    || typeof sample.mediaId !== 'string' || !isTime(sample.seeks) || !isTime(sample.rate)) {
+    return
+  }
+
+  if (sample.documentStartedAt === embed.direct?.documentStartedAt) {
+    if (sample.sampledAt <= embed.direct.sampledAt)
+      return
+  }
+  else {
+    if (sample.documentStartedAt <= newestFrameDocument)
+      return
+    newestFrameDocument = sample.documentStartedAt
+  }
+  embed.direct = sample
+})
+
+window.addEventListener('message', (event: MessageEvent<unknown>) => {
+  if (!embed || !isActiveEmbed() || event.origin !== embed.url.origin || event.source !== embed.element.contentWindow)
+    return
+
+  // Voxani's two providers emit playback events to the containing page.
+  const now = Date.now()
+  let value = event.data
+  const isAniEmbed = embed.url.hostname === 'aniembed.se'
+  if (!isAniEmbed && typeof value === 'string' && value.length <= 2048) {
     try {
-      return JSON.parse(data)
+      value = JSON.parse(value)
     }
     catch {
-      return { event: data }
+      return
     }
   }
-  return typeof data === 'object' ? data : null
-}
-
-function getEmbedEventName(payload: any): string {
-  const nested = typeof payload?.data === 'object' ? payload.data : null
-  return String(
-    payload?.event
-    || payload?.type
-    || payload?.name
-    || payload?.action
-    || payload?.message
-    || payload?.playerStatus
-    || payload?.status
-    || nested?.event
-    || nested?.type
-    || nested?.playerStatus
-    || nested?.status
-    || '',
-  ).toLowerCase()
-}
-
-function getEmbedNumber(payload: any, keys: string[]): number | null {
-  const nested = typeof payload?.data === 'object' ? payload.data : null
-  for (const key of keys) {
-    const value = payload?.[key] ?? nested?.[key]
-    const numberValue = Number(value)
-    if (Number.isFinite(numberValue) && numberValue >= 0)
-      return numberValue
-  }
-  return null
-}
-
-function ensureEmbedListener() {
-  if (embedListenerAttached)
+  if (!value || typeof value !== 'object' || Array.isArray(value))
     return
-  embedListenerAttached = true
 
-  window.addEventListener('message', (event: MessageEvent) => {
-    const payload = parseEmbedMessage(event.data)
-    if (!payload)
+  const message = value as Record<string, unknown>
+  let timing = message
+  let kind = message.event
+  let sampledAt = now
+  let mediaId = 'provider'
+  let rate = 1
+  if (isAniEmbed) {
+    if (message.source !== 'aniembed' || message.version !== 1 || message.type !== 'event'
+      || !message.data || typeof message.data !== 'object') {
+      return
+    }
+
+    timing = message.data as Record<string, unknown>
+    kind = message.name
+    const [, , anime, episode] = embed.url.pathname.split('/')
+    if ((timing.animeId !== anime && timing.animeId !== Number(anime)) || timing.episode !== Number(episode)
+      || !isTime(timing.sentAt) || timing.sentAt > now || now - timing.sentAt > maxPlaybackAge
+      || (timing.language !== 'sub' && timing.language !== 'dub') || typeof timing.paused !== 'boolean'
+      || (timing.providerId != null && (typeof timing.providerId !== 'string' || !/^[a-z0-9_-]{1,48}$/.test(timing.providerId)))) {
+      return
+    }
+    sampledAt = timing.sentAt
+    mediaId = `provider:${timing.language}:${timing.providerId ?? ''}`
+    if (isTime(timing.playbackRate) && timing.playbackRate > 0 && timing.playbackRate <= 16)
+      rate = timing.playbackRate
+  }
+  else if (kind === 'time' || message.type === 'watching-log') {
+    kind = 'progress'
+  }
+
+  const previous = embed.fallback
+  if (previous && sampledAt <= previous.sampledAt)
+    return
+  const ended = kind === 'error' || (isAniEmbed ? kind === 'ended' : kind === 'complete')
+  const loading = isAniEmbed && kind === 'providerchange'
+  const currentTime = isAniEmbed || message.type === 'watching-log' ? timing.currentTime : timing.time
+  const duration = timing.duration
+  if (!ended && !loading
+    && ((isAniEmbed ? !['ready', 'play', 'pause', 'progress', 'seeked'].includes(String(kind)) : kind !== 'progress')
+      || !isTime(currentTime) || !isTime(duration) || duration === 0 || currentTime > duration + 1)) {
+    return
+  }
+  if (previous?.ended && previous.mediaId === mediaId && kind === 'progress')
+    return
+
+  embed.fallback = {
+    url: embed.url.href,
+    documentStartedAt: 0,
+    sampledAt,
+    currentTime: isTime(currentTime) ? currentTime : 0,
+    duration: isTime(duration) && duration > 0 ? duration : null,
+    paused: ended || (isAniEmbed && timing.paused === true),
+    ended,
+    readyState: loading ? 0 : 3,
+    buffering: false,
+    mediaId,
+    seeks: (previous?.seeks ?? 0) + Number(kind === 'seeked' && (!previous || !isTime(currentTime)
+      || Math.abs(currentTime - previous.currentTime) >= 0.75)),
+    rate,
+  }
+})
+
+function updateEmbedPlayback(element: HTMLIFrameElement, presenceData: PresenceData) {
+  const episode = document.location.pathname + document.location.search
+  if (embed?.element !== element || embed.url.href !== element.src || embed.episode !== episode) {
+    embed = undefined
+    const url = new URL(element.src)
+    const [, , id, third, fourth] = url.pathname.split('/')
+    const embedEpisode = url.hostname === 'aniembed.se' ? third : id === 's-2' ? undefined : fourth
+    const requested = new URLSearchParams(document.location.search).get('ep')
+    if (embedEpisode && requested && /^\d+(?:\.\d+)?$/.test(requested) && Number(embedEpisode) !== Number(requested))
       return
 
-    const eventName = getEmbedEventName(payload)
-    const current = getEmbedNumber(payload, ['currentTime', 'current_time', 'current', 'time', 'seconds', 'position'])
-    const total = getEmbedNumber(payload, ['duration', 'durationSeconds', 'duration_seconds', 'total'])
+    embed = { element, url, episode }
+  }
 
-    if (current != null) {
-      if (current > embedCurrentTime + 0.1 || Math.abs(current - embedCurrentTime) > 2) {
-        embedIsPlaying = true
-        lastEmbedTimeUpdate = Date.now()
-      }
-      embedCurrentTime = current
-    }
+  const now = Date.now()
+  const direct = embed.direct
+  const fallback = embed.fallback
+  const sample = isFresh(direct, now) && direct.readyState > 0
+    ? direct
+    : isFresh(fallback, now) && (!(direct?.paused || direct?.ended) || fallback.sampledAt > direct.sampledAt)
+      ? fallback
+      : undefined
+  if (!sample || sample.ended || sample.readyState === 0) {
+    embed.anchor = undefined
+    return
+  }
+  if (sample.paused) {
+    embed.anchor = undefined
+    presenceData.smallImageKey = Assets.Pause
+    presenceData.smallImageText = 'Paused'
+    return
+  }
+  if (sample.buffering || sample.rate <= 0)
+    return
 
-    if (total != null && total > 0) {
-      embedDuration = total
-    }
+  presenceData.smallImageKey = Assets.Play
+  presenceData.smallImageText = 'Playing'
+  const previous = embed.anchor?.sample
+  if (!previous || previous.documentStartedAt !== sample.documentStartedAt || previous.mediaId !== sample.mediaId
+    || previous.seeks !== sample.seeks || previous.rate !== sample.rate
+    || (previous.duration === null) !== (sample.duration === null)
+    || Math.abs((previous.duration ?? 0) - (sample.duration ?? 0)) > 1
+    || Math.abs(sample.currentTime - previous.currentTime - (sample.sampledAt - previous.sampledAt) / 1000 * sample.rate) >= 3) {
+    const position = sample.currentTime / sample.rate + (now - sample.sampledAt) / 1000
+    const [start, end] = getTimestamps(position, (sample.duration ?? 0) / sample.rate)
+    if (!Number.isFinite(start) || start <= 0)
+      return
+    embed.anchor = { sample, start, end }
+  }
 
-    if (['playing', 'play'].includes(eventName)) {
-      embedIsPlaying = true
-      lastEmbedTimeUpdate = Date.now()
-    }
-    else if (['paused', 'pause'].includes(eventName)) {
-      embedIsPlaying = false
-    }
-    else if (['ended', 'end', 'complete', 'completed', 'finish', 'finished'].includes(eventName)) {
-      embedIsPlaying = false
-    }
-  })
+  if (embed.anchor) {
+    presenceData.startTimestamp = embed.anchor.start
+    if (sample.duration !== null && Number.isFinite(embed.anchor.end) && embed.anchor.end > embed.anchor.start)
+      presenceData.endTimestamp = embed.anchor.end
+  }
 }
 
 presence.on('UpdateData', async () => {
@@ -210,7 +321,7 @@ presence.on('UpdateData', async () => {
   // reset timer on SPA navigation
   if (pathname !== lastPath) {
     browsingTimestamp = Math.floor(Date.now() / 1000)
-    resetEmbedState()
+    embed = undefined
     lastPath = pathname
   }
 
@@ -262,11 +373,11 @@ presence.on('UpdateData', async () => {
     }
 
     // playback state
-    // Detect embed source: if no native <video> is present, check for <iframe>
-    const embedIframe = document.querySelector<HTMLIFrameElement>('iframe')
-    const isEmbedSource = !video && Boolean(embedIframe)
+    const embedIframe = getActiveEmbed()
+    if (!embedIframe)
+      embed = undefined
 
-    if (video) {
+    if (video && !embedIframe) {
       if (!video.paused && video.readyState > 0) {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Playing'
@@ -290,51 +401,8 @@ presence.on('UpdateData', async () => {
           presenceData.startTimestamp = Math.floor(Date.now() / 1000) - Math.floor(video.currentTime)
       }
     }
-    else if (isEmbedSource) {
-      ensureEmbedListener()
-
-      const currentSrc = embedIframe?.getAttribute('src') || ''
-      if (currentSrc && currentSrc !== lastEmbedSrc) {
-        resetEmbedState()
-        lastEmbedSrc = currentSrc
-      }
-
-      // Actively poll iframe for fresh getTime / getStatus
-      if (embedIframe?.contentWindow) {
-        try {
-          embedIframe.contentWindow.postMessage({ command: 'getTime' }, '*')
-          embedIframe.contentWindow.postMessage({ command: 'getStatus' }, '*')
-        }
-        catch { /* ignore cross-origin restrictions */ }
-      }
-
-      // If playing status hasn't received a time update in > 4s, treat as paused
-      if (embedIsPlaying && lastEmbedTimeUpdate > 0 && Date.now() - lastEmbedTimeUpdate > 4000) {
-        embedIsPlaying = false
-      }
-
-      if (embedDuration > 0 && embedCurrentTime >= 0) {
-        if (embedIsPlaying) {
-          presenceData.smallImageKey = Assets.Play
-          presenceData.smallImageText = 'Playing'
-          ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-            Math.floor(embedCurrentTime),
-            Math.floor(embedDuration),
-          )
-        }
-        else {
-          presenceData.smallImageKey = Assets.Pause
-          presenceData.smallImageText = 'Paused'
-          if (embedCurrentTime > 0) {
-            presenceData.startTimestamp = Math.floor(Date.now() / 1000) - Math.floor(embedCurrentTime)
-          }
-        }
-      }
-      else {
-        presenceData.smallImageKey = Assets.Play
-        presenceData.smallImageText = 'Streaming'
-        presenceData.startTimestamp = browsingTimestamp
-      }
+    else if (embedIframe) {
+      updateEmbedPlayback(embedIframe, presenceData)
     }
     else {
       // Video not yet loaded
