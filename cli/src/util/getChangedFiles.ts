@@ -1,0 +1,136 @@
+import { execFileSync, execSync } from 'node:child_process'
+import process from 'node:process'
+import { context } from '@actions/github'
+import gitDiffParser from 'gitdiff-parser'
+import isCI from 'is-ci'
+import { exit, info } from './log.js'
+
+export interface ChangedFile {
+  path: string
+  deleted: boolean
+}
+
+export async function getChangedFilesCi(): Promise<ChangedFile[]> {
+  if (!process.env.GITHUB_TOKEN)
+    exit('GITHUB_TOKEN is not set')
+
+  let base: string | undefined
+  let head: string | undefined
+
+  switch (context.eventName) {
+    case 'pull_request':
+    case 'pull_request_review':
+      base = context.payload.pull_request?.base?.sha
+      head = context.payload.pull_request?.head?.sha
+      break
+    case 'push':
+      base = context.payload.before
+      head = context.payload.after
+      break
+  }
+
+  if (!base || !head)
+    exit('No base or head found')
+
+  info(`Getting changed files from ${base} to ${head}`)
+
+  const response = await fetch(`https://github.com/${context.repo.owner}/${context.repo.repo}/compare/${base}...${head}.diff`, {
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+  })
+
+  if (!response.ok)
+    exit(`Could not get the changed files from ${base} to ${head}: ${response.status} ${response.statusText}`)
+
+  const files = gitDiffParser.parse(await response.text())
+  return files.map(file => ({
+    path: file.type === 'delete' ? file.oldPath : file.newPath,
+    deleted: file.type === 'delete',
+  }))
+}
+
+export function getChangedFilesLocal(): ChangedFile[] {
+  const base = execSync('git merge-base main HEAD').toString().trim()
+  const head = execSync('git rev-parse HEAD').toString().trim()
+  const diffOutput = execSync(`git diff --name-status ${base} ${head}`).toString().trim()
+
+  return diffOutput.split('\n').filter(line => line.length > 0).map((line) => {
+    const [status, path] = line.split('\t')
+    return {
+      path,
+      deleted: status === 'D',
+    }
+  })
+}
+
+export function decodeUtf8Escapes(filePath: string): string {
+  filePath = filePath
+    .replace(/"$/, '')
+    .replace(/^"/, '')
+    .replace(/^\//, '')
+
+  const decodedPath = filePath.replace(/\\(\d{3})/g, (_, octalCode) =>
+    String.fromCharCode(Number.parseInt(octalCode, 8)))
+
+  const bytes = new Uint8Array([...decodedPath].map(char => char.charCodeAt(0)))
+  return new TextDecoder('utf-8').decode(bytes)
+}
+
+/** The commit the current change is compared against, or undefined when there is none to compare with. */
+export function getBaseSha(): string | undefined {
+  if (isCI) {
+    switch (context.eventName) {
+      case 'pull_request':
+      case 'pull_request_review':
+        return context.payload.pull_request?.base?.sha
+      case 'merge_group':
+        return context.payload.merge_group?.base_sha
+      case 'push':
+        return /^0+$/.test(context.payload.before ?? '') ? undefined : context.payload.before
+      default:
+        return undefined
+    }
+  }
+
+  try {
+    return execFileSync('git', ['merge-base', 'main', 'HEAD'], { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim() || undefined
+  }
+  catch {
+    return undefined
+  }
+}
+
+/** Files that differ between `base` and the working tree, or undefined when `base` is not available locally. */
+export function getChangedPathsSince(base: string, path: string): string[] | undefined {
+  try {
+    return execFileSync('git', ['diff', '--name-only', '--no-renames', base, '--', path], { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .split('\n')
+      .filter(line => line.length > 0)
+  }
+  catch {
+    return undefined
+  }
+}
+
+export function readFileAtRef(ref: string, path: string): string | undefined {
+  try {
+    return execFileSync('git', ['show', `${ref}:${path}`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()
+  }
+  catch {
+    return undefined
+  }
+}
+
+export function listFilesAtRef(ref: string, path: string): string[] | undefined {
+  try {
+    return execFileSync('git', ['ls-tree', '-r', '--name-only', ref, '--', path], { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .split('\n')
+      .filter(line => line.length > 0)
+  }
+  catch {
+    return undefined
+  }
+}

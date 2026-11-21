@@ -12,6 +12,8 @@ The PreMiD API consists of several key components:
 - [Slideshow Class](/v1/api/slideshow): A class for creating slideshows that alternate between different presence data
 - [iFrame Class](/v1/api/iframe): A class for interacting with iframes
 - [Utility Functions](/v1/api/utility-functions): Helper functions for common tasks
+- [SyncScriptContext](/v1/api/sync-script-context): The API for Watch Party sync scripts
+- [Sync Script Types](/v1/api/sync-script-types): TypeScript interfaces for sync scripts
 
 ## Getting Started
 

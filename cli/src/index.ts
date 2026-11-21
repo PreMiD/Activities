@@ -8,6 +8,7 @@ import { checkDns } from './commands/checkDns.js'
 import { mcp } from './commands/mcp.js'
 import { newActivity } from './commands/new.js'
 import { release } from './commands/release.js'
+import { syncBuild, syncDev, syncKeygen, syncNew, syncRelease } from './commands/sync.js'
 import { test } from './commands/test.js'
 import { updateAssets } from './commands/updateAssets.js'
 import { getCliPackageJson, getPackageJson } from './util/getPackageJson.js'
@@ -60,6 +61,32 @@ cli
   .option('--changed', 'Check only changed activities')
   .option('--fix', 'Remove invalid URLs and activities')
   .action(checkDns)
+
+cli
+  .command('sync-new [script]', 'Create a new sync script')
+  .action(syncNew)
+
+cli
+  .command('sync-dev [script]', 'Develop a sync script with hot-reload')
+  .action(syncDev)
+
+cli
+  .command('sync-build [script]', 'Build a sync script')
+  .option('--all', 'Build all sync scripts')
+  .option('--kill', 'Kill on error', { default: true })
+  .option('--zip', 'Zip the sync script')
+  .option('--validate', 'Also check that every changed script raised its version over the base branch')
+  .action(syncBuild)
+
+cli
+  .command('sync-release [script]', 'Build and release a sync script to the API')
+  .option('--changed', 'Release the sync scripts changed since the base commit and delete removed ones')
+  .option('--all', 'Release every sync script')
+  .action(syncRelease)
+
+cli
+  .command('sync-keygen', 'Print a new Ed25519 key pair for signing sync scripts')
+  .action(syncKeygen)
 
 cli
   .command('update-assets', 'Update assets for all activities in CI')

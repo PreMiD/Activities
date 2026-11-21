@@ -949,4 +949,150 @@ declare global {
     UpdateData: []
   }
 
+  // Sync Script types
+
+  interface SyncScriptPlaybackReport {
+    playing: boolean
+    currentTime: number
+    duration: number
+    playbackRate?: number
+  }
+
+  interface SyncScriptSyncCommand {
+    action: 'play' | 'pause' | 'seek' | 'rate'
+    currentTime?: number
+    playbackRate?: number
+    capturedAt?: number
+    capturedAtServer?: number
+    serverTs?: number
+    clockOffset?: number
+    isHeartbeat?: boolean
+  }
+
+  interface SyncScriptPageInfo {
+    title?: string
+    subtitle?: string
+    thumbnail?: string
+    /** Ignored by extensions that predate it. */
+    type?: 'video' | 'music' | 'live' | 'podcast'
+    /** Length in seconds. Ignored by extensions that predate it. */
+    duration?: number
+  }
+
+  interface SyncScriptFeatures {
+    video?: boolean
+    cursor?: boolean
+    scroll?: boolean
+    /**
+     * `false` keeps PreMiD's generic video detection off this site while the party tab stays on it, even after the script releases or stops.
+     * Ignored by extensions that predate it.
+     */
+    fallback?: boolean
+  }
+
+  interface SyncScriptRuntime {
+    version: string
+    capabilities: string[]
+  }
+
+  interface SyncScriptTakeControlOptions {
+    onPlay: (timeSeconds: number) => void
+    onPause: (timeSeconds: number) => void
+    onSeek: (timeSeconds: number) => void
+    onRate?: (playbackRate: number) => void
+    pauseAfterSeek?: boolean | number
+  }
+
+  interface AutoVideoHandle {
+    detach: () => void
+    onSyncCommand: (handler: (cmd: SyncScriptSyncCommand) => void) => () => void
+    reportAd: (isInAd: boolean) => void
+    reportBuffering: (isBuffering: boolean) => void
+  }
+
+  interface ManualVideoHandle {
+    reportPlayback: (status: SyncScriptPlaybackReport) => void
+    onSyncCommand: (handler: (cmd: SyncScriptSyncCommand) => void) => () => void
+    reportAd: (isInAd: boolean) => void
+    reportBuffering: (isBuffering: boolean) => void
+    release: () => void
+  }
+
+  interface SyncScriptVideoAPI {
+    attach: (element: HTMLMediaElement | string) => AutoVideoHandle
+    takeControl: (options: SyncScriptTakeControlOptions) => ManualVideoHandle
+    reportAd: (isInAd: boolean) => void
+    reportBuffering: (isBuffering: boolean) => void
+  }
+
+  interface MessagingNamespace {
+    send: (key: string, data: unknown) => void
+    request: (key: string, data: unknown) => Promise<unknown>
+    onMessage: (key: string, handler: (data: unknown) => void) => () => void
+    onRequest: (key: string, handler: (data: unknown) => unknown | Promise<unknown>) => () => void
+  }
+
+  interface PartyState {
+    readonly role: 'controller' | 'follower'
+    readonly paused: boolean
+    readonly active: boolean
+    readonly isHost: boolean
+    onRoleChange: (handler: (role: 'controller' | 'follower') => void) => () => void
+    /** Missing on extensions that predate it, so check it before use. */
+    onHostChange?: (handler: (isHost: boolean) => void) => () => void
+    onPauseChange: (handler: (paused: boolean) => void) => () => void
+    onActiveChange: (handler: (active: boolean) => void) => () => void
+  }
+
+  interface SyncScriptContext {
+    /** Missing on extensions that predate it, so check it before use. */
+    readonly runtime?: SyncScriptRuntime
+
+    features: (features: SyncScriptFeatures) => void
+
+    video: SyncScriptVideoAPI
+
+    setPageInfo: (info: SyncScriptPageInfo) => void
+
+    reportBlocked: (reason: string) => void
+    reportUnblocked: () => void
+
+    sendCustomData: (key: string, data: unknown) => void
+    onCustomData: (key: string, handler: (data: unknown) => void) => () => void
+
+    mainworld: MessagingNamespace
+
+    party: PartyState
+
+    /** Rate-limited; shows in the page's console, and in the `pmd sync-dev` terminal while the script is under development. Missing on extensions that predate it, so check it before use. */
+    log?: (...args: unknown[]) => void
+  }
+
+  interface SyncScriptDefinition {
+    setup: (ctx: SyncScriptContext) => (() => void) | void
+    onNavigate?: (ctx: SyncScriptContext, url: string) => void
+  }
+
+  interface SyncScriptHandle {
+    destroy: () => void
+  }
+
+  interface SyncMainworldContext {
+    content: MessagingNamespace
+  }
+
+  interface SyncMainworldScriptDefinition {
+    setup: (ctx: SyncMainworldContext) => (() => void) | void
+  }
+
+  const SyncScript: {
+    register: (definition: SyncScriptDefinition) => SyncScriptHandle
+    /** Missing on extensions that predate it, so check it before use. */
+    readonly runtime?: SyncScriptRuntime
+  }
+
+  const SyncMainworldScript: {
+    register: (definition: SyncMainworldScriptDefinition) => SyncScriptHandle
+  }
+
 }

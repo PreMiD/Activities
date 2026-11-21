@@ -63,6 +63,10 @@ Useful options:
 
 - `--validate`: Run additional validation checks for metadata, images, etc.
 
+### Watch Party Sync Scripts
+
+Sync scripts in `syncScripts/` keep videos in sync during a Watch Party. They have their own commands (`npx pmd sync-new`, `sync-dev`, `sync-build`) and are released automatically when merged. See the [sync script guide](https://docs.premid.app/v1/guide/watch-party-sync-scripts) to get started.
+
 ## Testing Your Activity
 
 To test your Activity:

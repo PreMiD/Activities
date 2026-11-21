@@ -112,6 +112,17 @@ describe('webSocketServer test RPC', () => {
     await rejection
   })
 
+  it('tells message listeners once the last extension disconnects', async () => {
+    const received: unknown[] = []
+    server.onMessage(message => received.push(message))
+    const client = await connectClient()
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+
+    client.terminate()
+
+    await vi.waitFor(() => expect(received).toEqual([{ type: 'disconnected' }]))
+  })
+
   it('send recovers after a run without a dist folder', async () => {
     const cwd = await mkdtemp(join(tmpdir(), 'pmd-ws-'))
     await server.close()
@@ -135,6 +146,40 @@ describe('webSocketServer test RPC', () => {
     await vi.waitFor(() => expect(server.isConnected).toBe(true))
 
     await expect(server.request('hello', {}, 20)).rejects.toThrow('Timed out waiting for the extension (hello)')
+  })
+
+  it('onMessage hears every other message, and a throwing listener changes nothing', async () => {
+    const client = await connectClient()
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+    const heard: unknown[] = []
+    server.onMessage(() => {
+      throw new Error('listener')
+    })
+    const unsubscribe = server.onMessage(message => heard.push(message))
+
+    client.send('received')
+    client.send(JSON.stringify({ type: 'syncScriptLog', service: 'YouTube', tabId: 1, level: 'log', args: ['hi'] }))
+    await vi.waitFor(() => expect(heard).toHaveLength(1))
+    unsubscribe()
+    client.send(JSON.stringify({ type: 'syncScriptReport', kind: 'status' }))
+    await new Promise(resolve => setTimeout(resolve, 20))
+
+    expect(heard).toEqual([{ type: 'syncScriptLog', service: 'YouTube', tabId: 1, level: 'log', args: ['hi'] }])
+    expect(server.isConnected).toBe(true)
+  })
+
+  it('broadcast sends a message to every connected browser', async () => {
+    const first = await connectClient()
+    const second = await connectClient()
+    await vi.waitFor(() => expect([...server.server.clients].length).toBe(2))
+    const received = [first, second].map(client => new Promise(resolve => client.once('message', raw => resolve(parse(raw)))))
+
+    server.broadcast({ type: 'syncScriptSolo', command: 'follower' })
+
+    expect(await Promise.all(received)).toEqual([
+      { type: 'syncScriptSolo', command: 'follower' },
+      { type: 'syncScriptSolo', command: 'follower' },
+    ])
   })
 
   it('onTestEvent receives events and can unsubscribe', async () => {

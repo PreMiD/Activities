@@ -94,15 +94,19 @@ export async function release() {
   let successCount = 0
 
   for (const activity of changed) {
-    await buildActivity({
+    const built = await buildActivity({
       activity: activity.metadata,
       path: activity.folder,
       versionized: activity.versionized,
-      kill: true,
+      kill: false,
       validate: false,
       watch: false,
       zip: false,
     })
+    if (!built) {
+      core.setFailed(`Failed to build activity ${activity.metadata.service}`)
+      continue
+    }
 
     const folderLetter = encodeURIComponent(getFolderLetter(activity.metadata.service))
     const folderName = sanitazeFolderName(activity.metadata.service)
