@@ -1,0 +1,70 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1405603924001558730",
+    "name": "LucasB25"
+  },
+  "service": "StaffMeets",
+  "description": {
+    "en": "Collaborative recruitment platform and applicant tracking system (ATS) for Discord, gaming communities, and creative projects.",
+    "fr": "Plateforme de recrutement collaborative et ATS pour Discord, communautés de jeu et projets créatifs."
+  },
+  "url": "staffmeets.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*staffmeets[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/RUDOez4.png",
+  "thumbnail": "https://i.imgur.com/4ECzywJ.png",
+  "color": "#10b981",
+  "category": "other",
+  "tags": [
+    "recruitment",
+    "staff",
+    "discord",
+    "jobs",
+    "community"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "title": "Language",
+      "icon": "fas fa-language",
+      "value": 0,
+      "values": [
+        "Auto",
+        "Français",
+        "English"
+      ]
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showRoleType",
+      "title": "Show Employment Type",
+      "icon": "fad fa-tags",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Elapsed Time",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
