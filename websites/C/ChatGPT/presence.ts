@@ -48,11 +48,13 @@ async function getStrings() {
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 function isTypingPrompt(): boolean {
-  const editor = document.querySelector('#prompt-textarea')
-  if (!editor)
-    return false
-  const text = editor instanceof HTMLTextAreaElement ? editor.value : (editor.textContent ?? '')
-  return text.replace(/\u200B/g, '').trim().length > 0
+  const editors = document.querySelectorAll('#prompt-textarea, div.ProseMirror[contenteditable]')
+  for (const editor of editors) {
+    const text = editor instanceof HTMLTextAreaElement ? editor.value : (editor.textContent ?? '')
+    if (text.replace(/\u200B/g, '').trim().length > 0)
+      return true
+  }
+  return false
 }
 
 enum ActivityAssets {
@@ -76,13 +78,13 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const isTalking = document.querySelector(
-    'button[data-testid=stop-button]',
+    'button[data-testid=stop-button], button[aria-label="Stop responding"], button[aria-label="Stop"], button[aria-label="停止"]',
   )
   const searchDialog = [...document.querySelectorAll('[role=dialog]')].find((dialog) => {
     const heading = dialog.querySelector('h1, h2, h3')?.textContent?.trim()
     const placeholder = dialog.querySelector('input')?.placeholder
     return (heading === 'グローバル検索' || heading === 'Global search')
-      && (placeholder === '検索...' || placeholder === 'Search...')
+      && (placeholder === '検索...' || placeholder === '検索…' || placeholder === 'Search...' || placeholder === 'Search…')
   })
   let gptName = document.querySelector('button[data-testid=model-switcher-dropdown-button]')?.textContent?.trim()
     ?? [...document.querySelectorAll('span')]
@@ -127,7 +129,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.split('/')[1] === 'settings') {
     presenceData.details = strings.settings
-    presenceData.state = document.querySelector('h1')?.textContent?.trim()
+    presenceData.state = [...document.querySelectorAll('h1')].find(h1 => !h1.closest('nav'))?.textContent?.trim()
   }
   else if (pathname.split('/')[1] === 'c' || pathname.split('/')[1] === 'uc') {
     const chatPrivacy = new PrivacyUI(pathname.split('/')[2]!)
@@ -189,7 +191,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.split('/')[1] === 'gpts') {
     presenceData.details = strings.exploreGPTs
-    presenceData.state = document.querySelector('div.cursor-pointer.border-token-text-primary')?.textContent
+    presenceData.state = document.querySelector('button[role=tab][aria-selected=true]')?.textContent
 
     if (document.querySelector('div[role=dialog]')) {
       presenceData.details = showGPTName ? strings.viewingGPT : strings.viewingAGPT
@@ -238,7 +240,7 @@ presence.on('UpdateData', async () => {
   else if (pathname.split('/')[1] === 'plugins') {
     if (pathname.startsWith('/plugins/plugin_connector_')) {
       presenceData.details = strings.viewingPlugin
-      presenceData.state = document.querySelector('h1')?.textContent?.trim()
+      presenceData.state = [...document.querySelectorAll('h1')].find(h1 => !h1.closest('nav'))?.textContent?.trim()
     }
     else {
       presenceData.details = strings.viewingPlugins
