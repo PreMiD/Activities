@@ -195,7 +195,7 @@ presence.on('UpdateData', async () => {
               state: undefined,
               largeImageKey: undefined,
               largeImageText: undefined,
-              isMovie: false,
+              isMovie: undefined as boolean | undefined,
               pageUrl: document.location.href.split('?')[0]!,
               showUrl: undefined,
             }
@@ -212,10 +212,11 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = info.largeImageKey
           presenceData.largeImageText = info.largeImageText
         }
-        if (info.isMovie) {
-          presenceData.buttons = [
-            { label: 'Watch Movie', url: info.pageUrl },
-          ]
+        if (info.isMovie === undefined) {
+          presenceData.buttons = [{ label: 'Watch Now', url: info.pageUrl }]
+        }
+        else if (info.isMovie) {
+          presenceData.buttons = [{ label: 'Watch Movie', url: info.pageUrl }]
         }
         else {
           presenceData.buttons = info.showUrl
@@ -229,7 +230,9 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
-        presenceData.details = info.isMovie ? 'Watching a movie' : 'Watching a series'
+        presenceData.details = info.isMovie === undefined
+          ? 'Watching HBO Max'
+          : info.isMovie ? 'Watching a movie' : 'Watching a series'
       }
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
