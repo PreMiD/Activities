@@ -93,8 +93,8 @@ function getTitleInfo(usePresenceName: boolean) {
 
     return {
       name: usePresenceName ? showName : 'HBO Max',
-      details: usePresenceName ? episodeName : showName,
-      state: usePresenceName
+      details: (usePresenceName && episodeName) || showName,
+      state: usePresenceName || !episodeName
         ? `Season ${s}, Episode ${e}`
         : `S${s} E${e} - ${episodeName}`,
       largeImageKey: getCoverArt(showItem),
@@ -205,8 +205,8 @@ presence.on('UpdateData', async () => {
         break
 
       if (!privacyMode) {
-        presenceData.name = info.name
-        presenceData.details = info.details
+        presenceData.name = info.name ?? playerTitle
+        presenceData.details = info.details ?? playerTitle
         presenceData.state = info.state
         if (showCoverArt && info.largeImageKey) {
           presenceData.largeImageKey = info.largeImageKey
