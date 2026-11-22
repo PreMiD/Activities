@@ -7,7 +7,7 @@
   },
   "service": "LoopHole Games",
   "description": {
-    "en": "LoopHole Games is a free arcade of browser games: idle games, arcade games and board games. Shows which game you're playing, live details like your wave, and a button so friends can play the same game or join your party."
+    "en": "LoopHole Games is a free arcade of browser games: idle games, arcade games and board games."
   },
   "url": "loopholegames.co.uk",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*loopholegames[.]co[.]uk[/]",
