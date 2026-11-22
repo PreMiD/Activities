@@ -7,7 +7,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   // URL corrente, inclusa la navigazione con #
   const path = (
-    window.location.pathname + window.location.hash
+    document.location.pathname + document.location.hash
   ).toLowerCase()
 
   // Rilevamento popup profilo
@@ -42,14 +42,16 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  // Filtri stagionali: leggiamo i controlli già presenti nel DOM React.
+  // Filtri stagionali
   const seasonalSection = document.querySelector('.stagionali')
   const selectedSeason = seasonalSection?.querySelector(
     '.season-button[aria-pressed="true"] .season-name',
   )?.textContent?.trim()
+
   const selectedYear = seasonalSection?.querySelector<HTMLSelectElement>(
     '#stagionali-year-select',
   )?.value
+
   const seasonalPage = seasonalSection?.querySelector(
     '.anime-pagination span',
   )?.textContent?.trim()
@@ -60,7 +62,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Su Universal Anime'
   }
 
-  // 2. Scheda anime con copertina dinamica
+  // 2. Scheda anime
   else if (animeTitle) {
     presenceData.details = `Consultando ${animeTitle}`
     presenceData.state = 'Scheda Anime'
@@ -70,7 +72,7 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // 3. Scheda manga con copertina dinamica
+  // 3. Scheda manga
   else if (mangaTitle) {
     presenceData.details = `Consultando ${mangaTitle}`
     presenceData.state = 'Scheda Manga'
@@ -80,7 +82,7 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // 4. Stagionali (stagione, anno e pagina cambiano dinamicamente)
+  // 4. Stagionali
   else if (path.includes('#stagionali')) {
     presenceData.details = 'Esplorando gli anime stagionali'
     presenceData.state = selectedSeason && selectedYear
