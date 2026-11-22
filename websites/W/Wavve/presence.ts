@@ -123,7 +123,7 @@ function getCurrentEpisodeItem(contentId: string, topNumber: string): Element | 
   const byId = contentId ? items.find(item => item.innerHTML.includes(contentId)) : undefined
   if (byId)
     return byId
-  return items.find(item => !topNumber || textOf(item.querySelector(SELECTORS.episodeNumber)).startsWith(topNumber)) ?? null
+  return items.find(item => topNumber && textOf(item.querySelector(SELECTORS.episodeNumber)).startsWith(topNumber)) ?? null
 }
 
 /** 웨이브 이미지 주소의 크기 부분(320_180)을 더 큰 480_270 으로 바꿔요. 웨이브 화면이 쓰는 크기예요. */
@@ -206,8 +206,8 @@ presence.on('UpdateData', async () => {
 
   // 언어 설정이 바뀌었을 때만 문구를 다시 가져와요.
   if (oldLang !== lang) {
-    oldLang = lang
     strings = await getStrings()
+    oldLang = lang
   }
 
   const presenceData: PresenceData = {
