@@ -20,7 +20,7 @@ export async function fetchPageInfo(pathname: string): Promise<void> {
     pageInfo = { url: document.location.href }
 
     try {
-      pageInfo.data = await fetch(
+      const res = await fetch(
         `https://default.any-amer.prd.api.hbomax.com/cms/routes${pathname}?include=default&decorators=viewingHistory,isFavorite,contentAction,badges&page[items.size]=10`,
         {
           headers: {
@@ -31,7 +31,12 @@ export async function fetchPageInfo(pathname: string): Promise<void> {
           method: 'GET',
           credentials: 'include',
         },
-      ).then(res => res.json())
+      )
+
+      if (!res.ok)
+        throw new Error(`HBO Max API responded with ${res.status}`)
+
+      pageInfo.data = await res.json()
     }
     catch {
       pageInfo = null
