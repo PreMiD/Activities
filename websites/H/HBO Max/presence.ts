@@ -69,19 +69,36 @@ function getTitleInfo(usePresenceName: boolean) {
     const isMovie = episodeItem.attributes.videoType === 'MOVIE'
     const s = episodeItem.attributes.seasonNumber
     const e = episodeItem.attributes.episodeNumber
+    const showName = showItem.attributes.name
+    const episodeName = episodeItem.attributes.name
+
+    if (isMovie) {
+      const releaseDate = getAttrs(episodeItem)?.airDate ?? getAttrs(showItem)?.premiereDate
+      const year = releaseDate ? new Date(releaseDate).getUTCFullYear() : undefined
+      const editId = (episodeItem.relationships as any)?.edit?.data?.id as string | undefined
+      const durationMs = editId ? getAttrs(findById(editId))?.duration as number | undefined : undefined
+      const minutes = durationMs ? Math.floor(durationMs / 60_000) : undefined
+
+      return {
+        name: usePresenceName ? showName : 'HBO Max',
+        details: showName,
+        state: [year, minutes ? `${minutes} minutes` : undefined].filter(Boolean).join(' • ') || undefined,
+        largeImageKey: getCoverArt(showItem),
+        largeImageText: showName,
+        isMovie,
+        pageUrl: document.location.href.split('?')[0]!,
+        showUrl: undefined,
+      }
+    }
 
     return {
-      name: usePresenceName ? showItem.attributes.name : 'HBO Max',
-      details: usePresenceName
-        ? episodeItem.attributes.name
-        : showItem.attributes.name,
-      state: isMovie
-        ? 'Movie'
-        : `Season ${s}, Episode ${e}`,
+      name: usePresenceName ? showName : 'HBO Max',
+      details: usePresenceName ? episodeName : showName,
+      state: usePresenceName
+        ? `Season ${s}, Episode ${e}`
+        : `S${s} E${e} - ${episodeName}`,
       largeImageKey: getCoverArt(showItem),
-      largeImageText: isMovie
-        ? showItem.attributes.name
-        : `S${s}:E${e} — ${episodeItem.attributes.name}`,
+      largeImageText: `Season ${s}, Episode ${e}`,
       isMovie,
       pageUrl: document.location.href.split('?')[0]!,
       showUrl: `${document.location.origin}/series/${showId}`,
