@@ -207,8 +207,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/jQH4vOH.png',
-    largeImageText: 'PortSwigger Academy',
-  } as PresenceData
+  }
 
   switch (pageKind) {
     case 'lab': {
