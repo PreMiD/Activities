@@ -71,7 +71,7 @@ function getTitleInfo(usePresenceName: boolean) {
     const e = episodeItem.attributes.episodeNumber
 
     return {
-      name: usePresenceName ? showItem.attributes.name : 'Max',
+      name: usePresenceName ? showItem.attributes.name : 'HBO Max',
       details: usePresenceName
         ? episodeItem.attributes.name
         : showItem.attributes.name,
@@ -84,7 +84,7 @@ function getTitleInfo(usePresenceName: boolean) {
         : `S${s}:E${e} — ${episodeItem.attributes.name}`,
       isMovie,
       pageUrl: document.location.href.split('?')[0]!,
-      showUrl: `https://play.hbomax.com/series/${showId}`,
+      showUrl: `${document.location.origin}/series/${showId}`,
     }
   }
 
@@ -169,7 +169,20 @@ presence.on('UpdateData', async () => {
 
     case 'video': {
       const video = document.querySelector('video')
+      const playerTitle = document.querySelector('[data-testid="player-ux-asset-title"]')?.textContent?.trim()
       const info = getTitleInfo(usePresenceName && !privacyMode)
+        ?? (playerTitle
+          ? {
+              name: usePresenceName ? playerTitle : 'HBO Max',
+              details: playerTitle,
+              state: undefined,
+              largeImageKey: undefined,
+              largeImageText: undefined,
+              isMovie: false,
+              pageUrl: document.location.href.split('?')[0]!,
+              showUrl: undefined,
+            }
+          : null)
 
       if (!info || !video)
         break
@@ -219,7 +232,7 @@ presence.on('UpdateData', async () => {
       if (!showBrowsingStatus || privacyMode)
         return presence.clearActivity()
 
-      presenceData.details = 'Browsing Max...'
+      presenceData.details = 'Browsing HBO Max...'
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Browsing'
       break
