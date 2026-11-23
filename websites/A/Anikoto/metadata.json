@@ -15,7 +15,8 @@
     "anikoto.cz",
     "anikoto.me",
     "anikoto.net",
-    "anikototv.se"
+    "anikototv.se",
+    "anikototv.bz"
   ],
   "regExp": "^https?[:][/][/](www[.])?(anikototv[.]to|anikoto[.]cz|anikoto[.]me|anikoto[.]net|anikototv[.]se)[/]",
   "version": "1.0.1",
