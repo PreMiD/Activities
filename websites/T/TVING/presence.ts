@@ -47,15 +47,16 @@ presence.on('UpdateData', async () => {
       }
 
       if (video) {
-        const streamData = JSON.parse(document.querySelector('[id=__NEXT_DATA__]')?.textContent ?? '{}')?.props?.pageProps?.streamData
+        const streamData = JSON.parse(document.querySelector('[id=__NEXT_DATA__]')?.textContent ?? '{}')?.props?.pageProps?.streamData?.body?.content
 
-        data.details = streamData?.body?.content?.program_name ?? "Unknown program"
-        data.state = streamData?.body?.content?.episode_name ?? "Unknown episode"
+        data.details = streamData?.program_name ?? "Unknown program"
+        data.state = streamData?.episode_name ?? "Unknown episode"
         data.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         data.smallImageText = video.paused ? 'Paused' : 'Playing'
 
-        if (cover)
-          data.largeImageKey = await getShortURL(imageUrl + streamData.body.content.info.episode.image[0].url)
+        if (cover && streamData?.info?.episode?.image?.[0]?.url)
+          data.largeImageKey = await getShortURL(`${imageUrl}${streamData?.info?.episode?.image?.[0]?.url ?? "https://cdn.rcd.gg/PreMiD/websites/T/TVING/assets/logo.png"}`)
+
 
         if (!video.paused) {
           [data.startTimestamp, data.endTimestamp] = getTimestampsFromMedia(video)
