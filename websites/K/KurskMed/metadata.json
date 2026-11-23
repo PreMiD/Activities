@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "sidpi",
+    "id": "582205399705321474"
+  },
+  "service": "KurskMed",
+  "description": {
+    "en": "KurskMed is the personal account portal of Kursk State Medical University in Kursk, Russia.",
+    "ru": "КурскМед — личный кабинет Курского государственного медицинского университета."
+  },
+  "url": "newlk.kurskmed.com",
+  "regExp": "^https?[:][/][/]newlk[.]kurskmed[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://wsrv.nl/logo.png?url=web.archive.org/web/20261118100506im_/https://www.kurskmed.com/images/logo.png&w=512&h=512&fit=contain&bg=white&filename=logo.png",
+  "thumbnail": "https://wsrv.nl/logo.png?url=web.archive.org/web/20261118100506im_/https://www.kurskmed.com/images/logo.png&w=512&h=512&fit=contain&bg=white&filename=logo.png",
+  "color": "#4a7bc8",
+  "category": "other",
+  "tags": [
+    "health",
+    "medical",
+    "portal",
+    "clinic",
+    "appointments",
+    "dashboard"
+  ],
+  "settings": [
+    {
+      "id": "showSection",
+      "title": "Show current section",
+      "icon": "fas fa-compass",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    }
+  ]
+}
