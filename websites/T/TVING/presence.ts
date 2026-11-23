@@ -47,11 +47,10 @@ presence.on('UpdateData', async () => {
       }
 
       if (video) {
-        const streamData = JSON.parse(document.querySelector('[id=__NEXT_DATA__]')?.textContent ?? '{}').props.pageProps.streamData
+        const streamData = JSON.parse(document.querySelector('[id=__NEXT_DATA__]')?.textContent ?? '{}')?.props?.pageProps?.streamData
 
-        data.details = streamData.body.content.program_name
-        data.state = streamData.body.content.episode_name
-
+        data.details = streamData?.body?.content?.program_name ?? "Unknown program"
+        data.state = streamData?.body?.content?.episode_name ?? "Unknown episode"
         data.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         data.smallImageText = video.paused ? 'Paused' : 'Playing'
 
