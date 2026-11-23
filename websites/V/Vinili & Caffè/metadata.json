@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "terronizzarsi",
+    "id": "295500038401163264"
+  },
+  "service": "Vinili & Caffè",
+  "altnames": ["Vinili e Caffè", "viniliecaffe"],
+  "description": {
+    "en": "Italian Discord community about music, games and good company. Shows what you are doing on the website, including Music Quiz games.",
+    "it": "Community italiana su Discord di musica, giochi e chiacchiere. Mostra cosa stai facendo sul sito, comprese le partite al Music Quiz."
+  },
+  "url": ["viniliecaffe.it", "www.viniliecaffe.it"],
+  "regExp": "^https?[:][/][/](www[.])?viniliecaffe[.]it[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/ttSsZzp.gif",
+  "thumbnail": "https://i.imgur.com/ttSsZzp.gif",
+  "color": "#C8935E",
+  "category": "socials",
+  "tags": ["community", "discord", "music", "quiz", "italian"],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Mostra i pulsanti",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Mostra un pulsante per aprire la pagina in cui sei"
+    },
+    {
+      "id": "showQuiz",
+      "title": "Mostra i dettagli del Music Quiz",
+      "icon": "fas fa-music",
+      "value": true,
+      "description": "Mostra quiz, domanda e punti mentre giochi"
+    }
+  ]
+}
