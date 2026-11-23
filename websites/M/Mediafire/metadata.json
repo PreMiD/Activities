@@ -13,11 +13,10 @@
   "url": [
     "www.mediafire.com",
     "mediafire.zendesk.com",
-    "app.mediafire.com",
-    "blog.mediafire.com"
+    "app.mediafire.com"
   ],
   "regExp": "^https?[:][/][/]((www|app|blog)[.]mediafire[.]com|(mediafire)[.]zendesk[.]com)[/]",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mediafire/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mediafire/assets/thumbnail.jpg",
   "color": "#FF0000",

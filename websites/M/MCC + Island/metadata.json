@@ -22,12 +22,11 @@
     "stats.sirarchibald.dev",
     "lighthouse.gay",
     "mccihub.net",
-    "stats.derniklaas.de",
     "radar.themysterys.com",
     "reafystats.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(mcchampionship[.]com|mccisland[.]net|mcc[.]live|mccisland[.]wiki|stats[.]sirarchibald[.]dev|lighthouse[.]gay|mccihub[.]net|stats[.]derniklaas[.]de|radar[.]themysterys[.]com|reafystats[.]com)[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MCC%20%2B%20Island/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MCC%20%2B%20Island/assets/thumbnail.png",
   "color": "#F0443E",

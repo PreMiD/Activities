@@ -20,12 +20,9 @@
     "vi": "AnimeFLV là nền tảng phát trực tuyến nơi bạn có thể xem anime phụ đề Tiếng Tây Ban Nha.",
     "zh": "AnimeFLV是一个视频网站，您可以在其中观看带有西班牙语字幕的动漫。"
   },
-  "url": [
-    "www3.animeflv.net",
-    "animeflv.ac"
-  ],
+  "url": "www3.animeflv.net",
   "regExp": "^https?[:][/][/]((www[0-9]*)[.]animeflv[.]net|animeflv[.]ac)[/]",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFLV/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFLV/assets/thumbnail.png",
   "color": "#694ba1",
