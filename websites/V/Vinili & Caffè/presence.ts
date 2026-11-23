@@ -5,8 +5,8 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  // immagine leggera per Discord (il GIF animato da 9 MB resta solo come logo nel negozio)
-  Logo = 'https://cdn.viniliecaffe.it/images/logo-disco.png',
+  // 512×512 obbligatorio per pmd; il GIF animato resta solo in metadata (logo negozio)
+  Logo = 'https://files.catbox.moe/adu4lq.png',
 }
 
 /** Stato scritto dal sito stesso (Music Quiz: quiz, domanda, punti) in <html data-vc-presence="…"> */
@@ -60,7 +60,8 @@ const PAGES: Record<string, string> = {
 
 function pageTitle(): string {
   const title = document.title || ''
-  const tail = title.includes('ǀ') ? title.split('ǀ').pop()!.trim() : ''
+  const sep = title.includes('ǀ') ? 'ǀ' : title.includes('|') ? '|' : ''
+  const tail = sep ? title.split(sep).pop()!.trim() : ''
   return tail || 'Home'
 }
 
