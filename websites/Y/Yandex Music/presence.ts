@@ -39,13 +39,12 @@ function getTimecode(selectors: string[]): number | undefined {
   for (const selector of selectors) {
     const timecode = document.querySelector(selector)?.textContent?.trim()
 
-    if (!timecode)
+    // Mirrors the format accepted by timestampFromFormat, so an actual 0:00
+    // position stays distinguishable from a missing or invalid timecode.
+    if (!timecode || !/^\d+(?::\d{1,2}(?::\d{1,2})?)?$/.test(timecode))
       continue
 
-    const seconds = timestampFromFormat(timecode)
-
-    if (seconds > 0)
-      return seconds
+    return timestampFromFormat(timecode)
   }
 }
 
@@ -77,11 +76,14 @@ presence.on('UpdateData', async () => {
     state: metadata.artist || metadata.album || undefined,
   }
 
+  const currentTime = getTimecode(timecodeSelectors.current)
   const duration = getTimecode(timecodeSelectors.total)
 
-  if (duration) {
+  // Only show a progress bar when the page exposes both values; a missing
+  // position must not be treated as the start of the track.
+  if (currentTime !== undefined && duration) {
     const [startTimestamp, endTimestamp] = getTimestamps(
-      getTimecode(timecodeSelectors.current) ?? 0,
+      currentTime,
       duration,
     )
 
