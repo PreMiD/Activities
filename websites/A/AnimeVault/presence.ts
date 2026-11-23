@@ -25,6 +25,12 @@ function formatImageUrl(rawUrl: string | null | undefined): string | null {
     if (url.origin === document.location.origin && url.pathname === document.location.pathname)
       return null
 
+    // Các domain bị wsrv.nl chặn theo chính sách ("Domain or TLD blocked by policy") như phimimg.com
+    // sẽ được chuyển thẳng URL gốc cho Discord tải trực tiếp
+    if (url.hostname.includes('phimimg.com') || url.hostname.includes('ophim') || url.hostname.includes('kkphim')) {
+      return url.href
+    }
+
     // fit=cover lấp đầy hoàn hảo khung vuông 512x512 của Discord, không bị co dẹp
     return `https://wsrv.nl/?url=${encodeURIComponent(url.href)}&w=512&h=512&fit=cover&output=png`
   }
