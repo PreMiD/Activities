@@ -27,7 +27,7 @@
     "music.yandex.com"
   ],
   "regExp": "^https?[:][/][/]music[.]yandex[.](ru|com)[/]",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex%20Music/assets/thumbnail.png",
   "color": "#FDCD01",
