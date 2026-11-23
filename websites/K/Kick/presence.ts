@@ -217,7 +217,7 @@ function getPageData(
         }
 
         case 'search': {
-          const query = document.querySelector<HTMLInputElement>('input[type="search"], input')?.value?.trim()
+          const query = document.querySelector<HTMLInputElement>('input[type="search"], [data-testid="search-input"]')?.value?.trim()
           return {
             details: 'Searching on Kick...',
             state: query ? `Searching: ${query}` : undefined,
@@ -258,8 +258,9 @@ function getPageData(
           const avatar = getStreamerAvatar()
           const livestreamTitle = getLivestreamTitle()
           const category = getStreamCategory()
-          const isVOD = search.includes('video=') || url.includes('video=')
-          const isClip = url.includes('/clips/') || search.includes('clip=')
+          const searchParams = new URLSearchParams(search)
+          const isVOD = searchParams.has('video')
+          const isClip = new URL(url).pathname.includes('/clips/') || searchParams.has('clip')
           const isMedia = isVOD || isClip || (Boolean(videoEl) && Number.isFinite(videoEl?.duration) && (videoEl?.duration ?? 0) > 0 && !isChannelLive(videoEl))
 
           if (isMedia) {
@@ -271,8 +272,8 @@ function getPageData(
               state,
               largeImageKey: avatar || ActivityAssets.Logo,
               largeImageText: streamer,
-              smallImageKey: videoEl?.paused ? Assets.Pause : Assets.Play,
-              smallImageText: videoEl?.paused ? 'Paused' : 'Playing',
+              smallImageKey: videoEl ? (videoEl.paused ? Assets.Pause : Assets.Play) : undefined,
+              smallImageText: videoEl ? (videoEl.paused ? 'Paused' : 'Playing') : undefined,
               buttons: [
                 {
                   label: isClip ? 'Watch Clip' : 'Watch Stream VOD',
@@ -405,11 +406,14 @@ function isChannelLive(videoEl: HTMLVideoElement | null): boolean {
   if (ogTitle && (ogTitle.includes('live stream') || ogTitle.includes('watch live')))
     return true
 
-  const liveBadge = document.querySelector('[data-testid="channel-avatar"]')?.closest('button, div')?.parentElement?.querySelector('.bg-kick-voltGreen-150, span')
+  const liveBadge = document.querySelector('[data-testid="channel-avatar"]')
+    ?.closest('button, div')
+    ?.parentElement
+    ?.querySelector('.bg-kick-voltGreen-150')
   if (liveBadge?.textContent?.trim().toUpperCase() === 'LIVE')
     return true
 
-  if (videoEl && !videoEl.paused && (!Number.isFinite(videoEl.duration) || videoEl.duration === Infinity))
+  if (videoEl && !videoEl.paused && videoEl.duration === Number.POSITIVE_INFINITY)
     return true
 
   return false
