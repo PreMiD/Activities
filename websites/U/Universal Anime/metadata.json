@@ -12,9 +12,9 @@
   },
   "url": "universalanime.eu",
   "regExp": "^https?[:][/][/](www[.])?universalanime[.]eu[/]",
-  "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/Andreii98/universal-anime-assets/main/favicon.png",
-  "thumbnail": "https://i.imgur.com/If1NW5q.jpeg",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Universal%20Anime/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Universal%20Anime/assets/thumbnail.jpeg",
   "color": "#E53935",
   "category": "anime",
   "tags": [
