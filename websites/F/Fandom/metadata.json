@@ -19,7 +19,7 @@
   },
   "url": "fandom.com",
   "regExp": "^https?[:][/][/][a-z0-9-]+[.]fandom[.]com[/]",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fandom/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fandom/assets/thumbnail.png",
   "color": "#002A32",

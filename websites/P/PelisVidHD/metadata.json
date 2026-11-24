@@ -12,7 +12,7 @@
   },
   "url": "pelisvidhd.icu",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pelisvidhd[.]icu[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PelisVidHD/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PelisVidHD/assets/thumbnail.jpeg",
   "color": "#FF0000",

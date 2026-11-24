@@ -15,7 +15,7 @@
   },
   "url": "streamwatch.online",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*streamwatch[.]online[/]",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",

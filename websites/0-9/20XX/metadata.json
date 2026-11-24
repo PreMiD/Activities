@@ -14,7 +14,7 @@
   },
   "url": "20xx.io",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*20xx[.]io[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/20XX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/20XX/assets/thumbnail.jpg",
   "color": "#9AD1FD",
