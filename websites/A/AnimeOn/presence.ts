@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '1541447121809444954',
@@ -125,14 +125,26 @@ function togetherStream(): { title: string | null, line: string | null } {
 presence.on('UpdateData', async () => {
   const { pathname, href, search } = document.location
   const searchParams = new URLSearchParams(search)
-  const [showTimestamps, showCover, showButtons, showJoinButton, privacy, showBrowsingStatus] = await Promise.all([
+  const [
+    showTimestamps,
+    showCover,
+    showButtons,
+    showJoinButton,
+    privacy,
+    showBrowsingStatus,
+    displayType,
+    hidePaused,
+  ] = await Promise.all([
     presence.getSetting<boolean>('timestamps'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('joinButton'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showBrowsingStatus'),
+    presence.getSetting<number>('displayType'),
+    presence.getSetting<boolean>('hidePaused'),
   ])
+  const showTitleInStatus = !privacy && displayType === 1
   const {
     browsing,
     searchFor,
@@ -173,7 +185,7 @@ presence.on('UpdateData', async () => {
     }
     case pathname.startsWith('/anime/'): {
       const animeId = pathname.match(/^\/anime\/.*?-(\d+)\/?$/)?.[1]
-      const title = text('h1') ?? anime
+      const title = text('h1')
       const video = document.querySelector<HTMLVideoElement>('#player video')
       const cover = animeId ? image(`img[src*="/anime/posters/${animeId}_"]`) : null
 
@@ -187,13 +199,15 @@ presence.on('UpdateData', async () => {
         const epLine = [number && `${episode} ${number}`, dub].filter(Boolean).join(' • ')
 
         watching = true
-        presenceData.details = title
+        presenceData.details = title ?? anime
         if (epLine)
           presenceData.state = epLine
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? paused : playing
 
         if (video.paused) {
+          if (hidePaused)
+            return presence.clearActivity()
           delete presenceData.startTimestamp
         }
         else {
@@ -205,9 +219,12 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.details = viewAnime
-        presenceData.state = title
+        presenceData.state = title ?? anime
         buttonLabel = buttonViewAnime
       }
+
+      if (showTitleInStatus && title)
+        presenceData.statusDisplayType = watching ? StatusDisplayType.Details : StatusDisplayType.State
       break
     }
     case pathname === '/catalog': {
@@ -260,6 +277,8 @@ presence.on('UpdateData', async () => {
       const { title, line } = togetherStream()
 
       presenceData.details = title ?? 'Watch Together'
+      if (showTitleInStatus && title)
+        presenceData.statusDisplayType = StatusDisplayType.Details
       if (line)
         presenceData.state = line
       //* Only the media element tells the truth here: a room listed as "Пауза" still
@@ -275,6 +294,8 @@ presence.on('UpdateData', async () => {
       const streamPaused = watching && video?.paused === true
 
       if (streamPaused) {
+        if (hidePaused)
+          return presence.clearActivity()
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = paused
       }
