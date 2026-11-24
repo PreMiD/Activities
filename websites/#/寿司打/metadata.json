@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "寿司打",
+  "altnames": [
+    "寿司打"
+  ],
+  "description": {
+    "en": "Sushida is a free browser typing game where you type the words on sushi plates flowing past on a conveyor belt before they disappear.",
+    "ja": "寿司打は、流れてくるお皿の文字をタイプしてどれだけモトを取れるかを競う、無料のブラウザタイピング練習ゲームです。"
+  },
+  "url": "sushida.net",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sushida[.]net[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/sushida/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/sushida/thumbnail.png",
+  "color": "#D80018",
+  "category": "games",
+  "tags": [
+    "typing",
+    "game",
+    "japan",
+    "practice"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "ボタンを表示",
+      "icon": "fad fa-link",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "経過時間を表示",
+      "icon": "fad fa-clock",
+      "value": true
+    }
+  ]
+}
