@@ -10,5 +10,8 @@ export function getTimestamps(
 ): [startTimestamp: number, endTimestamp: number] {
   const startTime = (Date.now() / 1000) - elementTime
   const endTime = startTime + elementDuration
-  return [Math.floor(startTime), Math.floor(endTime)]
+  return [
+    Math.floor(startTime),
+    Math.floor(endTime),
+  ]
 }

@@ -101,7 +101,11 @@ export class ActivityCompiler {
     await build({
       entryPoints: [
         resolve(this.cwd, 'presence.ts'),
-        ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : []),
+        ...(hasIframe
+          ? [
+              resolve(this.cwd, 'iframe.ts'),
+            ]
+          : []),
       ],
       outdir: resolve(this.cwd, 'dist'),
       bundle: true,
@@ -188,7 +192,12 @@ export class ActivityCompiler {
   }
 
   private async compileAndSend({ validate, zip, sarif }: { validate: boolean, zip: boolean, sarif: boolean }) {
-    await this.compile({ validate, zip, preCheck: false, kill: false })
+    await this.compile({
+      validate,
+      zip,
+      preCheck: false,
+      kill: false,
+    })
     if (sarif) {
       await writeSarifLog()
     }
@@ -215,7 +224,9 @@ export class ActivityCompiler {
       return false
     }
 
-    const libraryVersion: ActivityMetadata | null = await fetch(`https://api.premid.app/v6/activities${this.versionized ? `/v${metadata.apiVersion}` : ''}/${encodeURIComponent(metadata.service)}/metadata.json`).then(res => res.json()).catch(() => null)
+    const libraryVersion: ActivityMetadata | null = await fetch(`https://api.premid.app/v6/activities${this.versionized
+      ? `/v${metadata.apiVersion}`
+      : ''}/${encodeURIComponent(metadata.service)}/metadata.json`).then(res => res.json()).catch(() => null)
 
     let serviceFolder: string
     if (this.versionized) {
@@ -452,7 +463,9 @@ export class ActivityCompiler {
       valid = false
     }
 
-    const urls = Array.isArray(metadata.url) ? metadata.url : [metadata.url]
+    const urls = Array.isArray(metadata.url)
+      ? metadata.url
+      : [metadata.url]
 
     // regExp validation for URLs
     {
