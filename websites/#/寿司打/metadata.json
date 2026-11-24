@@ -15,9 +15,9 @@
   },
   "url": "sushida.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sushida[.]net[/]",
-  "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/sushida/logo.png",
-  "thumbnail": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/sushida/thumbnail.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%E5%AF%BF%E5%8F%B8%E6%89%93/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%E5%AF%BF%E5%8F%B8%E6%89%93/assets/thumbnail.png",
   "color": "#D80018",
   "category": "games",
   "tags": [

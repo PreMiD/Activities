@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1568835180276219986',
 })
 
-const LOGO = 'https://raw.githubusercontent.com/pachiris/Activities/premid-assets/sushida/logo.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/%23/%E5%AF%BF%E5%8F%B8%E6%89%93/assets/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let playingSince = 0
