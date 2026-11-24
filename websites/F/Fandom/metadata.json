@@ -18,7 +18,7 @@
     "vi": "Trang giải trí nơi các fan được đặt lên hàng đầu. Nguồn thông tin được cập nhật hằng ngày dành cho chương trình truyền hình, phim, và trò chơi, như Star Wars, Fallout, Marvel, DC và hơn nữa."
   },
   "url": "fandom.com",
-  "regExp": "^https?[:][/][/][a-z0-9-]+[.]fandom[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fandom[.]com[/]",
   "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fandom/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fandom/assets/thumbnail.png",

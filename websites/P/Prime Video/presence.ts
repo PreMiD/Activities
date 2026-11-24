@@ -1,6 +1,6 @@
 import { ActivityType } from 'premid'
 import { getPlaybackMetadata, isMetadataLoading } from './api/metadata.js'
-import { ActivityAssets, CLIENT_ID, DETAIL_PATH } from './config/constants.js'
+import { ActivityAssets, DETAIL_PATH } from './config/constants.js'
 import { applyBrowsingPresence } from './page/browsing.js'
 import { findBannerImage, findPageTitle, findPlayerVideo } from './page/dom.js'
 import { getPlaybackDisplay } from './player/display.js'
@@ -9,7 +9,7 @@ import { getLiveViewerTime } from './player/timeline.js'
 import { startTimelineTracking } from './player/timelineTracker.js'
 
 const presence = new Presence({
-  clientId: CLIENT_ID,
+  clientId: '705139844883677224',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
