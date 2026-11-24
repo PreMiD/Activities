@@ -22,7 +22,7 @@
     "localhost",
     "127.0.0.1"
   ],
-  "regExp": "^https?[:][/][/](localhost|127[.]0[.]0[.]1):8080[/]",
+  "regExp": "^https?[:][/][/](localhost|127[.]0[.]0[.]1)(:8080)?[/]",
   "version": "1.7.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VLC/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VLC/assets/thumbnail.png",

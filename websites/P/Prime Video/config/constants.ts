@@ -1,5 +1,3 @@
-export const CLIENT_ID = '705139844883677224'
-
 export enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png',
 }
