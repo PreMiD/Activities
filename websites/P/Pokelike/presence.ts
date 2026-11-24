@@ -49,7 +49,7 @@ presence.on('UpdateData', () => {
     name: 'Pokelike',
     type: 0, // Playing
     details: 'Playing Pokelike',
-    largeImageKey: 'https://pokelike.xyz/img/icon-512.png',
+    largeImageKey: 'https://i.imgur.com/KHbGx2p.png',
     startTimestamp: sessionStarted,
   }
 
