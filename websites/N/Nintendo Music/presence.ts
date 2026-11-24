@@ -158,11 +158,13 @@ presence.on('UpdateData', async () => {
   const now = Math.floor(Date.now() / 1000)
 
   const albumArt = document.querySelector<HTMLImageElement>('#main-column img')?.src ?? NintendoMusicLogo
+  const gameCover = document.querySelector<HTMLImageElement>('img[alt="Top Tracks"]')?.src ?? NintendoMusicLogo
 
-  const [showTimestamps, showSongArt, displayFormat, marioKartTrackOrigin, classicFormattingMKW] = await Promise.all([
+  const [showTimestamps, showSongArt, displayFormat, gamePageAlbumCover, marioKartTrackOrigin, classicFormattingMKW] = await Promise.all([
     presence.getSetting<boolean>('showTimestamps'),
     presence.getSetting<boolean>('showSongArt'),
     presence.getSetting<number>('displayFormat'),
+    presence.getSetting<number>('gamePageAlbumCover'),
     presence.getSetting<boolean>('marioKartTrackOrigin'),
     presence.getSetting<boolean>('classicFormattingMKW'),
   ])
@@ -200,7 +202,14 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = now
 
     if (showSongArt) {
-      presenceData.largeImageKey = albumArt
+      switch (Number(gamePageAlbumCover)) {
+        case 0:
+          presenceData.largeImageKey = gameCover
+          break
+        case 1:
+          presenceData.largeImageKey = albumArt
+          break
+      }
     }
   }
   else if (pathname.includes('/user-playlist')) {
@@ -232,6 +241,26 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = mainTitle
     presenceData.state = 'My Music'
+    presenceData.startTimestamp = now
+  }
+  else if (pathname.includes('/mix-playlist')) {
+    presenceData.details = 'Checking Out The Daily Mix'
+    presenceData.startTimestamp = now
+  }
+  else if (pathname.includes('/notice')) {
+    presenceData.details = 'Reading Notices'
+    presenceData.startTimestamp = now
+  }
+  else if (pathname.includes('/history')) {
+    presenceData.details = 'Checking Out My History'
+    presenceData.startTimestamp = now
+  }
+  else if (pathname.includes('settings')) {
+    presenceData.details = 'In Settings'
+    presenceData.startTimestamp = now
+  }
+  else if (pathname.includes('/language')) {
+    presenceData.details = 'In Languages'
     presenceData.startTimestamp = now
   }
   else {
