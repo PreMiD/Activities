@@ -79,7 +79,9 @@ presence.on('UpdateData', () => {
       )
 
       if (match) {
-        presenceData.state = `${match[1]} received trade${match[1] === '1' ? '' : 's'}`
+        presenceData.state = `${match[1]} received trade${match[1] === '1'
+          ? ''
+          : 's'}`
       }
       else if (/Aucune offre reçue en attente/i.test(bodyText)) {
         presenceData.state = 'No pending trades'
@@ -199,8 +201,11 @@ presence.on('UpdateData', () => {
         /AMIS\s*\((\d+)\)/i,
       )
 
-      if (match)
-        presenceData.state = `${match[1]} friend${match[1] === '1' ? '' : 's'}`
+      if (match) {
+        presenceData.state = `${match[1]} friend${match[1] === '1'
+          ? ''
+          : 's'}`
+      }
 
       break
     }

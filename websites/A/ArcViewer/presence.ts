@@ -152,7 +152,9 @@ presence.on('UpdateData', async () => {
     else presenceData.state = artist
     if (mapSmallImages !== 3) {
       presenceData.smallImageText = `${
-        mapSmallImages === 0 || mapSmallImages === 1 ? characteristic : ''
+        mapSmallImages === 0 || mapSmallImages === 1
+          ? characteristic
+          : ''
       } ${
         mapSmallImages === 0 || mapSmallImages === 2
           ? difficulty.replace('Plus', '+')
@@ -160,14 +162,20 @@ presence.on('UpdateData', async () => {
       }`
       presenceData.smallImageKey = OtherAssets[
         `${
-          mapSmallImages === 0 || mapSmallImages === 1 ? characteristic : ''
+          mapSmallImages === 0 || mapSmallImages === 1
+            ? characteristic
+            : ''
         }${
-          mapSmallImages === 0 || mapSmallImages === 2 ? difficulty : ''
+          mapSmallImages === 0 || mapSmallImages === 2
+            ? difficulty
+            : ''
         }` as keyof typeof OtherAssets
       ]
       ?? OtherAssets[
         `Unknown${
-          mapSmallImages === 0 || mapSmallImages === 2 ? difficulty : ''
+          mapSmallImages === 0 || mapSmallImages === 2
+            ? difficulty
+            : ''
         }` as keyof typeof OtherAssets
       ]
     }

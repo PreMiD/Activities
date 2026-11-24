@@ -43,7 +43,9 @@ function loadStation(id: string): void {
         return
       }
       const xml = new DOMParser().parseFromString(await res.text(), 'text/xml')
-      const programs: Program[] = [...xml.querySelectorAll('prog')].map(prog => ({
+      const programs: Program[] = [
+        ...xml.querySelectorAll('prog'),
+      ].map(prog => ({
         ft: prog.getAttribute('ft') ?? '',
         to: prog.getAttribute('to') ?? '',
         title: prog.querySelector('title')?.textContent?.trim() ?? '',
@@ -76,7 +78,9 @@ function toUnix(time: string): number {
 
 function formatDate(time: string): string {
   const m = time.match(/^\d{4}(\d{2})(\d{2})(\d{2})(\d{2})/)
-  return m ? `${Number(m[1])}/${Number(m[2])} ${m[3]}:${m[4]}` : ''
+  return m
+    ? `${Number(m[1])}/${Number(m[2])} ${m[3]}:${m[4]}`
+    : ''
 }
 
 function findProgram(station: Station | undefined, unix: number): Program | undefined {
@@ -100,11 +104,15 @@ function readElapsed(): number | null {
       return Number(m[1]) * 3600 + Number(m[2]) * 60 + Number(m[3])
   }
   const media = document.querySelector<HTMLMediaElement>('audio, video')
-  return media && !Number.isNaN(media.duration) && Number.isFinite(media.currentTime) ? Math.floor(media.currentTime) : null
+  return media && !Number.isNaN(media.duration) && Number.isFinite(media.currentTime)
+    ? Math.floor(media.currentTime)
+    : null
 }
 
 function cut(text: string, max = 120): string {
-  return text.length > max ? `${text.slice(0, max)}…` : text
+  return text.length > max
+    ? `${text.slice(0, max)}…`
+    : text
 }
 
 presence.on('UpdateData', async () => {
@@ -140,7 +148,9 @@ presence.on('UpdateData', async () => {
 
     if (showProgram && program?.title) {
       presenceData.details = cut(program.title)
-      presenceData.state = cut(program.pfm ? `${stationName}｜${program.pfm}` : stationName)
+      presenceData.state = cut(program.pfm
+        ? `${stationName}｜${program.pfm}`
+        : stationName)
     }
     else {
       presenceData.details = stationName
@@ -180,8 +190,12 @@ presence.on('UpdateData', async () => {
     }
     if (showButtons) {
       presenceData.buttons = timefreeTime
-        ? [{ label: 'タイムフリーで聴く', url: `https://radiko.jp/#!/ts/${stationId}/${timefreeTime}` }]
-        : [{ label: `${cut(stationName, 20)} を聴く`, url: `https://radiko.jp/#!/live/${stationId}` }]
+        ? [
+            { label: 'タイムフリーで聴く', url: `https://radiko.jp/#!/ts/${stationId}/${timefreeTime}` },
+          ]
+        : [
+            { label: `${cut(stationName, 20)} を聴く`, url: `https://radiko.jp/#!/live/${stationId}` },
+          ]
     }
     presence.setActivity(presenceData)
     return

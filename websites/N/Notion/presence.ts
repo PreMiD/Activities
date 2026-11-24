@@ -134,7 +134,9 @@ presence.on('UpdateData', async () => {
         const blogTitle = document.querySelector('h1[class*="title"]')
         if (blogTitle) {
           presenceData.details = privacy ? strings.readingAnArticle : strings.readingArticle
-          presenceData.state = privacy ? '' : blogTitle?.textContent?.trim() || document.title
+          presenceData.state = privacy
+            ? ''
+            : blogTitle?.textContent?.trim() || document.title
         }
         else {
           presenceData.details = strings.readingBlogs
@@ -163,7 +165,9 @@ presence.on('UpdateData', async () => {
       }
       else if (pathname.includes('/@')) {
         presenceData.details = privacy ? strings.viewAProfile : strings.viewProfile
-        presenceData.state = privacy ? '' : document.querySelector('main h3')?.textContent
+        presenceData.state = privacy
+          ? ''
+          : document.querySelector('main h3')?.textContent
       }
       else {
         presenceData.details = strings.viewPage
@@ -196,7 +200,9 @@ presence.on('UpdateData', async () => {
             wordCount += text.split(' ').slice(2, text.split(' ').length).length
           }
         }
-        presenceData.details = !privacy ? document.title : strings.talkingWithAI
+        presenceData.details = !privacy
+          ? document.title
+          : strings.talkingWithAI
         presenceData.state = isTalking
           ? strings.aiResponding
           : strings.conversationStats
@@ -217,9 +223,13 @@ presence.on('UpdateData', async () => {
       else if (pathname.startsWith('/meet') && search.startsWith('?p=')) {
         const pageIcon = document.querySelector<HTMLImageElement>('div[style*="display: flow-root"] .notion-record-icon img:not([src^="data:image"]):not([src*="notion-emojis"])')
         presenceData.details = privacy ? strings.editAMeetingNote : strings.editMeetingNote
-        presenceData.state = privacy ? '' : document.querySelector('.notion-peek-renderer .layout-content h1')?.textContent || document.querySelector('h1')?.textContent || strings.unknown
+        presenceData.state = privacy
+          ? ''
+          : document.querySelector('.notion-peek-renderer .layout-content h1')?.textContent || document.querySelector('h1')?.textContent || strings.unknown
         if (pageIcon && !privacy) {
-          presenceData.smallImageKey = pageIcon?.src?.includes('.svg') ? await svgToPng(pageIcon?.src) : pageIcon?.src
+          presenceData.smallImageKey = pageIcon?.src?.includes('.svg')
+            ? await svgToPng(pageIcon?.src)
+            : pageIcon?.src
         }
         else {
           presenceData.smallImageKey = Assets.Writing
@@ -261,9 +271,13 @@ presence.on('UpdateData', async () => {
         const pageIcon = document.querySelector<HTMLImageElement>('div[style*="display: flow-root"] .notion-record-icon img:not([src^="data:image"]):not([src*="notion-emojis"])') || topBarIcon[topBarIcon.length - 1]
         if (isEditable) {
           presenceData.details = privacy ? strings.editingAPage : strings.editingPage
-          presenceData.state = privacy ? '' : document.querySelector('.notion-overlay-container h1')?.textContent || document.querySelector('.notion-peek-renderer .layout-content h1')?.textContent || document.querySelector('h1')?.textContent || document.querySelector('.notion-topbar div[role="button"] > div.notranslate')?.textContent || document.title
+          presenceData.state = privacy
+            ? ''
+            : document.querySelector('.notion-overlay-container h1')?.textContent || document.querySelector('.notion-peek-renderer .layout-content h1')?.textContent || document.querySelector('h1')?.textContent || document.querySelector('.notion-topbar div[role="button"] > div.notranslate')?.textContent || document.title
           if (pageIcon && !privacy) {
-            presenceData.smallImageKey = pageIcon?.src?.includes('.svg') ? await svgToPng(pageIcon?.src) : pageIcon?.src
+            presenceData.smallImageKey = pageIcon?.src?.includes('.svg')
+              ? await svgToPng(pageIcon?.src)
+              : pageIcon?.src
           }
           else {
             presenceData.smallImageKey = Assets.Writing
@@ -272,9 +286,13 @@ presence.on('UpdateData', async () => {
         }
         else {
           presenceData.details = privacy ? strings.readingAPage : strings.readingPage
-          presenceData.state = privacy ? '' : document.querySelector('.notion-overlay-container h1')?.textContent || document.querySelector('.notion-peek-renderer .layout-content h1')?.textContent || document.querySelector('h1')?.textContent || document.querySelector('.notion-topbar div[role="button"] > div.notranslate')?.textContent || document.title
+          presenceData.state = privacy
+            ? ''
+            : document.querySelector('.notion-overlay-container h1')?.textContent || document.querySelector('.notion-peek-renderer .layout-content h1')?.textContent || document.querySelector('h1')?.textContent || document.querySelector('.notion-topbar div[role="button"] > div.notranslate')?.textContent || document.title
           if (pageIcon && !privacy) {
-            presenceData.smallImageKey = pageIcon?.src?.includes('.svg') ? await svgToPng(pageIcon?.src) : pageIcon?.src
+            presenceData.smallImageKey = pageIcon?.src?.includes('.svg')
+              ? await svgToPng(pageIcon?.src)
+              : pageIcon?.src
           }
           else {
             presenceData.smallImageKey = Assets.Reading
@@ -287,8 +305,14 @@ presence.on('UpdateData', async () => {
     case /^[a-z0-9-]+\.notion\.site$/.test(hostname): {
       const websiteLogo = document.querySelector<HTMLImageElement>('div[style*="display: flow-root"] .notion-record-icon img:not([src^="data:image"]):not([src*="notion-emojis"])')?.src || document.querySelector<HTMLImageElement>('.notion-topbar .notion-record-icon img:not([src^="data:image"]):not([src*="notion-emojis"])')?.src || ActivityAssets.Logo
       presenceData.details = strings.viewPublicWebsite
-      presenceData.state = privacy ? '' : document.querySelector('h1')?.textContent || document.querySelector('.notion-topbar span')?.textContent || document.title
-      presenceData.largeImageKey = privacy ? ActivityAssets.Logo : (websiteLogo.includes('.svg') ? await svgToPng(websiteLogo) || ActivityAssets.Logo : websiteLogo || ActivityAssets.Logo)
+      presenceData.state = privacy
+        ? ''
+        : document.querySelector('h1')?.textContent || document.querySelector('.notion-topbar span')?.textContent || document.title
+      presenceData.largeImageKey = privacy
+        ? ActivityAssets.Logo
+        : (websiteLogo.includes('.svg')
+            ? await svgToPng(websiteLogo) || ActivityAssets.Logo
+            : websiteLogo || ActivityAssets.Logo)
       break
     }
     case hostname === 'calendar.notion.so': {
@@ -313,14 +337,18 @@ presence.on('UpdateData', async () => {
         }
         else if (pathname.includes('/event')) {
           presenceData.details = strings.editingAnEvent
-          presenceData.state = privacy ? '' : document.querySelector('div[data-floating-context-panel="true"] p')?.textContent?.trim() || document.querySelector('div[data-context-panel-root="true"] p')?.textContent
+          presenceData.state = privacy
+            ? ''
+            : document.querySelector('div[data-floating-context-panel="true"] p')?.textContent?.trim() || document.querySelector('div[data-context-panel-root="true"] p')?.textContent
         }
         else if (pathname.includes('/settings')) {
           presenceData.details = strings.editingTheirSettings
         }
         else if (pathname.includes('/scheduling')) {
           presenceData.details = strings.schedulingMeetings
-          presenceData.state = privacy ? '' : document.querySelector('div[data-floating-context-panel="true"] p')?.textContent?.trim() || document.querySelector('div[data-context-panel-root="true"] p')?.textContent
+          presenceData.state = privacy
+            ? ''
+            : document.querySelector('div[data-floating-context-panel="true"] p')?.textContent?.trim() || document.querySelector('div[data-context-panel-root="true"] p')?.textContent
         }
         else {
           presenceData.details = strings.viewPage
@@ -337,7 +365,9 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = ActivityAssets.Mail
       if (mailTitle) {
         presenceData.details = strings.viewingEmail
-        presenceData.state = privacy ? '' : mailTitle?.textContent?.trim()
+        presenceData.state = privacy
+          ? ''
+          : mailTitle?.textContent?.trim()
       }
       else if (compose) {
         presenceData.details = strings.composingEmail
@@ -365,12 +395,18 @@ presence.on('UpdateData', async () => {
       }
       else if (pathname?.includes('/search')) {
         presenceData.details = strings.lookingForEmail
-        presenceData.state = privacy ? '' : document.querySelector('input#search-input')?.textContent?.trim() || params.get('query') || ''
+        presenceData.state = privacy
+          ? ''
+          : document.querySelector('input#search-input')?.textContent?.trim() || params.get('query') || ''
       }
       else {
         const categoryName = document.title?.split('•')
         presenceData.details = strings.viewingCategory
-        presenceData.state = privacy || categoryName.length <= 2 ? '' : (categoryName.length === 3 ? categoryName[0] : categoryName[1])
+        presenceData.state = privacy || categoryName.length <= 2
+          ? ''
+          : (categoryName.length === 3
+              ? categoryName[0]
+              : categoryName[1])
       }
       break
     }

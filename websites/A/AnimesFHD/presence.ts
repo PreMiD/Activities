@@ -28,7 +28,9 @@ interface Activity {
 
 function readActivity(): Activity {
   const el = document.querySelector<HTMLElement>('#fhd-activity')
-  return el ? { ...el.dataset } : {}
+  return el
+    ? { ...el.dataset }
+    : {}
 }
 
 function episodeLine(activity: Activity): string {
@@ -67,13 +69,19 @@ presence.on('UpdateData', async () => {
     smallImageKey: Assets.Viewing,
     smallImageText: 'Navegando',
   }
-  const cover = showCover && !privacy && activity.cover ? activity.cover : ActivityAssets.Logo
+  const cover = showCover && !privacy && activity.cover
+    ? activity.cover
+    : ActivityAssets.Logo
 
   if (/^\/(?:episod|episode)\//.test(pathname) && activity.page === 'episode' && activity.title) {
     presenceData.details = privacy ? 'Assistindo um anime' : activity.title
-    presenceData.state = privacy ? 'No AnimesFHD' : (episodeLine(activity) || 'Assistindo')
+    presenceData.state = privacy
+      ? 'No AnimesFHD'
+      : (episodeLine(activity) || 'Assistindo')
     presenceData.largeImageKey = cover
-    presenceData.largeImageText = !privacy && activity.episodeTitle ? activity.episodeTitle : 'AnimesFHD'
+    presenceData.largeImageText = !privacy && activity.episodeTitle
+      ? activity.episodeTitle
+      : 'AnimesFHD'
     const video = playerVideo()
     if (video && !Number.isNaN(video.duration) && video.duration > 0) {
       if (video.paused) {
@@ -92,21 +100,37 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = 'Assistindo'
     }
     if (showButtons && !privacy) {
-      presenceData.buttons = [{ label: 'Assistir no AnimesFHD', url: href }]
+      presenceData.buttons = [
+        { label: 'Assistir no AnimesFHD', url: href },
+      ]
       if (activity.seriesUrl)
         presenceData.buttons.push({ label: 'Ver o anime', url: activity.seriesUrl })
     }
   }
   else if (/^\/assistir-junto\/[a-f0-9]{32}$/.test(pathname) && activity.page === 'watch-room') {
     const people = Number(activity.roomPeople || 0)
-    presenceData.details = privacy || !activity.title ? 'Assistindo junto' : `Assistindo junto: ${activity.title}`
-    const roomParts = [privacy ? '' : episodeLine(activity), people ? `${people} ${people === 1 ? 'pessoa' : 'pessoas'} na sala` : '']
+    presenceData.details = privacy || !activity.title
+      ? 'Assistindo junto'
+      : `Assistindo junto: ${activity.title}`
+    const roomParts = [
+      privacy
+        ? ''
+        : episodeLine(activity),
+      people
+        ? `${people} ${people === 1
+          ? 'pessoa'
+          : 'pessoas'} na sala`
+        : '',
+    ]
     presenceData.state = roomParts.filter(Boolean).join(' • ') || 'Sala do AnimesFHD'
     presenceData.largeImageKey = cover
     presenceData.smallImageKey = Assets.Live
     presenceData.smallImageText = 'Sala ao vivo'
-    if (showButtons && !privacy && activity.roomPublic === '1')
-      presenceData.buttons = [{ label: 'Entrar na sala', url: href }]
+    if (showButtons && !privacy && activity.roomPublic === '1') {
+      presenceData.buttons = [
+        { label: 'Entrar na sala', url: href },
+      ]
+    }
   }
   else if (pathname === '/assistir-junto') {
     presenceData.details = 'Assistir junto'
@@ -115,17 +139,30 @@ presence.on('UpdateData', async () => {
   }
   else if (/^\/(?:serie|series)\//.test(pathname) && activity.page === 'series' && activity.title) {
     presenceData.details = 'Vendo um anime'
-    presenceData.state = privacy ? 'No AnimesFHD' : [activity.title, activity.season && activity.season !== '1' ? `T${activity.season}` : '', activity.audio || ''].filter(Boolean).join(' • ')
+    presenceData.state = privacy
+      ? 'No AnimesFHD'
+      : [
+          activity.title,
+          activity.season && activity.season !== '1'
+            ? `T${activity.season}`
+            : '',
+          activity.audio || '',
+        ].filter(Boolean).join(' • ')
     presenceData.largeImageKey = cover
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Lendo os detalhes'
-    if (showButtons && !privacy)
-      presenceData.buttons = [{ label: 'Ver o anime', url: href }]
+    if (showButtons && !privacy) {
+      presenceData.buttons = [
+        { label: 'Ver o anime', url: href },
+      ]
+    }
   }
   else if (pathname.startsWith('/animes/pesquisar') || (pathname === '/animes' && new URLSearchParams(search).get('q'))) {
     const query = new URLSearchParams(search).get('q')
     presenceData.details = 'Pesquisando animes'
-    presenceData.state = showSearch && !privacy && query ? `"${query.slice(0, 100)}"` : 'No catálogo'
+    presenceData.state = showSearch && !privacy && query
+      ? `"${query.slice(0, 100)}"`
+      : 'No catálogo'
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Pesquisando'
   }

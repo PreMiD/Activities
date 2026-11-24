@@ -14,7 +14,11 @@ export async function getProfilePicture(id: string): Promise<string | undefined>
   const index = cache.findIndex((val, _, __) => val.id === id)
   const _val = cache[index]
   if (index === -1) {
-    const _new: PictureCache = { id, url: await internal_getPFP(id), date: Date.now() }
+    const _new: PictureCache = {
+      id,
+      url: await internal_getPFP(id),
+      date: Date.now(),
+    }
     cache.push(_new)
     return _new.url
   }
@@ -74,7 +78,9 @@ export function determineSeason(preferAltName: boolean): SeasonResponse {
     }
   }
 
-  return multiTestForSeason(preferAltName ? [alternativeName, ...altNames, name] : [name, alternativeName, ...altNames])
+  return multiTestForSeason(preferAltName
+    ? [alternativeName, ...altNames, name]
+    : [name, alternativeName, ...altNames])
 }
 
 function multiTestForSeason(names: string[]): SeasonResponse {

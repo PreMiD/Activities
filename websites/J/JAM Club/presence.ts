@@ -47,8 +47,11 @@ presence.on('UpdateData', async () => {
     }
 
     const btn = await presence.getSetting<boolean>('buttons')
-    if (btn)
-      pd.buttons = [{ label: 'Смотреть', url: href }]
+    if (btn) {
+      pd.buttons = [
+        { label: 'Смотреть', url: href },
+      ]
+    }
   }
   else if (pathname === '/' || pathname === '/index.html') {
     pd.details = 'Главная страница'

@@ -40,7 +40,9 @@ presence.on('UpdateData', async () => {
           }
 
           else if (path.includes('view')) {
-            presenceData.state = await presence.getSetting('showtitle') ? `\"${document.querySelector('span.title_subject')?.textContent}\" 읽는 중` : '게시글 읽는 중'
+            presenceData.state = await presence.getSetting('showtitle')
+              ? `\"${document.querySelector('span.title_subject')?.textContent}\" 읽는 중`
+              : '게시글 읽는 중'
             presenceData.smallImageKey = Assets.Reading
           }
 
@@ -85,7 +87,9 @@ presence.on('UpdateData', async () => {
     }
 
     else if (document.location.hostname === 'gallog.dcinside.com') {
-      presenceData.details = await presence.getSetting('shownickname') ? `${document.querySelector('strong.nick_name')?.textContent}의 갤로그 보는 중` : '누군가의 갤로그 보는 중'
+      presenceData.details = await presence.getSetting('shownickname')
+        ? `${document.querySelector('strong.nick_name')?.textContent}의 갤로그 보는 중`
+        : '누군가의 갤로그 보는 중'
       presenceData.smallImageKey = Assets.Viewing
     }
 

@@ -443,7 +443,9 @@ function audioVariablesReplaced(str: string, info: MediaInfo) {
     ?.replace('%title%', info?.Name ?? 'unknown title')
     ?.replace(
       '%artist%',
-      info?.Artists.length === 0 ? 'unknown artists' : info?.Artists?.join(', '),
+      info?.Artists.length === 0
+        ? 'unknown artists'
+        : info?.Artists?.join(', '),
     )
     ?.replace('%releasedate%', info?.DateCreated ?? 'unknown date')
     ?.replace(
@@ -729,7 +731,9 @@ async function handleItemDetails(): Promise<void> {
 
         if (data.Overview) {
           description = data.Overview.slice(0, 40)
-            + (data.Overview.length > 40 ? '...' : '')
+            + (data.Overview.length > 40
+              ? '...'
+              : '')
         }
         presenceData.state = `${data.Type} ─ ${description}`
         break

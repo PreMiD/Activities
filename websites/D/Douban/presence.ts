@@ -75,13 +75,19 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Exploring Book Comments'
       }
       presenceData.state = getTitle()
-      presenceData.buttons = [{ label: 'View Book', url: href }]
+      presenceData.buttons = [
+        { label: 'View Book', url: href },
+      ]
     }
     else if (pathname.startsWith('/tag')) {
       presenceData.details = 'Exploring Book Tags'
-      presenceData.state = args[2] ? `Tag: ${args[2]}` : getTitle()
+      presenceData.state = args[2]
+        ? `Tag: ${args[2]}`
+        : getTitle()
       if (args[2]) {
-        presenceData.buttons = [{ label: 'View Tag', url: href }]
+        presenceData.buttons = [
+          { label: 'View Tag', url: href },
+        ]
       }
     }
     else if (pathname.startsWith('/updates')) {
@@ -114,7 +120,9 @@ presence.on('UpdateData', async () => {
         }
       }
       presenceData.state = getTitle()
-      presenceData.buttons = [{ label: 'View Movie', url: href }]
+      presenceData.buttons = [
+        { label: 'View Movie', url: href },
+      ]
     }
     else if (pathname.startsWith('/mine')) {
       presenceData.details = 'Viewing My Movie List'
@@ -131,7 +139,9 @@ presence.on('UpdateData', async () => {
     else if (pathname.startsWith('/review')) {
       presenceData.details = 'Viewing Movie Review'
       presenceData.state = getTitle()
-      presenceData.buttons = [{ label: 'View Review', url: href }]
+      presenceData.buttons = [
+        { label: 'View Review', url: href },
+      ]
     }
   }
 
@@ -155,7 +165,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = getTitle()
       }
       presenceData.state = getTitle()
-      presenceData.buttons = [{ label: 'View Music', url: href }]
+      presenceData.buttons = [
+        { label: 'View Music', url: href },
+      ]
     }
   }
 
@@ -167,7 +179,9 @@ presence.on('UpdateData', async () => {
     if (pathname.startsWith('/detail')) {
       presenceData.details = 'Viewing Douban Market Item'
       presenceData.state = getTitle()
-      presenceData.buttons = [{ label: 'View Item', url: href }]
+      presenceData.buttons = [
+        { label: 'View Item', url: href },
+      ]
     }
   }
 

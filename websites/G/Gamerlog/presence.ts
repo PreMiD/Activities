@@ -66,7 +66,9 @@ presence.on('UpdateData', async () => {
   }
 
   const isGamePage = segments[0] === 'game' && !!segments[1]
-  const game = isGamePage ? getGameInfo() : undefined
+  const game = isGamePage
+    ? getGameInfo()
+    : undefined
 
   if (document.querySelector(REVIEW_BOX)) {
     presenceData.details = 'Writing a review'
@@ -80,7 +82,9 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (isGamePage) {
-    presenceData.details = game ? `Viewing ${game.title}` : 'Viewing a game'
+    presenceData.details = game
+      ? `Viewing ${game.title}`
+      : 'Viewing a game'
     if (game?.developer)
       presenceData.state = `by ${game.developer}`
     if (game?.cover) {
@@ -122,14 +126,18 @@ presence.on('UpdateData', async () => {
   }
   else if ((segments[0] === 'list' || segments[0] === 'tier-list') && segments[1]) {
     const title = getPageTitle()
-    presenceData.details = segments[0] === 'tier-list' ? 'Viewing a tier list' : 'Viewing a list'
+    presenceData.details = segments[0] === 'tier-list'
+      ? 'Viewing a tier list'
+      : 'Viewing a list'
     if (title)
       presenceData.state = title
   }
   else if (segments[0] === 'profile') {
     if (!segments[1]) {
       const name = document.querySelector('h2.font-bold.text-foreground.text-lg')?.textContent?.trim()
-      presenceData.details = !hideOwnName && name ? `Viewing ${name}'s profile` : 'Viewing their profile'
+      presenceData.details = !hideOwnName && name
+        ? `Viewing ${name}'s profile`
+        : 'Viewing their profile'
     }
     else {
       presenceData.details = 'Viewing a profile'

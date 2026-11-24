@@ -15,14 +15,23 @@ function formatTitleFromURL(url: string): string {
 
   // Extract main content identifier from the URL
   const contentSegments = segments.filter(
-    s => !['movie', 'series', 'music-video', 'shortfilm', 'original', 'buy-ticket'].includes(s),
+    s => ![
+      'movie',
+      'series',
+      'music-video',
+      'shortfilm',
+      'original',
+      'buy-ticket',
+    ].includes(s),
   )
 
   // Process and capitalize title
   return contentSegments
     .join('-')
     .split('-')
-    .map(word => (word === 'ep' ? '' : word.charAt(0).toUpperCase() + word.slice(1)))
+    .map(word => (word === 'ep'
+      ? ''
+      : word.charAt(0).toUpperCase() + word.slice(1)))
     .filter(word => word)
     .join(' ')
 }
@@ -67,7 +76,9 @@ presence.on('UpdateData', async () => {
     if (seriesIndex !== -1 && seriesIndex + 1 < pathParts.length) {
       const seriesName = formatTitleFromURL(pathParts[seriesIndex + 1] || '')
       const episodeName
-        = seriesIndex + 3 < pathParts.length ? formatTitleFromURL(pathParts[seriesIndex + 3] || '') : null
+        = seriesIndex + 3 < pathParts.length
+          ? formatTitleFromURL(pathParts[seriesIndex + 3] || '')
+          : null
 
       presenceData.state = episodeNumber
         ? `${seriesName}: Episode ${episodeNumber}`
@@ -110,7 +121,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing Chorki'
   }
 
-  const video = isWatchPage ? document.querySelector('video') : null
+  const video = isWatchPage
+    ? document.querySelector('video')
+    : null
 
   if (video) {
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play

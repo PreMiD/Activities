@@ -10,7 +10,9 @@ export class RouteHandlers {
     const chatName = Utils.getInfoByName('chatName')
 
     const pageTypeElement = document.querySelector('.breadcrumb-title')
-    const pageTypeText = pageTypeElement ? pageTypeElement.textContent?.trim() : ''
+    const pageTypeText = pageTypeElement
+      ? pageTypeElement.textContent?.trim()
+      : ''
 
     let modelName: string | null
 

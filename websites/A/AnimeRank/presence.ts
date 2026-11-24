@@ -22,12 +22,16 @@ function getAnime(id: string): AnimeInfo | null {
   if (!pending.has(id)) {
     pending.add(id)
     fetch(`/api/anime/${id}`)
-      .then(r => (r.ok ? r.json() : null))
+      .then(r => (r.ok
+        ? r.json()
+        : null))
       .then((d) => {
         const a = d?.anime ?? d?.data ?? d
         const t = a?.title ?? {}
         const title = t.turkish || t.english || t.romaji || ''
-        animeCache.set(id, title ? { title, cover: a?.images?.coverLarge || a?.images?.coverSmall } : null)
+        animeCache.set(id, title
+          ? { title, cover: a?.images?.coverLarge || a?.images?.coverSmall }
+          : null)
       })
       .catch(() => animeCache.set(id, null))
       .finally(() => pending.delete(id))
@@ -95,8 +99,11 @@ presence.on('UpdateData', async () => {
       presenceData.state = title
       if (showCover && anime?.cover)
         presenceData.largeImageKey = anime.cover
-      if (showButtons)
-        presenceData.buttons = [{ label: 'Animeye Göz At', url: href }]
+      if (showButtons) {
+        presenceData.buttons = [
+          { label: 'Animeye Göz At', url: href },
+        ]
+      }
     }
     presenceData.smallImageKey = Assets.Viewing
   }

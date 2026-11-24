@@ -19,7 +19,9 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('buttons'),
   ])
   const presenceData: PresenceData = {
-    largeImageKey: !logo ? ActivityAssets.Logo : ActivityAssets.Logo2,
+    largeImageKey: !logo
+      ? ActivityAssets.Logo
+      : ActivityAssets.Logo2,
     startTimestamp: browsingTimestamp,
   }
   const { pathname, href, search } = document.location
@@ -64,7 +66,9 @@ presence.on('UpdateData', async () => {
       / ((document.querySelector('.reading-content')?.scrollHeight ?? 0)
         - window.innerHeight))
       * 100
-    progress = Math.ceil(progress) > 100 ? 100 : Math.ceil(progress)
+    progress = Math.ceil(progress) > 100
+      ? 100
+      : Math.ceil(progress)
     presenceData.details = isAdult ? 'Reading a webtoon' : title
     presenceData.state = `📖 ${chapter} 🔸 ${progress}%`
     presenceData.largeImageKey = title?.includes('Solo Leveling')
@@ -86,7 +90,9 @@ presence.on('UpdateData', async () => {
     if (document.querySelector('.manga-title-badges.adult')) {
       presenceData.details = 'Viewing a webtoon'
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.largeImageKey = logo === 0 ? ActivityAssets.Logo : ActivityAssets.Logo2
+      presenceData.largeImageKey = logo === 0
+        ? ActivityAssets.Logo
+        : ActivityAssets.Logo2
     }
     else {
       const title = document.querySelector('.post-title')?.textContent

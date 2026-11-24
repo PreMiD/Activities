@@ -85,7 +85,9 @@ function getStructuredDataImage(): string | undefined {
   for (const script of document.querySelectorAll<HTMLScriptElement>('script[type="application/ld+json"]')) {
     try {
       const data = JSON.parse(script.textContent || '') as { image?: string | string[] }
-      const image = Array.isArray(data.image) ? data.image[0] : data.image
+      const image = Array.isArray(data.image)
+        ? data.image[0]
+        : data.image
 
       if (typeof image === 'string' && image.includes('image.tmdb.org/t/p/w500/')) {
         return `https://images.weserv.nl/?url=${encodeURIComponent(image)}&w=92&h=92&fit=cover&output=jpg`
@@ -141,7 +143,9 @@ presence.on('UpdateData', async () => {
       ?.parentElement
     const watchingText = partyHeader?.querySelector<HTMLElement>(':scope > span:last-child')?.textContent?.trim()
     const partyStatus = partyId
-      ? `Watch Party${watchingText && /^\d+ watching$/.test(watchingText) ? ` • ${watchingText}` : ''}`
+      ? `Watch Party${watchingText && /^\d+ watching$/.test(watchingText)
+        ? ` • ${watchingText}`
+        : ''}`
       : undefined
     const title = player?.getAttribute('aria-label')?.replace(/^Video Player - /, '').trim()
       || player?.querySelector<HTMLElement>('h2')?.textContent?.trim()
@@ -207,7 +211,9 @@ presence.on('UpdateData', async () => {
         if (partyId && showJoinPartyButton) {
           const partyUrl = new URL(pathname, document.location.origin)
           partyUrl.searchParams.set('party', partyId)
-          presenceData.buttons = [{ label: 'Join Party', url: partyUrl.href }]
+          presenceData.buttons = [
+            { label: 'Join Party', url: partyUrl.href },
+          ]
         }
       }
 
@@ -231,9 +237,13 @@ presence.on('UpdateData', async () => {
   if (/^\/(?:movie|tv)\/[^/]+/.test(pathname)) {
     const mediaInfo = getMediaPageInfo()
     const isMovie = pathname.startsWith('/movie/')
-    const selectedSeason = isMovie ? undefined : getSelectedSeason()
+    const selectedSeason = isMovie
+      ? undefined
+      : getSelectedSeason()
     const title = mediaInfo.title || (isMovie ? 'Movie' : 'Series')
-    const titleWithYear = mediaInfo.year ? `${title} (${mediaInfo.year})` : title
+    const titleWithYear = mediaInfo.year
+      ? `${title} (${mediaInfo.year})`
+      : title
     const metadataText = [
       selectedSeason,
       mediaInfo.duration,

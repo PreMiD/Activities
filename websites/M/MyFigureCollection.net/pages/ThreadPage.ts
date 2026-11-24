@@ -5,7 +5,9 @@ export class ThreadPage extends BasePage {
   override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewThread
     presenceData.state = getTitle()
-    presenceData.buttons = [getButton(strings.buttonViewPage)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewPage),
+    ]
     return false
   }
 }

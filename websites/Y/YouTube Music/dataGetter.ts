@@ -1,5 +1,3 @@
-import { timestampFromFormat } from 'premid'
-
 export interface MediaData {
   playbackState: 'playing' | 'paused' | 'none'
   title?: string
@@ -26,7 +24,9 @@ export interface MediaDataGetter {
 function getTextContent(selector: string): string | undefined {
   const text = document.querySelector(selector)?.textContent?.trim()
 
-  return text && text.length > 0 ? text : undefined
+  return text && text.length > 0
+    ? text
+    : undefined
 }
 
 function getValidImageSource(...selectors: string[]): string | undefined {
@@ -102,7 +102,9 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
     const title = getTextContent('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')
     const artistElements = getPlayerLinks()
     const artistElement = artistElements[0]
-    const albumElement = artistElements.length > 1 ? artistElements[1] : null
+    const albumElement = artistElements.length > 1
+      ? artistElements[1]
+      : null
     const artwork = getValidImageSource('ytmusic-player-bar img.image', '#song-image img', 'ytmusic-player-bar img#img')
 
     const complexInfo = document.querySelector('.complex-string.ytmusic-player-bar')
@@ -160,7 +162,9 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   getVideoElement(): HTMLMediaElement | null {
     return document.querySelector<HTMLMediaElement>('.html5-main-video')
       ?? document.querySelector<HTMLMediaElement>('.video-stream')
-      ?? [...document.querySelectorAll<HTMLMediaElement>('video, audio')]
+      ?? [
+        ...document.querySelectorAll<HTMLMediaElement>('video, audio'),
+      ]
         .find(media => media.currentSrc && Number.isFinite(media.duration) && media.duration > 0)
         ?? null
   }
@@ -188,7 +192,10 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
 
     const times = timeText?.split(' / ') ?? []
     if (times.length === 2 && times[0] && times[1]) {
-      return [times[0].trim(), times[1].trim()]
+      return [
+        times[0].trim(),
+        times[1].trim(),
+      ]
     }
 
     const progressBar = document.querySelector('.time-info')

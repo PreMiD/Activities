@@ -9,7 +9,14 @@ const strings = {
   read: 'Reading',
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const modes = ['CW', 'LSB', 'USB', 'AM', 'FM', 'AMsync']
+const modes = [
+  'CW',
+  'LSB',
+  'USB',
+  'AM',
+  'FM',
+  'AMsync',
+]
 
 let frequency: string
 let mode = 2

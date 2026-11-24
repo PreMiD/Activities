@@ -60,12 +60,21 @@ function getPosterFromMeta(): string | null {
 function getMediaFromUrl(): { tipo: string, tmdbId: string | null, temporada: string | null, episodio: string | null } {
   const params = new URLSearchParams(window.location.search)
   const tipoRaw = (params.get('tipo') || params.get('type') || 'movie').toLowerCase()
-  const tipo = tipoRaw === 'tv' || tipoRaw === 'serie' || tipoRaw === 'series' ? 'tv' : 'movie'
+  const tipo = tipoRaw === 'tv' || tipoRaw === 'serie' || tipoRaw === 'series'
+    ? 'tv'
+    : 'movie'
   const tmdbId = params.get('id') || params.get('tmdb_id') || params.get('tmdbId')
   const temporada = params.get('temporada') || params.get('season')
   const episodio = params.get('episodio') || params.get('episode')
 
-  return { tipo, tmdbId: tmdbId ? tmdbId.trim() : null, temporada, episodio }
+  return {
+    tipo,
+    tmdbId: tmdbId
+      ? tmdbId.trim()
+      : null,
+    temporada,
+    episodio,
+  }
 }
 
 // La sinopsis vive en IDs distintos según la página: #detailsOverview en /details,
@@ -73,8 +82,11 @@ function getMediaFromUrl(): { tipo: string, tmdbId: string | null, temporada: st
 function getOverview(): string | null {
   const el = document.querySelector('#detailsOverview, #aboutOverview')
   const text = el?.textContent?.trim()
-  if (text && text !== 'Sin sinopsis disponible.')
-    return text.length > 120 ? `${text.slice(0, 117)}...` : text
+  if (text && text !== 'Sin sinopsis disponible.') {
+    return text.length > 120
+      ? `${text.slice(0, 117)}...`
+      : text
+  }
   return null
 }
 
@@ -85,7 +97,11 @@ function parseTitleFromDocumentTitle(): { titulo: string | null, temporada: stri
   const raw = document.title.replace(/\s*-\s*PelisVidHD\s*$/i, '').trim()
   const match = raw.match(/^(.*)\sT(\d+)\sE(\d+)$/i)
   if (match && match[1] && match[2] && match[3]) {
-    return { titulo: match[1].trim(), temporada: match[2], episodio: match[3] }
+    return {
+      titulo: match[1].trim(),
+      temporada: match[2],
+      episodio: match[3],
+    }
   }
   return { titulo: raw || null, temporada: null, episodio: null }
 }
@@ -111,9 +127,15 @@ presence.on('UpdateData', async () => {
     lastKey = key
   }
 
-  const poster = enFicha ? getPosterFromMeta() : null
-  const overview = enFicha ? getOverview() : null
-  const anio = enFicha && media.tipo === 'movie' ? getYear() : null
+  const poster = enFicha
+    ? getPosterFromMeta()
+    : null
+  const overview = enFicha
+    ? getOverview()
+    : null
+  const anio = enFicha && media.tipo === 'movie'
+    ? getYear()
+    : null
 
   const presenceData: PresenceData = {
     largeImageKey: poster || ActivityAssets.Logo,
@@ -128,7 +150,9 @@ presence.on('UpdateData', async () => {
     const tituloLimpio = titulo || (esSerie ? 'Serie' : 'Película')
     const tituloConDetalle = esSerie
       ? tituloLimpio
-      : (anio ? `${tituloLimpio} (${anio})` : tituloLimpio)
+      : (anio
+          ? `${tituloLimpio} (${anio})`
+          : tituloLimpio)
 
     presenceData.details = `${tituloConDetalle}`
     presenceData.name = tituloConDetalle
@@ -177,7 +201,9 @@ presence.on('UpdateData', async () => {
     const tituloLimpio = titulo || (esSerie ? 'Serie' : 'Película')
     const tituloConDetalle = esSerie
       ? tituloLimpio
-      : (anio ? `${tituloLimpio} (${anio})` : tituloLimpio)
+      : (anio
+          ? `${tituloLimpio} (${anio})`
+          : tituloLimpio)
 
     presenceData.details = `${tituloConDetalle}`
     presenceData.name = tituloConDetalle
@@ -192,7 +218,9 @@ presence.on('UpdateData', async () => {
     iFrameVideoData = null
     const query = new URLSearchParams(window.location.search).get('q')
     presenceData.smallImageKey = Assets.Search
-    presenceData.details = query ? `Buscando: ${query}` : 'Buscando contenido'
+    presenceData.details = query
+      ? `Buscando: ${query}`
+      : 'Buscando contenido'
     presenceData.state = 'PelisVidHD'
   }
   else if (path.includes('/login')) {

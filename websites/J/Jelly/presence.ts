@@ -7,7 +7,9 @@ const ANIMATED_LOGO = 'https://cdn.rcd.gg/PreMiD/websites/J/Jelly/assets/0.gif'
 const STILL_LOGO = 'https://cdn.rcd.gg/PreMiD/websites/J/Jelly/assets/1.png'
 
 function truncate(value: string, maxLength = 128): string {
-  return value.length <= maxLength ? value : `${value.slice(0, maxLength - 1)}…`
+  return value.length <= maxLength
+    ? value
+    : `${value.slice(0, maxLength - 1)}…`
 }
 
 let cachedImage: { url: string, asset: Promise<Blob | string> } | undefined
@@ -70,10 +72,14 @@ function getDetailActivity(): { details: string, state: string, imageUrl: string
     return
 
   const titleLogo = heading.nextElementSibling
-  const image = titleLogo instanceof HTMLImageElement ? titleLogo : hero.querySelector<HTMLImageElement>(':scope > div > img[src]')
+  const image = titleLogo instanceof HTMLImageElement
+    ? titleLogo
+    : hero.querySelector<HTMLImageElement>(':scope > div > img[src]')
   const imageUrl = image?.currentSrc || image?.src || JELLY_LOGO
   const isEpisode = Boolean(route[2])
-  const mediaType = document.location.pathname.startsWith('/media/movie/') ? 'movie' : 'series'
+  const mediaType = document.location.pathname.startsWith('/media/movie/')
+    ? 'movie'
+    : 'series'
   if (!isEpisode) {
     return {
       details: 'Consulte une fiche sur Jelly',
@@ -113,7 +119,9 @@ function getBrowsingState(): string {
     case '':
       return 'Accueil'
     case 'catalog':
-      return document.location.pathname === '/catalog/search' ? 'Recherche' : 'Catalogue'
+      return document.location.pathname === '/catalog/search'
+        ? 'Recherche'
+        : 'Catalogue'
     case 'discover':
       if (item) {
         return 'Découverte de films et de séries'
@@ -214,18 +222,28 @@ presence.on('UpdateData', async () => {
   const playback = getActivePlayback()
 
   if (!playback) {
-    const initialDetail = privacy ? undefined : getDetailActivity()
-    if (!showBrowsingStatus || (initialDetail && !(initialDetail.mediaType === 'movie' ? showMovies : showSeries))) {
+    const initialDetail = privacy
+      ? undefined
+      : getDetailActivity()
+    if (!showBrowsingStatus || (initialDetail && !(initialDetail.mediaType === 'movie'
+      ? showMovies
+      : showSeries))) {
       presence.clearActivity()
       return
     }
-    const imageUrl = (!privacy && showCover ? initialDetail?.imageUrl : undefined) ?? logo
+    const imageUrl = (!privacy && showCover
+      ? initialDetail?.imageUrl
+      : undefined) ?? logo
     const image = await getImageAsset(imageUrl)
-    const detail = privacy ? undefined : getDetailActivity()
+    const detail = privacy
+      ? undefined
+      : getDetailActivity()
     if (version !== updateVersion
       || document.location.pathname !== pathname
       || getActivePlayback()
-      || ((!privacy && showCover ? detail?.imageUrl : undefined) ?? logo) !== imageUrl) {
+      || ((!privacy && showCover
+        ? detail?.imageUrl
+        : undefined) ?? logo) !== imageUrl) {
       return
     }
 
@@ -238,7 +256,11 @@ presence.on('UpdateData', async () => {
       largeImageText: detail?.largeImageText ?? 'Jelly',
       ...(showSmallImages && { smallImageKey: Assets.Reading, smallImageText: 'Navigation' }),
       // Le guide PreMiD interdit un bouton vers l'accueil : seule une fiche précise en reçoit un.
-      ...(detail && { buttons: [{ label: 'Voir la fiche', url: document.location.href }] }),
+      ...(detail && {
+        buttons: [
+          { label: 'Voir la fiche', url: document.location.href },
+        ],
+      }),
     })
     return
   }
@@ -250,7 +272,9 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  const imageUrl = (!privacy && showCover ? player.dataset.premidImage?.trim() : undefined) || logo
+  const imageUrl = (!privacy && showCover
+    ? player.dataset.premidImage?.trim()
+    : undefined) || logo
   const image = await getImageAsset(imageUrl)
 
   // Le chargement d'image peut finir après une navigation ou la fin de lecture.
@@ -259,7 +283,9 @@ presence.on('UpdateData', async () => {
     || !player.isConnected
     || player.dataset.premidActive !== 'true'
     || player.dataset.premidPlaybackState === 'ended'
-    || ((!privacy && showCover ? player.dataset.premidImage?.trim() : undefined) || logo) !== imageUrl) {
+    || ((!privacy && showCover
+      ? player.dataset.premidImage?.trim()
+      : undefined) || logo) !== imageUrl) {
     return
   }
 
@@ -272,13 +298,23 @@ presence.on('UpdateData', async () => {
   const activity: PresenceData = {
     type: ActivityType.Watching,
     details: `Regarde ${mediaType} sur Jelly`,
-    ...(!privacy && { state: truncate([currentTitle, episode].filter(Boolean).join(' · ')) }),
-    ...(!privacy && usePresenceName && { name: truncate(currentTitle) }),
+    ...(!privacy && {
+      state: truncate([currentTitle, episode].filter(Boolean).join(' · ')),
+    }),
+    ...(!privacy && usePresenceName && {
+      name: truncate(currentTitle),
+    }),
     largeImageKey: image,
-    largeImageText: privacy ? 'Jelly' : truncate(currentTitle),
+    largeImageText: privacy
+      ? 'Jelly'
+      : truncate(currentTitle),
     ...(showSmallImages && {
-      smallImageKey: isPlaying && !video.paused ? Assets.Play : Assets.Pause,
-      smallImageText: isPlaying && !video.paused ? 'Lecture' : 'En pause',
+      smallImageKey: isPlaying && !video.paused
+        ? Assets.Play
+        : Assets.Pause,
+      smallImageText: isPlaying && !video.paused
+        ? 'Lecture'
+        : 'En pause',
     }),
   }
 

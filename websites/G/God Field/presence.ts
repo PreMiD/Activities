@@ -5,7 +5,16 @@ const presence = new Presence({
 })
 
 const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/logo.png'
-const LANGS = ['ja', 'en', 'fr', 'ko', 'pt', 'ru', 'zh-hans', 'zh-hant']
+const LANGS = [
+  'ja',
+  'en',
+  'fr',
+  'ko',
+  'pt',
+  'ru',
+  'zh-hans',
+  'zh-hant',
+]
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 type Mode = 'training' | 'private' | 'duel'
@@ -41,7 +50,9 @@ function loadTexts(): Promise<void> {
   loading = Promise.all(LANGS.map(async (lang) => {
     try {
       const res = await fetch(`${location.origin}/i18n/${lang}.json`)
-      return res.ok ? ((await res.json()) as { texts: Texts }).texts : null
+      return res.ok
+        ? ((await res.json()) as { texts: Texts }).texts
+        : null
     }
     catch {
       return null
@@ -94,7 +105,9 @@ presence.on('UpdateData', async () => {
   // 画面に表示されている文字だけを見たい (隠れている要素の文字は含めたくない) ので innerText を使う
   // eslint-disable-next-line unicorn/prefer-dom-node-text-content
   const body = document.body.innerText
-  const modeName = (t: Texts | undefined) => (lastMode && t ? t.modeNames[lastMode] : null)
+  const modeName = (t: Texts | undefined) => (lastMode && t
+    ? t.modeNames[lastMode]
+    : null)
 
   // ***** 対戦中・決着 *****
   // 対戦画面: 「戦いをあきらめる」などのボタンは常に見えているとは限らないので、
@@ -105,16 +118,23 @@ presence.on('UpdateData', async () => {
     ?? has(body, t => t.game.endingWin)
     ?? has(body, t => t.game.endingDraw)
     ?? has(body, t => t.game.usedMiracles)
-    ?? (/HP\s*\d+/.test(body) && /MP\s*\d+/.test(body) ? texts[0] : undefined)
+    ?? (/HP\s*\d+/.test(body) && /MP\s*\d+/.test(body)
+      ? texts[0]
+      : undefined)
   if (inGame) {
     battleSince ||= Math.floor(Date.now() / 1000)
     const ended = has(body, t => t.game.endingWin) ?? has(body, t => t.game.endingDraw)
     presenceData.details = ended ? '決着がついた' : '対戦中'
-    const name = showMode ? modeName(inGame) : null
+    const name = showMode
+      ? modeName(inGame)
+      : null
     // 「HP77 MP27」のような表示の数 = 対戦しているプレイヤーの数
     const alive = (body.match(/HP\s*\d+/g) ?? []).length
-    if (name)
-      presenceData.state = showCount && alive > 0 && !ended ? `${name}（${alive}人）` : name
+    if (name) {
+      presenceData.state = showCount && alive > 0 && !ended
+        ? `${name}（${alive}人）`
+        : name
+    }
     presenceData.smallImageKey = Assets.Play
     presenceData.startTimestamp = battleSince
     presence.setActivity(presenceData)
@@ -139,7 +159,9 @@ presence.on('UpdateData', async () => {
         const [before, after] = menu.menu.userCount.split('{{count}}')
         const escape = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
         const re = new RegExp(`${escape((before ?? '').trim())}\\s*(\\d+)\\s*${escape((after ?? '').trim())}`, 'g')
-        const total = [...body.matchAll(re)].reduce((sum, m) => sum + Number(m[1]), 0)
+        const total = [
+          ...body.matchAll(re),
+        ].reduce((sum, m) => sum + Number(m[1]), 0)
         if (total > 0)
           presenceData.state = `オンライン ${total}人`
       }
@@ -170,15 +192,21 @@ presence.on('UpdateData', async () => {
   // ***** 修行・隠れ乱闘の待機画面 *****
   // 修行の画面にも「戦いを始める」ボタンがあるので、修行 (「修行者 N 人」) を先に判定する
   const training = has(body, t => t.training.players)
-  const priv = training ? undefined : (has(body, t => t.private.shuffleTeams) ?? has(body, t => t.private.chatLog) ?? has(body, t => t.private.startGame))
+  const priv = training
+    ? undefined
+    : (has(body, t => t.private.shuffleTeams) ?? has(body, t => t.private.chatLog) ?? has(body, t => t.private.startGame))
   if (training || priv) {
     lastMode = training ? 'training' : 'private'
     presenceData.details = '対戦相手を待っています'
-    const name = showMode ? modeName(training || priv) : null
+    const name = showMode
+      ? modeName(training || priv)
+      : null
     if (name)
       presenceData.state = name
     const count = showCount
-      ? lastMode === 'private' ? readCount(body, t => t.private.userCount) : readCount(body, t => t.training.playerCount)
+      ? lastMode === 'private'
+        ? readCount(body, t => t.private.userCount)
+        : readCount(body, t => t.training.playerCount)
       : null
     if (count !== null && name)
       presenceData.state = `${name}（${count}人）`

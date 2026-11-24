@@ -90,7 +90,10 @@ export function buildActivity(page: Page, settings: Settings, strings: Strings):
       break
   }
 
-  if (button && settings.buttons)
-    data.buttons = [{ label: button, url: page.url }]
+  if (button && settings.buttons) {
+    data.buttons = [
+      { label: button, url: page.url },
+    ]
+  }
   return data
 }

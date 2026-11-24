@@ -56,7 +56,9 @@ function getCoverUrl(): string | undefined {
     return undefined
 
   const hash = art.slice('cover|'.length)
-  return hash ? `https://haul.fm/covers/${hash}-300.webp` : undefined
+  return hash
+    ? `https://haul.fm/covers/${hash}-300.webp`
+    : undefined
 }
 
 /** Name of the live presenter, or undefined while AutoDJ is on air. */
@@ -65,7 +67,9 @@ function getLivePresenter(): string | undefined {
     return undefined
 
   const name = getText('onair-name')
-  return name?.toLowerCase() === 'autodj' ? undefined : name
+  return name?.toLowerCase() === 'autodj'
+    ? undefined
+    : name
 }
 
 function getPageDetails(): string {
@@ -86,7 +90,9 @@ presence.on('UpdateData', async () => {
 
   const isPlaying = Date.now() - lastPlayingAt < PAUSE_GRACE_MS
   const buttons: PresenceData['buttons'] = showButtons && !privacy
-    ? [{ label: 'Listen on haul.fm', url: LISTEN_URL }]
+    ? [
+        { label: 'Listen on haul.fm', url: LISTEN_URL },
+      ]
     : undefined
 
   if (!isPlaying) {
@@ -94,7 +100,9 @@ presence.on('UpdateData', async () => {
 
     presence.setActivity({
       largeImageKey: ActivityAssets.Logo,
-      details: privacy ? 'Browsing haul.fm' : getPageDetails(),
+      details: privacy
+        ? 'Browsing haul.fm'
+        : getPageDetails(),
       smallImageKey: ActivityAssets.Pause,
       smallImageText: 'Paused',
       buttons,
@@ -120,8 +128,12 @@ presence.on('UpdateData', async () => {
   else {
     const trackName = getText('mini-title', 'title')
     const artistName = getText('mini-artist', 'artist')
-    const presenter = showPresenter ? getLivePresenter() : undefined
-    const coverUrl = showCover ? getCoverUrl() : undefined
+    const presenter = showPresenter
+      ? getLivePresenter()
+      : undefined
+    const coverUrl = showCover
+      ? getCoverUrl()
+      : undefined
 
     presenceData.details = trackName ?? 'Listening to haul.fm'
     presenceData.state = trackName ? artistName : undefined

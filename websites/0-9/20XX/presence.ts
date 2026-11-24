@@ -133,7 +133,9 @@ presence.on('UpdateData', async () => {
 
     if (data20XX.user) {
       presenceData.state = `${data20XX.user.displayName} (${
-        data20XX.user.isGuest ? 'guest' : `rank ${data20XX.user.rank}`
+        data20XX.user.isGuest
+          ? 'guest'
+          : `rank ${data20XX.user.rank}`
       })`
       if (data20XX.serverInfo)
         presenceData.state += ` in ${data20XX.serverInfo.location}`

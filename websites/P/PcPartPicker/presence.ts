@@ -79,7 +79,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/user/')) {
     const section = pathname.split('\'/')[3]
     presenceData.details = `Viewing ${pathname.split('/')[2]}'s ${
-      section === '' ? 'profile' : section
+      section === ''
+        ? 'profile'
+        : section
     }`
     presenceData.buttons = [
       {
@@ -96,7 +98,9 @@ presence.on('UpdateData', async () => {
       'div.actionBox.actionBox__permalink > input.text-input',
     )
     presenceData.details = 'Building System'
-    presenceData.state = price ? `Price: ${price.textContent}` : 'Price: $0'
+    presenceData.state = price
+      ? `Price: ${price.textContent}`
+      : 'Price: $0'
     if (link) {
       presenceData.buttons = [
         {

@@ -29,7 +29,9 @@ presence.on('UpdateData', async () => {
       break
     case /^\/search$/.test(pathname):
       presenceData.details = 'Searching quizzes'
-      presenceData.state = privacy ? '' : document.querySelector('#term-display > span:nth-child(2)')?.textContent
+      presenceData.state = privacy
+        ? ''
+        : document.querySelector('#term-display > span:nth-child(2)')?.textContent
       presenceData.smallImageKey = Assets.Search
       break
     case /^\/(?:user-)?quizzes.*$/.test(pathname):
@@ -42,7 +44,9 @@ presence.on('UpdateData', async () => {
       ) {
         const timer = document.querySelector('.timer-cell > .timer')
         presenceData.details = privacy ? 'Take a quiz' : 'Take the quiz:'
-        presenceData.state = privacy ? '' : document.querySelector('.quiz-container > .quiz-top > .thumb-right > h1') || document.title
+        presenceData.state = privacy
+          ? ''
+          : document.querySelector('.quiz-container > .quiz-top > .thumb-right > h1') || document.title
         if (!privacy && cover)
           presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.quiz-container > .quiz-top > .thumb > img')?.src || ActivityAssets.Logo
         if (timer && window.getComputedStyle(timer).display === 'block') {
@@ -83,7 +87,9 @@ presence.on('UpdateData', async () => {
       else if (/^\/users\/[^/]+\/blog\/[^/]+$/.test(pathname)) {
         presenceData.details = 'Viewing blog:'
         presenceData.state = document.querySelector('.blog-page-content h1')?.textContent || document.title
-        presenceData.largeImageKey = (!privacy && cover) ? document.querySelector<HTMLImageElement>('.blog-page-content .blog img')?.src || ActivityAssets.Logo : ActivityAssets.Logo
+        presenceData.largeImageKey = (!privacy && cover)
+          ? document.querySelector<HTMLImageElement>('.blog-page-content .blog img')?.src || ActivityAssets.Logo
+          : ActivityAssets.Logo
       }
       else if (/^\/users\/[^/]+\/blog\/?$/.test(pathname)) {
         presenceData.details = `Viewing ${document.querySelector('.blog-user-content h1')?.textContent || document.title}`

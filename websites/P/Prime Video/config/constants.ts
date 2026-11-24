@@ -46,7 +46,14 @@ export const TRACKED_REQUEST_REGEX = new RegExp([PLAYBACK_PATH_REGEX, UPDATE_SES
 
 // API used by the player overlay to display title / episode / live guide
 export const PLAYER_CHROME_PATH = '/cdp/lumina/playerChromeResources/v1'
-export const FORWARDED_PARAMS = ['deviceID', 'deviceTypeID', 'marketplaceID', 'uxLocale', 'firmware', 'gascEnabled']
+export const FORWARDED_PARAMS = [
+  'deviceID',
+  'deviceTypeID',
+  'marketplaceID',
+  'uxLocale',
+  'firmware',
+  'gascEnabled',
+]
 
 export const RETRY_DELAY_MS = 10_000
 export const SCHEDULE_REFRESH_MS = 15 * 60 * 1000

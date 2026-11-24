@@ -19,7 +19,9 @@ function getImportantPath(): string[] {
 
 function getTitle(): string {
   const split = document.title.match(/(.*) [|-]/)
-  return split ? split[1]!.trim() : document.title
+  return split
+    ? split[1]!.trim()
+    : document.title
 }
 
 function applyCharacterSlideshow(presenceData: PresenceData): void {
@@ -240,12 +242,16 @@ presence.on('UpdateData', () => {
             container?.nextElementSibling?.textContent
           }`
           presenceData.largeImageKey = container?.querySelector('img')?.src
-          presenceData.buttons = [{ label: strings?.buttonViewPage ?? '', url: href }]
+          presenceData.buttons = [
+            { label: strings?.buttonViewPage ?? '', url: href },
+          ]
           break
         }
         case 'artworks': {
           presenceData.details = `VRoid Hub - ${strings?.readingAPost}`
-          presenceData.buttons = [{ label: strings?.buttonViewPage ?? '', url: href }]
+          presenceData.buttons = [
+            { label: strings?.buttonViewPage ?? '', url: href },
+          ]
           applyArtworkSlideshow(presenceData)
           break
         }
@@ -260,7 +266,9 @@ presence.on('UpdateData', () => {
           presenceData.largeImageKey = getComputedStyle(
             container?.querySelector<HTMLDivElement>('div[style]') as Element,
           )?.backgroundImage?.match(/url\("(.*)"\)/)?.[1]
-          presenceData.buttons = [{ label: strings?.buttonViewPage ?? '', url: href }]
+          presenceData.buttons = [
+            { label: strings?.buttonViewPage ?? '', url: href },
+          ]
           break
         }
         case 'models': {
@@ -321,7 +329,9 @@ presence.on('UpdateData', () => {
               ?.childNodes ?? [],
           ]
             .map((node) => {
-              return node.nodeName === 'svg' ? '❤️' : node.textContent
+              return node.nodeName === 'svg'
+                ? '❤️'
+                : node.textContent
             })
             .join('')
           if (pathList[1] === 'artworks')

@@ -36,7 +36,9 @@ function updatePresence() {
     const total = pomoInfo?.[2]
 
     presenceData.details = taskText || 'Focusing 📖'
-    presenceData.state = done && total ? `${done} / ${total} tasks done ✅` : undefined
+    presenceData.state = done && total
+      ? `${done} / ${total} tasks done ✅`
+      : undefined
     presenceData.startTimestamp = focusStartTS
   }
   else {

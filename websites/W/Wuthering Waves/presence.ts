@@ -155,7 +155,9 @@ presence.on('UpdateData', async () => {
               presenceData.largeImageKey = document.querySelector<HTMLImageElement>(selectors.regionImage)
               presenceData.details = strings.readingRegion
               presenceData.state = document.querySelector(selectors.regionName)
-              if (mapDetail && (isMobile ? mapDetail.style.display !== 'none' : true)) {
+              if (mapDetail && (isMobile
+                ? mapDetail.style.display !== 'none'
+                : true)) {
                 presenceData.smallImageKey = mapDetail.querySelector<HTMLImageElement>(selectors.regionSubImage)
                 presenceData.smallImageText = `${mapDetail.querySelector(selectors.regionSubName)?.textContent} - ${mapDetail.querySelector(selectors.regionSubDescription)?.textContent}`
               }

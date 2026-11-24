@@ -9,7 +9,15 @@ interface ServerInfo {
   display: string
 }
 
-const INVALID_SERVER_CODES = new Set(['FO', 'TH', 'ME', 'SE', 'AC', 'WH', 'CO'])
+const INVALID_SERVER_CODES = new Set([
+  'FO',
+  'TH',
+  'ME',
+  'SE',
+  'AC',
+  'WH',
+  'CO',
+])
 
 function getServerInfo(pathname: string): ServerInfo | null {
   // Must match exact 2-letter segment (e.g. /forum/en/ or /forum/de_2/) and NOT words like /forum/forums/
@@ -60,7 +68,9 @@ presence.on('UpdateData', async () => {
   const { pathname, search } = document.location
 
   const serverInfo = getServerInfo(pathname)
-  const serverPrefix = (showServer && serverInfo) ? `${serverInfo.display} • ` : ''
+  const serverPrefix = (showServer && serverInfo)
+    ? `${serverInfo.display} • `
+    : ''
 
   const getPageTitle = (): string | undefined => {
     const el = document.querySelector('.p-title-value') || document.querySelector('h1')

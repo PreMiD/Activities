@@ -30,7 +30,9 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'In a call with:'
         presenceData.smallImageKey = Assets.Call
       }
-      presenceData.state = callRecipient ? users.join(', ') : '(Hidden)'
+      presenceData.state = callRecipient
+        ? users.join(', ')
+        : '(Hidden)'
     }
     else if (document.querySelector('span')?.textContent) {
       presenceData.details = 'In a Messenger room'

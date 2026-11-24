@@ -62,8 +62,12 @@ presence.on('UpdateData', async () => {
   for (const [path, data] of Object.entries(pages)) {
     if (
       `/${path}` === document.querySelector('.active.item')?.getAttribute('href')
-    )
-      presenceData = { ...presenceData, ...data } as PresenceData
+    ) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   // Handle users

@@ -162,7 +162,9 @@ presence.on('UpdateData', async () => {
       // Fetch manga data from API (uses cache if available)
       const mangaData = await getMangaData(mangaId)
       if (mangaData) {
-        presenceData.details = displayReading ? `looking at ${mangaData.title}` : 'looking at something'
+        presenceData.details = displayReading
+          ? `looking at ${mangaData.title}`
+          : 'looking at something'
         presenceData.detailsUrl = displayReading ? href : undefined
 
         // Build state string for comic page based on user settings
@@ -217,7 +219,9 @@ presence.on('UpdateData', async () => {
         }
 
         // Display reading status with format type
-        presenceData.details = displayReading ? `Reading ${mangaCache.get(chapterData.manga_id)?.title}` : `Reading a something`
+        presenceData.details = displayReading
+          ? `Reading ${mangaCache.get(chapterData.manga_id)?.title}`
+          : `Reading a something`
         presenceData.detailsUrl = displayReading ? href : undefined
         // Build state string based on user settings
         const mangaInfo = mangaCache.get(chapterData.manga_id)
@@ -249,7 +253,9 @@ presence.on('UpdateData', async () => {
             ? mangaCache.get(chapterData.manga_id)?.cover_portrait_url || mangaCache.get(chapterData.manga_id)?.cover_image_url || SHINIGAMI_KOMIK_ID_LOGO
             : chapterData.thumbnail_image_url
         }
-        presenceData.largeImageText = displayReading ? chapterData.chapter_title || mangaCache.get(chapterData.manga_id)?.title : `Reading a ${mangaCache.get(chapterData.manga_id)?.taxonomy.Format.map(f => f.slug).join(', ')}`
+        presenceData.largeImageText = displayReading
+          ? chapterData.chapter_title || mangaCache.get(chapterData.manga_id)?.title
+          : `Reading a ${mangaCache.get(chapterData.manga_id)?.taxonomy.Format.map(f => f.slug).join(', ')}`
         presenceData.statusDisplayType = displayReading ? StatusDisplayType.State : StatusDisplayType.Details
       }
     }

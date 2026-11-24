@@ -40,12 +40,18 @@ presence.on('UpdateData', async () => {
 
   // Page title and banner are only used by the player and the detail pages
   const needsPageInfo = playerActive || document.location.pathname.includes(DETAIL_PATH)
-  const pageTitle = needsPageInfo ? findPageTitle() : undefined
-  const bannerImg = needsPageInfo && showCover ? findBannerImage() : undefined
+  const pageTitle = needsPageInfo
+    ? findPageTitle()
+    : undefined
+  const bannerImg = needsPageInfo && showCover
+    ? findBannerImage()
+    : undefined
 
   // Title and episode come from the playback API, even when the player overlay is hidden.
   // While a new media is loading, the previous activity is kept.
-  const metadata = playerActive ? getPlaybackMetadata() : null
+  const metadata = playerActive
+    ? getPlaybackMetadata()
+    : null
   if (playerActive && !metadata && isMetadataLoading())
     return
   const viewerTime = video && !Number.isFinite(video.duration)
@@ -70,7 +76,13 @@ presence.on('UpdateData', async () => {
   }
   else {
     resetElapsedTime()
-    applyBrowsingPresence(presenceData, { pathname: document.location.pathname, pageTitle, bannerImg, showCover, imageType })
+    applyBrowsingPresence(presenceData, {
+      pathname: document.location.pathname,
+      pageTitle,
+      bannerImg,
+      showCover,
+      imageType,
+    })
   }
 
   // Without any timestamp, Discord shows a timer that resets after ~1h10: the fixed start is kept

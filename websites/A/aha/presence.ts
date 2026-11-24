@@ -87,7 +87,9 @@ presence.on('UpdateData', async () => {
       )?.textContent
       currentPresenceData.details = 'Watching'
 
-      currentPresenceData.state = subtitle ? `${title} | ${subtitle}` : title
+      currentPresenceData.state = subtitle
+        ? `${title} | ${subtitle}`
+        : title
       break
     }
     case pathname.includes('/account'):

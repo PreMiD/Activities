@@ -90,8 +90,12 @@ presence.on('UpdateData', async () => {
       const pageParams = new URLSearchParams(window.location.search)
 
       presenceData.state = `Page ${
-        pageParams.has('page') ? pageParams.get('page') : 1
-      } of ${outof === 0 ? 1 : outof}`
+        pageParams.has('page')
+          ? pageParams.get('page')
+          : 1
+      } of ${outof === 0
+        ? 1
+        : outof}`
     }
   }
   else if (document.location.pathname.includes('/tasks')) {

@@ -64,7 +64,10 @@ presence.on('UpdateData', async () => {
     for (const [k, v] of Object.entries(statics)) {
       if (path.match(k)) {
         presenceData.largeImageKey = ActivityAssets.Logo
-        presenceData = { ...presenceData, ...v } as PresenceData
+        presenceData = {
+          ...presenceData,
+          ...v,
+        } as PresenceData
       }
     }
   }
@@ -93,7 +96,10 @@ presence.on('UpdateData', async () => {
         for (const [k, v] of Object.entries(statics)) {
           if (path.match(k)) {
             presenceData.largeImageKey = ActivityAssets.Tft
-            presenceData = { ...presenceData, ...v } as PresenceData
+            presenceData = {
+              ...presenceData,
+              ...v,
+            } as PresenceData
           }
         }
 
@@ -126,7 +132,10 @@ presence.on('UpdateData', async () => {
         for (const [k, v] of Object.entries(statics)) {
           if (path.match(k)) {
             presenceData.largeImageKey = ActivityAssets.Wildrift
-            presenceData = { ...presenceData, ...v } as PresenceData
+            presenceData = {
+              ...presenceData,
+              ...v,
+            } as PresenceData
           }
         }
 
@@ -175,7 +184,10 @@ presence.on('UpdateData', async () => {
         for (const [k, v] of Object.entries(statics)) {
           if (path.match(k)) {
             presenceData.largeImageKey = ActivityAssets.Valorant
-            presenceData = { ...presenceData, ...v } as PresenceData
+            presenceData = {
+              ...presenceData,
+              ...v,
+            } as PresenceData
           }
         }
 
@@ -257,7 +269,10 @@ presence.on('UpdateData', async () => {
           for (const [k, v] of Object.entries(statics)) {
             if (path.match(k)) {
               presenceData.largeImageKey = ActivityAssets.Lol
-              presenceData = { ...presenceData, ...v } as PresenceData
+              presenceData = {
+                ...presenceData,
+                ...v,
+              } as PresenceData
             }
           }
         }
@@ -284,7 +299,10 @@ presence.on('UpdateData', async () => {
           for (const [k, v] of Object.entries(statics)) {
             if (path.match(k)) {
               presenceData.largeImageKey = ActivityAssets.Lor
-              presenceData = { ...presenceData, ...v } as PresenceData
+              presenceData = {
+                ...presenceData,
+                ...v,
+              } as PresenceData
             }
           }
         }

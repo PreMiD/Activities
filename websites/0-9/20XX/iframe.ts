@@ -103,7 +103,9 @@ const guessKeys: ItemMap = {
 function guessMap(map: Map20XX): string | null {
   const camera = map.spawns.find((spawn: Spawn20XX) => spawn.type === 'camera')
   const guessKey = `${map.size.x}:${map.size.y}:${
-    camera ? `${camera.pos.x}:${camera.pos.y}` : 'n'
+    camera
+      ? `${camera.pos.x}:${camera.pos.y}`
+      : 'n'
   }:${map.spawns.length}:${map.doodads.length}`
   return guessKeys[guessKey] || null
 }

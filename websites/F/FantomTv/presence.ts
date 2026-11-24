@@ -150,7 +150,12 @@ presence.on('UpdateData', async () => {
 
       if (shouldFetch) {
         movie = await fetchMovieDetails(id)
-        currentState = { type, id, lastUpdate: now, data: movie }
+        currentState = {
+          type,
+          id,
+          lastUpdate: now,
+          data: movie,
+        }
       }
 
       if (movie) {
@@ -222,7 +227,12 @@ presence.on('UpdateData', async () => {
     else if (type === 'anime' && id) {
       // Reset current state for anime since we don't fetch API data
       if (currentState.type !== 'anime' || currentState.id !== id) {
-        currentState = { type: 'anime', id, lastUpdate: now, data: null }
+        currentState = {
+          type: 'anime',
+          id,
+          lastUpdate: now,
+          data: null,
+        }
       }
 
       const animeTitle
@@ -239,7 +249,12 @@ presence.on('UpdateData', async () => {
   }
   else {
     // Reset current state when not watching
-    currentState = { type: '', id: '', lastUpdate: 0, data: null }
+    currentState = {
+      type: '',
+      id: '',
+      lastUpdate: 0,
+      data: null,
+    }
 
     if (
       document.getElementById('details-modal')

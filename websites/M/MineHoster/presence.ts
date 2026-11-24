@@ -298,7 +298,9 @@ presence.on('UpdateData', async () => {
     const searchModalElement = document.querySelector('[class*=InputSpinner__Container]')
     const serverMatch = pathname.match(/\/server\/([a-f0-9]+)/)
     const serverID = serverMatch ? serverMatch[1] : null
-    const shortServerID = serverID ? `#${serverID.substring(0, 8)}` : null
+    const shortServerID = serverID
+      ? `#${serverID.substring(0, 8)}`
+      : null
 
     presenceData.name = showGamepanelName ? 'MineHoster Gamepanel' : 'MineHoster'
 
@@ -533,12 +535,16 @@ presence.on('UpdateData', async () => {
       const pageNumbers = Array.from(pageButtons)
         .map(btn => Number.parseInt(btn.textContent))
         .filter(num => !Number.isNaN(num))
-      const totalPages = pageNumbers.length > 0 ? Math.max(...pageNumbers) : 1
+      const totalPages = pageNumbers.length > 0
+        ? Math.max(...pageNumbers)
+        : 1
 
       presenceData.details = strings.activityLogs
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
-        : `${editCount} ${strings.edits} / ${totalPages} ${totalPages !== 1 ? strings.pages : strings.page}`
+        : `${editCount} ${strings.edits} / ${totalPages} ${totalPages !== 1
+          ? strings.pages
+          : strings.page}`
       presenceData.smallImageKey = Images.book
     }
     else if (pathname.includes('/account')) {
@@ -566,10 +572,14 @@ presence.on('UpdateData', async () => {
 
       if (container) {
         const serverCount = container.querySelectorAll('a').length
-        presenceData.state = `${strings.viewing} ${serverCount} ${serverCount !== 1 ? strings.servers : strings.server}`
+        presenceData.state = `${strings.viewing} ${serverCount} ${serverCount !== 1
+          ? strings.servers
+          : strings.server}`
       }
       else {
-        presenceData.state = `${strings.searchingThrough} ${serverCount}  ${serverCount !== 1 ? strings.servers : strings.server}`
+        presenceData.state = `${strings.searchingThrough} ${serverCount}  ${serverCount !== 1
+          ? strings.servers
+          : strings.server}`
       }
     }
     else {
@@ -587,7 +597,9 @@ presence.on('UpdateData', async () => {
         : currentSearch
           ? `${strings.searching}: ${currentSearch}`
           : isHomepage
-            ? `${strings.searchingThrough} ${serverCount}  ${serverCount !== 1 ? strings.servers : strings.server}`
+            ? `${strings.searchingThrough} ${serverCount}  ${serverCount !== 1
+              ? strings.servers
+              : strings.server}`
             : ''
     }
   }

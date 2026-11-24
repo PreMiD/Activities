@@ -45,7 +45,9 @@ function blobToBase64(blob: Blob): Promise<string> {
 
 function extractWorkIdFromUrl(url: string): string | null {
   const match = url.match(/\/RJ(\d+)/i)
-  return match ? `RJ${match[1]}` : null
+  return match
+    ? `RJ${match[1]}`
+    : null
 }
 
 presence.on('UpdateData', async () => {
@@ -62,7 +64,9 @@ presence.on('UpdateData', async () => {
   const source = audio?.querySelector<HTMLSourceElement>('source')
   const audioSrc = source?.src
 
-  const actualPlayingId = audioSrc ? extractWorkIdFromUrl(audioSrc) : null
+  const actualPlayingId = audioSrc
+    ? extractWorkIdFromUrl(audioSrc)
+    : null
 
   if (audio && audioSrc) {
     const title = document.querySelector<HTMLElement>('.text-bold')?.textContent?.trim()
@@ -82,13 +86,17 @@ presence.on('UpdateData', async () => {
 
     const presenceData: PresenceData = {
       type: isPaused ? ActivityType.Watching : ActivityType.Listening,
-      details: privacy ? 'Listening to something...' : title || 'Listening...',
+      details: privacy
+        ? 'Listening to something...'
+        : title || 'Listening...',
       state: privacy ? undefined : description,
       startTimestamp: Math.floor(Date.now() / 1000) - Math.floor(currentTime),
       endTimestamp: isPaused
         ? undefined
         : Math.floor(Date.now() / 1000) + Math.floor(duration - currentTime),
-      largeImageKey: privacy ? ActivityAssets.Logo : (lastImageKey ?? ActivityAssets.Logo),
+      largeImageKey: privacy
+        ? ActivityAssets.Logo
+        : (lastImageKey ?? ActivityAssets.Logo),
       smallImageKey: isPaused ? Assets.Pause : Assets.Play,
       smallImageText: isPaused ? 'Paused' : 'Playing',
       buttons: !privacy && buttonsEnabled

@@ -96,7 +96,9 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/Trendyol/assets/logo.png',
       details: 'Bir ürüne göz atıyor:',
       state: `${product.textContent} | ${product2.textContent} ${
-        price && price.textContent !== '' ? `(${price.textContent})` : null
+        price && price.textContent !== ''
+          ? `(${price.textContent})`
+          : null
       }`,
       startTimestamp: Math.floor(Date.now() / 1000),
     })

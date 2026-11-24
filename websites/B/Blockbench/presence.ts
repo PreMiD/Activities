@@ -90,7 +90,9 @@ presence.on('UpdateData', async () => {
   else if (page.includes('/plugins') && pluginHeader) {
     presenceData.details = 'Looking at a plugin:'
     presenceData.state = pluginHeader
-    presenceData.buttons = [{ label: 'View Plugin', url: location.href }]
+    presenceData.buttons = [
+      { label: 'View Plugin', url: location.href },
+    ]
   }
   else if (page.includes('/wiki')) {
     presenceData.details = 'Blockbench Wiki'
@@ -101,7 +103,9 @@ presence.on('UpdateData', async () => {
     )?.textContent
     || document.querySelector('#wiki_wrapper div.content > h1')?.textContent
     || 'Unknown Wiki Page'
-    presenceData.buttons = [{ label: 'Read Wiki', url: location.href }]
+    presenceData.buttons = [
+      { label: 'Read Wiki', url: location.href },
+    ]
   }
   else if (pages[page]) {
     presenceData.details = `Looking at the ${pages[page]} page`

@@ -47,11 +47,17 @@ presence.on('UpdateData', async () => {
     // Informações
     presenceData.name = showTitleAsPresence ? anime_name : 'Anim'
     presenceData.details = showTitleAsPresence ? ep_name : anime_name
-    presenceData.state = showTitleAsPresence ? ep : `${ep} - ${ep_name}`;
-    [presenceData.startTimestamp, presenceData.endTimestamp] = paused ? [0, 0] : getTimestampsFromMedia(video)
+    presenceData.state = showTitleAsPresence
+      ? ep
+      : `${ep} - ${ep_name}`;
+    [presenceData.startTimestamp, presenceData.endTimestamp] = paused
+      ? [0, 0]
+      : getTimestampsFromMedia(video)
 
     // Imagens
-    presenceData.largeImageKey = showCover ? ep_preview ?? ActivityAssets.Logo : ActivityAssets.Logo
+    presenceData.largeImageKey = showCover
+      ? ep_preview ?? ActivityAssets.Logo
+      : ActivityAssets.Logo
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? 'Pausado' : 'Reproduzindo'
   }
@@ -74,7 +80,9 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = staticPages[pathnameArray[1] as string]?.details
     presenceData.state = staticPages[pathnameArray[1] as string]?.state
-    presenceData.largeImageKey = showCover ? staticPages[pathnameArray[1] as string]?.largeImageKey ?? ActivityAssets.Logo : ActivityAssets.Logo
+    presenceData.largeImageKey = showCover
+      ? staticPages[pathnameArray[1] as string]?.largeImageKey ?? ActivityAssets.Logo
+      : ActivityAssets.Logo
   }
 
   if (privacyMode) {

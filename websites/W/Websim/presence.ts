@@ -31,8 +31,12 @@ presence.on('iFrameData', (data) => {
     presenceData.largeImageKey = data.favicon
     presenceData.smallImageKey = Assets.Logo
   }
-  presenceData.details = (document.title.toLocaleLowerCase().includes('profile')) ? `Viewing ${document.title}` : `Playing ${document.title}`
-  presenceData.state = (data.isOwner) ? `This is their creation` : `By ${data.creator.username}`
+  presenceData.details = (document.title.toLocaleLowerCase().includes('profile'))
+    ? `Viewing ${document.title}`
+    : `Playing ${document.title}`
+  presenceData.state = (data.isOwner)
+    ? `This is their creation`
+    : `By ${data.creator.username}`
 })
 
 presence.on('UpdateData', async () => {
@@ -68,7 +72,9 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'View Project',
-        url: `https://websim.ai${pathArray[3] ? currentPath.substring(0, currentPath.lastIndexOf('/')) : currentPath}`,
+        url: `https://websim.ai${pathArray[3]
+          ? currentPath.substring(0, currentPath.lastIndexOf('/'))
+          : currentPath}`,
       },
     ]
     if (!btnPrivacy && pathArray[3]) {

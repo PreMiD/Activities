@@ -51,7 +51,9 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
     }
     case 'team-builder': {
       presenceData.details = 'Building a Team'
-      const activeCharacters = [...document.querySelectorAll('.character-box')]
+      const activeCharacters = [
+        ...document.querySelectorAll('.character-box'),
+      ]
       if (activeCharacters.length) {
         const key = activeCharacters.map(char => char.querySelector('h5')?.textContent).join('-')
         if (registerSlideshowKey(`limbus-company-team-build-${key}`)) {

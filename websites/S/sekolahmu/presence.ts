@@ -25,7 +25,9 @@ presence.on('UpdateData', () => {
         }
         else if (pathname.startsWith('/kelasku')) {
           const params = new URLSearchParams(search)
-          presenceData.state = (params.get('page') ?? '') === 'aktivitas-tambahan' ? 'Viewing the add-on classes' : 'Viewing the classes'
+          presenceData.state = (params.get('page') ?? '') === 'aktivitas-tambahan'
+            ? 'Viewing the add-on classes'
+            : 'Viewing the classes'
         }
         else if (pathname.startsWith('/laporan-belajar')) {
           presenceData.state = 'Viewing the learning report'
@@ -49,7 +51,9 @@ presence.on('UpdateData', () => {
       const asesmenPanel = `${baseApp} div.activity-v2-layout div.main div.outer-content`
       const asesmenName = document.querySelector(`${asesmenPanel} > div.activity-v2-content div.activity-v2-banner > h2`)?.textContent ?? '<loading..>'
       const getNav = (...name: [string, ...string[]]): boolean => {
-        return [...document.querySelectorAll(`${asesmenPanel} > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a`)].some((e) => {
+        return [
+          ...document.querySelectorAll(`${asesmenPanel} > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a`),
+        ].some((e) => {
           for (let i = 0; i < name.length; i++) {
             if (e.innerHTML.includes(name[i]!)) {
               return true

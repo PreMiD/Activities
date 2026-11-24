@@ -118,7 +118,9 @@ presence.on('UpdateData', async () => {
     }
 
     if (buttons) {
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
     }
   }
 
@@ -137,7 +139,9 @@ presence.on('UpdateData', async () => {
     }
 
     if (buttons) {
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
     }
   }
 
@@ -156,7 +160,9 @@ presence.on('UpdateData', async () => {
     }
 
     if (buttons) {
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
     }
   }
 
@@ -176,7 +182,9 @@ presence.on('UpdateData', async () => {
     }
 
     if (buttons) {
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
     }
   }
 
@@ -199,7 +207,9 @@ presence.on('UpdateData', async () => {
       }
 
       if (buttons) {
-        presenceData.buttons = [{ label: 'Read Chapter', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Chapter', url: href },
+        ]
       }
     }
   }
@@ -228,7 +238,9 @@ presence.on('UpdateData', async () => {
     }
 
     if (buttons) {
-      presenceData.buttons = [{ label: 'View Book', url: href }]
+      presenceData.buttons = [
+        { label: 'View Book', url: href },
+      ]
     }
   }
 
@@ -241,7 +253,9 @@ presence.on('UpdateData', async () => {
       = String(state).charAt(0).toUpperCase() + String(state).slice(1)
 
     if (buttons) {
-      presenceData.buttons = [{ label: 'Browse Genre', url: href }]
+      presenceData.buttons = [
+        { label: 'Browse Genre', url: href },
+      ]
     }
   }
 

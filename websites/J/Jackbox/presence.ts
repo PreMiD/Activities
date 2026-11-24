@@ -154,7 +154,10 @@ presence.on('UpdateData', async () => {
             infoState: gamePlayerInfoState,
             presence,
           })
-          presenceData = { ...presenceData, ...gamePresenceData }
+          presenceData = {
+            ...presenceData,
+            ...gamePresenceData,
+          }
         }
       }
       else {

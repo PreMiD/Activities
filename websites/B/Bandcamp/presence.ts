@@ -154,11 +154,17 @@ function getTrackInfo(player: Player | null): TrackInfo {
   const fromAlbum = document.querySelector('#name-section .fromAlbum')
 
   return {
-    title: player?.title ?? (isTrackPage() ? heading : undefined),
+    title: player?.title ?? (isTrackPage()
+      ? heading
+      : undefined),
     artist: artist?.textContent?.trim(),
     artistUrl: link(artist),
-    album: isTrackPage() ? fromAlbum?.textContent?.trim() : heading,
-    albumUrl: isTrackPage() ? link(fromAlbum?.closest('a')) : pageUrl(),
+    album: isTrackPage()
+      ? fromAlbum?.textContent?.trim()
+      : heading,
+    albumUrl: isTrackPage()
+      ? link(fromAlbum?.closest('a'))
+      : pageUrl(),
   }
 }
 
@@ -193,7 +199,9 @@ function getListeningData(player: Player, title: string, track: TrackInfo, setti
     presenceData.statusDisplayType = StatusDisplayType.Details
 
   if (settings.links) {
-    const detailsUrl = player.titleUrl ?? (isTrackPage() ? pageUrl() : undefined)
+    const detailsUrl = player.titleUrl ?? (isTrackPage()
+      ? pageUrl()
+      : undefined)
 
     if (detailsUrl)
       presenceData.detailsUrl = detailsUrl
@@ -224,7 +232,9 @@ function getBrowsingData(track: TrackInfo, settings: Settings): PresenceData {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
-  const fan = isDiscover() ? text('#fan-bio-vm .name h1 span') : undefined
+  const fan = isDiscover()
+    ? text('#fan-bio-vm .name h1 span')
+    : undefined
 
   if (document.location.hostname === 'daily.bandcamp.com') {
     const article = document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content
@@ -242,13 +252,17 @@ function getBrowsingData(track: TrackInfo, settings: Settings): PresenceData {
   else if (isAlbumPage() || isTrackPage()) {
     const name = [track.title ?? track.album, track.artist].filter(Boolean).join(' by ')
 
-    presenceData.details = isTrackPage() ? 'Viewing track' : 'Viewing album'
+    presenceData.details = isTrackPage()
+      ? 'Viewing track'
+      : 'Viewing album'
     if (name)
       presenceData.state = name
     presenceData.largeImageKey = getCover(settings)
   }
   else if (fan) {
-    presenceData.details = document.location.pathname.endsWith('/wishlist') ? strings.viewWishlist : strings.viewProfile
+    presenceData.details = document.location.pathname.endsWith('/wishlist')
+      ? strings.viewWishlist
+      : strings.viewProfile
     presenceData.state = fan
   }
   else {
@@ -275,7 +289,9 @@ presence.on('UpdateData', async () => {
     strings = await getStrings()
   }
 
-  const player = isDiscover() ? getDiscoverPlayer() : getPagePlayer()
+  const player = isDiscover()
+    ? getDiscoverPlayer()
+    : getPagePlayer()
   const track = getTrackInfo(player)
   const { title } = track
   const presenceData = player && title

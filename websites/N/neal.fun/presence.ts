@@ -186,7 +186,9 @@ presence.on('UpdateData', async () => {
       const type = document.querySelector('.item-type')?.textContent
       presenceData.state = `${
         document.querySelector('.item-title')?.textContent || '?'
-      }${type && type.trim() ? ` (${type.trim()})` : ''}`
+      }${type && type.trim()
+        ? ` (${type.trim()})`
+        : ''}`
       break
     }
     case 'life-stats': {

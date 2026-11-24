@@ -46,7 +46,10 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
         presenceData.details = 'Viewing a Character Build'
         presenceData.state = active.querySelector('.name')
         presenceData.smallImageKey = active.querySelector<HTMLImageElement>('[data-main-image]')
-        addButton(presenceData, { label: 'View Character', url: active.querySelector('a') })
+        addButton(presenceData, {
+          label: 'View Character',
+          url: active.querySelector('a'),
+        })
       }
       else {
         presenceData.details = 'Browsing Character Builds'
@@ -63,7 +66,12 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
         for (const team of teams) {
           const header = team.querySelector('.team-header .skill-name')?.textContent
           presenceData.state = `${mainFilter?.textContent} - ${subFilter?.textContent} - ${header}`
-          const data: PresenceData = { ...presenceData, smallImageKey: Assets.Question, smallImageText: [...team.querySelectorAll('.emp-name')].map(node => node.textContent).join(', '),
+          const data: PresenceData = {
+            ...presenceData,
+            smallImageKey: Assets.Question,
+            smallImageText: [
+              ...team.querySelectorAll('.emp-name'),
+            ].map(node => node.textContent).join(', '),
           }
           slideshow.addSlide(header ?? '', data, 5000)
         }

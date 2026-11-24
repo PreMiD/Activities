@@ -91,13 +91,16 @@ presence.on('UpdateData', async () => {
         presenceData.startTimestamp = videoData.startTimestamp
         presenceData.endTimestamp = videoData.endTimestamp
       }
-      presenceData.buttons = [{
-        label: 'View Playlist',
-        url: href,
-      }, {
-        label: 'View Song on YouTube',
-        url: `https://youtu.be/${videoData.id}`,
-      }]
+      presenceData.buttons = [
+        {
+          label: 'View Playlist',
+          url: href,
+        },
+        {
+          label: 'View Song on YouTube',
+          url: `https://youtu.be/${videoData.id}`,
+        },
+      ]
     }
   }
 

@@ -149,7 +149,9 @@ presence.on('UpdateData', async () => {
     const gameAwardsHeading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5')).find(
       el => el.textContent?.includes('Game Awards'),
     )
-    const gameAwardsNumbers = [...gameAwardsHeading?.textContent?.matchAll(/(?:👑|🎖)\s*(\d+)/g) ?? []]
+    const gameAwardsNumbers = [
+      ...gameAwardsHeading?.textContent?.matchAll(/(?:👑|🎖)\s*(\d+)/g) ?? [],
+    ]
     const gameAwardsCount = gameAwardsNumbers.length > 0
       ? gameAwardsNumbers.reduce((total, match) => total + Number(match[1]), 0)
       : undefined

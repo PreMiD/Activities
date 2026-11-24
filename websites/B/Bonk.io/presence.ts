@@ -61,7 +61,9 @@ presence.on('UpdateData', async () => {
       case 'newbonklobby':
         presenceData.details = `In a lobby - ${ifd.lastGameMode} (${
           ifd.playerCount
-        } player${ifd.playerCount === 1 ? '' : 's'})`
+        } player${ifd.playerCount === 1
+          ? ''
+          : 's'})`
         presenceData.smallImageKey = modePair[ifd.lastGameMode ?? ''] || ActivityAssets.Classic
         presenceData.smallImageText = ifd.lastGameMode
         break

@@ -34,7 +34,9 @@ presence.on('UpdateData', async () => {
       state: author,
       largeImageKey: ActivityAssets.Logo,
       smallImageKey: paused ? Assets.Pause : Assets.Play,
-      smallImageText: paused ? (await strings).pause : (await strings).play,
+      smallImageText: paused
+        ? (await strings).pause
+        : (await strings).play,
       startTimestamp,
       endTimestamp,
       buttons: [

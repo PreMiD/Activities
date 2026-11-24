@@ -46,7 +46,9 @@ async function parseAnimeInfo(raw: string | null): Promise<AnimeInfo> {
 
   const episodeMatch = cleaned.match(/episode[- ]?(\d+)/i)
   const episodeNumber = episodeMatch ? episodeMatch[1] : ''
-  const episode = episodeNumber ? `Episode ${episodeNumber}` : ''
+  const episode = episodeNumber
+    ? `Episode ${episodeNumber}`
+    : ''
 
   const title = cleaned
     .replace(/episode[- ]?\d.*$/gi, '')

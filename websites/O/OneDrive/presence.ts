@@ -29,7 +29,9 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = assets['office-logo']
     presenceData.smallImageText = 'Microsoft Office Online'
     presenceData.details = `Editing ${
-      fileType.charAt(0) === 'E' ? 'an' : 'a'
+      fileType.charAt(0) === 'E'
+        ? 'an'
+        : 'a'
     } ${fileType} file`
     presenceData.state = fileName
   }

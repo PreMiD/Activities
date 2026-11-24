@@ -28,7 +28,9 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('logo'),
   ])
   const presenceData: PresenceData = {
-    largeImageKey: logo === 0 ? ActivityAssets.Logo : ActivityAssets.Logo2,
+    largeImageKey: logo === 0
+      ? ActivityAssets.Logo
+      : ActivityAssets.Logo2,
   }
   const urlpath = window.location.pathname.split('/')
 

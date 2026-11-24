@@ -248,11 +248,15 @@ const canvasDataFunctions = {
 }
 
 function applyPrivacy(input: string, detail: string, isPrivate: boolean) {
-  return isPrivate ? input : `${input} for ${detail}`
+  return isPrivate
+    ? input
+    : `${input} for ${detail}`
 }
 
 function getNavigationPath(): string[] {
-  return [...(document.querySelector('#breadcrumbs > ol')?.children ?? [])]
+  return [
+    ...(document.querySelector('#breadcrumbs > ol')?.children ?? []),
+  ]
     .slice(1)
     .map((li) => {
       return li?.textContent ?? ''
@@ -708,7 +712,9 @@ presence.on('UpdateData', async () => {
                       .match(
                         /(?:([\d,]+) Years?, )?(?:(\d+) Months?, )?(?:(\d+) Days?, )?(?:(\d+) Hours?, )?(?:(\d+) Minutes?, )?(\d+) Seconds?/,
                       )!
-                      .map(x => (x ? +x.replaceAll(',', '') : 0)) as [number, number, number, number, number, number, number]
+                      .map(x => (x
+                        ? +x.replaceAll(',', '')
+                        : 0)) as [number, number, number, number, number, number, number]
                     const timeElapsed = new Date()
                     const daySeconds = seconds + minutes * 60 + hours * 3600 + days * 86400
                     if (timeElapsedType === 'Running') {

@@ -72,7 +72,9 @@ export function getMccLiveData(privacy: boolean): Partial<PresenceData> {
     state: `${event.slice(0, 128 - mode.length - 3)} · ${mode}`,
   }
   const image = selectedGameImage()
-  const asset = image ? gameAsset(image) : undefined
+  const asset = image
+    ? gameAsset(image)
+    : undefined
   const game = asset ? gameNames[asset] : undefined
   if (image && game) {
     result.smallImageKey = image

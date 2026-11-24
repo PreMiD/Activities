@@ -44,7 +44,9 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('li.active,img')?.src
         ?? ActivityAssets.Logo
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-      presenceData.buttons = [{ label: 'Bekijk Video', url: href }]
+      presenceData.buttons = [
+        { label: 'Bekijk Video', url: href },
+      ]
 
       if (!video.paused) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
@@ -71,7 +73,9 @@ presence.on('UpdateData', async () => {
         }
         case path.includes('/series'): {
           presenceData.details = 'Bekijkt alle series'
-          presenceData.buttons = [{ label: 'Bekijk Alle Series', url: href }]
+          presenceData.buttons = [
+            { label: 'Bekijk Alle Series', url: href },
+          ]
           break
         }
         case path.includes('/documentaires'): {
@@ -83,7 +87,9 @@ presence.on('UpdateData', async () => {
         }
         case path.includes('/films'): {
           presenceData.details = 'Bekijkt alle films'
-          presenceData.buttons = [{ label: 'Bekijk Alle Films', url: href }]
+          presenceData.buttons = [
+            { label: 'Bekijk Alle Films', url: href },
+          ]
           break
         }
       }
@@ -97,7 +103,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = privacy
         ? 'Bekijkt alle content van een omproep'
         : `Bekijkt alle content van ${path.split('/')[2]}`
-      presenceData.buttons = [{ label: 'Bekijk Al Hun Content', url: href }]
+      presenceData.buttons = [
+        { label: 'Bekijk Al Hun Content', url: href },
+      ]
       break
     }
     case path.includes('/collectie'): {
@@ -139,7 +147,9 @@ presence.on('UpdateData', async () => {
         : titel // Serie
       presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property="og:image"]')
         ?.content ?? ActivityAssets.Logo
-      presenceData.buttons = [{ label: 'Bekijk Content', url: href }]
+      presenceData.buttons = [
+        { label: 'Bekijk Content', url: href },
+      ]
     }
   }
 

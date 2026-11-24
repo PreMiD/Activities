@@ -27,7 +27,9 @@ export class Lib {
   }
 
   private async fetch<T extends DataType>(url: string, siteId: SiteId): Promise<CachedResponse<T>> {
-    const response = await fetch(url, { headers: { 'Site-Id': siteId } })
+    const response = await fetch(url, {
+      headers: { 'Site-Id': siteId },
+    })
     const json = await response.json()
 
     const { data } = json
