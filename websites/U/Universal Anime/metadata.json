@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1013077555735187457",
+    "name": "lionair01"
+  },
+  "service": "Universal Anime",
+  "description": {
+    "en": "Explore anime and manga, discover new series, and manage your personal collections on Universal Anime.",
+    "it": "Esplora anime e manga, scopri nuove serie e gestisci le tue collezioni personali su Universal Anime."
+  },
+  "url": "universalanime.eu",
+  "regExp": "^https?[:][/][/](www[.])?universalanime[.]eu[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/Andreii98/universal-anime-assets/main/favicon.png",
+  "thumbnail": "https://i.imgur.com/If1NW5q.jpeg",
+  "color": "#E53935",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "manga",
+    "entertainment"
+  ]
+}
