@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Ninja",
@@ -22,7 +22,7 @@
   },
   "url": "truckers.fm",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*truckers[.]fm[/]",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/thumbnail.png",
   "color": "#C82372",

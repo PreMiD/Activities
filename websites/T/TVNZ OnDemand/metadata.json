@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Cairo",
@@ -12,7 +12,7 @@
   },
   "url": "www.tvnz.co.nz",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tvnz[.]co[.]nz[/]",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/thumbnail.png",
   "color": "#167EF5",

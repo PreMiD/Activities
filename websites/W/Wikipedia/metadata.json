@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "TheDrop.",
@@ -165,7 +165,7 @@
   },
   "url": "wikipedia.org",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wikipedia[.]([a-z]*)[/]",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/thumbnail.png",
   "color": "#f9f9f9",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "philanthropistical",
@@ -13,7 +13,7 @@
   },
   "url": "v3rmillion.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*v3rmillion[.]net[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/V3rmillion/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/V3rmillion/assets/thumbnail.png",
   "color": "#CD1818",

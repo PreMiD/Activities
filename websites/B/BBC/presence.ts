@@ -102,6 +102,28 @@ let SoundMedia: MediaData = {
 let iPlayer: IPlayerData
 let soundData: SoundData
 let lastPath: string | undefined
+let liveBroadcast: { serviceId: string, data?: LiveBroadcast, fetchedAt: number } | undefined
+
+async function getLiveBroadcast(serviceId: string): Promise<LiveBroadcast | undefined> {
+  const now = Date.now()
+  if (liveBroadcast?.serviceId === serviceId) {
+    const end = liveBroadcast.data ? Date.parse(liveBroadcast.data.end) : 0
+    if (now < end || now - liveBroadcast.fetchedAt < 30_000)
+      return liveBroadcast.data
+  }
+
+  const previous = liveBroadcast?.serviceId === serviceId ? liveBroadcast.data : undefined
+  liveBroadcast = { serviceId, data: previous, fetchedAt: now }
+  try {
+    const response = await fetch(
+      `https://rms.api.bbc.co.uk/v2/broadcasts/sub-services/poll/${serviceId}?experience=domestic&offset=0&limit=3`,
+    )
+    const { data } = await response.json() as { data: LiveBroadcast[] }
+    liveBroadcast.data = data.find(b => Date.parse(b.start) <= now && now < Date.parse(b.end)) ?? data[0]
+  }
+  catch {}
+  return liveBroadcast.data
+}
 
 presence.on('iFrameData', (data: IFrameData) => {
   if (data.audio)
@@ -340,37 +362,61 @@ presence.on('UpdateData', async () => {
   }
   else if (path.includes('/sounds')) {
     presenceData.type = ActivityType.Listening
-    if (lastPath !== path) {
-      lastPath = path
-      const data = await presence.getPageVariable<Record<string, any>>(
-        '__PRELOADED_STATE__.programmes',
-      )
-      soundData = {
-        programmes: data['__PRELOADED_STATE__.programmes'],
-      } as SoundData
-    }
+    const liveServiceId = path.match(/\/sounds\/play\/live[/:]([^/?#]+)/)?.[1]
 
-    if (path.includes('/play/')) {
-      const isLive = path.includes('Live:')
-      setCover(soundData.programmes?.current.image_url)
+    if (liveServiceId) {
+      const broadcast = await getLiveBroadcast(liveServiceId)
+      const station = broadcast?.network.short_title
+      const audio = document.querySelector<HTMLAudioElement>('audio')
+      // No player found means we can't tell, and a live page is most likely playing
+      const paused = audio?.paused ?? (SoundMedia.duration ? SoundMedia.paused : false)
 
-      if (isLive) {
-        presenceData.details = SoundMedia.title ?? soundData.programmes?.current.titles.primary
-        presenceData.state = soundData.programmes?.current.titles.secondary
-        presenceData.smallImageKey = Assets.Live
+      if (usePresenceName && station)
+        presenceData.name = `BBC ${station}`
+
+      presenceData.details = broadcast?.titles.primary || station
+      presenceData.state = broadcast?.titles.secondary || (station ? `${strings.Live}: ${station}` : strings.Live)
+      setCover(broadcast?.image_url)
+
+      presenceData.smallImageKey = paused ? Assets.Pause : Assets.Live
+      presenceData.smallImageText = paused ? strings.pause : strings.Live
+
+      if (broadcast && !paused) {
+        presenceData.startTimestamp = Math.floor(Date.parse(broadcast.start) / 1000)
+        presenceData.endTimestamp = Math.floor(Date.parse(broadcast.end) / 1000)
       }
       else {
-        presenceData.details = SoundMedia.title ?? soundData.programmes?.current.titles.primary
-        presenceData.state = soundData.programmes?.current.titles.secondary
-        presenceData.smallImageKey = SoundMedia.paused || !SoundMedia.duration
-          ? Assets.Pause
-          : Assets.Play
+        delete presenceData.startTimestamp
+        delete presenceData.endTimestamp
       }
 
+      presenceData.buttons = [
+        {
+          label: strings.buttonListenAlong,
+          url: href,
+        },
+      ]
+    }
+    else if (path.includes('/play/')) {
+      if (lastPath !== path) {
+        lastPath = path
+        const data = await presence.getPageVariable<Record<string, any>>(
+          '__PRELOADED_STATE__.programmes',
+        )
+        soundData = {
+          programmes: data['__PRELOADED_STATE__.programmes'],
+        } as SoundData
+      }
+
+      setCover(soundData.programmes?.current.image_url)
+
+      presenceData.details = SoundMedia.title ?? soundData.programmes?.current.titles.primary
+      presenceData.state = soundData.programmes?.current.titles.secondary
+      presenceData.smallImageKey = SoundMedia.paused || !SoundMedia.duration
+        ? Assets.Pause
+        : Assets.Play
       presenceData.smallImageText = SoundMedia.paused || !SoundMedia.duration
-        ? isLive
-          ? strings.Live
-          : strings.pause
+        ? strings.pause
         : strings.play;
 
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(SoundMedia.currentTime, SoundMedia.duration)
@@ -382,7 +428,7 @@ presence.on('UpdateData', async () => {
         },
       ]
 
-      if (SoundMedia.paused || isLive) {
+      if (SoundMedia.paused) {
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
@@ -939,6 +985,19 @@ interface MediaData {
   paused: boolean
   cover?: string
   title?: string
+}
+
+interface LiveBroadcast {
+  start: string
+  end: string
+  image_url?: string
+  network: {
+    short_title: string
+  }
+  titles: {
+    primary?: string
+    secondary?: string
+  }
 }
 
 interface SoundData {

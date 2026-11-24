@@ -8,6 +8,17 @@ const strings = presence.getStrings({
   pause: 'general.paused',
   browsing: 'general.browsing',
 })
+const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'wav', 'ogg', 'oga', 'm4a', 'aac', 'wma', 'opus', 'aiff', 'ape'])
+const VIDEO_EXTENSIONS = new Set(['mp4', 'mkv', 'avi', 'mov', 'webm', 'wmv', 'flv', 'm4v', 'mpg', 'mpeg', 'ts', '3gp'])
+
+function splitExtension(filename: string) {
+  const lastDot = filename.lastIndexOf('.')
+  if (lastDot <= 0)
+    return { name: filename, ext: '' }
+
+  return { name: filename.slice(0, lastDot), ext: filename.slice(lastDot + 1).toLowerCase() }
+}
+
 const media: MediaObj = {
   // anyone is welcome to suggest more metadata via GH issues
   time: undefined,
@@ -66,9 +77,17 @@ presence.on('UpdateData', async () => {
       elapsed = Math.floor(Date.now() / 1000)
     }
 
-    if (media.Type === 'Audio')
+    const { name: fileNameNoExt, ext: fileExt } = media.filename
+      ? splitExtension(media.filename)
+      : { name: '', ext: '' }
+
+    const inferredType = media.Type
+      || (AUDIO_EXTENSIONS.has(fileExt) ? 'Audio' : undefined)
+      || (VIDEO_EXTENSIONS.has(fileExt) ? 'Video' : undefined)
+
+    if (inferredType === 'Audio')
       (presenceData as PresenceData).type = ActivityType.Listening
-    else if (media.Type === 'Video')
+    else if (inferredType === 'Video')
       (presenceData as PresenceData).type = ActivityType.Watching
 
     if (media.state === 'playing' || media.state === 'paused') {
@@ -95,13 +114,13 @@ presence.on('UpdateData', async () => {
         if (media.title && media.album && media.title === media.album)
           media.album = undefined
 
-        presenceData.details = ((media.title ?? '')
+        presenceData.details = ((media.title ?? fileNameNoExt)
           + (media.trackNumber ? ` Track N°${media.trackNumber}` : '')
           || 'A song') + (media.album ? ` on ${media.album}` : '')
         media.artist
           ? (presenceData.state = `by ${media.artist}`)
-          : media.filename
-            ? (presenceData.state = media.filename)
+          : fileExt
+            ? (presenceData.state = fileExt.toUpperCase())
             : delete presenceData.state
       }
       else if (isShow) {
@@ -109,8 +128,8 @@ presence.on('UpdateData', async () => {
           ? (presenceData.details = media.showName)
           : media.title
             ? (presenceData.details = media.title)
-            : media.filename
-              ? (presenceData.details = media.filename)
+            : fileNameNoExt
+              ? (presenceData.details = fileNameNoExt)
               : (presenceData.details = 'some TV')
         presenceData.state = `S${media.seasonNumber}E${media.episodeNumber}`
       }
@@ -119,14 +138,24 @@ presence.on('UpdateData', async () => {
           ? (presenceData.details = media.showName)
           : media.title
             ? (presenceData.details = media.title)
-            : media.filename
-              ? (presenceData.details = media.filename)
+            : fileNameNoExt
+              ? (presenceData.details = fileNameNoExt)
               : (presenceData.details = 'something')
         media.seasonNumber
           ? (presenceData.state = `season ${media.seasonNumber}`)
           : media.episodeNumber
             ? (presenceData.state = `episode ${media.episodeNumber}`)
-            : delete presenceData.state
+            : fileExt
+              ? (presenceData.state = fileExt.toUpperCase())
+              : delete presenceData.state
+      }
+
+      if (
+        await presence.getSetting<boolean>('showTitle')
+        && presenceData.details
+        && (inferredType === 'Audio' || inferredType === 'Video')
+      ) {
+        presenceData.name = presenceData.details
       }
 
       if (presenceData.details && presenceData.details.length > 100)

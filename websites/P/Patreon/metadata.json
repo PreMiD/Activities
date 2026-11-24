@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "RisingSunLight",
@@ -17,7 +17,7 @@
     "privacy.patreon.com"
   ],
   "regExp": "^https?[:][/][/]((www|support|privacy)[.]patreon[.]com|patreon[.]com)[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Patreon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Patreon/assets/thumbnail.png",
   "color": "#F1465A",

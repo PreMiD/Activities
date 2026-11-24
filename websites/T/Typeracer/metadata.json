@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Hans5958",
@@ -15,7 +15,7 @@
     "data.typeracer.com"
   ],
   "regExp": "^https?[:][/][/](play|data)[.]typeracer[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Typeracer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Typeracer/assets/thumbnail.png",
   "color": "#007ec5",

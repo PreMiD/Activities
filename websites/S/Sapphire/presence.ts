@@ -134,6 +134,10 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing module'
     presenceData.state = 'Moderation: Message Histories'
   }
+  else if (fullUrl.includes('/moderation/role-commands')) {
+    presenceData.details = 'Viewing module'
+    presenceData.state = 'Moderation: Role Commands'
+  }
   else if (fullUrl.includes('/message-history')) {
     presenceData.details = 'Viewing module'
     presenceData.state = 'Moderation: Viewing a message history'
@@ -185,6 +189,10 @@ presence.on('UpdateData', async () => {
   else if (fullUrl.includes('/logging/settings')) {
     presenceData.details = 'Viewing module'
     presenceData.state = 'Logging: Settings'
+  }
+  else if (fullUrl.includes('/logging/dashboard-changes')) {
+    presenceData.details = 'Viewing module'
+    presenceData.state = 'Logging: Dashboard Changes'
   }
 
   // 2. DOCUMENTATION PATHS

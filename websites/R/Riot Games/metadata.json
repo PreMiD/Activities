@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Kazo",
@@ -18,7 +18,7 @@
     "playvalorant.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(riotgames|leagueoflegends|playruneterra|playvalorant)[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Riot%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Riot%20Games/assets/thumbnail.jpg",
   "color": "#d13639",
