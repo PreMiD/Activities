@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "kevy_.",
+    "id": "417621368553865216"
+  },
+  "service": "Pokelike",
+  "description": {
+    "en": "Pokelike is a Pokemon roguelike browser game with Story adventures, Battle Tower, and challenges."
+  },
+  "url": "pokelike.xyz",
+  "regExp": "^https://pokelike[.]xyz/",
+  "version": "1.0.0",
+  "logo": "https://pokelike.xyz/img/icon-512.png",
+  "thumbnail": "https://pokelike.xyz/img/modeImages/story-mode.png",
+  "color": "#F2C94C",
+  "category": "games",
+  "tags": [
+    "pokemon",
+    "roguelike",
+    "browser-game"
+  ]
+}
