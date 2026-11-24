@@ -11,7 +11,7 @@
   },
   "url": "toonily.com",
   "regExp": "^https?[:][/][/]toonily[.]com[/]",
-  "version": "1.2.4",
+  "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Toonily/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Toonily/assets/thumbnail.png",
   "color": "#2f063e",
