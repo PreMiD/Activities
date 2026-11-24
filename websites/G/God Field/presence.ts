@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/logo.png'
-const LANGS = ['ja', 'en', 'fr', 'ko', 'pt', 'ru', 'zh-hans', 'zh-hant']
+const LANGS = ['ja', 'en', 'es', 'fr', 'ko', 'pt', 'ru', 'zh-hans', 'zh-hant']
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 type Mode = 'training' | 'private' | 'duel'
@@ -17,6 +17,33 @@ interface Texts {
   private: { startGame: string, shuffleTeams: string, chatLog: string, userCount: string }
   duel: { ranking: string, rating: string }
   game: { abandon: string, resetGame: string, opening: string, endingWin: string, endingDraw: string, usedMiracles: string }
+  reference: {
+    reference: string
+    elements: string
+    curses: string
+    trade: string
+    weapons: string
+    armor: string
+    sundries: string
+    miracles: string
+    devils: string
+    guardians: string
+    phenomena: string
+    elementsNote: string
+    diseasesNote: string
+    diseaseUpgradeNote: string
+    fogNote: string
+    discardNote: string
+    sacrificeNote: string
+    bounceNote: string
+    miraclesNote: string
+    usedMiraclesNote: string
+    devilsNote: string
+    earthNote: string
+    moonNote: string
+    guardianAttackNote: string
+    guardiansNote: string
+  }
 }
 
 // ゲームの言語ファイル (/i18n/*.json) から、画面ごとの目印になる文言を集める。
@@ -75,6 +102,50 @@ function readCount(body: string, pick: (t: Texts) => string): number | null {
   return null
 }
 
+// 教典 (本家の reference) を開いているかの判定。
+// 見出しの「教典」は開くボタンとして対戦画面に常駐しているため、それだけでは判定できない。
+// 開いている間は左列のタブ名10個が常に見える (閉じた対戦画面では「起こした奇跡」の
+// 「奇跡」しか出ないことを実機で確認済み) ため、タブ名の同時出現数で判定する。
+// あわせて、選択中のタブの注記文が見えている場合も開いているとみなす。
+// 注記はプレースホルダを含まないものだけを使う ({{light}} 等を含む文は
+// ゲーム側で別の文字列に置換されて表示されるため、原文のままでは一致しない)
+const REF_TABS: ((t: Texts) => string)[] = [
+  t => t.reference.elements,
+  t => t.reference.curses,
+  t => t.reference.trade,
+  t => t.reference.weapons,
+  t => t.reference.armor,
+  t => t.reference.sundries,
+  t => t.reference.miracles,
+  t => t.reference.devils,
+  t => t.reference.guardians,
+  t => t.reference.phenomena,
+]
+const REF_NOTES: ((t: Texts) => string)[] = [
+  t => t.reference.elementsNote,
+  t => t.reference.diseasesNote,
+  t => t.reference.diseaseUpgradeNote,
+  t => t.reference.fogNote,
+  t => t.reference.discardNote,
+  t => t.reference.sacrificeNote,
+  t => t.reference.bounceNote,
+  t => t.reference.miraclesNote,
+  t => t.reference.usedMiraclesNote,
+  t => t.reference.devilsNote,
+  t => t.reference.earthNote,
+  t => t.reference.moonNote,
+  t => t.reference.guardianAttackNote,
+  t => t.reference.guardiansNote,
+]
+function isReferenceOpen(body: string) {
+  if (!has(body, t => t.reference.reference))
+    return false
+  if (REF_NOTES.some(pick => has(body, pick)))
+    return true
+  // タブ名は言語ごとに1組なので、一致した言語での出現数を数える
+  return texts.some(t => REF_TABS.filter(pick => body.includes(strip(pick(t)))).length >= 8)
+}
+
 let lastMode: Mode | null = null
 let battleSince = 0
 
@@ -109,13 +180,15 @@ presence.on('UpdateData', async () => {
   if (inGame) {
     battleSince ||= Math.floor(Date.now() / 1000)
     const ended = has(body, t => t.game.endingWin) ?? has(body, t => t.game.endingDraw)
-    presenceData.details = ended ? '決着がついた' : '対戦中'
+    // 決着表示より教典を優先しない (決着後も教典は開けるが、状態としては決着が上)
+    const reading = !ended && isReferenceOpen(body)
+    presenceData.details = ended ? '決着がついた' : reading ? '教典を読んでいます' : '対戦中'
     const name = showMode ? modeName(inGame) : null
     // 「HP77 MP27」のような表示の数 = 対戦しているプレイヤーの数
     const alive = (body.match(/HP\s*\d+/g) ?? []).length
     if (name)
       presenceData.state = showCount && alive > 0 && !ended ? `${name}（${alive}人）` : name
-    presenceData.smallImageKey = Assets.Play
+    presenceData.smallImageKey = reading ? Assets.Reading : Assets.Play
     presenceData.startTimestamp = battleSince
     presence.setActivity(presenceData)
     return
@@ -149,17 +222,26 @@ presence.on('UpdateData', async () => {
   }
 
   // ***** 真剣タイマン (待機画面・ランキング) *****
-  const duel = has(body, t => t.duel.ranking)
-  if (duel && body.includes(duel.modeNames.duel)) {
+  const duel = texts.find(t => body.includes(strip(t.duel.ranking)) && body.includes(t.modeNames.duel))
+  if (duel) {
     lastMode = 'duel'
     const name = showMode ? duel.modeNames.duel : null
-    if (has(body, t => t.duel.rating)) {
-      presenceData.details = '対戦相手を待っています'
+    // ランキング一覧はロビーの上に重なって開くため、ロビーの「レーティング」が
+    // 残り続けて文言では待機中と区別できない。一覧を開くと行ごとのレーティング
+    // 数値 (1000以上の数だけの行) が大量に増えるので、その数で判定する
+    // (2026-11-12 実機の innerText で検証: ロビー=1件、一覧表示中=61件)
+    const ratingRows = body.split('\n').filter((line) => {
+      const text = line.trim()
+      return /^\d+$/.test(text) && Number(text) >= 1000
+    }).length
+    if (ratingRows >= 5 || !has(body, t => t.duel.rating)) {
+      presenceData.details = 'ランキングを見ています'
+      presenceData.smallImageKey = Assets.Viewing
       if (name)
         presenceData.state = name
     }
     else {
-      presenceData.details = 'ランキングを見ています'
+      presenceData.details = '対戦相手を待っています'
       if (name)
         presenceData.state = name
     }
