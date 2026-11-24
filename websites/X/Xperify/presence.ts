@@ -3,7 +3,7 @@ const presence = new Presence({
   clientId: '1569667784130961408',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const LOGO = 'https://xperify.in/icon-512.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/X/Xperify/assets/logo.png'
 
 interface XpState {
   status?: 'menu' | 'starting' | 'playing' | 'paused' | 'results' | 'reaction' | 'reaction-done'
