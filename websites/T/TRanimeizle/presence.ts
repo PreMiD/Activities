@@ -116,5 +116,5 @@ presence.on('UpdateData', async () => {
 
   if (Object.keys(presenceData).length > 2)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

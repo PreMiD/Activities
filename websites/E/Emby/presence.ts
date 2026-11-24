@@ -927,7 +927,7 @@ async function updateData(): Promise<void> {
     if (!presenceData.largeImageKey)
       presenceData.largeImageKey = PRESENCE_ART_ASSETS.logo
     if (!presenceData.details)
-      presence.setActivity()
+      presence.clearActivity()
     else presence.setActivity(presenceData)
   }
 }
