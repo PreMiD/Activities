@@ -15,15 +15,20 @@
   "devDependencies": {
     "@antfu/eslint-config": "^8.3.0",
     "@total-typescript/tsconfig": "^1.0.4",
-    "@types/node": "^25.9.5",
-    "@vitest/coverage-v8": "^4.1.11",
-    "@vitest/ui": "^4.1.11",
-    "eslint": "^10.8.1",
+    "@types/node": "^25.9.9",
+    "@vitest/coverage-v8": "^4.1.12",
+    "@vitest/ui": "^4.1.12",
+    "eslint": "^10.15.0",
     "eslint-plugin-format": "^2.0.1",
-    "eslint-plugin-json-schema-validator": "^6.3.1",
+    "eslint-plugin-json-schema-validator": "^6.3.2",
     "pmd": "file:cli",
     "premid": "file:premid",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
+  },
+  "overrides": {
+    "tinypool": "^2.2.0",
+    "minimatch": "^11.0.9",
+    "katex": "^0.19.1"
   }
 }
