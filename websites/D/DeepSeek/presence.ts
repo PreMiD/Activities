@@ -18,7 +18,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/logo.png',
-  Talking = 'https://i.imgur.com/l5SUX1w.png',
+  Talking = 'https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/0.png',
 }
 
 // The DeepThink and search toggles share DeepSeek's toggle button
