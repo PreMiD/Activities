@@ -28,7 +28,9 @@ type PageKind = 'home' | 'lab' | 'article' | 'index' | 'learningPath' | 'dashboa
 type ActivitySettings = Record<typeof SETTING_KEYS[number], boolean>
 
 function clamp(value: string, max = 128): string {
-  return value.length > max ? `${value.slice(0, max - 1)}…` : value
+  return value.length > max
+    ? `${value.slice(0, max - 1)}…`
+    : value
 }
 
 const ACADEMY_ROOT = '/web-security'
@@ -80,7 +82,9 @@ function getAnchoredSection(): string | null {
     // A malformed fragment such as #% is not a heading, so the page still publishes.
     return null
   }
-  const target = id ? document.getElementById(id) : null
+  const target = id
+    ? document.getElementById(id)
+    : null
   return target?.matches('h1, h2, h3, h4, h5, h6')
     ? target.textContent?.trim() || null
     : null
@@ -109,7 +113,12 @@ interface AccountStats {
   username: string | null
 }
 
-const LEVEL_NAMES = new Set(['NEWBIE', 'APPRENTICE', 'PRACTITIONER', 'EXPERT'])
+const LEVEL_NAMES = new Set([
+  'NEWBIE',
+  'APPRENTICE',
+  'PRACTITIONER',
+  'EXPERT',
+])
 const PROGRESS_LEVELS = ['apprentice', 'practitioner', 'expert']
 
 function text(selector: string, index = 0): string | null {
@@ -121,7 +130,9 @@ function progressCount(scope: ParentNode, level: string): number | null {
     scope.querySelector(`.${level}-progress .radial-text-element-progress, .${level}-progress .radial-text-element__progress`)?.textContent?.trim() ?? '',
     10,
   )
-  return Number.isNaN(value) ? null : value
+  return Number.isNaN(value)
+    ? null
+    : value
 }
 
 function sumCounts(counts: Array<number | null>): number | null {
@@ -136,7 +147,9 @@ function sumCounts(counts: Array<number | null>): number | null {
 
 function getLevelProgressScope(): ParentNode {
   // The dashboard repeats the same rings under "Exam preparation steps", so count only this card.
-  return [...document.querySelectorAll('.container-cards-charcoal-rounded')]
+  return [
+    ...document.querySelectorAll('.container-cards-charcoal-rounded'),
+  ]
     .find(card => card.querySelector('h3')?.textContent?.trim() === 'Level progress') ?? document
 }
 
@@ -152,10 +165,14 @@ function getAccountStats(): AccountStats {
     rank: rankMatch?.[1] ?? null,
     percent: text('.progress-with-percent text'),
     solved,
-    level: [...document.querySelectorAll('[class*="lab-level-"]')]
+    level: [
+      ...document.querySelectorAll('[class*="lab-level-"]'),
+    ]
       .map(element => element.textContent?.trim() ?? '')
       .find(name => LEVEL_NAMES.has(name)) ?? null,
-    username: username && username !== 'ANONYMOUS' ? username : null,
+    username: username && username !== 'ANONYMOUS'
+      ? username
+      : null,
   }
 }
 
@@ -175,7 +192,9 @@ function formatAccountState(
     parts.push(`Solved: ${stats.solved}`)
   if (include.progress && settings.showProgress && stats.percent)
     parts.push(stats.percent)
-  return parts.length > 0 ? parts.join(' | ') : undefined
+  return parts.length > 0
+    ? parts.join(' | ')
+    : undefined
 }
 
 function getLabDifficulty(): string | null {
@@ -214,9 +233,19 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = 'Solving'
       const title = getLabTitle()
-      presenceData.details = title ? `Solving Lab: ${title}` : 'Solving a lab'
-      const difficulty = settings.showDifficulty ? getLabDifficulty() : null
-      presenceData.state = `${difficulty ? `${difficulty} · ` : ''}${isLabSolved() ? 'Solved' : 'In progress'}`
+      presenceData.details = title
+        ? `Solving Lab: ${title}`
+        : 'Solving a lab'
+      const difficulty = settings.showDifficulty
+        ? getLabDifficulty()
+        : null
+      const difficultyLabel = difficulty
+        ? `${difficulty} · `
+        : ''
+      const solvedLabel = isLabSolved()
+        ? 'Solved'
+        : 'In progress'
+      presenceData.state = `${difficultyLabel}${solvedLabel}`
       break
     }
     case 'article': {
@@ -225,7 +254,9 @@ presence.on('UpdateData', async () => {
       const heading = getHeading()
       presenceData.details = `Reading: ${getTopic() ?? heading ?? 'documentation'}`
       // A hash names the heading being read; otherwise only topic sub-pages name a section.
-      const section = getAnchoredSection() ?? (getBreadcrumbDepth() >= 3 ? heading : null)
+      const section = getAnchoredSection() ?? (getBreadcrumbDepth() >= 3
+        ? heading
+        : null)
       if (section)
         presenceData.state = `Section: ${section}`
       break
@@ -237,7 +268,9 @@ presence.on('UpdateData', async () => {
       const section = getAnchoredSection()
       // All-labs deep links read naturally as "Browsing <topic> labs", so keep it in details.
       if (indexPath === '/all-labs') {
-        presenceData.details = section ? `Browsing ${section} labs` : 'Browsing all labs'
+        presenceData.details = section
+          ? `Browsing ${section} labs`
+          : 'Browsing all labs'
         break
       }
       presenceData.details = `Browsing ${indexName ?? 'the index'}`
