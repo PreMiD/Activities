@@ -1,0 +1,238 @@
+{
+  "modrinth.browsingApiDocs": {
+    "description": "Shown when browsing the Modrinth API documentation.",
+    "message": "Browsing API documentation"
+  },
+  "modrinth.browsingContributingDocs": {
+    "description": "Shown when browsing the \"Contributing to Modrinth\" documentation.",
+    "message": "Browsing Contributing to Modrinth docs"
+  },
+  "modrinth.browsingGuide": {
+    "description": "Shown when browsing the guides of the Modrinth documentation.",
+    "message": "Browsing Guide"
+  },
+  "modrinth.buttonViewOrganization": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Organization"
+  },
+  "modrinth.buttonViewProject": {
+    "description": "Used as the title for the button in Discord. {0} will be replaced with the type of content (e.g. Mod, Plugin, Shader).",
+    "message": "View {0}"
+  },
+  "modrinth.discoveringContent": {
+    "description": "Shown when browsing the discover page without a specific content type.",
+    "message": "Discovering content"
+  },
+  "modrinth.discoveringDataPacks": {
+    "description": "Shown when browsing the data packs discover page.",
+    "message": "Discovering Data Packs"
+  },
+  "modrinth.discoveringModpacks": {
+    "description": "Shown when browsing the modpacks discover page.",
+    "message": "Discovering Modpacks"
+  },
+  "modrinth.discoveringMods": {
+    "description": "Shown when browsing the mods discover page.",
+    "message": "Discovering Mods"
+  },
+  "modrinth.discoveringPlugins": {
+    "description": "Shown when browsing the plugins discover page.",
+    "message": "Discovering Plugins"
+  },
+  "modrinth.discoveringResourcePacks": {
+    "description": "Shown when browsing the resource packs discover page.",
+    "message": "Discovering Resource Packs"
+  },
+  "modrinth.discoveringServers": {
+    "description": "Shown when browsing the servers discover page.",
+    "message": "Discovering Servers"
+  },
+  "modrinth.discoveringShaders": {
+    "description": "Shown when browsing the shaders discover page.",
+    "message": "Discovering Shaders"
+  },
+  "modrinth.editingProject": {
+    "description": "Shown when editing a project in its settings. {0} will be replaced with the type of content (e.g. Mod, Plugin, Shader).",
+    "message": "Editing {0}"
+  },
+  "modrinth.hostingServer": {
+    "description": "Shown when viewing the Modrinth server hosting page.",
+    "message": "Hosting a server on Modrinth"
+  },
+  "modrinth.legalCcpa": {
+    "description": "Name of a legal page, shown after \"Reading\".",
+    "message": "Privacy Notice for California Residents"
+  },
+  "modrinth.legalCopyright": {
+    "description": "Name of a legal page, shown after \"Reading\".",
+    "message": "Copyright Policy"
+  },
+  "modrinth.legalOther": {
+    "description": "Shown after \"Reading\" when viewing a legal page that has no specific name.",
+    "message": "Legal Information"
+  },
+  "modrinth.legalRewardsInfo": {
+    "description": "Name of a legal page, shown after \"Reading\".",
+    "message": "Rewards Program Information"
+  },
+  "modrinth.legalRewardsTerms": {
+    "description": "Name of a legal page, shown after \"Reading\".",
+    "message": "Rewards Program Terms"
+  },
+  "modrinth.legalRules": {
+    "description": "Name of a legal page, shown after \"Reading\".",
+    "message": "Content Rules"
+  },
+  "modrinth.legalSecurity": {
+    "description": "Name of a legal page, shown after \"Reading\".",
+    "message": "Security Notice"
+  },
+  "modrinth.managingCollections": {
+    "description": "Shown when viewing the collections of the dashboard.",
+    "message": "Managing Collections"
+  },
+  "modrinth.managingOrganization": {
+    "description": "Shown when editing the settings of an organization.",
+    "message": "Managing Organization"
+  },
+  "modrinth.managingOrganizations": {
+    "description": "Shown when viewing the organizations of the dashboard.",
+    "message": "Managing Organizations"
+  },
+  "modrinth.managingProjects": {
+    "description": "Shown when viewing the projects of the dashboard.",
+    "message": "Managing Projects"
+  },
+  "modrinth.managingReports": {
+    "description": "Shown when viewing the reports of the dashboard.",
+    "message": "Managing Reports"
+  },
+  "modrinth.managingServers": {
+    "description": "Shown when managing hosted servers.",
+    "message": "Managing Servers"
+  },
+  "modrinth.modrinthChangelog": {
+    "description": "Shown when viewing the Modrinth changelog page.",
+    "message": "Modrinth Changelog"
+  },
+  "modrinth.readingNews": {
+    "description": "Shown when viewing the Modrinth news page.",
+    "message": "Reading News"
+  },
+  "modrinth.tabAnalytics": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Analytics"
+  },
+  "modrinth.tabChangelog": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Changelog"
+  },
+  "modrinth.tabDescription": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Description"
+  },
+  "modrinth.tabDisclosures": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Disclosures"
+  },
+  "modrinth.tabGallery": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Gallery"
+  },
+  "modrinth.tabGeneral": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "General"
+  },
+  "modrinth.tabLicense": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "License"
+  },
+  "modrinth.tabLinks": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Links"
+  },
+  "modrinth.tabMembers": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Members"
+  },
+  "modrinth.tabModeration": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Moderation"
+  },
+  "modrinth.tabProjects": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Projects"
+  },
+  "modrinth.tabTags": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Tags"
+  },
+  "modrinth.tabVersions": {
+    "description": "Name of a tab of a project, shown after the project's page title.",
+    "message": "Versions"
+  },
+  "modrinth.typeCollection": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Collection"
+  },
+  "modrinth.typeDataPack": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Data Pack"
+  },
+  "modrinth.typeMod": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Mod"
+  },
+  "modrinth.typeModpack": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Modpack"
+  },
+  "modrinth.typePlugin": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Plugin"
+  },
+  "modrinth.typeProject": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Project"
+  },
+  "modrinth.typeResourcePack": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Resource Pack"
+  },
+  "modrinth.typeServer": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Server"
+  },
+  "modrinth.typeShader": {
+    "description": "Type of content on Modrinth, inserted in \"Viewing {0}\", \"Editing {0}\" and \"View {0}\".",
+    "message": "Shader"
+  },
+  "modrinth.viewingAnalytics": {
+    "description": "Shown when viewing the analytics of the dashboard.",
+    "message": "Viewing Analytics"
+  },
+  "modrinth.viewingDashboard": {
+    "description": "Shown when viewing the dashboard.",
+    "message": "Viewing Dashboard"
+  },
+  "modrinth.viewingNotifications": {
+    "description": "Shown when viewing the notifications of the dashboard.",
+    "message": "Viewing Notifications"
+  },
+  "modrinth.viewingOrganization": {
+    "description": "Shown when viewing an organization.",
+    "message": "Viewing Organization"
+  },
+  "modrinth.viewingProject": {
+    "description": "Shown when viewing a project. {0} will be replaced with the type of content (e.g. Mod, Plugin, Shader).",
+    "message": "Viewing {0}"
+  },
+  "modrinth.viewingRevenue": {
+    "description": "Shown when viewing the revenue of the dashboard.",
+    "message": "Viewing Revenue"
+  },
+  "modrinth.viewingSettings": {
+    "description": "Shown when viewing the account settings.",
+    "message": "Viewing Settings"
+  }
+}
