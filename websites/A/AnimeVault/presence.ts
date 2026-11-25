@@ -9,8 +9,91 @@ enum ActivityAssets {
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+const MAX_COVER_CACHE = 20
+const MAX_FAILED_CACHE = 50
 const coverCache = new Map<string, Blob>()
 const coverPending = new Set<string>()
+const coverFailed = new Set<string>()
+
+interface ThumbCandidate {
+  url: string
+  element?: HTMLImageElement
+}
+
+function cacheCoverBlob(url: string, blob: Blob): void {
+  if (coverCache.has(url)) {
+    coverCache.delete(url)
+  }
+  else if (coverCache.size >= MAX_COVER_CACHE) {
+    const oldestKey = coverCache.keys().next().value
+    if (oldestKey)
+      coverCache.delete(oldestKey)
+  }
+  coverCache.set(url, blob)
+}
+
+function markCoverFailed(url: string): void {
+  if (coverFailed.size >= MAX_FAILED_CACHE) {
+    const oldestKey = coverFailed.values().next().value
+    if (oldestKey)
+      coverFailed.delete(oldestKey)
+  }
+  coverFailed.add(url)
+}
+
+async function toSquareCoverBlob(source: HTMLImageElement | Blob): Promise<Blob | null> {
+  const size = 512
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')
+  if (!ctx)
+    return null
+
+  let objectUrl: string | null = null
+  try {
+    let drawable: CanvasImageSource
+    let srcW: number
+    let srcH: number
+
+    if (source instanceof HTMLImageElement) {
+      drawable = source
+      srcW = source.naturalWidth
+      srcH = source.naturalHeight
+    }
+    else {
+      objectUrl = URL.createObjectURL(source)
+      const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const el = new Image()
+        el.onload = () => resolve(el)
+        el.onerror = () => reject(new Error('Image load failed'))
+        el.src = objectUrl!
+      })
+      drawable = img
+      srcW = img.naturalWidth
+      srcH = img.naturalHeight
+    }
+
+    if (!srcW || !srcH)
+      return null
+
+    const scale = Math.max(size / srcW, size / srcH)
+    const drawW = srcW * scale
+    const drawH = srcH * scale
+    ctx.drawImage(drawable, (size - drawW) / 2, (size - drawH) / 2, drawW, drawH)
+
+    return await new Promise<Blob | null>(resolve =>
+      canvas.toBlob(b => resolve(b), 'image/png'),
+    )
+  }
+  catch {
+    return null
+  }
+  finally {
+    if (objectUrl)
+      URL.revokeObjectURL(objectUrl)
+  }
+}
 
 function resolveCleanImageUrl(rawUrl: string | null | undefined): string | null {
   if (!rawUrl || typeof rawUrl !== 'string')
@@ -33,37 +116,64 @@ function resolveCleanImageUrl(rawUrl: string | null | undefined): string | null 
   }
 }
 
-function getMovieCover(url: string | null): Blob | string {
-  if (!url)
+function getMovieCover(candidate: ThumbCandidate | null): Blob | string {
+  if (!candidate)
     return ActivityAssets.Logo
 
+  const { url, element } = candidate
   const cached = coverCache.get(url)
   if (cached)
     return cached
 
-  if (!coverPending.has(url)) {
+  if (!coverPending.has(url) && !coverFailed.has(url)) {
     coverPending.add(url)
-    fetch(url)
-      .then(res => (res.ok ? res.blob() : null))
-      .then((blob) => {
-        if (blob)
-          coverCache.set(url, blob)
-      })
-      .catch(() => {})
-      .finally(() => coverPending.delete(url))
+    void (async () => {
+      try {
+        if (element && element.complete && element.naturalWidth > 0) {
+          const domBlob = await toSquareCoverBlob(element)
+          if (domBlob) {
+            cacheCoverBlob(url, domBlob)
+            return
+          }
+        }
+
+        const res = await fetch(url, { mode: 'cors', credentials: 'omit' })
+        if (!res.ok) {
+          markCoverFailed(url)
+          return
+        }
+
+        const rawBlob = await res.blob()
+        const finalBlob = (await toSquareCoverBlob(rawBlob))
+          || (rawBlob.type.startsWith('image/') ? rawBlob : null)
+
+        if (finalBlob) {
+          cacheCoverBlob(url, finalBlob)
+        }
+        else {
+          markCoverFailed(url)
+        }
+      }
+      catch {
+        markCoverFailed(url)
+      }
+      finally {
+        coverPending.delete(url)
+      }
+    })()
   }
 
   return url
 }
 
-function getMovieThumbUrl(): string | null {
+function getMovieThumbCandidate(): ThumbCandidate | null {
   // 1. Thẻ video poster
   const video = document.querySelector<HTMLVideoElement>('video')
   const videoPoster = video?.getAttribute('poster') || video?.poster
   if (videoPoster) {
     const resolved = resolveCleanImageUrl(videoPoster)
     if (resolved)
-      return resolved
+      return { url: resolved }
   }
 
   // 2. Thẻ meta og:image, twitter:image
@@ -77,7 +187,7 @@ function getMovieThumbUrl(): string | null {
     if (meta?.content) {
       const resolved = resolveCleanImageUrl(meta.content)
       if (resolved)
-        return resolved
+        return { url: resolved }
     }
   }
 
@@ -92,27 +202,8 @@ function getMovieThumbUrl(): string | null {
       && !src.includes('premid')
     ) {
       const resolved = resolveCleanImageUrl(src)
-      if (resolved) {
-        if (img.complete && img.naturalWidth > 0 && !coverCache.has(resolved) && !coverPending.has(resolved)) {
-          try {
-            const canvas = document.createElement('canvas')
-            canvas.width = 512
-            canvas.height = 512
-            const ctx = canvas.getContext('2d')
-            if (ctx) {
-              ctx.drawImage(img, 0, 0, 512, 512)
-              canvas.toBlob((blob) => {
-                if (blob)
-                  coverCache.set(resolved, blob)
-              }, 'image/png')
-            }
-          }
-          catch {
-            // Ignored if canvas is tainted
-          }
-        }
-        return resolved
-      }
+      if (resolved)
+        return { url: resolved, element: img }
     }
   }
 
@@ -158,8 +249,8 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('timestamps'),
   ])
 
-  const thumbUrl = getMovieThumbUrl()
-  const currentCover = getMovieCover(thumbUrl)
+  const thumbCandidate = getMovieThumbCandidate()
+  const currentCover = getMovieCover(thumbCandidate)
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
