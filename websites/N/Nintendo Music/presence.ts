@@ -159,7 +159,7 @@ presence.on('UpdateData', async () => {
 
   const playlistArt = document.querySelector<HTMLImageElement>('#main-column img')?.src ?? NintendoMusicLogo
   const gameBoxArt = document.querySelector<HTMLImageElement>('a[href*="/game/"] img[width="48"]')?.src ?? NintendoMusicLogo
-  
+
   const [showTimestamps, showSongArt, displayFormat, songDisplayFormat, marioKartTrackOrigin, classicFormattingMKW] = await Promise.all([
     presence.getSetting<boolean>('showTimestamps'),
     presence.getSetting<boolean>('showSongArt'),
