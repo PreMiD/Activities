@@ -284,7 +284,9 @@ presence.on('UpdateData', async () => {
 
     if (pathname.startsWith('/search')) {
       const query = url.searchParams.get('q')
-      details = query ? `${strings.searchFor} ${query}` : strings.search
+      details = query
+        ? `${strings.searchFor} ${query}`
+        : strings.search
     }
     else if (pathname.includes('/my-list')) {
       details = strings.myList
@@ -310,7 +312,9 @@ presence.on('UpdateData', async () => {
       const domGenre = document.querySelector('.genre-title, .header-title, h1')?.textContent?.trim()
 
       const genreName = mappedGenre || domGenre
-      details = genreName ? strings.browsingGenre.replace('{0}', genreName) : strings.browse
+      details = genreName
+        ? strings.browsingGenre.replace('{0}', genreName)
+        : strings.browse
     }
 
     return await presence.setActivity({

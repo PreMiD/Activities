@@ -12,7 +12,7 @@
   },
   "url": "wordengine.jp",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wordengine[.]jp[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WordEngine/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WordEngine/assets/thumbnail.png",
   "color": "#1e73be",

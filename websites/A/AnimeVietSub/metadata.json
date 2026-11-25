@@ -12,7 +12,7 @@
   },
   "url": "animevietsub.name",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animevietsub[s]?[.][a-z]+[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeVietSub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeVietSub/assets/thumbnail.png",
   "color": "#4A90D9",

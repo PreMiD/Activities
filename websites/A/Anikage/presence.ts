@@ -62,14 +62,22 @@ function cleanText(text: string | null | undefined, max = 128): string | undefin
 function parseWatchTitle(): { title?: string, episode?: number } {
   const raw = document.title.replace(/ - Watch on Anikage$/, '').trim()
   const epMatch = raw.match(/ - Episode (\d+)$/)
-  if (epMatch?.[1])
-    return { title: cleanText(raw.slice(0, epMatch.index)), episode: Number.parseInt(epMatch[1], 10) }
-  return { title: cleanText(raw) }
+  if (epMatch?.[1]) {
+    return {
+      title: cleanText(raw.slice(0, epMatch.index)),
+      episode: Number.parseInt(epMatch[1], 10),
+    }
+  }
+  return {
+    title: cleanText(raw),
+  }
 }
 
 function getEpisodeNumber(titleEpisode?: number): number {
   const param = new URLSearchParams(document.location.search).get('ep')
-  const fromParam = param ? Number.parseInt(param, 10) : Number.NaN
+  const fromParam = param
+    ? Number.parseInt(param, 10)
+    : Number.NaN
   if (Number.isFinite(fromParam) && fromParam > 0)
     return fromParam
   if (titleEpisode && titleEpisode > 0)
@@ -85,7 +93,9 @@ function isActiveToggle(el: Element): boolean {
 }
 
 function getActiveToggleLabel(options: string[]): string | undefined {
-  const buttons = [...document.querySelectorAll('button')]
+  const buttons = [
+    ...document.querySelectorAll('button'),
+  ]
   for (const label of options) {
     const el = buttons.find(b => b.textContent?.trim() === label)
     if (el && isActiveToggle(el))
@@ -152,7 +162,9 @@ async function updateActivity() {
     const { title, episode: titleEpisode } = parseWatchTitle()
     const episode = getEpisodeNumber(titleEpisode)
     const cover = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
-    const audioMode = showAudioMode ? getActiveToggleLabel(['SUB', 'DUB']) : undefined
+    const audioMode = showAudioMode
+      ? getActiveToggleLabel(['SUB', 'DUB'])
+      : undefined
 
     const video = document.querySelector<HTMLVideoElement>('video')
     const playButton = document.querySelector('media-play-button')
@@ -162,15 +174,23 @@ async function updateActivity() {
     // reuse the previous page's time.
     if (embedVideo && embedVideo.url !== watchUrlKey())
       embedVideo = null
-    const currTime = video && Number.isFinite(video.currentTime) ? video.currentTime : embedVideo?.currTime
-    const duration = video && Number.isFinite(video.duration) && video.duration > 0 ? video.duration : embedVideo?.duration
+    const currTime = video && Number.isFinite(video.currentTime)
+      ? video.currentTime
+      : embedVideo?.currTime
+    const duration = video && Number.isFinite(video.duration) && video.duration > 0
+      ? video.duration
+      : embedVideo?.duration
     const paused = video
       ? video.paused
-      : embedVideo?.paused ?? (playLabel ? !/^pause/i.test(playLabel) && /play/i.test(playLabel) : true)
+      : embedVideo?.paused ?? (playLabel
+        ? !/^pause/i.test(playLabel) && /play/i.test(playLabel)
+        : true)
 
     presenceData.details = title ?? 'Anikage'
     presenceData.largeImageText = title ?? 'Anikage'
-    presenceData.state = `Episode ${episode}${audioMode ? ` • ${audioMode}` : ''}`
+    presenceData.state = `Episode ${episode}${audioMode
+      ? ` • ${audioMode}`
+      : ''}`
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.paused : strings.playing
     if (showCover && cover)
@@ -190,7 +210,9 @@ async function updateActivity() {
     }
 
     const watchUrl = `https://anikage.cc/anime/watch/${id}?ep=${episode}`
-    presenceData.buttons = [{ label: strings.buttonWatchAnime, url: watchUrl }]
+    presenceData.buttons = [
+      { label: strings.buttonWatchAnime, url: watchUrl },
+    ]
   }
   // --- Info page ---
   else if (pathname.startsWith('/anime/info/')) {
@@ -207,7 +229,9 @@ async function updateActivity() {
       if (title)
         presenceData.largeImageText = title
     }
-    presenceData.buttons = [{ label: strings.buttonViewAnime, url: `https://anikage.cc/anime/info/${id}` }]
+    presenceData.buttons = [
+      { label: strings.buttonViewAnime, url: `https://anikage.cc/anime/info/${id}` },
+    ]
   }
   // --- Browse (+ search) ---
   else if (pathname.startsWith('/browse')) {
@@ -265,7 +289,9 @@ async function updateActivity() {
       presenceData.details = strings.viewProfile
       presenceData.state = username
       presenceData.smallImageKey = Assets.Reading
-      presenceData.buttons = [{ label: strings.buttonViewProfile, url: `https://anikage.cc/u/${username}` }]
+      presenceData.buttons = [
+        { label: strings.buttonViewProfile, url: `https://anikage.cc/u/${username}` },
+      ]
     }
   }
   // --- Home ---

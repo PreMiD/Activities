@@ -62,7 +62,9 @@ const classNames = {
 function formatDetails() {
   if (Number(kolStatus.path) > 0) {
     return `[${kolStatus.turnsthisrun}/${kolStatus.daysthisrun}] ${
-      Number(kolStatus.hardcore) === 1 ? 'HC' : 'SC'
+      Number(kolStatus.hardcore) === 1
+        ? 'HC'
+        : 'SC'
     } ${kolStatus.pathname}`
   }
 

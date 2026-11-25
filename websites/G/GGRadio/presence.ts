@@ -50,7 +50,9 @@ presence.on('UpdateData', async () => {
         .replace('%artist%', artist ?? '')
     }
 
-    presenceData.smallImageKey = document.querySelector('#play') !== null ? Assets.Pause : Assets.Play
+    presenceData.smallImageKey = document.querySelector('#play') !== null
+      ? Assets.Pause
+      : Assets.Play
 
     if (title === 'Welcome back!') {
       presenceData.details = 'Loading player...'

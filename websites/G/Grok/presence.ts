@@ -99,7 +99,9 @@ presence.on('UpdateData', async () => {
     case pathname.startsWith('/share'):
     case pathname.startsWith('/s/'): {
       presenceData.details = showTitle
-        ? (conversation.title ? formatTitle(conversation.title) : strings.readingSharedChat)
+        ? (conversation.title
+            ? formatTitle(conversation.title)
+            : strings.readingSharedChat)
         : strings.readingSharedChat
       if (showLastPrompt && conversation.lastPrompt) {
         presenceData.state = strings.replyingTo.replace(

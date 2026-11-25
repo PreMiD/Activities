@@ -213,9 +213,15 @@ const tlList = {
     { abbreviation: 'GREEK', name: 'Modern Greek' },
     { abbreviation: 'RECEPTUS', name: 'Textus Receptus' },
   ],
-  'lituano': [{ abbreviation: 'LT', name: 'Lithuanian' }],
-  'africâner': [{ abbreviation: 'AFR3353', name: '1933/1953 Afrikaans Bybel' }],
-  'árabe': [{ abbreviation: 'ARASVD', name: 'Smith Van Dyke Arabic Bible' }],
+  'lituano': [
+    { abbreviation: 'LT', name: 'Lithuanian' },
+  ],
+  'africâner': [
+    { abbreviation: 'AFR3353', name: '1933/1953 Afrikaans Bybel' },
+  ],
+  'árabe': [
+    { abbreviation: 'ARASVD', name: 'Smith Van Dyke Arabic Bible' },
+  ],
   'búlgaro': [
     { abbreviation: 'BULCARIGRADNT', name: 'Tsarigrad Edition' },
     { abbreviation: 'BULVEREN', name: 'Veren\'s Contemporary Bible' },
@@ -227,9 +233,15 @@ const tlList = {
     { abbreviation: 'CZBKR', name: 'Bible Kralicka' },
     { abbreviation: 'BZECEP', name: 'Ekumenicky Cesky Preklad' },
   ],
-  'esperanto': [{ abbreviation: 'ESPERANTO', name: 'Esperanto' }],
-  'estoniano': [{ abbreviation: 'ESTONIAN', name: 'Estonian' }],
-  'basco': [{ abbreviation: 'BASQ1571', name: 'Basque(Navarro-Labourdin)NT' }],
+  'esperanto': [
+    { abbreviation: 'ESPERANTO', name: 'Esperanto' },
+  ],
+  'estoniano': [
+    { abbreviation: 'ESTONIAN', name: 'Estonian' },
+  ],
+  'basco': [
+    { abbreviation: 'BASQ1571', name: 'Basque(Navarro-Labourdin)NT' },
+  ],
   'finlandês': [
     { abbreviation: 'PR-1938', name: 'Pyhä Raamattu' },
     { abbreviation: 'PR', name: 'Pyhä Raamattu' },
@@ -237,7 +249,9 @@ const tlList = {
   'gaélico escocês': [
     { abbreviation: 'GLA2', name: 'Gaelic Scripture (Manx Gaelic)' },
   ],
-  'haitiano': [{ abbreviation: 'HAT', name: 'Haitian Creole Version' }],
+  'haitiano': [
+    { abbreviation: 'HAT', name: 'Haitian Creole Version' },
+  ],
   'húngaro': [
     { abbreviation: 'HUN', name: 'Hungarian Version' },
     { abbreviation: 'KAROLI', name: 'Károli' },
@@ -249,22 +263,34 @@ const tlList = {
     { abbreviation: 'LND-1991', name: 'La Nuova Diodati 1991' },
     { abbreviation: 'IRV', name: 'Riveduta' },
   ],
-  'coreano': [{ abbreviation: 'KOR', name: 'Korean Version' }],
+  'coreano': [
+    { abbreviation: 'KOR', name: 'Korean Version' },
+  ],
   'latim': [
     { abbreviation: 'VULGATA', name: 'Biblia Sacra Vulgata' },
     { abbreviation: 'CLVUL', name: 'Clementine Vulgate' },
     { abbreviation: 'NVLA', name: 'Nova Vulgata' },
   ],
-  'letão': [{ abbreviation: 'LATV', name: 'Lativian Version' }],
-  'maori': [{ abbreviation: 'MAO', name: 'Maori Version' }],
-  'birmanês': [{ abbreviation: 'JUDSON', name: 'Judson - Myanmar/Burmse' }],
-  'holandês': [{ abbreviation: 'DUTCH', name: 'Dutch' }],
+  'letão': [
+    { abbreviation: 'LATV', name: 'Lativian Version' },
+  ],
+  'maori': [
+    { abbreviation: 'MAO', name: 'Maori Version' },
+  ],
+  'birmanês': [
+    { abbreviation: 'JUDSON', name: 'Judson - Myanmar/Burmse' },
+  ],
+  'holandês': [
+    { abbreviation: 'DUTCH', name: 'Dutch' },
+  ],
   'norueguês': [
     { abbreviation: 'DNB', name: 'Det Norsk Bibelselskap' },
     { abbreviation: 'NOR', name: 'Norwegian Version' },
     { abbreviation: 'NORSMB', name: 'Studentmållagsbibelen frå 1921' },
   ],
-  'polonês': [{ abbreviation: 'POLAND', name: 'Polska Biblia' }],
+  'polonês': [
+    { abbreviation: 'POLAND', name: 'Polska Biblia' },
+  ],
   'romeno': [
     { abbreviation: 'CORNILESCU', name: 'Cornilescu' },
     { abbreviation: 'RU', name: 'Rumanian Version' },
@@ -275,15 +301,25 @@ const tlList = {
     { abbreviation: 'UKRUB', name: 'Ukrainian Version' },
     { abbreviation: 'SYNODAL', name: 'Синодальный перевод (Synodal)' },
   ],
-  'albanês': [{ abbreviation: 'ALB1', name: 'Albanian Version' }],
+  'albanês': [
+    { abbreviation: 'ALB1', name: 'Albanian Version' },
+  ],
   'sueco': [
     { abbreviation: 'SWEFOLK1998', name: 'Svenska Folkbibeln (1998)' },
     { abbreviation: 'SVD', name: 'Swedish 1917 Version' },
   ],
-  'suaíli': [{ abbreviation: 'SWA', name: 'Swahili NT' }],
-  'tailandês': [{ abbreviation: 'KJVTHAI', name: 'KJV-Thai' }],
-  'filipino': [{ abbreviation: 'TLGANGBIBLIA', name: 'Ang Dating Biblia' }],
-  'turco': [{ abbreviation: 'BB31', name: 'Türkçe' }],
+  'suaíli': [
+    { abbreviation: 'SWA', name: 'Swahili NT' },
+  ],
+  'tailandês': [
+    { abbreviation: 'KJVTHAI', name: 'KJV-Thai' },
+  ],
+  'filipino': [
+    { abbreviation: 'TLGANGBIBLIA', name: 'Ang Dating Biblia' },
+  ],
+  'turco': [
+    { abbreviation: 'BB31', name: 'Türkçe' },
+  ],
   'vietnamita': [
     { abbreviation: 'VIETNBR', name: 'New Vietnamese Bible' },
     { abbreviation: 'VIE', name: 'Tiếng Việt' },

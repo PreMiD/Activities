@@ -25,7 +25,9 @@ function isPlaying(doc: Document, video: HTMLVideoElement): boolean {
 const videoResolver: Resolver = {
   isActive: pathname => pathname.includes('/video'),
 
-  getDetails: (t, doc) => doc.location.pathname.includes('/player/') ? t.media_video : t.video_browsing,
+  getDetails: (t, doc) => doc.location.pathname.includes('/player/')
+    ? t.media_video
+    : t.video_browsing,
 
   getState: (t, doc) => {
     if (doc.location.pathname.includes('/player/')) {
@@ -61,11 +63,15 @@ const videoResolver: Resolver = {
     return undefined
   },
 
-  getType: (t, doc) => doc.location.pathname.includes('/player/') ? ActivityType.Watching : undefined,
+  getType: (t, doc) => doc.location.pathname.includes('/player/')
+    ? ActivityType.Watching
+    : undefined,
 
   getButtons: (t, doc) => {
     if (doc.location.pathname.includes('/player/')) {
-      return [{ label: t.button_watch_video, url: doc.location.href }]
+      return [
+        { label: t.button_watch_video, url: doc.location.href },
+      ]
     }
     return undefined
   },

@@ -45,7 +45,9 @@ presence.on('UpdateData', async () => {
     )?.src
     presenceData.smallImageKey = ActivityAssets.User
     presenceData.smallImageText = 'Viewing profile'
-    presenceData.buttons = [{ label: 'View Artist', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Artist', url: document.URL },
+    ]
   }
   else if (document.location.pathname.startsWith('/artwork')) {
     presenceData.details = 'Viewing an artwork'
@@ -154,7 +156,9 @@ presence.on('UpdateData', async () => {
       }
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? 'Paused' : 'Playing'
-      presenceData.buttons = [{ label: 'View Course', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Course', url: document.URL },
+      ]
     }
     else if (document.location.href.includes('/series')) {
       presenceData.details = 'Viewing a series'
@@ -166,7 +170,9 @@ presence.on('UpdateData', async () => {
         ?.replace('("', '')
         ?.replace('")', '')
       presenceData.state = shortTitle
-      presenceData.buttons = [{ label: 'View Series', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Series', url: document.URL },
+      ]
     }
     else if (document.location.href.includes('/instructors')) {
       presenceData.details = 'Viewing an instructor'
@@ -174,7 +180,9 @@ presence.on('UpdateData', async () => {
         'div.instructor-page.ng-star-inserted > div.container > div > div > img',
       )?.src
       presenceData.state = shortTitle
-      presenceData.buttons = [{ label: 'View Instructor', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Instructor', url: document.URL },
+      ]
     }
   }
   else if (document.location.href.includes('settings')) {

@@ -3,7 +3,13 @@ import { Assets } from 'premid'
 const presence = new Presence({ clientId: '1138970637440917504' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const defaultImageUrl = 'https://cdn.rcd.gg/PreMiD/websites/K/KEXP/assets/logo.png'
-const watchPaths = ['/archive/', '/djs/', '/podcasts/', '/schedule/', '/shows/']
+const watchPaths = [
+  '/archive/',
+  '/djs/',
+  '/podcasts/',
+  '/schedule/',
+  '/shows/',
+]
 
 async function updatePresence() {
   const strings = await presence.getStrings({
@@ -77,7 +83,9 @@ async function updatePresence() {
           ? Assets.Pause
           : Assets.Play
         presenceData.smallImageText = strings[
-          playBackStatus.ariaLabel === 'Play Stream' ? 'pause' : 'play'
+          playBackStatus.ariaLabel === 'Play Stream'
+            ? 'pause'
+            : 'play'
         ]
       }
       break

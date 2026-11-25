@@ -63,7 +63,9 @@ presence.on('UpdateData', async () => {
         delete data.startTimestamp
 
         data.details = title.find(Boolean)
-        data.state = title[0] ? `${title[2]} ${title[1]}` : 'Film'
+        data.state = title[0]
+          ? `${title[2]} ${title[1]}`
+          : 'Film'
 
         data.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         data.smallImageText = video.paused ? 'Paused' : 'Playing'
@@ -125,12 +127,21 @@ presence.on('UpdateData', async () => {
       if (typeof data === 'function') {
         const output = await data()
 
-        if (output.largeImageKey)
+        if (output.largeImageKey) {
           presenceData = output
-        else presenceData = { ...presenceData, ...output } as PresenceData
+        }
+        else {
+          presenceData = {
+            ...presenceData,
+            ...output,
+          } as PresenceData
+        }
       }
       else {
-        presenceData = { ...presenceData, ...data } as PresenceData
+        presenceData = {
+          ...presenceData,
+          ...data,
+        } as PresenceData
       }
     }
   }

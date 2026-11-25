@@ -12,7 +12,7 @@ presence.on('UpdateData', async () => {
   }
   const { pathname, search } = document.location
 
-  if (pathname === '/' && search.slice(0, 2) === '?q') {
+  if (pathname === '/' && search.startsWith('?q')) {
     presenceData.details = 'Searching:'
     presenceData.state = document.querySelector('.caption')?.textContent
     presenceData.smallImageKey = Assets.Search

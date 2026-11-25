@@ -11,7 +11,7 @@
   },
   "url": "duel.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*duel[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Duel.com/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Duel.com/assets/thumbnail.webp",
   "color": "#1a2c4a",

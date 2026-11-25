@@ -22,7 +22,7 @@
   },
   "url": "www.google.com",
   "regExp": "^https?[:][/][/]www[.]google([.][a-z]+)+[/]",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google/assets/thumbnail.png",
   "color": "#ffffff",

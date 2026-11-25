@@ -107,7 +107,9 @@ presence.on('UpdateData', async () => {
     }
 
     presenceData.details = `Viewing ${
-      !privacy ? `${pathname.split(/[@,/]+/)[1]}'s` : 'a'
+      !privacy
+        ? `${pathname.split(/[@,/]+/)[1]}'s`
+        : 'a'
     } profile`
   }
   else if (pathname.startsWith('/settings')) {

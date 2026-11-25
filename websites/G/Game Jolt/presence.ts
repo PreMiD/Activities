@@ -87,7 +87,9 @@ presence.on('UpdateData', async () => {
     && gameName.textContent !== ''
   ) {
     presenceData.details = `Viewing a game${
-      author && author.textContent !== '' ? ` by ${author.textContent}` : ''
+      author && author.textContent !== ''
+        ? ` by ${author.textContent}`
+        : ''
     }:`
     presenceData.state = gameName.textContent?.trim()
   }
@@ -103,7 +105,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = `Searching for${
       page.includes('/search/users')
         ? ' a user'
-        : `${page.includes('/search/games') ? ' a game' : ''}`
+        : `${page.includes('/search/games')
+          ? ' a game'
+          : ''}`
     }:`
     presenceData.state = fixedSearchName[0]?.toUpperCase() + fixedSearchName.slice(1)
     presenceData.smallImageKey = Assets.Search

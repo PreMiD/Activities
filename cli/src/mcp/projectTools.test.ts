@@ -13,8 +13,26 @@ vi.mock('../util/getActivities.js', () => ({ getActivities: mocks.getActivities 
 const { buildActivity, listActivities } = await import('./projectTools.js')
 
 const activities = [
-  { metadata: { service: 'YouTube', apiVersion: 1, version: '1.0.0', url: 'youtube.com' }, folder: '/repo/websites/Y/YouTube', versionized: false },
-  { metadata: { service: 'Twitch', apiVersion: 1, version: '2.0.0', url: 'twitch.tv' }, folder: '/repo/websites/T/Twitch', versionized: false },
+  {
+    metadata: {
+      service: 'YouTube',
+      apiVersion: 1,
+      version: '1.0.0',
+      url: 'youtube.com',
+    },
+    folder: '/repo/websites/Y/YouTube',
+    versionized: false,
+  },
+  {
+    metadata: {
+      service: 'Twitch',
+      apiVersion: 1,
+      version: '2.0.0',
+      url: 'twitch.tv',
+    },
+    folder: '/repo/websites/T/Twitch',
+    versionized: false,
+  },
 ]
 
 function fakeChild(output: string, code: number) {
@@ -39,7 +57,12 @@ describe('projectTools', () => {
       const result = await listActivities({ query: 'you' })
 
       expect(result).toEqual([
-        { service: 'YouTube', folder: '/repo/websites/Y/YouTube', url: 'youtube.com', version: '1.0.0' },
+        {
+          service: 'YouTube',
+          folder: '/repo/websites/Y/YouTube',
+          url: 'youtube.com',
+          version: '1.0.0',
+        },
       ])
     })
 
@@ -59,7 +82,13 @@ describe('projectTools', () => {
       expect(result).toEqual({ success: false, output: 'build failed' })
       expect(mocks.spawn).toHaveBeenCalledWith(
         process.execPath,
-        [expect.stringMatching(/dist[/\\]index\.js$/), 'build', 'YouTube', '--no-kill', '--validate'],
+        [
+          expect.stringMatching(/dist[/\\]index\.js$/),
+          'build',
+          'YouTube',
+          '--no-kill',
+          '--validate',
+        ],
         expect.anything(),
       )
     })

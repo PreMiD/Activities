@@ -103,7 +103,9 @@ export function formatEpisodeState(
   episodeTitle?: string,
 ): string {
   const base = `S${season} E${episode}`
-  return episodeTitle ? `${base} — ${episodeTitle}` : base
+  return episodeTitle
+    ? `${base} — ${episodeTitle}`
+    : base
 }
 
 function normalizeUrl(url?: string | null): string | undefined {
@@ -134,7 +136,9 @@ function loadImage(url: string): Promise<HTMLImageElement> {
 }
 
 async function imageFromBlobOrBuffer(source: Blob | ArrayBuffer): Promise<HTMLImageElement | undefined> {
-  const blob = source instanceof Blob ? source : new Blob([source])
+  const blob = source instanceof Blob
+    ? source
+    : new Blob([source])
   const objectUrl = URL.createObjectURL(blob)
   try {
     return await loadImage(objectUrl)
@@ -204,7 +208,9 @@ async function ensureLogoBlob(): Promise<Blob | undefined> {
         if (response.ok) {
           const blob = await response.blob()
           if (blob.size > 100) {
-            logoBlob = blob.type.startsWith('image/') ? blob : await toJpegBlob(blob)
+            logoBlob = blob.type.startsWith('image/')
+              ? blob
+              : await toJpegBlob(blob)
             return
           }
         }
@@ -249,7 +255,9 @@ async function curlImageBlob(url: string): Promise<Blob | undefined> {
 
     if (!response.ok) {
       const img = await loadImage(url).catch(() => undefined)
-      return img ? toJpegBlob(img) : undefined
+      return img
+        ? toJpegBlob(img)
+        : undefined
     }
 
     const buffer = await response.arrayBuffer()
@@ -266,7 +274,9 @@ async function curlImageBlob(url: string): Promise<Blob | undefined> {
         return jpeg
     }
 
-    const type = headerType.startsWith('image/') ? headerType : 'image/jpeg'
+    const type = headerType.startsWith('image/')
+      ? headerType
+      : 'image/jpeg'
     const blob = new Blob([buffer], { type })
 
     if (buffer.byteLength > MAX_GIF_BYTES || buffer.byteLength > 1_500_000) {
@@ -279,7 +289,9 @@ async function curlImageBlob(url: string): Promise<Blob | undefined> {
   }
   catch {
     const img = await loadImage(url).catch(() => undefined)
-    return img ? toJpegBlob(img) : undefined
+    return img
+      ? toJpegBlob(img)
+      : undefined
   }
 }
 

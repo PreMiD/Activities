@@ -61,7 +61,9 @@ presence.on('UpdateData', async () => {
   ])
   const { pathname, hostname, href } = document.location
   const fullUrl = (string: string) =>
-    string ? `https://${hostname}${string}` : ActivityAssets.Logo
+    string
+      ? `https://${hostname}${string}`
+      : ActivityAssets.Logo
 
   if (oldLang !== newLang) {
     oldLang = newLang

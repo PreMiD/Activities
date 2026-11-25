@@ -17,8 +17,12 @@ presence.on('UpdateData', () => {
   const startTimestampStr = el.getAttribute('data-start-timestamp')
   const endTimestampStr = el.getAttribute('data-end-timestamp')
 
-  const startTimestamp = startTimestampStr ? Number.parseInt(startTimestampStr, 10) * 1000 : undefined
-  const endTimestamp = endTimestampStr ? Number.parseInt(endTimestampStr, 10) * 1000 : undefined
+  const startTimestamp = startTimestampStr
+    ? Number.parseInt(startTimestampStr, 10) * 1000
+    : undefined
+  const endTimestamp = endTimestampStr
+    ? Number.parseInt(endTimestampStr, 10) * 1000
+    : undefined
 
   presence.setActivity({
     type: ActivityType.Watching,

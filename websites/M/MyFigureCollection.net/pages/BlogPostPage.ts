@@ -11,7 +11,9 @@ export class BlogPostPage extends BasePage {
     presenceData.details = strings.readingAnArticle
     presenceData.state = getTitle()
     presenceData.smallImageKey = await squareImage(getThumbnail())
-    presenceData.buttons = [getButton(strings.buttonReadArticle)]
+    presenceData.buttons = [
+      getButton(strings.buttonReadArticle),
+    ]
     return false
   }
 }

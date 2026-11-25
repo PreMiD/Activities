@@ -81,7 +81,9 @@ presence.on('UpdateData', async () => {
     const titleParts = documentTitle.split(' - ')
     const username = titleParts[0]?.trim()
 
-    presenceData.details = username && username !== 'Profile' && username !== 'Profile not found' ? `${username}'s Profile` : 'Viewing Profile'
+    presenceData.details = username && username !== 'Profile' && username !== 'Profile not found'
+      ? `${username}'s Profile`
+      : 'Viewing Profile'
     presenceData.state = 'Browsing'
   }
   else if (pathname.startsWith('/daily')) {

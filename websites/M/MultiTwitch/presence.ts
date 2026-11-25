@@ -33,7 +33,9 @@ presence.on('UpdateData', async () => {
         {
           largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/MultiTwitch/assets/0.png',
           details: `Watching ${currentStreams.length} ${
-            currentStreams.length > 1 ? 'streams' : 'stream'
+            currentStreams.length > 1
+              ? 'streams'
+              : 'stream'
           }`,
           state: stream,
         },
@@ -57,7 +59,9 @@ presence.on('UpdateData', async () => {
   else {
     slideshow.deleteAllSlides()
     presenceData.details = `Watching ${currentStreams.length} ${
-      currentStreams.length > 1 ? 'streams' : 'stream'
+      currentStreams.length > 1
+        ? 'streams'
+        : 'stream'
     }`
     presenceData.startTimestamp = watchingTimestamp
     presence.setActivity(presenceData)

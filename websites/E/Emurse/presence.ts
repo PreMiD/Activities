@@ -39,7 +39,9 @@ presence.on('UpdateData', async () => {
       default: {
         presenceData.details = `Reading a ${title}`
         presenceData.state = document.querySelector('h1')
-        presenceData.buttons = [{ label: 'View Article', url: href }]
+        presenceData.buttons = [
+          { label: 'View Article', url: href },
+        ]
       }
     }
   }

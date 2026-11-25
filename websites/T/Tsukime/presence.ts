@@ -70,7 +70,9 @@ presence.on('UpdateData', async () => {
     }
     case 'anime':
     case 'manga': {
-      presenceData.details = `Viewing ${page === 'anime' ? 'an' : 'a'} ${page}`
+      presenceData.details = `Viewing ${page === 'anime'
+        ? 'an'
+        : 'a'} ${page}`
       presenceData.state = document
         .querySelector('h1')
         ?.textContent
@@ -82,7 +84,9 @@ presence.on('UpdateData', async () => {
       }
       presenceData.buttons = [
         {
-          label: page === 'anime' ? 'View anime' : 'View manga',
+          label: page === 'anime'
+            ? 'View anime'
+            : 'View manga',
           url: document.location.href,
         },
       ]

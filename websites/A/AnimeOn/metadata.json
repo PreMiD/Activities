@@ -15,7 +15,7 @@
     "v1.animeon.co"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animeon[.](cc|co)[/]",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeOn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeOn/assets/thumbnail.png",
   "color": "#8B5CF6",
@@ -49,10 +49,29 @@
       "value": true
     },
     {
+      "id": "hidePaused",
+      "title": "Hide Paused",
+      "icon": "fad fa-pause-circle",
+      "value": false
+    },
+    {
       "id": "privacy",
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
       "value": false
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "values": [
+        "Activity Name",
+        "Anime Title"
+      ],
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "buttons",

@@ -123,12 +123,16 @@ async function updatePresence(): Promise<void> {
     )
   }
 
-  const displayServer = showServer && serverName && serverName !== 'Server' ? serverName : ''
+  const displayServer = showServer && serverName && serverName !== 'Server'
+    ? serverName
+    : ''
 
   const data: PresenceData = {
     type: ActivityType.Listening,
     largeImageKey: thumbnail || DEFAULT_ASSETS.logo,
-    largeImageText: displayServer ? `Server: ${displayServer}` : 'Soya Music',
+    largeImageText: displayServer
+      ? `Server: ${displayServer}`
+      : 'Soya Music',
   }
 
   if (active && title) {
@@ -149,7 +153,9 @@ async function updatePresence(): Promise<void> {
         parts.push(voiceChannel)
     }
 
-    data.state = (parts.length ? parts.join(' • ') : playing ? 'Listening to Soya' : 'Paused').slice(0, 128)
+    data.state = (parts.length
+      ? parts.join(' • ')
+      : playing ? 'Listening to Soya' : 'Paused').slice(0, 128)
 
     if (lyricsOpen) {
       data.smallImageKey = DEFAULT_ASSETS.lyrics
@@ -185,10 +191,14 @@ async function updatePresence(): Promise<void> {
 
     if (showButtons) {
       const pathServerId = pathname.match(/\/dashboard\/([^/]+)/)?.[1]
-      const resolvedServerId = serverId || (pathServerId && pathServerId !== 'profile' ? pathServerId : '')
+      const resolvedServerId = serverId || (pathServerId && pathServerId !== 'profile'
+        ? pathServerId
+        : '')
       const playerUrl = resolvedServerId
         ? `https://soyamusic.in/dashboard/${resolvedServerId}/webplayer`
-        : (href.startsWith('https://') && pathname.includes('/webplayer') ? href : '')
+        : (href.startsWith('https://') && pathname.includes('/webplayer')
+            ? href
+            : '')
 
       if (playerUrl) {
         data.buttons = [
@@ -203,7 +213,9 @@ async function updatePresence(): Promise<void> {
 
   if (pathname.includes('/webplayer')) {
     data.details = 'Web Player'
-    data.state = displayServer ? `Connected to ${displayServer}` : 'Idle'
+    data.state = displayServer
+      ? `Connected to ${displayServer}`
+      : 'Idle'
     data.startTimestamp = pageStartTime
 
     presence.setActivity(data)

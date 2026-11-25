@@ -72,8 +72,11 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing Channel'
     if (name) {
       presenceData.state = name.textContent
-      if (buttons)
-        presenceData.buttons = [{ label: 'View Channel', url: href }]
+      if (buttons) {
+        presenceData.buttons = [
+          { label: 'View Channel', url: href },
+        ]
+      }
     }
     else {
       presenceData.details = 'Viewing All Channels'
@@ -129,7 +132,9 @@ presence.on('UpdateData', async () => {
           const { search } = location
           presenceData.details = `Searching for ${search.substring(
             7,
-            search.includes('&') ? search.indexOf('&') : search.length,
+            search.includes('&')
+              ? search.indexOf('&')
+              : search.length,
           )}`
         }
     }

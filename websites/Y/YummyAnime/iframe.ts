@@ -61,9 +61,15 @@ function pickBestVideo(): HTMLVideoElement | null {
   return pool.reduce((a, b) => {
     const da = getKnownDuration(a)
     const db = getKnownDuration(b)
-    const ad = Number.isFinite(da) ? da : 0
-    const bd = Number.isFinite(db) ? db : 0
-    return bd >= ad ? b : a
+    const ad = Number.isFinite(da)
+      ? da
+      : 0
+    const bd = Number.isFinite(db)
+      ? db
+      : 0
+    return bd >= ad
+      ? b
+      : a
   })
 }
 

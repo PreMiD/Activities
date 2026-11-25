@@ -95,7 +95,9 @@ presence.on('UpdateData', async () => {
         defaultCover = currentCover
       }
 
-      buttons = [{ label: strings.visitUserProfileButton, url: `${origin}/u/${part2}` }]
+      buttons = [
+        { label: strings.visitUserProfileButton, url: `${origin}/u/${part2}` },
+      ]
       break
     }
     case 'novels': {
@@ -143,7 +145,10 @@ presence.on('UpdateData', async () => {
         presenceData.details = `${strings.reading} ${novelName}`
         presenceData.state = `${currentChapTitle} -  ${noveltype}`
 
-        buttons = [{ label: strings.readNovelButton, url: `${origin}/novels/${part2}` }, { label: strings.readChapterButton, url: `${origin}/novels/${part2}/capitulos/${part4}` }]
+        buttons = [
+          { label: strings.readNovelButton, url: `${origin}/novels/${part2}` },
+          { label: strings.readChapterButton, url: `${origin}/novels/${part2}/capitulos/${part4}` },
+        ]
 
         currentPageTitle = novelName
       }
@@ -162,7 +167,9 @@ presence.on('UpdateData', async () => {
           currentPageTitle = novelName // Its not showing and idk why
           defaultCover = currentCover
         }
-        buttons = [{ label: strings.readNovelButton, url: `${origin}/novels/${part2}` }]
+        buttons = [
+          { label: strings.readNovelButton, url: `${origin}/novels/${part2}` },
+        ]
       }
       break
     }
@@ -180,7 +187,9 @@ presence.on('UpdateData', async () => {
           currentPageTitle = getPageTitle() || listName
         }
 
-        buttons = [{ label: strings.readListButton, url: `${origin}/listas/${part2}` }]
+        buttons = [
+          { label: strings.readListButton, url: `${origin}/listas/${part2}` },
+        ]
         break
       }
       presenceData.state = `${strings.lists}`
@@ -209,7 +218,9 @@ presence.on('UpdateData', async () => {
         currentPageTitle = newsTitle || defaultCover
       }
 
-      buttons = [{ label: strings.readNewsButton, url: `${origin}/noticias/${part2}` }]
+      buttons = [
+        { label: strings.readNewsButton, url: `${origin}/noticias/${part2}` },
+      ]
       break
     }
     case 'genero':{
@@ -237,7 +248,9 @@ presence.on('UpdateData', async () => {
         defaultCover = currentCover
         currentPageTitle = getPageTitle() || defaultCover
       }
-      buttons = [{ label: strings.viewPage, url: origin + pathname }]
+      buttons = [
+        { label: strings.viewPage, url: origin + pathname },
+      ]
 
       break
   }

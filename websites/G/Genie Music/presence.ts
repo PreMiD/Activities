@@ -113,7 +113,7 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
-      if (location.pathname.indexOf('/search') === 0) {
+      if (location.pathname.startsWith('/search')) {
         presenceData.smallImageKey = Assets.Search
         presenceData.details = '검색'
         presenceData.state = getQuery().query

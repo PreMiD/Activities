@@ -107,12 +107,16 @@ let liveBroadcast: { serviceId: string, data?: LiveBroadcast, fetchedAt: number 
 async function getLiveBroadcast(serviceId: string): Promise<LiveBroadcast | undefined> {
   const now = Date.now()
   if (liveBroadcast?.serviceId === serviceId) {
-    const end = liveBroadcast.data ? Date.parse(liveBroadcast.data.end) : 0
+    const end = liveBroadcast.data
+      ? Date.parse(liveBroadcast.data.end)
+      : 0
     if (now < end || now - liveBroadcast.fetchedAt < 30_000)
       return liveBroadcast.data
   }
 
-  const previous = liveBroadcast?.serviceId === serviceId ? liveBroadcast.data : undefined
+  const previous = liveBroadcast?.serviceId === serviceId
+    ? liveBroadcast.data
+    : undefined
   liveBroadcast = { serviceId, data: previous, fetchedAt: now }
   try {
     const response = await fetch(
@@ -279,8 +283,12 @@ presence.on('UpdateData', async () => {
               }`
             }
             else {
-              subtitle = `S${episodeNumber[0]}${episodeNumber[1] ? `:E${episodeNumber[1]}` : ''
-              }${episodeTitle ? ` ${episodeTitle}` : ''}`
+              subtitle = `S${episodeNumber[0]}${episodeNumber[1]
+                ? `:E${episodeNumber[1]}`
+                : ''
+              }${episodeTitle
+                ? ` ${episodeTitle}`
+                : ''}`
             }
           }
         }
@@ -375,7 +383,9 @@ presence.on('UpdateData', async () => {
         presenceData.name = `BBC ${station}`
 
       presenceData.details = broadcast?.titles.primary || station
-      presenceData.state = broadcast?.titles.secondary || (station ? `${strings.Live}: ${station}` : strings.Live)
+      presenceData.state = broadcast?.titles.secondary || (station
+        ? `${strings.Live}: ${station}`
+        : strings.Live)
       setCover(broadcast?.image_url)
 
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Live
@@ -776,7 +786,10 @@ presence.on('UpdateData', async () => {
 
     for (const [key, value] of Object.entries(weatherPages)) {
       if (path.match(key) && !VideoMedia.duration) {
-        presenceData = { ...presenceData, ...value } as PresenceData
+        presenceData = {
+          ...presenceData,
+          ...value,
+        } as PresenceData
         break
       }
       else if (VideoMedia.duration) {
@@ -871,7 +884,10 @@ presence.on('UpdateData', async () => {
         && !path.includes('/world/')
         && !VideoMedia.duration
       ) {
-        presenceData = { ...presenceData, ...value } as PresenceData
+        presenceData = {
+          ...presenceData,
+          ...value,
+        } as PresenceData
         break
       }
       else if (path.includes('/world/') && !VideoMedia.duration) {

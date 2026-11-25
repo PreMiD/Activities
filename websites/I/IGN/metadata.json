@@ -54,7 +54,7 @@
     "tr.ign.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ign[.]com([.]cn)?[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/IGN/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/IGN/assets/thumbnail.jpeg",
   "color": "#bf1313",

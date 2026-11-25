@@ -12,7 +12,9 @@ async function getBooleanSetting(
 ): Promise<boolean> {
   try {
     const value = await presence.getSetting<boolean>(settingId)
-    return typeof value === 'boolean' ? value : fallback
+    return typeof value === 'boolean'
+      ? value
+      : fallback
   }
   catch {
     return fallback
@@ -22,7 +24,9 @@ async function getBooleanSetting(
 async function getLanguageSetting(): Promise<string> {
   try {
     const value = await presence.getSetting<string>('lang')
-    return typeof value === 'string' && value ? value : 'en'
+    return typeof value === 'string' && value
+      ? value
+      : 'en'
   }
   catch {
     return 'en'

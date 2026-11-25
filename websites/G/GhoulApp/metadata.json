@@ -15,7 +15,7 @@
   },
   "url": "ghoulapp.com",
   "regExp": "^https?[:][/][/](?:www[.])?ghoulapp[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GhoulApp/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GhoulApp/assets/thumbnail.png",
   "color": "#DC2626",

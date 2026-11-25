@@ -45,7 +45,13 @@ export function getPlaybackDisplay(metadata: PlaybackMetadata | null, viewerTime
       }
     }
 
-    return { title: airing.title, subtitle: station, airing, station, image }
+    return {
+      title: airing.title,
+      subtitle: station,
+      airing,
+      station,
+      image,
+    }
   }
 
   // Live event (sports...): title = event, subtitle = stream (the remaining part of the item title)

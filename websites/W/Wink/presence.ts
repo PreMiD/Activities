@@ -129,7 +129,9 @@ presence.on('UpdateData', async () => {
         break
       }
 
-      presenceData.details = `Смотрит о ${pathList[0] === 'movies' ? 'фильме' : 'сериале'}`
+      presenceData.details = `Смотрит о ${pathList[0] === 'movies'
+        ? 'фильме'
+        : 'сериале'}`
       presenceData.state = title
 
       if (!privacy && logo) {
@@ -149,7 +151,9 @@ presence.on('UpdateData', async () => {
             presenceData.details = video.title
           }
           else {
-            presenceData.details = `Смотрит ${pathList[0] === 'movies' ? 'фильм' : 'сериал'}`
+            presenceData.details = `Смотрит ${pathList[0] === 'movies'
+              ? 'фильм'
+              : 'сериал'}`
           }
           if (!privacy && logo && video?.poster) {
             presenceData.largeImageKey = video?.poster

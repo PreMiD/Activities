@@ -14,7 +14,7 @@
     "easyfun.gg"
   ],
   "regExp": "^https?[:][/][/](www[.])?easyfun[.]gg[/]",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Easyfun/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Easyfun/assets/thumbnail.png",
   "color": "#00FF66",

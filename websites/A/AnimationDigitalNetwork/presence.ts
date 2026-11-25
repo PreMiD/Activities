@@ -44,7 +44,9 @@ function parseEpisode(): EpisodeLd | null {
     return null
   try {
     const data = JSON.parse(raw)
-    return Array.isArray(data) ? (data[0] ?? null) : data
+    return Array.isArray(data)
+      ? (data[0] ?? null)
+      : data
   }
   catch {
     return null
@@ -80,7 +82,9 @@ function fetchPosterUrl(showId: string): void {
 
   posterUrlPending.add(showId)
   fetch(`https://gw.api.animationdigitalnetwork.com/show/${showId}`)
-    .then(res => (res.ok ? res.json() : null))
+    .then(res => (res.ok
+      ? res.json()
+      : null))
     .then((data) => {
       const url: string | null = data?.show?.image2x ?? data?.show?.image ?? null
       posterUrlCache.set(showId, url)
@@ -123,7 +127,9 @@ function getCover(): string | Blob {
   if (!coverPending.has(url)) {
     coverPending.add(url)
     fetch(url)
-      .then(res => (res.ok ? res.blob() : null))
+      .then(res => (res.ok
+        ? res.blob()
+        : null))
       .then((blob) => {
         if (blob)
           coverCache.set(url, blob)
@@ -216,7 +222,9 @@ presence.on('UpdateData', async () => {
     // Top line: episode title or number.
     presenceData.details
       = episodeTitle
-        ?? (episodeNumber ? `${localized.episode} ${episodeNumber}` : seriesName)
+        ?? (episodeNumber
+          ? `${localized.episode} ${episodeNumber}`
+          : seriesName)
 
     // Bottom line: season / episode.
     if (seasonNumber && episodeNumber)
@@ -251,7 +259,9 @@ presence.on('UpdateData', async () => {
       delete presenceData.endTimestamp
     }
 
-    presenceData.buttons = [{ label: localized.buttonWatchEpisode, url: href }]
+    presenceData.buttons = [
+      { label: localized.buttonWatchEpisode, url: href },
+    ]
     wasWatching = true
   }
   else if (onVideoPage) {
@@ -272,7 +282,9 @@ presence.on('UpdateData', async () => {
       ? ActivityAssets.Logo
       : getCover()
 
-    presenceData.buttons = [{ label: localized.buttonViewPage, url: href }]
+    presenceData.buttons = [
+      { label: localized.buttonViewPage, url: href },
+    ]
   }
   else {
     if (wasWatching) {

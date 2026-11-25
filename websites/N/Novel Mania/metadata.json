@@ -16,7 +16,7 @@
   },
   "url": "novelmania.com.br",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*novelmania[.]com[.]br[/]",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Novel%20Mania/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Novel%20Mania/assets/thumbnail.jpg",
   "color": "#008cff",

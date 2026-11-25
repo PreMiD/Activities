@@ -171,7 +171,9 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = 'Checking their inbox'
       presenceData.state = `${unreadMessageCount} unread message${
-        unreadMessageCount === 1 ? '' : 's'
+        unreadMessageCount === 1
+          ? ''
+          : 's'
       }`
       break
     }

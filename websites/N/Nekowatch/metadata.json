@@ -12,7 +12,7 @@
   },
   "url": "nekowatch.xyz",
   "regExp": "^https?[:][/][/](www[.])?nekowatch[.]xyz[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nekowatch/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nekowatch/assets/thumbnail.png",
   "color": "#6366f1",

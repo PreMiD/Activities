@@ -12,7 +12,7 @@
   },
   "url": "www.zdf.de",
   "regExp": "^https?[:][/][/](www[.])?zdf[.]de[/]",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZDFmediathek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZDFmediathek/assets/thumbnail.jpg",
   "color": "#FE7405",

@@ -37,28 +37,43 @@ presence.on('UpdateData', async () => {
     }
     case pathname.includes('/searchresults'): {
       const dest = params.get('ss')
-      if (dest)
-        data.details = privacy ? 'Searching for accommodations' : `Searching: ${dest}`
-      else
+      if (dest) {
+        data.details = privacy
+          ? 'Searching for accommodations'
+          : `Searching: ${dest}`
+      }
+      else {
         data.details = 'Searching for accommodations'
+      }
       break
     }
     case pathname.startsWith('/hotel/'): {
-      data.details = privacy ? 'Viewing a hotel' : (h1 ?? 'Viewing a hotel')
-      if (buttons && !privacy)
-        data.buttons = [{ label: 'View Hotel', url: document.location.href }]
+      data.details = privacy
+        ? 'Viewing a hotel'
+        : (h1 ?? 'Viewing a hotel')
+      if (buttons && !privacy) {
+        data.buttons = [
+          { label: 'View Hotel', url: document.location.href },
+        ]
+      }
       break
     }
     case pathname.startsWith('/city/'): {
-      data.details = privacy ? 'Exploring a city' : (h1 ?? 'Exploring a city')
+      data.details = privacy
+        ? 'Exploring a city'
+        : (h1 ?? 'Exploring a city')
       break
     }
     case pathname.startsWith('/country/'): {
-      data.details = privacy ? 'Exploring a country' : (h1 ?? 'Exploring a country')
+      data.details = privacy
+        ? 'Exploring a country'
+        : (h1 ?? 'Exploring a country')
       break
     }
     case pathname.startsWith('/region/'): {
-      data.details = privacy ? 'Exploring a region' : (h1 ?? 'Exploring a region')
+      data.details = privacy
+        ? 'Exploring a region'
+        : (h1 ?? 'Exploring a region')
       break
     }
     case pathname.startsWith('/flights'): {
@@ -70,7 +85,9 @@ presence.on('UpdateData', async () => {
       break
     }
     case pathname.startsWith('/attractions') || pathname.startsWith('/things-to-do'): {
-      data.details = privacy ? 'Browsing attractions' : (h1 ?? 'Browsing attractions')
+      data.details = privacy
+        ? 'Browsing attractions'
+        : (h1 ?? 'Browsing attractions')
       break
     }
     case pathname.startsWith('/taxi'): {

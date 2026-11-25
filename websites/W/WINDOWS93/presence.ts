@@ -118,7 +118,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${
         document.querySelectorAll('.virus--hydra').length
       } window${
-        document.querySelectorAll('.virus--hydra').length !== 1 ? 's' : ''
+        document.querySelectorAll('.virus--hydra').length !== 1
+          ? 's'
+          : ''
       }`
       break
     }

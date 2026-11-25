@@ -452,7 +452,9 @@ presence.on('UpdateData', async () => {
         smallImageText: strings.episodeList,
         startTimestamp: getBrowsingTimestamp(),
         statusDisplayType,
-        buttons: [{ label: strings.buttonWatchAnime, url: document.location.href }],
+        buttons: [
+          { label: strings.buttonWatchAnime, url: document.location.href },
+        ],
       })
       return
     }
@@ -494,7 +496,9 @@ presence.on('UpdateData', async () => {
       smallImageKey: paused ? Assets.Pause : Assets.Play,
       smallImageText: paused ? strings.videoPaused : strings.videoPlaying,
       statusDisplayType,
-      buttons: seriesButton ? [episodeButton, seriesButton] : [episodeButton],
+      buttons: seriesButton
+        ? [episodeButton, seriesButton]
+        : [episodeButton],
     }
 
     //* "{0}" lets users drop the row entirely.

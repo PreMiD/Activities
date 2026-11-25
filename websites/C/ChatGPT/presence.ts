@@ -81,11 +81,17 @@ presence.on('UpdateData', async () => {
       )?.textContent
     }
     else {
-      presenceData.details = showTitle && !chatPrivacy.getIsHidden() ? document.title : (showGPTName ? strings.talkingWithAI.replace('{0}', gptName ?? strings.ai) : strings.talkingWithAI.replace('{0}', strings.ai))
+      presenceData.details = showTitle && !chatPrivacy.getIsHidden()
+        ? document.title
+        : (showGPTName
+            ? strings.talkingWithAI.replace('{0}', gptName ?? strings.ai)
+            : strings.talkingWithAI.replace('{0}', strings.ai))
     }
 
     presenceData.state = isTalking
-      ? (showGPTName ? strings.aiResponding.replace('{0}', gptName ?? strings.ai) : strings.aiResponding.replace('{0}', strings.ai))
+      ? (showGPTName
+          ? strings.aiResponding.replace('{0}', gptName ?? strings.ai)
+          : strings.aiResponding.replace('{0}', strings.ai))
       : strings.conversationStats
           .replace(
             '{0}',
@@ -110,11 +116,15 @@ presence.on('UpdateData', async () => {
         )?.textContent
       }
       else {
-        presenceData.details = showGPTName ? strings.talkingWithAI.replace('{0}', gptName ?? strings.ai) : strings.talkingWithAI.replace('{0}', strings.ai)
+        presenceData.details = showGPTName
+          ? strings.talkingWithAI.replace('{0}', gptName ?? strings.ai)
+          : strings.talkingWithAI.replace('{0}', strings.ai)
       }
 
       presenceData.state = isTalking
-        ? (showGPTName ? strings.aiResponding.replace('{0}', gptName ?? strings.ai) : strings.aiResponding.replace('{0}', strings.ai))
+        ? (showGPTName
+            ? strings.aiResponding.replace('{0}', gptName ?? strings.ai)
+            : strings.aiResponding.replace('{0}', strings.ai))
         : strings.conversationStats
             .replace(
               '{0}',
@@ -132,7 +142,9 @@ presence.on('UpdateData', async () => {
 
     if (document.querySelector('div[role=dialog]')) {
       presenceData.details = showGPTName ? strings.viewingGPT : strings.viewingAGPT
-      presenceData.state = showGPTName ? document.querySelector('div[role=dialog] div.text-token-text-primary > div > div.text-center')?.textContent : null
+      presenceData.state = showGPTName
+        ? document.querySelector('div[role=dialog] div.text-token-text-primary > div > div.text-center')?.textContent
+        : null
     }
   }
   else if (document.location.search.includes('?temporary-chat=true')) {
@@ -141,9 +153,13 @@ presence.on('UpdateData', async () => {
       presenceData.state = strings.thinkingOfPrompt
     }
     else {
-      presenceData.details = (showGPTName ? strings.talkingWithAIInTemporaryChat.replace('{0}', gptName ?? strings.ai) : strings.talkingWithAIInTemporaryChat.replace('{0}', strings.ai))
+      presenceData.details = (showGPTName
+        ? strings.talkingWithAIInTemporaryChat.replace('{0}', gptName ?? strings.ai)
+        : strings.talkingWithAIInTemporaryChat.replace('{0}', strings.ai))
       presenceData.state = isTalking
-        ? (showGPTName ? strings.aiResponding.replace('{0}', gptName ?? strings.ai) : strings.aiResponding.replace('{0}', strings.ai))
+        ? (showGPTName
+            ? strings.aiResponding.replace('{0}', gptName ?? strings.ai)
+            : strings.aiResponding.replace('{0}', strings.ai))
         : strings.conversationStats
             .replace(
               '{0}',
@@ -157,7 +173,11 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.split('/')[1] === 'share') {
-    presenceData.details = showTitle ? document.title : (showGPTName ? strings.talkingWithAIInSharedChat.replace('{0}', gptName ?? strings.ai) : strings.talkingWithAIInSharedChat.replace('{0}', strings.ai))
+    presenceData.details = showTitle
+      ? document.title
+      : (showGPTName
+          ? strings.talkingWithAIInSharedChat.replace('{0}', gptName ?? strings.ai)
+          : strings.talkingWithAIInSharedChat.replace('{0}', strings.ai))
     presenceData.state = strings.conversationStats
       .replace(
         '{0}',
@@ -170,8 +190,12 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.split('/')[1] === 'library') {
     const titleBar = document.querySelector('div[data-testid="modal-image-gen-lightbox"]')
-    presenceData.details = titleBar ? strings.viewingImage.replace('{0}', document.querySelector('div[data-testid="modal-image-gen-lightbox"] h2.text-token-text-primary')!.textContent!) : strings.viewingLibrary
-    presenceData.state = titleBar ? document.querySelector('div[data-testid="modal-image-gen-lightbox"] span.text-token-text-secondary')?.textContent : ''
+    presenceData.details = titleBar
+      ? strings.viewingImage.replace('{0}', document.querySelector('div[data-testid="modal-image-gen-lightbox"] h2.text-token-text-primary')!.textContent!)
+      : strings.viewingLibrary
+    presenceData.state = titleBar
+      ? document.querySelector('div[data-testid="modal-image-gen-lightbox"] span.text-token-text-secondary')?.textContent
+      : ''
   }
   else {
     presenceData.details = strings.startNewConversation

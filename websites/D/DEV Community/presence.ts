@@ -163,7 +163,9 @@ presence.on('UpdateData', async () => {
         ?.paused
         ? 'pause'
         : 'play'
-      contentStateText = contentStateKey === 'pause' ? 'Paused' : 'Playing'
+      contentStateText = contentStateKey === 'pause'
+        ? 'Paused'
+        : 'Playing'
 
       presenceData.smallImageKey = assets[contentStateKey]
       presenceData.smallImageText = contentStateText
@@ -196,7 +198,9 @@ presence.on('UpdateData', async () => {
         .paused
         ? 'pause'
         : 'play'
-      contentStateText = contentStateKey === 'pause' ? 'Paused' : 'Listening'
+      contentStateText = contentStateKey === 'pause'
+        ? 'Paused'
+        : 'Listening'
 
       presenceData.smallImageKey = assets[contentStateKey]
       presenceData.smallImageText = contentStateText

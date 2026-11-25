@@ -9,7 +9,12 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/MoviesJoy/assets/logo.png',
 }
 
-let video = { exists: false, duration: 0, currentTime: 0, paused: true }
+let video = {
+  exists: false,
+  duration: 0,
+  currentTime: 0,
+  paused: true,
+}
 
 presence.on(
   'iFrameData',

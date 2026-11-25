@@ -31,8 +31,12 @@ presence.on('UpdateData', async () => {
       presenceData.details = title
       presenceData.state = subTitle
 
-      presenceData.smallImageKey = video.paused || Number.isNaN(video.duration) ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video.paused || Number.isNaN(video.duration) ? 'Paused' : 'Playing';
+      presenceData.smallImageKey = video.paused || Number.isNaN(video.duration)
+        ? Assets.Pause
+        : Assets.Play
+      presenceData.smallImageText = video.paused || Number.isNaN(video.duration)
+        ? 'Paused'
+        : 'Playing';
 
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
@@ -145,8 +149,12 @@ presence.on('UpdateData', async () => {
   }
 
   for (const [key, value] of Object.entries(pages)) {
-    if (path.match(key))
-      presenceData = { ...presenceData, ...value } as PresenceData
+    if (path.match(key)) {
+      presenceData = {
+        ...presenceData,
+        ...value,
+      } as PresenceData
+    }
   }
 
   if (!showButtons)

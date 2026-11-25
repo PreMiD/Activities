@@ -90,7 +90,9 @@ presence.on('UpdateData', async () => {
         }
         presenceData.details = document.querySelector('.h1-titulo')?.textContent
         if (showButtons) {
-          presenceData.buttons = [{ label: 'Ler mangá', url: href }]
+          presenceData.buttons = [
+            { label: 'Ler mangá', url: href },
+          ]
         }
       }
       else {
@@ -110,7 +112,9 @@ presence.on('UpdateData', async () => {
       if (slug) {
         presenceData.details = document.querySelector('#scan-nome')?.textContent
         if (showButtons) {
-          presenceData.buttons = [{ label: 'Ver scan', url: href }]
+          presenceData.buttons = [
+            { label: 'Ver scan', url: href },
+          ]
         }
       }
       else {

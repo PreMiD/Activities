@@ -21,7 +21,9 @@ presence.on('UpdateData', async () => {
       )} ${localStorage.getItem('senpaio:server')} | ${
         document.querySelector('#room-stats-hud')?.textContent
       }`
-      presenceData.state = `Player : ${profile.tag === '' ? '' : `[${profile.tag}]`} ${
+      presenceData.state = `Player : ${profile.tag === ''
+        ? ''
+        : `[${profile.tag}]`} ${
         profile.list[profile.selected].nick === ''
           ? 'no nick'
           : profile.list[profile.selected].nick

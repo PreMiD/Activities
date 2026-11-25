@@ -98,7 +98,9 @@ presence.on('UpdateData', async () => {
       const options = {
         title: document.querySelector('.x78zum5.xdt5ytf.xtp0wl1')?.querySelector('.xzueoph.x1k70j0n')?.textContent ?? document.querySelector('a[aria-label] > span > [class*="x1n2onr6"]')?.textContent ?? document.querySelector('[class="xzueoph x1k70j0n"]')?.textContent ?? 'unknown title',
         creator: document.querySelector('.xjp7ctv > span')?.querySelector('a')?.textContent ?? document.querySelector('h1')?.textContent?.trim() ?? 'unknown creator',
-        watching: !liveCheck ? strings.watchingVid : strings.watchingLive,
+        watching: !liveCheck
+          ? strings.watchingVid
+          : strings.watchingLive,
         onprofile: strings.onProfileOf,
       }
       presenceData.name = 'Facebook Watch'
@@ -107,7 +109,9 @@ presence.on('UpdateData', async () => {
         ? options.watching
         : vidDetail.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile)
 
-      presenceData.state = !privacyMode && vidState !== '{0}' ? vidState.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile) : ''
+      presenceData.state = !privacyMode && vidState !== '{0}'
+        ? vidState.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile)
+        : ''
       switch (true) {
         case !!liveCheck: {
           presenceData.smallImageKey = video.paused
@@ -842,47 +846,69 @@ presence.on('UpdateData', async () => {
     },
     '/gaming/browse/live': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Livestreams ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Livestreams ${strings.browse}`,
     },
     '/gaming/browse/streamers': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Streamers ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Streamers ${strings.browse}`,
     },
     '/gaming/recent': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Recent livestreams ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Recent livestreams ${strings.browse}`,
     },
     '/gaming/recent/activity': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Recent activity ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Recent activity ${strings.browse}`,
     },
     '/gaming/recent/steamers': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Recent streamers ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Recent streamers ${strings.browse}`,
     },
     '/gaming/recent/history': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Recent history ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Recent history ${strings.browse}`,
     },
     '/games/recent': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Recent games ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Recent games ${strings.browse}`,
     },
     '/gaming/tournaments/hosted': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Hosted tournaments ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Hosted tournaments ${strings.browse}`,
     },
     '/gaming/tournaments/registered': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Registered tournaments ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Registered tournaments ${strings.browse}`,
     },
     '/gaming/tournaments/completed': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Completed tournaments ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Completed tournaments ${strings.browse}`,
     },
     '/gaming/play/registered': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Registered play ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Registered play ${strings.browse}`,
     },
     '/gaming/tournaments': {
       name: 'Facebook Gaming',
@@ -890,7 +916,9 @@ presence.on('UpdateData', async () => {
     },
     '/gaming/play/completed': {
       name: 'Facebook Gaming',
-      details: privacyMode ? strings.browse : `Completed play ${strings.browse}`,
+      details: privacyMode
+        ? strings.browse
+        : `Completed play ${strings.browse}`,
     },
     '/marketplace/you': {
       name: 'Facebook Marketplace',
@@ -942,8 +970,12 @@ presence.on('UpdateData', async () => {
     },
   }
   for (const [path, data] of Object.entries(pages)) {
-    if (pathname.includes(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (pathname.includes(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   if (!showTimestamp || dontShowTmp || privacyMode) {

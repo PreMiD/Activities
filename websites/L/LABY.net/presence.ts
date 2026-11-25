@@ -66,20 +66,26 @@ function handleProfileRoute(presenceData: PresenceData): void {
 
   presenceData.details = 'Viewing profile'
   presenceData.state = `@${profileName}`
-  const possessive = profileName.endsWith('s') ? '\'' : '\'s'
-  presenceData.buttons = [{
-    label: `View @${profileName}${possessive} profile`,
-    url: href,
-  }]
+  const possessive = profileName.endsWith('s')
+    ? '\''
+    : '\'s'
+  presenceData.buttons = [
+    {
+      label: `View @${profileName}${possessive} profile`,
+      url: href,
+    },
+  ]
 }
 
 function handleSingleItemRoute(itemType: string) {
   return (presenceData: PresenceData): void => {
     presenceData.details = `Viewing a ${itemType}`
-    presenceData.buttons = [{
-      label: `View this ${itemType}`,
-      url: href,
-    }]
+    presenceData.buttons = [
+      {
+        label: `View this ${itemType}`,
+        url: href,
+      },
+    ]
   }
 }
 
@@ -91,20 +97,24 @@ function handleDetailedItemRoute(itemType: string, selector: string) {
 
     presenceData.details = `Viewing ${itemType}`
     presenceData.state = itemName
-    presenceData.buttons = [{
-      label: `View ${itemName} ${itemType}`,
-      url: href,
-    }]
+    presenceData.buttons = [
+      {
+        label: `View ${itemName} ${itemType}`,
+        url: href,
+      },
+    ]
   }
 }
 
 function handleSimpleItemRoute(itemType: string) {
   return (presenceData: PresenceData): void => {
     presenceData.details = `Viewing a ${itemType}`
-    presenceData.buttons = [{
-      label: `View this ${itemType}`,
-      url: href,
-    }]
+    presenceData.buttons = [
+      {
+        label: `View this ${itemType}`,
+        url: href,
+      },
+    ]
   }
 }
 
@@ -115,10 +125,12 @@ function handleServerRoute(presenceData: PresenceData): void {
 
   presenceData.details = 'Viewing server'
   presenceData.state = serverName
-  presenceData.buttons = [{
-    label: `View server ${serverName}`,
-    url: href,
-  }]
+  presenceData.buttons = [
+    {
+      label: `View server ${serverName}`,
+      url: href,
+    },
+  ]
 }
 
 presence.on('UpdateData', () => {

@@ -25,7 +25,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector<HTMLDivElement>(
         '.right-section .large-font',
       )?.textContent
-      presenceData.buttons = [{ label: 'View App', url: href }]
+      presenceData.buttons = [
+        { label: 'View App', url: href },
+      ]
       break
     }
     case 'apps': {
@@ -51,7 +53,9 @@ presence.on('UpdateData', async () => {
       if (pathList[1]) {
         presenceData.details = 'Viewing a giveaway'
         presenceData.state = document.querySelector('h4')?.textContent
-        presenceData.buttons = [{ label: 'View Giveaway', url: href }]
+        presenceData.buttons = [
+          { label: 'View Giveaway', url: href },
+        ]
       }
       else {
         presenceData.details = 'Browsing giveaways'
@@ -64,7 +68,9 @@ presence.on('UpdateData', async () => {
         .querySelector<HTMLDivElement>('.top-title-text')
         ?.textContent
         ?.trim()
-      presenceData.buttons = [{ label: 'View Post', url: href }]
+      presenceData.buttons = [
+        { label: 'View Post', url: href },
+      ]
       break
     }
     case 'space': {
@@ -87,12 +93,16 @@ presence.on('UpdateData', async () => {
           .querySelector<HTMLDivElement>('.post-title-name')
           ?.textContent
           ?.trim()}`
-        presenceData.buttons = [{ label: 'View Post', url: href }]
+        presenceData.buttons = [
+          { label: 'View Post', url: href },
+        ]
       }
       else {
         presenceData.details = 'Browsing a space'
         presenceData.state = spaceTitle
-        presenceData.buttons = [{ label: 'View Space', url: href }]
+        presenceData.buttons = [
+          { label: 'View Space', url: href },
+        ]
       }
       break
     }
@@ -112,7 +122,9 @@ presence.on('UpdateData', async () => {
         ?.style
         .backgroundImage
         .match(/url\("(.+)"\)/)?.[1]
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
       break
     }
     default: {

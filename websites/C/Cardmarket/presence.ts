@@ -38,7 +38,13 @@ function getPageInfo() {
     }
   }
 
-  return { lang, game, pageType, category, product }
+  return {
+    lang,
+    game,
+    pageType,
+    category,
+    product,
+  }
 }
 
 function formatString(str: string): string {

@@ -102,7 +102,9 @@ const variantsResolver: Resolver = {
 
       if (gameIndex !== -1 && parts[gameIndex + 1]) {
         const cleanUrl = parts.slice(0, gameIndex + 2).join('/')
-        return [{ label: t.button_view_game, url: cleanUrl }]
+        return [
+          { label: t.button_view_game, url: cleanUrl },
+        ]
       }
     }
     return undefined

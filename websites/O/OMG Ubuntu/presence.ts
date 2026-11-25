@@ -56,7 +56,9 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Reading'
     presenceData.state = articleHeader
-    presenceData.buttons = [{ label: 'Read Article', url: location.href }]
+    presenceData.buttons = [
+      { label: 'Read Article', url: location.href },
+    ]
   }
   else if (pages[page]) {
     presenceData.details = `Looking at the ${pages[page]} page`
