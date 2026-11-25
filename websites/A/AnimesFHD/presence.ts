@@ -51,11 +51,12 @@ function playerVideo(): HTMLVideoElement | null {
 }
 
 presence.on('UpdateData', async () => {
-  const [showCover, showButtons, showSearch, privacy] = await Promise.all([
+  const [showCover, showButtons, showSearch, privacy, showAnimeName] = await Promise.all([
     presence.getSetting<boolean>('showCover'),
     presence.getSetting<boolean>('showButtons'),
     presence.getSetting<boolean>('showSearch'),
     presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('showAnimeName'),
   ])
   const { pathname, search, href } = document.location
   const activity = readActivity()
@@ -72,6 +73,9 @@ presence.on('UpdateData', async () => {
   const cover = showCover && !privacy && activity.cover
     ? activity.cover
     : ActivityAssets.Logo
+  const animeName = showAnimeName && !privacy && activity.title
+    ? activity.title.slice(0, 128)
+    : ''
 
   if (/^\/(?:episod|episode)\//.test(pathname) && activity.page === 'episode' && activity.title) {
     presenceData.details = privacy ? 'Assistindo um anime' : activity.title
@@ -79,6 +83,8 @@ presence.on('UpdateData', async () => {
       ? 'No AnimesFHD'
       : (episodeLine(activity) || 'Assistindo')
     presenceData.largeImageKey = cover
+    if (animeName)
+      presenceData.name = animeName
     presenceData.largeImageText = !privacy && activity.episodeTitle
       ? activity.episodeTitle
       : 'AnimesFHD'
@@ -124,6 +130,8 @@ presence.on('UpdateData', async () => {
     ]
     presenceData.state = roomParts.filter(Boolean).join(' • ') || 'Sala do AnimesFHD'
     presenceData.largeImageKey = cover
+    if (animeName)
+      presenceData.name = animeName
     presenceData.smallImageKey = Assets.Live
     presenceData.smallImageText = 'Sala ao vivo'
     if (showButtons && !privacy && activity.roomPublic === '1') {
@@ -149,6 +157,8 @@ presence.on('UpdateData', async () => {
           activity.audio || '',
         ].filter(Boolean).join(' • ')
     presenceData.largeImageKey = cover
+    if (animeName)
+      presenceData.name = animeName
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Lendo os detalhes'
     if (showButtons && !privacy) {
