@@ -107,7 +107,8 @@ function readBoatParty(): BoatParty | null {
     }
     faces = found
   }
-  if (!faces.length)
+  // just you aboard = solo sailing, not a party
+  if (faces.length < 2)
     return null
 
   const names = faces
