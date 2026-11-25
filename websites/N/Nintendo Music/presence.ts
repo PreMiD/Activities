@@ -157,14 +157,14 @@ presence.on('UpdateData', async () => {
   const duration = audio?.duration || 0
   const now = Math.floor(Date.now() / 1000)
 
-  const albumArt = document.querySelector<HTMLImageElement>('#main-column img')?.src ?? NintendoMusicLogo
-  const gameCover = document.querySelector<HTMLImageElement>('img[alt="Top Tracks"]')?.src ?? NintendoMusicLogo
-
-  const [showTimestamps, showSongArt, displayFormat, gamePageAlbumCover, marioKartTrackOrigin, classicFormattingMKW] = await Promise.all([
+  const playlistArt = document.querySelector<HTMLImageElement>('#main-column img')?.src ?? NintendoMusicLogo
+  const gameBoxArt = document.querySelector<HTMLImageElement>('a[href*="/game/"] img[width="48"]')?.src ?? NintendoMusicLogo
+  
+  const [showTimestamps, showSongArt, displayFormat, songDisplayFormat, marioKartTrackOrigin, classicFormattingMKW] = await Promise.all([
     presence.getSetting<boolean>('showTimestamps'),
     presence.getSetting<boolean>('showSongArt'),
     presence.getSetting<number>('displayFormat'),
-    presence.getSetting<number>('gamePageAlbumCover'),
+    presence.getSetting<number>('songDisplayFormat'),
     presence.getSetting<boolean>('marioKartTrackOrigin'),
     presence.getSetting<boolean>('classicFormattingMKW'),
   ])
@@ -185,7 +185,14 @@ presence.on('UpdateData', async () => {
     presenceData.endTimestamp = now + Math.floor(duration - currentTime)
 
     if (showSongArt) {
-      presenceData.largeImageKey = songArt
+      switch (Number(songDisplayFormat)) {
+        case 0:
+          presenceData.largeImageKey = gameBoxArt
+          break
+        case 1:
+          presenceData.largeImageKey = songArt
+          break
+      }
     }
   }
   else if (pathname.includes('/search')) {
@@ -202,12 +209,12 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = now
 
     if (showSongArt) {
-      switch (Number(gamePageAlbumCover)) {
+      switch (Number(songDisplayFormat)) {
         case 0:
-          presenceData.largeImageKey = gameCover
+          presenceData.largeImageKey = gameBoxArt
           break
         case 1:
-          presenceData.largeImageKey = albumArt
+          presenceData.largeImageKey = playlistArt
           break
       }
     }
@@ -221,7 +228,7 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = now
 
     if (showSongArt) {
-      presenceData.largeImageKey = albumArt
+      presenceData.largeImageKey = playlistArt
     }
   }
   else if (pathname.includes('/playlist')) {
@@ -233,7 +240,7 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = now
 
     if (showSongArt) {
-      presenceData.largeImageKey = albumArt
+      presenceData.largeImageKey = playlistArt
     }
   }
   else if (pathname.includes('/my-music')) {

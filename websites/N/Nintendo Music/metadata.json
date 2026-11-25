@@ -16,7 +16,7 @@
   },
   "url": "music.nintendo.com",
   "regExp": "^https?[:][/][/]music[.]nintendo[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/thumbnail.png",
   "color": "#FC2C00",
@@ -52,11 +52,11 @@
       ]
     },
     {
-      "id": "gamePageAlbumCover",
-      "title": "Album Cover Type",
+      "id": "songDisplayFormat",
+      "title": "Song Display Format",
       "icon": "fas fa-image",
       "value": 0,
-      "values": ["Box Art", "Game Thumbnail"]
+      "values": ["Box Art", "Thumbnail"]
     },
     {
       "id": "marioKartTrackOrigin",
