@@ -11,9 +11,9 @@
   },
   "url": "loopholegames.co.uk",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*loopholegames[.]co[.]uk[/]",
-  "version": "1.0.0",
-  "logo": "https://loopholegames.co.uk/assets/discord/loophole.png",
-  "thumbnail": "https://loopholegames.co.uk/assets/og/home.jpg",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LoopHole%20Games/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LoopHole%20Games/assets/thumbnail.jpg",
   "color": "#8b5cf6",
   "category": "games",
   "tags": [

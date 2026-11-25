@@ -19,7 +19,7 @@ interface LoopHolePage {
   since: number
 }
 
-const LOGO = 'https://loopholegames.co.uk/assets/discord/loophole.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/L/LoopHole%20Games/assets/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
@@ -40,14 +40,19 @@ presence.on('UpdateData', async () => {
   if (page?.game && page.kind === 'game') {
     presenceData.name = page.game
     presenceData.largeImageKey = page.image
-    presenceData.details = showDetails && page.details ? page.details : 'On LoopHole Games'
+    presenceData.details = showDetails && page.details
+      ? page.details
+      : 'On LoopHole Games'
     if (showDetails && page.state)
       presenceData.state = page.state
     presenceData.startTimestamp = Math.floor(page.since / 1000)
 
     if (showButtons) {
       const buttons: [ButtonData, ButtonData?] = [
-        { label: `Play ${page.game}`.slice(0, 32), url: page.url },
+        {
+          label: `Play ${page.game}`.slice(0, 32),
+          url: page.url,
+        },
       ]
       if (page.partyUrl) {
         buttons.push({
@@ -62,8 +67,14 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = page.image
     presenceData.details = 'Looking at a game'
     presenceData.state = page.game
-    if (showButtons)
-      presenceData.buttons = [{ label: `Play ${page.game}`.slice(0, 32), url: page.url }]
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: `Play ${page.game}`.slice(0, 32),
+          url: page.url,
+        },
+      ]
+    }
   }
   else if (page?.kind === 'stats') {
     presenceData.details = 'Viewing the arcade stats'
