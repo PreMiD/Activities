@@ -5,45 +5,56 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  // URL corrente, inclusa la navigazione con #
-  const path = (
-    document.location.pathname + document.location.hash
-  ).toLowerCase()
+  // ==========================================
+  // RICONOSCIMENTO URL UNIVERSAL ANIME
+  // ==========================================
 
-  // Rilevamento popup profilo
+  const pathname = document.location.pathname
+    .replace(/\/+$/, '')
+    .toLowerCase() || '/'
+
+  // Compatibilità con i vecchi URL hash
+  const hashPath = document.location.hash
+    .replace(/^#\/?/, '')
+    .toLowerCase()
+
+  const currentPath = pathname === '/' && hashPath
+    ? `/${hashPath}`
+    : pathname
+
+  const segments = currentPath.split('/').filter(Boolean)
+  const page = segments[0] || 'home'
+
+  // ==========================================
+  // RILEVAMENTO MODALI
+  // ==========================================
+
   const profilePopup = document.querySelector(
     '.profile-user-info',
   )
 
-  // Rilevamento titolo anime
   const animeTitle = document.querySelector(
     '.anime-modal-details h2',
   )?.textContent?.trim()
 
-  // Copertina anime
   const animeCover = document.querySelector<HTMLImageElement>(
     '.anime-modal-cover',
   )?.src
 
-  // Rilevamento titolo manga
   const mangaTitle = document.querySelector(
     '.ua-mcat-modal h2',
   )?.textContent?.trim()
 
-  // Copertina manga
   const mangaCover = document.querySelector<HTMLImageElement>(
     '.ua-mcat-modal img',
   )?.src
 
-  // Attività predefinita
-  const presenceData: PresenceData = {
-    details: 'Esplorando Universal Anime',
-    state: 'Alla scoperta di anime e manga',
-    startTimestamp: browsingTimestamp,
-  }
+  // ==========================================
+  // DATI STAGIONALI
+  // ==========================================
 
-  // Filtri stagionali
   const seasonalSection = document.querySelector('.stagionali')
+
   const selectedSeason = seasonalSection?.querySelector(
     '.season-button[aria-pressed="true"] .season-name',
   )?.textContent?.trim()
@@ -56,13 +67,29 @@ presence.on('UpdateData', async () => {
     '.anime-pagination span',
   )?.textContent?.trim()
 
-  // 1. Popup profilo
-  if (profilePopup) {
-    presenceData.details = 'Visualizzando un profilo'
-    presenceData.state = 'Su Universal Anime'
+  // ==========================================
+  // PRESENCE PREDEFINITA
+  // ==========================================
+
+  const presenceData: PresenceData = {
+    details: 'Esplorando Universal Anime',
+    state: 'Alla scoperta di anime e manga',
+    startTimestamp: browsingTimestamp,
   }
 
-  // 2. Scheda anime
+  // ==========================================
+  // 1. POPUP PROFILO
+  // ==========================================
+
+  if (profilePopup) {
+    presenceData.details = 'Visualizzando un profilo'
+    presenceData.state = 'Community Universal Anime'
+  }
+
+  // ==========================================
+  // 2. SCHEDA ANIME
+  // ==========================================
+
   else if (animeTitle) {
     presenceData.details = `Consultando ${animeTitle}`
     presenceData.state = 'Scheda Anime'
@@ -72,7 +99,10 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // 3. Scheda manga
+  // ==========================================
+  // 3. SCHEDA MANGA
+  // ==========================================
+
   else if (mangaTitle) {
     presenceData.details = `Consultando ${mangaTitle}`
     presenceData.state = 'Scheda Manga'
@@ -82,9 +112,44 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // 4. Stagionali
-  else if (path.includes('#stagionali')) {
+  // ==========================================
+  // 4. FORUM
+  // ==========================================
+
+  else if (page === 'forum') {
+    presenceData.details = 'Esplorando il Forum'
+    presenceData.state = 'Discutendo con la community'
+  }
+
+  // ==========================================
+  // 5. PROFILO PERSONALE
+  // ==========================================
+
+  else if (page === 'profilo') {
+    presenceData.details = 'Visualizzando il proprio profilo'
+    presenceData.state = 'Universal Anime Community'
+  }
+
+  // ==========================================
+  // 6. PROFILO PUBBLICO
+  // ==========================================
+
+  else if (page === 'utente') {
+    const username = segments[1]
+
+    presenceData.details = 'Visitando un profilo'
+    presenceData.state = username
+      ? `Utente: ${username}`
+      : 'Community Universal Anime'
+  }
+
+  // ==========================================
+  // 7. ANIME STAGIONALI
+  // ==========================================
+
+  else if (page === 'stagionali') {
     presenceData.details = 'Esplorando gli anime stagionali'
+
     presenceData.state = selectedSeason && selectedYear
       ? `${selectedSeason} ${selectedYear}${seasonalPage
         ? ` • ${seasonalPage}`
@@ -92,63 +157,92 @@ presence.on('UpdateData', async () => {
       : 'Consultando le stagioni anime'
   }
 
-  // 5. Homepage
-  else if (path === '/' || path === '/#' || path.endsWith('#home')) {
-    presenceData.details = 'Nella homepage'
-    presenceData.state = 'Esplorando Universal Anime'
-  }
+  // ==========================================
+  // 8. CATALOGO ANIME
+  // ==========================================
 
-  // 6. Catalogo anime
-  else if (
-    path.includes('#catalogo')
-    && !path.includes('#catalogo-manga')
-  ) {
+  else if (page === 'catalogo') {
     presenceData.details = 'Catalogo Anime'
     presenceData.state = 'Cercando nuovi anime'
   }
 
-  // 7. Libreria manga 3D
-  else if (path.includes('#libreria-3d')) {
+  // ==========================================
+  // 9. LIBRERIA MANGA 3D
+  // ==========================================
+
+  else if (page === 'libreria-3d') {
     presenceData.details = 'Libreria Manga 3D'
     presenceData.state = 'Organizzando la collezione'
   }
 
-  // 8. Catalogo manga
-  else if (
-    path.includes('#manga')
-    || path.includes('#catalogo-manga')
-  ) {
+  // ==========================================
+  // 10. CATALOGO MANGA
+  // ==========================================
+
+  else if (page === 'catalogo-manga') {
     presenceData.details = 'Catalogo Manga'
     presenceData.state = 'Esplorando nuovi manga'
   }
 
-  // 9. Profilo tramite URL
-  else if (
-    path.includes('#profilo')
-    || path.includes('/profilo')
-  ) {
-    presenceData.details = 'Visualizzando un profilo'
-    presenceData.state = 'Su Universal Anime'
+  // ==========================================
+  // 11. SEZIONE MANGA
+  // ==========================================
+
+  else if (page === 'manga') {
+    presenceData.details = 'Sezione Manga'
+    presenceData.state = 'Esplorando Universal Anime'
   }
 
-  // 10. Lista personale
-  else if (
-    path.includes('#lista')
-    || path.includes('/lista')
-  ) {
-    presenceData.details = 'Lista Anime'
-    presenceData.state = 'Gestendo la propria lista'
+  // ==========================================
+  // 12. LISTA PERSONALE
+  // ==========================================
+
+  else if (page === 'mia-lista') {
+    presenceData.details = 'La mia lista anime'
+    presenceData.state = 'Gestendo la propria collezione'
   }
 
-  // 11. Ricerca
-  else if (
-    path.includes('#ricerca')
-    || path.includes('/ricerca')
-  ) {
-    presenceData.details = 'Ricerca'
-    presenceData.state = 'Cercando anime e manga'
+  // ==========================================
+  // 13. CLASSIFICHE
+  // ==========================================
+
+  else if (page === 'rating') {
+    presenceData.details = 'Classifiche Anime'
+    presenceData.state = 'Scoprendo gli anime più apprezzati'
   }
 
-  // Aggiorna la Rich Presence di Discord
+  // ==========================================
+  // 14. GENERI
+  // ==========================================
+
+  else if (page === 'generi') {
+    presenceData.details = 'Esplorando i generi anime'
+    presenceData.state = segments[1]
+      ? `Genere: ${decodeURIComponent(segments[1])}`
+      : 'Cercando nuovi generi'
+  }
+
+  // ==========================================
+  // 15. AGGIORNAMENTI
+  // ==========================================
+
+  else if (page === 'updates') {
+    presenceData.details = 'Leggendo gli aggiornamenti'
+    presenceData.state = 'Novità di Universal Anime'
+  }
+
+  // ==========================================
+  // 16. HOMEPAGE
+  // ==========================================
+
+  else if (page === 'home') {
+    presenceData.details = 'Nella homepage'
+    presenceData.state = 'Esplorando Universal Anime'
+  }
+
+  // ==========================================
+  // AGGIORNAMENTO DISCORD
+  // ==========================================
+
   presence.setActivity(presenceData)
 })
