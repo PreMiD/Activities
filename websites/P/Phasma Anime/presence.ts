@@ -66,13 +66,17 @@ function clock(seconds: number): string {
   const h = Math.floor(s / 3600)
   const m = Math.floor((s % 3600) / 60)
   const ss = String(s % 60).padStart(2, '0')
-  return h ? `${h}:${String(m).padStart(2, '0')}:${ss}` : `${m}:${ss}`
+  return h
+    ? `${h}:${String(m).padStart(2, '0')}:${ss}`
+    : `${m}:${ss}`
 }
 
 /** The page's own name from the tab title ("Frieren - Episodes, Info | Phasma Anime" -> "Frieren"). */
 function pageName(): string {
   const t = document.title.replace(/\s*[|-]\s*Phasma Anime$/, '').replace(/\s*-\s*Episodes, Info$/, '').trim()
-  return t === 'Phasma Anime' ? '' : t
+  return t === 'Phasma Anime'
+    ? ''
+    : t
 }
 
 presence.on('UpdateData', async () => {
@@ -100,11 +104,17 @@ presence.on('UpdateData', async () => {
       presenceData.details = pageName() || strings.watchingAnime
     }
     else {
-      const episode = `${strings.episode} ${w.episode}${w.total ? ` / ${w.total}` : ''}${w.dub ? ' · Dub' : ''}`
-      presenceData.details = w.season ? `${w.title} · ${strings.season} ${w.season}` : w.title
+      const episode = `${strings.episode} ${w.episode}${w.total
+        ? ` / ${w.total}`
+        : ''}${w.dub ? ' · Dub' : ''}`
+      presenceData.details = w.season
+        ? `${w.title} · ${strings.season} ${w.season}`
+        : w.title
       presenceData.state = w.playing
         ? episode
-        : `${episode} · ${strings.pause} ${clock(w.position)}${w.duration ? ` / ${clock(w.duration)}` : ''}`
+        : `${episode} · ${strings.pause} ${clock(w.position)}${w.duration
+          ? ` / ${clock(w.duration)}`
+          : ''}`
       if (showCover && w.poster) {
         presenceData.largeImageKey = w.poster
         presenceData.largeImageText = `${w.title}${w.dub ? ' (Dub)' : ''}`
@@ -116,8 +126,11 @@ presence.on('UpdateData', async () => {
         if (w.end)
           presenceData.endTimestamp = w.end
       }
-      if (showButtons)
-        presenceData.buttons = [{ label: strings.viewAnime, url: `https://phasmaanime.com/anime/${w.id}` }]
+      if (showButtons) {
+        presenceData.buttons = [
+          { label: strings.viewAnime, url: `https://phasmaanime.com/anime/${w.id}` },
+        ]
+      }
     }
     presence.setActivity(presenceData)
     return
@@ -138,8 +151,11 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.viewAnAnime
     if (name)
       presenceData.state = name
-    if (showButtons)
-      presenceData.buttons = [{ label: strings.viewAnime, url: href }]
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: strings.viewAnime, url: href },
+      ]
+    }
   }
   else if (pathname.startsWith('/search')) {
     const q = new URLSearchParams(search).get('q')
