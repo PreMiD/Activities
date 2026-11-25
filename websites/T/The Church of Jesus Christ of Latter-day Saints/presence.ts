@@ -347,18 +347,41 @@ function applyBroadcastActivity(presenceData: PresenceData, pathname: string) {
   }
 
   const isLibrary = pathname === '/media/collection/broadcasts'
-  const collection = getCachedLibraryCollection(pathname)
-  if (!isLibrary && !collection)
+  const isCollection = pathname.startsWith('/media/collection/')
+  const slug = pathname.split('/')[3]
+  // The library uses flat collection URLs, including these non-prefixed slugs.
+  const isBroadcastCollection = isCollection && Boolean(slug && (
+    slug.startsWith('broadcasts-') || slug.endsWith('-broadcasts') || [
+      'general-conference',
+      'young-adult-and-youth-devotionals',
+      'music-and-the-spoken-word',
+      'christmas-devotionals',
+      'worldwide-relief-society-devotional-and-testimony-meeting-broadcast',
+      'byu-womens-conference',
+      'byu-devotionals',
+      'love-share-invite',
+      'pres-nelsons-100-birthday-celebration',
+      'be-one',
+      'teaching-religion-to-youth-and-young-adults',
+    ].includes(slug)
+  ))
+  const hasBroadcastBreadcrumb = isCollection && Array.from(document.querySelectorAll<HTMLAnchorElement>(
+    'nav[aria-label="Breadcrumb"] a[href], .eden-breadcrumbs__ol a[href]',
+  )).some(link => link.origin === document.location.origin
+    && link.pathname.replace(/\/+$/, '') === '/media/collection/broadcasts')
+  if (!isLibrary && !isBroadcastCollection && !hasBroadcastBreadcrumb)
     return false
 
+  const collection = getCachedLibraryCollection(pathname)
   const title = document.querySelector('[data-testid="CollectionPage-title"]')?.textContent?.trim()
+    || document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content?.trim()
+    || document.title.trim()
     || collection?.title
   presenceData.details = !isLibrary && title
     ? `Browsing ${title}...`
     : 'Browsing the broadcast library...'
-  presenceData.largeImageKey = collection
-    ? formatMusicBrowsingArtwork(collection.image)
-    : getPageArtwork() || ActivityAssets.Logo
+  presenceData.largeImageKey = getPageArtwork()
+    || (collection ? formatMusicBrowsingArtwork(collection.image) : ActivityAssets.Logo)
   cacheBroadcastCollections()
   return true
 }
@@ -411,6 +434,36 @@ function parsePlaybackTime(text: string | null | undefined) {
   return value.split(':').reduce((seconds, part) => seconds * 60 + Number(part), 0)
 }
 
+const audioProgress = new WeakMap<HTMLAudioElement, { source: string, elapsed: number, lastProgress: number }>()
+
+function isAudioAdvancing(audio: HTMLAudioElement, paused: boolean, elapsed: number) {
+  const hasNativeState = audio.readyState >= 1 || audio.paused === false
+    || (Number.isFinite(audio.duration) && audio.duration > 0)
+
+  if (paused || audio.seeking || hasNativeState) {
+    audioProgress.delete(audio)
+    return !paused && !audio.paused && !audio.seeking && audio.readyState >= 3
+  }
+
+  // A pause control alone does not prove that playback is advancing.
+  if (!Number.isFinite(elapsed)) {
+    audioProgress.delete(audio)
+    return false
+  }
+
+  const source = audio.currentSrc || audio.src
+  const now = Date.now()
+  const previous = audioProgress.get(audio)
+  let lastProgress = 0
+  if (previous && previous.source === source && elapsed >= previous.elapsed) {
+    lastProgress = elapsed > previous.elapsed ? now : previous.lastProgress
+  }
+
+  audioProgress.set(audio, { source, elapsed, lastProgress })
+  // The rendered clock has second-level precision, so allow a short grace period.
+  return lastProgress > 0 && now - lastProgress <= 2000
+}
+
 function readAudioPlayback(audio: HTMLAudioElement) {
   // Both library players expose their playback state through accessible controls.
   // These also work when live media properties are unavailable to PreMiD.
@@ -436,8 +489,10 @@ function readAudioPlayback(audio: HTMLAudioElement) {
     && Number.isFinite(audio.currentTime)
     && Number.isFinite(audio.duration) && audio.duration > 0
 
-  if (audio.error || audio.ended)
+  if (audio.error || audio.ended) {
+    audioProgress.delete(audio)
     return undefined
+  }
 
   if (!hasControls && !hasNativeTiming && audio.paused !== false)
     return undefined
@@ -458,6 +513,8 @@ function readAudioPlayback(audio: HTMLAudioElement) {
     ? audio.playbackRate
     : 1
 
+  const advancing = isAudioAdvancing(audio, paused, elapsed)
+
   if (paused && !(currentTime > 0))
     return undefined
 
@@ -469,7 +526,7 @@ function readAudioPlayback(audio: HTMLAudioElement) {
     currentTime,
     duration: totalTime,
     playbackRate,
-    advancing: !paused && (!nativeAgrees || (!audio.seeking && audio.readyState >= 3)),
+    advancing,
   }
 }
 
@@ -545,10 +602,35 @@ function getMusicArtwork(card: Element | null | undefined) {
     || image?.src || image?.currentSrc
 }
 
-function findMusicSongLink(title: string) {
-  return Array.from(document.querySelectorAll<HTMLAnchorElement>('main a[href*="/media/music/songs/"]'))
-    .find(link => link.origin === document.location.origin
-      && link.textContent?.trim().replace(/^\d+\.\s*/, '') === title)
+function findMusicSongUrl(title: string) {
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('main a[href*="/media/music/songs/"]'))
+    .filter(link => link.origin === document.location.origin)
+  const normalizedTitle = title.replace(/^\d+\.\s*/, '')
+  const matches = links.filter(link => link.textContent?.trim().replace(/^\d+\.\s*/, '') === normalizedTitle)
+
+  // The collection exposes the active song (including its hymn number) on its row.
+  const active = matches.filter(link => link.parentElement?.querySelector(
+    'button[aria-pressed="true"][aria-label^="Pause Song "]',
+  ))
+  if (active.length > 0)
+    return active.length === 1 && active[0] ? new URL(active[0].href) : undefined
+
+  if (/^\d+\.\s*/.test(title)) {
+    const numbered = matches.filter(link => link.textContent?.trim() === title)
+    if (numbered.length > 0)
+      return numbered.length === 1 && numbered[0] ? new URL(numbered[0].href) : undefined
+  }
+
+  // An individual song page identifies the tune by its route. Do not choose
+  // a different song with the same title from the previous/next navigation.
+  if (document.location.pathname.startsWith('/media/music/songs/') && getMusicPageTitle() === title) {
+    if (matches.every(link => new URL(link.href).pathname === document.location.pathname))
+      return new URL(document.location.href)
+    return undefined
+  }
+
+  // A title alone cannot distinguish different tunes with the same name.
+  return matches.length === 1 && matches[0] ? new URL(matches[0].href) : undefined
 }
 
 function applyMusicActivity(
@@ -569,11 +651,9 @@ function applyMusicActivity(
   const album = document.querySelector('main h1')?.textContent?.trim()
   const imageUrl = getMusicArtwork(card)
 
-  // Match the player's title to the song's actual link, ignoring its hymn number.
-  const songLink = findMusicSongLink(title)
-  const songUrl = new URL(songLink?.href || document.location.href)
+  const songUrl = findMusicSongUrl(title)
   // The song-list filters are unnecessary for opening an individual recording.
-  songUrl.searchParams.delete('songListFilters')
+  songUrl?.searchParams.delete('songListFilters')
 
   const shortTitle = title.length > 15 ? `${title.substring(0, 15)}...` : title
   presenceData.type = ActivityType.Listening
@@ -581,7 +661,7 @@ function applyMusicActivity(
   presenceData.smallImageKey = playback.paused ? Assets.Pause : Assets.Play
   presenceData.smallImageText = playback.paused ? 'Paused' : 'Playing'
 
-  const cachedCollection = findMusicCollection(songUrl.pathname, songUrl.search)
+  const cachedCollection = (songUrl ? findMusicCollection(songUrl.pathname, songUrl.search) : undefined)
     ?? findMusicCollection(document.location.pathname.replace(/\/+$/, ''), document.location.search)
   presenceData.largeImageKey = imageUrl || cachedCollection?.image
     || presenceData.largeImageKey || ActivityAssets.Logo
@@ -595,10 +675,15 @@ function applyMusicActivity(
   else
     delete presenceData.state
 
-  presenceData.buttons = [{
-    label: `Listen to ${shortTitle}`,
-    url: songUrl.href,
-  }]
+  if (songUrl) {
+    presenceData.buttons = [{
+      label: `Listen to ${shortTitle}`,
+      url: songUrl.href,
+    }]
+  }
+  else {
+    delete presenceData.buttons
+  }
 
   setPlaybackTimestamps(
     presenceData,
@@ -877,10 +962,8 @@ presence.on('UpdateData', () => {
         const card = audio ? getMusicCard(audio) : undefined
         const trackTitle = card?.querySelector('h5')?.textContent?.trim()
         const breadcrumb = isSong ? findMusicBreadcrumb() : undefined
-        const songLink = !isSong && trackTitle ? findMusicSongLink(trackTitle) : undefined
-        const songCollection = songLink
-          ? new URL(songLink.href).searchParams.get('crumbs')
-          : undefined
+        const songUrl = !isSong && trackTitle ? findMusicSongUrl(trackTitle) : undefined
+        const songCollection = songUrl?.searchParams.get('crumbs')
         const playerMatchesPage = isSong
           ? trackTitle === title
           : songCollection === currentPath.split('/').pop()
