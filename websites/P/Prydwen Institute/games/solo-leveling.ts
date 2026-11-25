@@ -44,7 +44,9 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
               ...presenceData,
               state: `${mainName} - ${subName}`,
               smallImageKey: Assets.Question,
-              smallImageText: [...sub.querySelectorAll('.single-char')]
+              smallImageText: [
+                ...sub.querySelectorAll('.single-char'),
+              ]
                 .map(
                   char =>
                     char.querySelector<HTMLImageElement>('[data-main-image]')

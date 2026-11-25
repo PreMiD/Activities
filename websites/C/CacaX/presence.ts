@@ -34,7 +34,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = `Regarde le profil de l'utilisateur ${
       document.querySelector('h1')?.textContent
     }...`
-    presenceData.buttons = [{ label: 'Voir le Profil', url: href }]
+    presenceData.buttons = [
+      { label: 'Voir le Profil', url: href },
+    ]
     let imgUrl = ''
 
     for (const image of images) {
@@ -65,7 +67,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = `Regarde le post de ${
       document.querySelector('span')?.textContent
     }...`
-    presenceData.buttons = [{ label: 'Voir le Post', url: href }]
+    presenceData.buttons = [
+      { label: 'Voir le Post', url: href },
+    ]
 
     let imgUrl = ''
 

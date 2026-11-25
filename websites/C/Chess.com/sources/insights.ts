@@ -12,7 +12,9 @@ const insightsResolver: Resolver = {
   getState: (t, doc) => {
     const parts = doc.location.pathname.split('/')
     const insightsIndex = parts.indexOf('insights')
-    const username = (insightsIndex !== -1 && parts[insightsIndex + 1]) ? parts[insightsIndex + 1] : null
+    const username = (insightsIndex !== -1 && parts[insightsIndex + 1])
+      ? parts[insightsIndex + 1]
+      : null
 
     if (username) {
       const formattedUser = username.charAt(0).toUpperCase() + username.slice(1)

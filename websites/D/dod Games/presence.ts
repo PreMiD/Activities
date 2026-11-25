@@ -192,9 +192,15 @@ presence.on('UpdateData', async () => {
 
         for (const pos in playerState) {
           const player = playerState[pos];
-          (['bottom', 'up'].includes(pos) ? teamPlayers : opPlayers).push(
+          (['bottom', 'up'].includes(pos)
+            ? teamPlayers
+            : opPlayers).push(
             `${
-              player!.bet === 'tichu' ? '🟠' : player!.bet === 'grand' ? '🔴' : ''
+              player!.bet === 'tichu'
+                ? '🟠'
+                : player!.bet === 'grand'
+                  ? '🔴'
+                  : ''
             }${player!.name}`,
           )
         }

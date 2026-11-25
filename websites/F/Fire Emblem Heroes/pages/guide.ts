@@ -46,7 +46,9 @@ export default function applyGuideDetails(
       const characterImage = document.querySelector<HTMLImageElement>(
         '.sec_gif > img',
       )?.src
-      const characterDescriptions = [...document.querySelectorAll('dl dt')].map(
+      const characterDescriptions = [
+        ...document.querySelectorAll('dl dt'),
+      ].map(
         dt => ({
           text: dt.textContent,
           image: dt.nextElementSibling?.querySelector('img')?.src,

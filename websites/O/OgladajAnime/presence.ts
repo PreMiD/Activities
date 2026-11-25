@@ -15,12 +15,24 @@ let lastWatched: Playback
 
 function getPlayerInfo(): [isPaused: boolean, timestamp: [start: number, end: number]] {
   const player = getOAPlayer()
-  if (player?.paused === false)
-    return [false, getTimestampsFromMedia(player)]
-  else if (playbackInfo?.paused === false)
-    return [false, getTimestamps(playbackInfo.currTime, playbackInfo.duration)]
-  else
-    return [true, [-1, -1]]
+  if (player?.paused === false) {
+    return [
+      false,
+      getTimestampsFromMedia(player),
+    ]
+  }
+  else if (playbackInfo?.paused === false) {
+    return [
+      false,
+      getTimestamps(playbackInfo.currTime, playbackInfo.duration),
+    ]
+  }
+  else {
+    return [
+      true,
+      [-1, -1],
+    ]
+  }
 }
 
 function getOAPlayer(): HTMLVideoElement | undefined {
@@ -118,18 +130,31 @@ let oldLang: string | null = null
 
 async function setButton(label: string, url: string): Promise<[ButtonData, (ButtonData | undefined)]> {
   const privacyMode = await presence.getSetting<boolean>('privacyMode')
-  if (privacyMode || userID === 0)
-    return [{ label, url }, undefined]
-  else
-    return [{ label: strings.buttonMyProfile, url: `https://ogladajanime.pl/profile/${userID}` }, { label, url }]
+  if (privacyMode || userID === 0) {
+    return [
+      { label, url },
+      undefined,
+    ]
+  }
+  else {
+    return [
+      { label: strings.buttonMyProfile, url: `https://ogladajanime.pl/profile/${userID}` },
+      { label, url },
+    ]
+  }
 }
 
 async function profileButton(): Promise<[ButtonData, undefined] | undefined> {
   const privacyMode = await presence.getSetting<boolean>('privacyMode')
-  if (privacyMode || userID === 0)
+  if (privacyMode || userID === 0) {
     return undefined
-  else
-    return [{ label: strings.buttonMyProfile, url: `https://ogladajanime.pl/profile/${userID}` }, undefined]
+  }
+  else {
+    return [
+      { label: strings.buttonMyProfile, url: `https://ogladajanime.pl/profile/${userID}` },
+      undefined,
+    ]
+  }
 }
 
 presence.on('iFrameData', (data) => {

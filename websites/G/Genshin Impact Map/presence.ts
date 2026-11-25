@@ -221,12 +221,16 @@ presence.on('UpdateData', async () => {
     current = map[0]!
   }
   presenceData.details = current.map
-  presenceData.state = current.city && currentCity ? currentCity.map : null
+  presenceData.state = current.city && currentCity
+    ? currentCity.map
+    : null
   presenceData.largeImageKey = getImage(
     showPreview ? 'preview' : 'default',
     randomPreview,
   )
-  presenceData.smallImageKey = current.city && currentCity ? currentCity.image.small : current.image.small
+  presenceData.smallImageKey = current.city && currentCity
+    ? currentCity.image.small
+    : current.image.small
   presenceData.smallImageText = host.replace('.com', '')
   if (!timestamps) {
     delete presenceData.startTimestamp
@@ -242,7 +246,9 @@ function getImage(type: 'default' | 'preview', random?: boolean) {
   return (
     Array.isArray(currentImage[type]) && type === 'preview'
       ? currentImage[type][
-        random ? Math.floor(randomNumber * currentImage[type].length) : 0
+        random
+          ? Math.floor(randomNumber * currentImage[type].length)
+          : 0
       ]
       : currentImage[type] || current.image.default
   ) as string

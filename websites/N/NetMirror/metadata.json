@@ -16,7 +16,7 @@
   },
   "url": "netmirror.gg",
   "regExp": "^https?[:][/][/](www[.])?(net77|netmirror)[.](cc|gg)[/]",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NetMirror/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NetMirror/assets/thumbnail.webp",
   "color": "#e11d48",

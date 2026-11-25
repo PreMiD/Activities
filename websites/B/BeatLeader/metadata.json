@@ -15,8 +15,8 @@
     "replay.beatleader.com",
     "royale.beatleader.com"
   ],
-  "regExp": "^https?[:][/][/]beatleader[.](xyz|com|net)[/]",
-  "version": "1.13.2",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*beatleader[.](xyz|com|net)[/]",
+  "version": "1.13.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/thumbnail.png",
   "color": "#c81c9f",

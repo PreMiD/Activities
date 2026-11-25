@@ -99,8 +99,12 @@ presence.on('UpdateData', async () => {
   }
 
   if (obj.repeatType !== 'deactivated' && !paused) {
-    presenceData.smallImageKey = obj.repeatType === 'loopQueue' ? Assets.Repeat : Assets.RepeatOne
-    presenceData.smallImageText = obj.repeatType === 'loopQueue' ? Assets.Repeat : Assets.RepeatOne
+    presenceData.smallImageKey = obj.repeatType === 'loopQueue'
+      ? Assets.Repeat
+      : Assets.RepeatOne
+    presenceData.smallImageText = obj.repeatType === 'loopQueue'
+      ? Assets.Repeat
+      : Assets.RepeatOne
   }
 
   presenceData.buttons = [

@@ -105,7 +105,9 @@ presence.on('UpdateData', async () => {
           '.people-count',
         )
         const queueList = document.querySelector('.ani-queue-list')
-        const upcomingEpisodes = queueList ? queueList.querySelectorAll('.ani-play-queue-item').length : 0
+        const upcomingEpisodes = queueList
+          ? queueList.querySelectorAll('.ani-play-queue-item').length
+          : 0
         presenceData.state = `動畫派對 | ${onlineViewers?.textContent || ''}| ${upcomingEpisodes}集待看`
 
         if (video.paused) {

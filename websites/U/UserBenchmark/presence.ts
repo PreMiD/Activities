@@ -76,8 +76,12 @@ presence.on('UpdateData', async () => {
   }
 
   for (const [k, v] of Object.entries(statics)) {
-    if (path.match(k))
-      presenceData = { ...presenceData, ...v }
+    if (path.match(k)) {
+      presenceData = {
+        ...presenceData,
+        ...v,
+      }
+    }
   }
 
   if (path === '/') {

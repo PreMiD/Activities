@@ -11,7 +11,7 @@
   },
   "url": "justice.gov",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*justice[.]gov[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://images.weserv.nl/?url=www.justice.gov%2Fd9%2Fstyles%2Fcoh_medium%2Fpublic%2F2025-03%2Fdoj-seal-257x257.png%3Fitok%3DqL5GWp29&w=512&h=512&fit=contain&output=png&filename=logo.png",
   "thumbnail": "https://www.justice.gov/themes/custom/usdoj_uswds/images/metatag-image--default.png",
   "color": "#162E51",

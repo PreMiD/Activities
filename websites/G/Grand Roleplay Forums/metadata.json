@@ -11,7 +11,7 @@
   },
   "url": "gta5grand.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gta5grand[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Grand%20Roleplay%20Forums/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Grand%20Roleplay%20Forums/assets/thumbnail.png",
   "color": "#ff4500",

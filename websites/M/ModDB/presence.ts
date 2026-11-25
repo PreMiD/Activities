@@ -46,7 +46,9 @@ presence.on('UpdateData', async () => {
         type?.pop()
       const typeJoined = type?.join('')
       presenceData.details = `Adding a${
-        typeJoined?.startsWith('a') ? 'n' : ''
+        typeJoined?.startsWith('a')
+          ? 'n'
+          : ''
       } ${typeJoined}`
       break
     }
@@ -64,7 +66,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = `Viewing ${
         gameName
           ? `${gameName} ${typeJoined}`
-          : `${typeJoined?.startsWith('a') ? 'an' : 'a'} ${typeJoined}`
+          : `${typeJoined?.startsWith('a')
+            ? 'an'
+            : 'a'} ${typeJoined}`
       }'s ${locations[2]}`
       const heading = document.querySelector('.normalcorner .title .heading')
       if (heading?.textContent && !heading.textContent.startsWith('Reviews'))
@@ -83,14 +87,18 @@ presence.on('UpdateData', async () => {
       presenceData.details = `Viewing ${
         gameName
           ? `${gameName} ${typeJoined}`
-          : `${typeJoined?.startsWith('a') ? 'an' : 'a'} ${typeJoined}`
+          : `${typeJoined?.startsWith('a')
+            ? 'an'
+            : 'a'} ${typeJoined}`
       }`
       break
     }
     case /\/mods\/[A-Za-z0-9|-]+/.test(pathname): {
       const modName = document.querySelector('.title h2 a')?.textContent
       showLinkButton()
-      presenceData.details = `Viewing ${modName ? `${modName} mod` : 'a mod'}`
+      presenceData.details = `Viewing ${modName
+        ? `${modName} mod`
+        : 'a mod'}`
       break
     }
     case /\/rtx\/?[a-z]?/.test(pathname):

@@ -64,7 +64,9 @@ export async function getPresenceData({
     case 'ticTacToe': {
       return {
         state: `Tic Tac Toe: ${
-          playerState.instructions?.includes('next') ? 'Suggesting' : 'Guessing'
+          playerState.instructions?.includes('next')
+            ? 'Suggesting'
+            : 'Guessing'
         } prompts`,
         smallImageKey: Assets.Question,
         smallImageText: document.querySelector('.prompt'),

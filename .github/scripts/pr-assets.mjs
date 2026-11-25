@@ -36,7 +36,9 @@ export function activityKey(filename) {
   if (!match)
     return null
   const [, letter, name, version] = match
-  return version ? `websites/${letter}/${name}/${version}` : `websites/${letter}/${name}`
+  return version
+    ? `websites/${letter}/${name}/${version}`
+    : `websites/${letter}/${name}`
 }
 
 /**
@@ -52,7 +54,9 @@ export function groupActivities(files) {
       activities.set(key, { folder: key, files: [] })
     activities.get(key).files.push(file)
   }
-  return [...activities.values()].sort((a, b) => a.folder.localeCompare(b.folder))
+  return [
+    ...activities.values(),
+  ].sort((a, b) => a.folder.localeCompare(b.folder))
 }
 
 /**
@@ -91,7 +95,9 @@ export function imagesFromPatch(patch) {
  */
 export function displayName(folder) {
   const [, , name, version] = folder.split('/')
-  return version ? `${name} ${version}` : name
+  return version
+    ? `${name} ${version}`
+    : name
 }
 
 /**
@@ -140,7 +146,9 @@ export function buildCommentBody(activities, pullNumber = 0) {
   while (body.length + footer.length > MAX_COMMENT_LENGTH && sections.length > 0) {
     sections.pop()
     omitted++
-    body = [header, ...sections, `_…and ${omitted} more ${omitted === 1 ? 'activity' : 'activities'} (comment size limit)._`].join('\n')
+    body = [header, ...sections, `_…and ${omitted} more ${omitted === 1
+      ? 'activity'
+      : 'activities'} (comment size limit)._`].join('\n')
   }
   return body + footer
 }
@@ -162,7 +170,11 @@ export const isDynamic = url => /\$\{|\{\{/.test(url)
  */
 async function isImage(url) {
   try {
-    const response = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: AbortSignal.timeout(10000) })
+    const response = await fetch(url, {
+      method: 'HEAD',
+      redirect: 'follow',
+      signal: AbortSignal.timeout(10000),
+    })
     return response.ok && (response.headers.get('content-type') ?? '').startsWith('image/')
   }
   catch {
@@ -184,9 +196,13 @@ async function fetchMetadataAssets(github, head, folder) {
       ref: head.sha,
     })
     const metadata = JSON.parse(Buffer.from(data.content, 'base64').toString('utf-8'))
-    const url = field => typeof metadata[field] === 'string' && /^https?:\/\//.test(metadata[field]) ? metadata[field] : null
+    const url = field => typeof metadata[field] === 'string' && /^https?:\/\//.test(metadata[field])
+      ? metadata[field]
+      : null
     return {
-      service: typeof metadata.service === 'string' ? metadata.service : null,
+      service: typeof metadata.service === 'string'
+        ? metadata.service
+        : null,
       logo: url('logo'),
       thumbnail: url('thumbnail'),
     }
@@ -309,9 +325,14 @@ export default async function run({ github, context, core }) {
         else {
           if (metadata.service) {
             const version = group.folder.split('/')[3]
-            activity.name = version ? `${metadata.service} ${version}` : metadata.service
+            activity.name = version
+              ? `${metadata.service} ${version}`
+              : metadata.service
           }
-          for (const [field, width] of [['logo', 64], ['thumbnail', 120]]) {
+          for (const [field, width] of [
+            ['logo', 64],
+            ['thumbnail', 120],
+          ]) {
             const url = metadata[field]
             if (url && !seen.has(url)) {
               seen.add(url)

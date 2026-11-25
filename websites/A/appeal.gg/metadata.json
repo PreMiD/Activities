@@ -14,7 +14,7 @@
     "dashboard.appeal.gg"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*appeal[.]gg[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/appeal.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/appeal.gg/assets/thumbnail.png",
   "color": "#ffbb00",

@@ -17,7 +17,9 @@ const discussionResolver: Resolver = {
       return h1
 
     const metaTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-    return metaTitle ? ((metaTitle.split(' - Dealabs')[0] ?? metaTitle).trim()) : t.detail
+    return metaTitle
+      ? ((metaTitle.split(' - Dealabs')[0] ?? metaTitle).trim())
+      : t.detail
   },
 
   getDetails: (t: Translation) => {
@@ -29,7 +31,9 @@ const discussionResolver: Resolver = {
   getButtons: (t: Translation) => {
     if (document.location.pathname === '/discussions')
       return undefined
-    return [{ label: t.viewPage, url: document.location.href }] as ButtonArray
+    return [
+      { label: t.viewPage, url: document.location.href },
+    ] as ButtonArray
   },
 }
 

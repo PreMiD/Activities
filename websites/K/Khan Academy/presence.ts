@@ -82,5 +82,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = `📋 ${document.querySelector('.nav-breadcrumb a:last-child')?.textContent || 'Learning'}`
   }
 
-  presence.setActivity(presenceData.details ? presenceData : {})
+  presence.setActivity(presenceData.details
+    ? presenceData
+    : {})
 })

@@ -39,7 +39,9 @@ presence.on('UpdateData', async () => {
   }
 
   if (path !== 0) {
-    presenceData.state = `${path === 1 ? 'Pagina: ' : ''}${document.title.split('– Teckie')?.[0]}`
+    presenceData.state = `${path === 1
+      ? 'Pagina: '
+      : ''}${document.title.split('– Teckie')?.[0]}`
   }
 
   presence.setActivity(presenceData)

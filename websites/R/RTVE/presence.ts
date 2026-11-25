@@ -54,7 +54,9 @@ function getSectionInfo(): { sectionName: string } {
 
 function getLogoToUse(): ActivityAssets {
   const path = document.location.pathname.toLowerCase()
-  return path.startsWith('/play/') ? ActivityAssets.RTVE_PLAY : ActivityAssets.RTVE
+  return path.startsWith('/play/')
+    ? ActivityAssets.RTVE_PLAY
+    : ActivityAssets.RTVE
 }
 
 async function getStrings() {
@@ -84,7 +86,9 @@ presence.on('UpdateData', async () => {
   const audio = document.querySelector('audio')
 
   const presenceData: PresenceData = {
-    largeImageKey: showCover ? getLogoToUse() : ActivityAssets.RTVE,
+    largeImageKey: showCover
+      ? getLogoToUse()
+      : ActivityAssets.RTVE,
   }
 
   // --- EN DIRECTO ---
@@ -96,7 +100,9 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = browsingTimestamp
 
     if (buttons && !privacy) {
-      presenceData.buttons = [{ label: strings.watchLive, url: href }]
+      presenceData.buttons = [
+        { label: strings.watchLive, url: href },
+      ]
     }
 
   // --- RADIO ---
@@ -109,7 +115,9 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = browsingTimestamp
 
     if (buttons && !privacy) {
-      presenceData.buttons = [{ label: strings.listenRadio, url: href }]
+      presenceData.buttons = [
+        { label: strings.listenRadio, url: href },
+      ]
     }
 
   // --- VIDEO ---
@@ -122,7 +130,9 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = browsingTimestamp
 
     if (buttons && !privacy) {
-      presenceData.buttons = [{ label: 'Ver en RTVE Play', url: href }]
+      presenceData.buttons = [
+        { label: 'Ver en RTVE Play', url: href },
+      ]
     }
 
   // --- NOTICIAS ---
@@ -135,7 +145,9 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = browsingTimestamp
 
     if (buttons && !privacy) {
-      presenceData.buttons = [{ label: 'Leer noticia', url: href }]
+      presenceData.buttons = [
+        { label: 'Leer noticia', url: href },
+      ]
     }
 
   // --- DEFAULT ---
@@ -148,7 +160,9 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = browsingTimestamp
 
     if (buttons && !privacy) {
-      presenceData.buttons = [{ label: `Visitar ${sectionName}`, url: href }]
+      presenceData.buttons = [
+        { label: `Visitar ${sectionName}`, url: href },
+      ]
     }
   }
 

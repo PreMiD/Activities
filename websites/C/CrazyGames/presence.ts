@@ -86,7 +86,9 @@ presence.on('UpdateData', async () => {
     if (pathname.includes('/multiplayer')) {
       const multiplayerActiveMode = document.querySelector('a[class*="MultiplayerHeader"][class*="MultiplayerHeader_active"]')
       const modeSelectionOverlay = document.querySelector('[class*="ModeSelectionOverlay"]')
-      presenceData.state = multiplayerActiveMode && !modeSelectionOverlay ? `${document.querySelector('[class*="MultiplayerHeader"] h1')?.textContent?.trim()} - ${multiplayerActiveMode?.textContent?.trim()}` : document.querySelector('[class*="MultiplayerHeader"] h1')?.textContent?.trim() || ''
+      presenceData.state = multiplayerActiveMode && !modeSelectionOverlay
+        ? `${document.querySelector('[class*="MultiplayerHeader"] h1')?.textContent?.trim()} - ${multiplayerActiveMode?.textContent?.trim()}`
+        : document.querySelector('[class*="MultiplayerHeader"] h1')?.textContent?.trim() || ''
     }
     else {
       presenceData.state = document.querySelector('h1[class*="PageTitle"]')?.textContent?.trim() || ''

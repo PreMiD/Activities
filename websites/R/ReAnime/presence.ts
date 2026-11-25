@@ -123,7 +123,12 @@ function getPoster(): string {
     '.watch-sidebar-enter img, .watch-info-enter img',
   )?.src
 
-  const candidates = [sidebarPoster, ogImage, twitterImage, sitePoster]
+  const candidates = [
+    sidebarPoster,
+    ogImage,
+    twitterImage,
+    sitePoster,
+  ]
     .map(url => cleanText(url))
     .filter(Boolean)
 
@@ -180,7 +185,9 @@ function getCurrentEpisodeLabel(): string {
     return `Episode ${watchBoxLabel.replace(/^Episode\s*/i, '')}`
 
   const ep = new URLSearchParams(document.location.search).get('ep')
-  return ep ? `Episode ${ep}` : 'Watching Anime'
+  return ep
+    ? `Episode ${ep}`
+    : 'Watching Anime'
 }
 
 function getWatchingStateLabel(episodeLabel: string): string {
@@ -189,7 +196,9 @@ function getWatchingStateLabel(episodeLabel: string): string {
   if (/^Episode\s+\d+/i.test(normalized))
     return `Watching ${normalized}`
 
-  return normalized ? `Watching ${normalized}` : 'Watching Anime'
+  return normalized
+    ? `Watching ${normalized}`
+    : 'Watching Anime'
 }
 
 function getAnimeDetailUrl(): string | null {

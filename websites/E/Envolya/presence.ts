@@ -32,7 +32,9 @@ presence.on('UpdateData', async () => {
       '#letterEditPageTitle',
     )?.textContent
     presenceData.state = `Writing a letter${
-      letterTitle ? `: “${letterTitle}”` : ''
+      letterTitle
+        ? `: “${letterTitle}”`
+        : ''
     }`
     presenceData.smallImageKey = Assets.Writing
 

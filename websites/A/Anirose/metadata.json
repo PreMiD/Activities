@@ -11,7 +11,7 @@
   },
   "url": "anigum.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anigum[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anirose/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anirose/assets/thumbnail.png",
   "color": "#000000",

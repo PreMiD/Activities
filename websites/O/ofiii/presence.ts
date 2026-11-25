@@ -33,7 +33,9 @@ function getPlayerVideo() {
 // The thumbnail goes through the site's image proxy; use the original CDN image instead
 function getThumbnailImage() {
   const poster = document.querySelector<HTMLVideoElement>('video.thumbnail')?.poster
-  return poster ? new URL(poster).searchParams.get('src') : null
+  return poster
+    ? new URL(poster).searchParams.get('src')
+    : null
 }
 
 presence.on('UpdateData', async () => {
@@ -91,8 +93,11 @@ presence.on('UpdateData', async () => {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       }
 
-      if (buttons)
-        presenceData.buttons = [{ label: strings.buttonViewEpisode, url: href }]
+      if (buttons) {
+        presenceData.buttons = [
+          { label: strings.buttonViewEpisode, url: href },
+        ]
+      }
     }
   }
   else if (pathname.startsWith('/channel/watch/')) {
@@ -117,8 +122,11 @@ presence.on('UpdateData', async () => {
       if (video.paused)
         delete presenceData.startTimestamp
 
-      if (buttons)
-        presenceData.buttons = [{ label: strings.buttonWatchStream, url: href }]
+      if (buttons) {
+        presenceData.buttons = [
+          { label: strings.buttonWatchStream, url: href },
+        ]
+      }
     }
   }
   else if (!browsing) {

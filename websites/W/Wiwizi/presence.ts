@@ -101,16 +101,24 @@ presence.on('UpdateData', async () => {
       || null
 
     const ratingVal = schema?.aggregateRating?.ratingValue
-    const rating = ratingVal ? `⭐ ${ratingVal}` : null
+    const rating = ratingVal
+      ? `⭐ ${ratingVal}`
+      : null
 
     let genres: string | null = null
     if (schema?.genre) {
-      genres = Array.isArray(schema.genre) ? schema.genre.slice(0, 2).join(', ') : (schema.genre as string)
+      genres = Array.isArray(schema.genre)
+        ? schema.genre.slice(0, 2).join(', ')
+        : (schema.genre as string)
     }
 
     const metaParts = [year, rating, genres].filter(Boolean)
-    const defaultState = isAnimeDetail ? 'Anime inceliyor' : isTvDetail ? 'Dizi inceliyor' : 'Film inceliyor'
-    const shortInfo = metaParts.length > 0 ? metaParts.join(' • ') : defaultState
+    const defaultState = isAnimeDetail
+      ? 'Anime inceliyor'
+      : isTvDetail ? 'Dizi inceliyor' : 'Film inceliyor'
+    const shortInfo = metaParts.length > 0
+      ? metaParts.join(' • ')
+      : defaultState
 
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
@@ -164,7 +172,9 @@ presence.on('UpdateData', async () => {
 
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
-      details: cleanName ? `${cleanName} (@${username})` : `@${username}`,
+      details: cleanName
+        ? `${cleanName} (@${username})`
+        : `@${username}`,
       state: 'Kullanıcı profilinde',
       largeImageKey: userAvatar,
       largeImageText: `@${username}`,

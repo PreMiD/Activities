@@ -12,7 +12,7 @@
   },
   "url": "popcornmovies.ac",
   "regExp": "^https?[:][/][/]popcornmovies[.]ac[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Popcornmovies/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Popcornmovies/assets/thumbnail.png",
   "color": "#2aa9e0",

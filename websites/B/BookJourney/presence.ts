@@ -127,7 +127,9 @@ function buildActivity(state: PremidSessionState): PresenceData | null {
   if (state.stateKind === 'ended') {
     return {
       details: 'Viewing an ended session',
-      state: state.bookTitle ? `Book: ${state.bookTitle}` : 'BookJourney',
+      state: state.bookTitle
+        ? `Book: ${state.bookTitle}`
+        : 'BookJourney',
       startTimestamp: startedAt,
       largeImageKey: logoUrl,
       buttons,
@@ -152,7 +154,9 @@ function buildActivity(state: PremidSessionState): PresenceData | null {
     queueState = `Current reader: ${state.currentReaderName}`
   }
 
-  const stateLine = state.bookTitle ? `${queueState} | ${state.bookTitle}` : queueState
+  const stateLine = state.bookTitle
+    ? `${queueState} | ${state.bookTitle}`
+    : queueState
 
   return {
     details,

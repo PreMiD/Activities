@@ -422,7 +422,9 @@ presence.on('UpdateData', async () => {
     if (!useMultiLanguage)
       return fallback
     const val = rawStrings[key]
-    return val && !val.startsWith('general.') ? val : fallback
+    return val && !val.startsWith('general.')
+      ? val
+      : fallback
   }
 
   const presenceData: PresenceData = {
@@ -439,7 +441,9 @@ presence.on('UpdateData', async () => {
     }
 
     case isProfile: {
-      presenceData.details = username ? `User: @${username}` : 'Viewing Profile'
+      presenceData.details = username
+        ? `User: @${username}`
+        : 'Viewing Profile'
 
       const isEditing = Boolean(document.querySelector('#nw-edit-title'))
 
@@ -484,15 +488,20 @@ presence.on('UpdateData', async () => {
       const audio = searchParams.get('audio')
       const genre = searchParams.get('genre')
 
-      presenceData.details = q ? `Searching: "${q}"` : 'Browsing Catalog'
+      presenceData.details = q
+        ? `Searching: "${q}"`
+        : 'Browsing Catalog'
 
       const filters: string[] = []
       if (season)
         filters.push(formatAnimeSlug(season) || '')
       if (year)
         filters.push(year)
-      if (format)
-        filters.push(format.toUpperCase() === 'TV' ? 'TV' : (formatAnimeSlug(format) || ''))
+      if (format) {
+        filters.push(format.toUpperCase() === 'TV'
+          ? 'TV'
+          : (formatAnimeSlug(format) || ''))
+      }
       if (status)
         filters.push(formatAnimeSlug(status) || '')
       if (audio)
@@ -516,7 +525,9 @@ presence.on('UpdateData', async () => {
         filters.push(sortText)
       }
 
-      presenceData.state = filters.length > 0 ? filters.join(' • ') : 'All Anime'
+      presenceData.state = filters.length > 0
+        ? filters.join(' • ')
+        : 'All Anime'
       break
     }
 
@@ -573,10 +584,14 @@ presence.on('UpdateData', async () => {
 
       const elementTime = parseTimeToSeconds(currentTimeText)
         ?? video?.currentTime
-        ?? (useSync && isWatch ? latestWatchData.progress_seconds : 0)
+        ?? (useSync && isWatch
+          ? latestWatchData.progress_seconds
+          : 0)
       const elementDuration = parseTimeToSeconds(durationText)
         ?? video?.duration
-        ?? (useSync && isWatch ? latestWatchData.duration_seconds : 0)
+        ?? (useSync && isWatch
+          ? latestWatchData.duration_seconds
+          : 0)
 
       if (!isPaused) {
         pauseStartTimestamp = null
@@ -616,13 +631,17 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Nekowatch'
         const formattedPage = pageName
           .split(/[-_]/)
-          .map(w => w.toUpperCase() === 'DMCA' ? 'DMCA' : (w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()))
+          .map(w => w.toUpperCase() === 'DMCA'
+            ? 'DMCA'
+            : (w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()))
           .join(' ')
         presenceData.state = `Viewing ${formattedPage}`
       }
       else {
         presenceData.details = getString('browsing', 'Browsing...')
-        presenceData.state = animeTitle ? `${getString('viewing', 'Viewing')} ${animeTitle}` : 'Exploring Catalog'
+        presenceData.state = animeTitle
+          ? `${getString('viewing', 'Viewing')} ${animeTitle}`
+          : 'Exploring Catalog'
       }
       presenceData.largeImageKey = coverUrlDefault || 'https://cdn.rcd.gg/PreMiD/websites/N/Nekowatch/assets/logo.jpeg'
       break

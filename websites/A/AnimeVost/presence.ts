@@ -178,7 +178,9 @@ presence.on('UpdateData', async () => {
       }
       if (video.duration) {
         presenceData.details = `Смотрит ${animetype} ${
-          !privacy ? animename : ''
+          !privacy
+            ? animename
+            : ''
         }`
         presenceData.state = document.querySelector('.active')?.textContent
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
@@ -202,7 +204,9 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.details = `На странице ${animetype}a ${
-          !privacy ? animename : ''
+          !privacy
+            ? animename
+            : ''
         }`
       }
     }

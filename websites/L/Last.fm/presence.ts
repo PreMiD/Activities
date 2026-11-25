@@ -135,8 +135,12 @@ presence.on('UpdateData', async () => {
   }
 
   for (const [path, data] of Object.entries(pages)) {
-    if (location.pathname.match(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (location.pathname.match(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   if (

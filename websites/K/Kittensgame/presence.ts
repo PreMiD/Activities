@@ -47,7 +47,9 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageText = advice?.textContent
         }
 
-        presenceData.buttons = [{ label: 'Play Game', url: href }]
+        presenceData.buttons = [
+          { label: 'Play Game', url: href },
+        ]
       }
       break
     }
@@ -65,13 +67,17 @@ presence.on('UpdateData', async () => {
         }
         case pathname.includes('/u/'): {
           presenceData.details = `Forum - Viewing the profile of: ${
-            username && userTag ? `${username} (${userTag})` : userTag
+            username && userTag
+              ? `${username} (${userTag})`
+              : userTag
           }`
           presenceData.state = `Tab: ${document
             .querySelector('[class*="  active"]')
             ?.textContent
             ?.toLowerCase()}`
-          presenceData.buttons = [{ label: 'View Profile', url: href }]
+          presenceData.buttons = [
+            { label: 'View Profile', url: href },
+          ]
           break
         }
         case pathname.includes('/post/'): {
@@ -123,7 +129,9 @@ presence.on('UpdateData', async () => {
           'meta[property="og:title"]',
         )?.content
         presenceData.smallImageKey = Assets.Reading
-        presenceData.buttons = [{ label: 'Read Article', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Article', url: href },
+        ]
         break
       }
 

@@ -65,7 +65,9 @@ presence.on('UpdateData', async () => {
     }
     case '/favorites': {
       presenceData.details = `Browsing a user's favorite ${
-        searchParams.get('comments') ? 'threads' : 'discussions'
+        searchParams.get('comments')
+          ? 'threads'
+          : 'discussions'
       }`
       presenceData.state = searchParams.get('id')
       break
@@ -74,7 +76,9 @@ presence.on('UpdateData', async () => {
       const link = document.querySelector<HTMLAnchorElement>('.titleline a')
       presenceData.details = 'Viewing a discussion'
       presenceData.state = link?.textContent
-      presenceData.buttons = [{ label: 'View Discussion', url: href }]
+      presenceData.buttons = [
+        { label: 'View Discussion', url: href },
+      ]
       if (document.querySelector<HTMLSpanElement>('.sitebit.comhead'))
         presenceData.buttons.push({ label: 'Read Article', url: link!.href })
 

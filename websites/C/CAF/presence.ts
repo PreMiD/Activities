@@ -100,14 +100,20 @@ presence.on('UpdateData', async () => {
     presenceData.state = getPageTitle()
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = strings.readingArticle
-    if (buttons)
-      presenceData.buttons = [{ label: strings.buttonReadArticle, url: href }]
+    if (buttons) {
+      presenceData.buttons = [
+        { label: strings.buttonReadArticle, url: href },
+      ]
+    }
   }
   else {
     presenceData.details = strings.viewPage
     presenceData.state = getPageTitle()
-    if (buttons)
-      presenceData.buttons = [{ label: strings.buttonViewPage, url: href }]
+    if (buttons) {
+      presenceData.buttons = [
+        { label: strings.buttonViewPage, url: href },
+      ]
+    }
   }
 
   presence.setActivity(presenceData)

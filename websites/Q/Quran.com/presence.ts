@@ -114,7 +114,9 @@ function getVerseKey(pathname: string, audio: HTMLAudioElement | null): string |
 
   const verseNumber = pathname.match(/^\/[^/]+\/(\d+)\/?$/)?.[1]
   const chapterNumber = query(['[data-testid="chapter-navigation"]'])?.textContent?.match(/^(\d+)\./)?.[1]
-  return verseNumber && chapterNumber ? `${chapterNumber}:${verseNumber}` : undefined
+  return verseNumber && chapterNumber
+    ? `${chapterNumber}:${verseNumber}`
+    : undefined
 }
 
 presence.on('UpdateData', async () => {
@@ -212,7 +214,9 @@ presence.on('UpdateData', async () => {
 
         if (pathname === '/duas' || pathname.startsWith('/duas/')) {
           setCategory('reading')
-          presenceData.details = pathname === '/duas' ? strings.duas : strings.viewingDua
+          presenceData.details = pathname === '/duas'
+            ? strings.duas
+            : strings.viewingDua
           if (pathname !== '/duas' && pageTitle)
             presenceData.state = pageTitle
           presenceData.startTimestamp = browsingTimestamp
@@ -224,10 +228,17 @@ presence.on('UpdateData', async () => {
           presenceData.details = strings.readingTafsir
           const tafsirSeparator = [' — Tafsir ', ' – Tafsir ', ' - Tafsir ']
             .find(separator => pageTitle.includes(separator))
-          const tafsirTitle = tafsirSeparator ? pageTitle.split(tafsirSeparator)[0] : undefined
+          const tafsirTitle = tafsirSeparator
+            ? pageTitle.split(tafsirSeparator)[0]
+            : undefined
           const tafsirContext = pageTitle.split('Tafsir Surah ')[1]
           const verseKey = query(['[data-verse-key]'])?.getAttribute('data-verse-key')
-          const state = [verseKey ? `${strings.ayah} ${verseKey}` : tafsirContext, tafsirTitle]
+          const state = [
+            verseKey
+              ? `${strings.ayah} ${verseKey}`
+              : tafsirContext,
+            tafsirTitle,
+          ]
             .filter(Boolean)
             .join(' • ')
           if (state)
@@ -252,7 +263,9 @@ presence.on('UpdateData', async () => {
           ? document.title.match(/^Surah (.+?) Ayah \d+/)?.[1]
           : undefined
         const surahName = query(['[data-testid="chapter-navigation"]'])?.textContent
-          ?? (directVerseSurah ? `Surah ${directVerseSurah}` : undefined)
+          ?? (directVerseSurah
+            ? `Surah ${directVerseSurah}`
+            : undefined)
         const pageInfo = query(['[data-testid="page-info"]'])?.textContent
 
         if (!surahName) {
@@ -267,15 +280,23 @@ presence.on('UpdateData', async () => {
         const verseKey = getVerseKey(pathname, audio)
 
         const chapterNumber = surahName?.match(/^(\d+)\./)?.[1]
-        const englishName = chapterNumber ? getEnglishName(chapterNumber) : undefined
+        const englishName = chapterNumber
+          ? getEnglishName(chapterNumber)
+          : undefined
         const audioSrc = audio?.currentSrc || audio?.src
-        const reciterName = audioSrc ? getReciterName(audioSrc) : undefined
+        const reciterName = audioSrc
+          ? getReciterName(audioSrc)
+          : undefined
 
         presenceData.details = surahName
-          ? `${strings.reading} ${surahName}${englishName ? ` (${englishName})` : ''}`
+          ? `${strings.reading} ${surahName}${englishName
+            ? ` (${englishName})`
+            : ''}`
           : strings.readingFallback
 
-        const ayahPart = verseKey ? `${strings.ayah} ${verseKey}` : pageInfo
+        const ayahPart = verseKey
+          ? `${strings.ayah} ${verseKey}`
+          : pageInfo
         const state = [ayahPart, reciterName].filter(Boolean).join(' • ')
         if (state)
           presenceData.state = state

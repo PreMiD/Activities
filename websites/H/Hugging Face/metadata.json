@@ -11,7 +11,7 @@
   },
   "url": "huggingface.co",
   "regExp": "^https?[:][/][/](www[.])?huggingface[.]co[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hugging%20Face/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hugging%20Face/assets/thumbnail.png",
   "color": "#FFD21E",

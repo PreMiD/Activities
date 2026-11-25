@@ -11,7 +11,7 @@
   },
   "url": "qbreader.org",
   "regExp": "^https?[:][/][/](www[.])?qbreader[.]org[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/QBReader/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/QBReader/assets/thumbnail.png",
   "color": "#0a84ff",

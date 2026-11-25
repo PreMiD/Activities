@@ -42,7 +42,9 @@ presence.on('UpdateData', () => {
       presenceData.state = document.title
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Reading'
-      presenceData.buttons = [{ label: 'Read article', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'Read article', url: document.URL },
+      ]
     }
   }
   else if (document.location.hostname === 'forum.xda-developers.com') {

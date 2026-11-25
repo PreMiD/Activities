@@ -81,9 +81,13 @@ presence.on('UpdateData', async () => {
     if (title)
       presenceData.details = `Watching ${title}`
     presenceData.state = [
-      runtime ? `${runtime}  •  ` : '',
+      runtime
+        ? `${runtime}  •  `
+        : '',
       seasonEpisode ?? '',
-      rating ? `⭐${rating}` : '',
+      rating
+        ? `⭐${rating}`
+        : '',
     ].join('')
   }
 

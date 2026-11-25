@@ -10,7 +10,9 @@ export class RouteHandlers {
     label: string,
   ): void {
     if (settings.showButtons) {
-      presenceData.buttons = [{ label, url: href }]
+      presenceData.buttons = [
+        { label, url: href },
+      ]
     }
   }
 
@@ -209,6 +211,8 @@ export class RouteHandlers {
   static handleDefaultPage(presenceData: PresenceData): void {
     const docTitle = Utils.titleFromDocument()
     presenceData.details = 'Browsing Swarm'
-    presenceData.state = docTitle ? Utils.trunc(docTitle) : 'Exploring'
+    presenceData.state = docTitle
+      ? Utils.trunc(docTitle)
+      : 'Exploring'
   }
 }

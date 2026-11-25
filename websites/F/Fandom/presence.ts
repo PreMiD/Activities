@@ -171,7 +171,9 @@ presence.on('UpdateData', async () => {
     */
     const actionResult = (): string =>
       getURLParam('action') || getURLParam('veaction')
-    const lang = currentPath[0] === 'wiki' ? 'en' : currentPath[0]
+    const lang = currentPath[0] === 'wiki'
+      ? 'en'
+      : currentPath[0]
     const titleFromURL = (): string => {
       return decodeURIComponent(
         currentPath[0] === 'index.php'
@@ -236,7 +238,9 @@ presence.on('UpdateData', async () => {
           '2001': 'Viewing a forum board thread', // deprecated, redirected
           '2002': 'Viewing a forum topic', // deprecated, redirected
         }[
-          [...document.querySelector('body')!.classList]
+          [
+            ...document.querySelector('body')!.classList,
+          ]
             .find(v => /ns--?\d/.test(v))!
             .slice(3)
         ] || 'Viewing a wiki page'

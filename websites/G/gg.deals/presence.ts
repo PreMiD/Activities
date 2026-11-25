@@ -30,7 +30,9 @@ const newsArticleRoutes = [
 
 function getLargestGameImage(): string | undefined {
   const gameImage = document.querySelector<HTMLImageElement>('img.image-game')
-  return gameImage ? getLargestImageSource(gameImage) : undefined
+  return gameImage
+    ? getLargestImageSource(gameImage)
+    : undefined
 }
 
 function getLargestGiftCardImage(): string | undefined {
@@ -41,7 +43,9 @@ function getLargestGiftCardImage(): string | undefined {
   const giftCardImage = giftCardImages.find((image) => {
     const source = image.getAttribute('src')?.trim() || image.src
     const alt = image.alt?.trim() || ''
-    const className = typeof image.className === 'string' ? image.className : ''
+    const className = typeof image.className === 'string'
+      ? image.className
+      : ''
 
     if (!source) {
       return false
@@ -79,7 +83,12 @@ function getLargestImageSource(image: HTMLImageElement): string | undefined {
           ? size * 1000
           : size
 
-        return { url, priority: Number.isNaN(priority) ? 0 : priority }
+        return {
+          url,
+          priority: Number.isNaN(priority)
+            ? 0
+            : priority,
+        }
       })
       .filter(candidate => candidate.url)
       .sort((left, right) => right.priority - left.priority)[0]
@@ -119,7 +128,9 @@ function getLargestNewsImage(): string | undefined {
       return rightWidth - leftWidth
     })
 
-  return eligibleImages[0] ? getLargestImageSource(eligibleImages[0]) : undefined
+  return eligibleImages[0]
+    ? getLargestImageSource(eligibleImages[0])
+    : undefined
 }
 
 function getResultsCount(): string | undefined {
@@ -222,7 +233,9 @@ function extractTitleAndPlatform(rawTitle: string): { title: string, platform?: 
     }
   }
 
-  return { title: rawTitle.trim() }
+  return {
+    title: rawTitle.trim(),
+  }
 }
 
 function addPageButton(presenceData: PresenceData, label: string) {
@@ -399,10 +412,21 @@ function updatePresence() {
   else if (pathname.includes('/collection/')) {
     const filters = getActiveCollectionFilters()
     const platform = filters.platform || getPlatformLabel(pathname)
-    const typeLabel = filters.type ? getPluralType(filters.type) : 'items'
-    const tag = filters.tag ? `${filters.tag} ` : ''
+    const typeLabel = filters.type
+      ? getPluralType(filters.type)
+      : 'items'
+    const tag = filters.tag
+      ? `${filters.tag} `
+      : ''
 
-    const primaryFilterType = ['releaseDate', 'genre', 'developer', 'publisher', 'drm', 'ageRating'].find(
+    const primaryFilterType = [
+      'releaseDate',
+      'genre',
+      'developer',
+      'publisher',
+      'drm',
+      'ageRating',
+    ].find(
       type => filters[type],
     )
 

@@ -21,7 +21,9 @@ presence.on('UpdateData', async () => {
   const songInfo = document.querySelector('.p-2.song-info')
 
   if (songInfo) {
-    const [artist, album] = [...songInfo.querySelectorAll('.mb-1')].map(
+    const [artist, album] = [
+      ...songInfo.querySelectorAll('.mb-1'),
+    ].map(
       e => e.textContent,
     )
     const title = songInfo.querySelector('.mb-2')?.textContent

@@ -45,7 +45,9 @@ presence.on('UpdateData', async () => {
                     url: author.href,
                   },
                 ]
-              : [{ label: 'Watch Video', url: href }]
+              : [
+                  { label: 'Watch Video', url: href },
+                ]
           }
           else {
             presenceData.buttons = author
@@ -56,7 +58,9 @@ presence.on('UpdateData', async () => {
                     url: author.href,
                   },
                 ]
-              : [{ label: 'View Post', url: href }]
+              : [
+                  { label: 'View Post', url: href },
+                ]
           }
           presenceData.details = document.querySelector('.k31gt')
           presenceData.state = author?.textContent
@@ -75,7 +79,9 @@ presence.on('UpdateData', async () => {
           presenceData.state = [
             ...document.querySelectorAll('header + div a'),
           ].find(e => e.classList.length > 1)?.textContent
-          presenceData.buttons = [{ label: 'View Profile', url: href }]
+          presenceData.buttons = [
+            { label: 'View Profile', url: href },
+          ]
           break
         }
         case pathname.includes('/explore/answertime'): {
@@ -173,7 +179,9 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Help center - reading an article'
         presenceData.state = article.textContent
         presenceData.smallImageKey = Assets.Reading
-        presenceData.buttons = [{ label: 'Read Article', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Article', url: href },
+        ]
       }
       else {
         presenceData.details = 'Browsing through the help center'
@@ -189,7 +197,9 @@ presence.on('UpdateData', async () => {
         return
       }
       const username = document.querySelector('header h1')?.textContent
-      presenceData.details = `Viewing user${username ? `: ${username}` : ''}`
+      presenceData.details = `Viewing user${username
+        ? `: ${username}`
+        : ''}`
       break
     }
   }

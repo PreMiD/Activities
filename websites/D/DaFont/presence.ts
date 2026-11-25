@@ -50,7 +50,9 @@ presence.on('UpdateData', () => {
     presenceData.state = `${details}`
   }
   else if (path.startsWith('/top.php')) {
-    details = document.location.search.length > 1 ? 'All Time' : 'Yesterday'
+    details = document.location.search.length > 1
+      ? 'All Time'
+      : 'Yesterday'
     presenceData.details = 'Browsing the top fonts :'
     presenceData.state = `${details}`
   }

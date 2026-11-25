@@ -17,7 +17,9 @@ function absoluteUrl(value: string | null | undefined): string | undefined {
     return undefined
   try {
     const url = new URL(value, document.location.origin)
-    return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : undefined
+    return url.protocol === 'https:' || url.protocol === 'http:'
+      ? url.href
+      : undefined
   }
   catch {
     return undefined
@@ -58,7 +60,9 @@ presence.on('UpdateData', async () => {
       }
 
       if (mixUrl) {
-        presenceData.buttons = [{ label: 'Listen to Show', url: mixUrl }]
+        presenceData.buttons = [
+          { label: 'Listen to Show', url: mixUrl },
+        ]
       }
 
       presence.setActivity(presenceData)
@@ -81,7 +85,9 @@ presence.on('UpdateData', async () => {
       largeImageKey: MIXCLOUD_LOGO,
       smallImageKey: Assets.Live,
       smallImageText: (await strings).live,
-      buttons: [{ label: 'View Livestream', url: document.location.href }],
+      buttons: [
+        { label: 'View Livestream', url: document.location.href },
+      ],
     }
     presence.setActivity(presenceData)
     return

@@ -31,12 +31,16 @@ let activeTitle: string | null = null
 
 function parseIsoDuration(value: unknown): number | null {
   const match = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:([\d.]+)S)?$/.exec(String(value))
-  return match ? Number(match[1] ?? 0) * 3600 + Number(match[2] ?? 0) * 60 + Number(match[3] ?? 0) : null
+  return match
+    ? Number(match[1] ?? 0) * 3600 + Number(match[2] ?? 0) * 60 + Number(match[3] ?? 0)
+    : null
 }
 
 function parseJson(text: string | null): any {
   try {
-    return text ? JSON.parse(text) : null
+    return text
+      ? JSON.parse(text)
+      : null
   }
   catch {
     return null
@@ -52,7 +56,9 @@ function getAdMarker(text?: string): string | null {
  * Without duration to compare (live, not loaded yet): the last requested.
  */
 function findActiveTitle(): string | null {
-  const ids = [...titles.keys()].reverse()
+  const ids = [
+    ...titles.keys(),
+  ].reverse()
   const video = findPlayerVideo()
 
   if (video && Number.isFinite(video.duration)) {
@@ -88,7 +94,13 @@ function parsePlaylist(result: any): Pick<TimelineState, 'intro' | 'full' | 'bre
 
     if (item.type === 'Remote') {
       const marker = getAdMarker(item.urlsInPriorityOrder?.[0])
-      breaks.push({ cue: position, marker, a: marker ? adDurations.get(marker) ?? 0 : 0 })
+      breaks.push({
+        cue: position,
+        marker,
+        a: marker
+          ? adDurations.get(marker) ?? 0
+          : 0,
+      })
       continue
     }
 
@@ -102,7 +114,13 @@ function parsePlaylist(result: any): Pick<TimelineState, 'intro' | 'full' | 'bre
   }
 
   const full = /"fullTitleDurationMs":(\d+)/.exec(JSON.stringify(result))
-  return { intro, breaks, full: full ? Number(full[1]) / 1000 : null }
+  return {
+    intro,
+    breaks,
+    full: full
+      ? Number(full[1]) / 1000
+      : null,
+  }
 }
 
 function onPlayback(url: string, json: any): void {
@@ -111,7 +129,15 @@ function onPlayback(url: string, json: any): void {
     return
 
   titles.delete(gti)
-  titles.set(gti, { gti, intro: 0, full: null, breaks: [], anchor: null, live: null, ...parsePlaylist(json?.vodPlaylistedPlaybackUrls?.result) })
+  titles.set(gti, {
+    gti,
+    intro: 0,
+    full: null,
+    breaks: [],
+    anchor: null,
+    live: null,
+    ...parsePlaylist(json?.vodPlaylistedPlaybackUrls?.result),
+  })
   if (titles.size > MAX_TRACKED_TITLES)
     titles.delete(titles.keys().next().value!)
 
@@ -139,7 +165,9 @@ function onUpdateSession(info: any): void {
 
   const progress = info?.streamInfo
   const video = findPlayerVideo()
-  const state = activeTitle ? titles.get(activeTitle) : undefined
+  const state = activeTitle
+    ? titles.get(activeTitle)
+    : undefined
   if (!progress || !video || !state)
     return
 

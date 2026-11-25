@@ -54,7 +54,9 @@ async function generateThumbnail(thumbnailUrl: string, type: number, alignment: 
 
     // `toDataURL` would encode synchronously on the main thread
     const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'))
-    return blob ? await blobToDataUrl(blob) : thumbnailUrl
+    return blob
+      ? await blobToDataUrl(blob)
+      : thumbnailUrl
   }
   catch {
     return thumbnailUrl
@@ -90,7 +92,9 @@ export function applyCover(
   url: string | undefined,
   { showCover, imageType, alignment = CropAlignment.Right }: { showCover: boolean, imageType: number, alignment?: CropAlignment },
 ): void {
-  const thumbnail = url && showCover ? getThumbnail(url, imageType, alignment) : undefined
+  const thumbnail = url && showCover
+    ? getThumbnail(url, imageType, alignment)
+    : undefined
   if (thumbnail)
     presenceData.largeImageKey = thumbnail
 }

@@ -85,13 +85,16 @@ async function generatePresenceData() {
       }
 
       if (showButtons) {
-        presenceData.buttons = [{
-          url: href,
-          label: 'YTypingを開く',
-        }, {
-          url: `https://youtu.be/${map.videoId}`,
-          label: 'YouTubeで聴く',
-        }]
+        presenceData.buttons = [
+          {
+            url: href,
+            label: 'YTypingを開く',
+          },
+          {
+            url: `https://youtu.be/${map.videoId}`,
+            label: 'YouTubeで聴く',
+          },
+        ]
       }
 
       if (showCurrentSong) {
@@ -122,7 +125,9 @@ async function generatePresenceData() {
       const isPaused = _video.paused
 
       const presenceData: PresenceData = {
-        largeImageKey: showCover && videoId ? videoThubnail : largeImageKey,
+        largeImageKey: showCover && videoId
+          ? videoThubnail
+          : largeImageKey,
         type: isPaused ? ActivityType.Playing : ActivityType.Listening,
       }
 
@@ -149,10 +154,12 @@ async function generatePresenceData() {
       }
 
       if (showButtons) {
-        presenceData.buttons = [{
-          url: `https://youtu.be/${videoId}`,
-          label: 'YouTubeで聴く',
-        }]
+        presenceData.buttons = [
+          {
+            url: `https://youtu.be/${videoId}`,
+            label: 'YouTubeで聴く',
+          },
+        ]
       }
 
       return presenceData

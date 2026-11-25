@@ -21,7 +21,7 @@
     "caf.fr"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*caf[.]fr[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CAF/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CAF/assets/thumbnail.png",
   "color": "#0060AD",

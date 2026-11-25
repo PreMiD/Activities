@@ -33,8 +33,12 @@ presence.on('UpdateData', async () => {
       if (search.startsWith('?id=')) {
         const animeId = search.split('?id=')[1]?.split('&')[0]
         const contentDiv = document.querySelector('.col-sm-12.col-md-8.col-lg-9')
-        const h2Content = contentDiv ? contentDiv.querySelector('h2') : null
-        const h4Content = contentDiv ? contentDiv.querySelector('h4') : null
+        const h2Content = contentDiv
+          ? contentDiv.querySelector('h2')
+          : null
+        const h4Content = contentDiv
+          ? contentDiv.querySelector('h4')
+          : null
 
         if (h4Content && h4Content.textContent?.trim()) {
           presenceData.details = 'Adatlap böngészése:'
@@ -68,7 +72,9 @@ presence.on('UpdateData', async () => {
         const linkElement = document.querySelector(
           'a.text-white[href^="https://animedrive.hu/anime/?id="]',
         )
-        const h2Element = linkElement ? linkElement.querySelector('h2') : null
+        const h2Element = linkElement
+          ? linkElement.querySelector('h2')
+          : null
         const episodeElement = document.querySelector(
           'a.nk-pagination-current-white',
         )

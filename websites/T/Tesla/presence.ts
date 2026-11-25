@@ -64,7 +64,9 @@ presence.on('UpdateData', async () => {
     'en_au',
     'en_nz',
   ]
-  const urlpNum = langs.includes(urlpath[1]!) ? 2 : 1
+  const urlpNum = langs.includes(urlpath[1]!)
+    ? 2
+    : 1
   const presenceData: PresenceData = {
     largeImageKey: logoArr[logo] ?? ActivityAssets.LogoRed,
   }
