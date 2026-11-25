@@ -1,4 +1,4 @@
-import { Assets, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 // Discord application ID (distinct from the author's user snowflake).
 const presence = new Presence({
