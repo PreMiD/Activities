@@ -88,7 +88,7 @@ presence.on('UpdateData', async () => {
   }
 
   // Checking if the user is currently typing a question
-  if (document.querySelector('#chat-input')?.textContent !== '') {
+  if (document.querySelector('#chat-input')?.textContent?.trim()) {
     presenceState = strings?.askingQuestion ?? ''
     smallImageKey = Assets.Writing
     smallImageText = strings?.askingQuestion ?? ''
