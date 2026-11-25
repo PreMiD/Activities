@@ -15,7 +15,7 @@
   },
   "url": "godfield.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*godfield[.]net[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/thumbnail.webp",
   "color": "#008F6F",
