@@ -2,22 +2,24 @@
   "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
-    "name": "Poska",
-    "id": "1337827446044622908"
+    "id": "1337827446044622908",
+    "name": "Poska"
   },
   "service": "Poska",
   "description": {
     "en": "Watch free movies, TV series and live TV in high definition without ads on Poska.",
     "fr": "Regardez des films, séries et la TV en direct gratuitement en HD sans pub sur Poska."
   },
-  "url": "poska.pitsho.org",
+  "url": [
+    "poska.pitsho.org"
+  ],
+  "regExp": "^https?[:][/][/]poska[.]pitsho[.]org[/]",
   "version": "1.0.0",
   "logo": "https://poska.pitsho.org/static/icon-512.png",
   "thumbnail": "https://poska.pitsho.org/static/icon-512.png",
   "color": "#e50914",
   "category": "videos",
   "tags": [
-    "poska",
     "streaming",
     "movies",
     "series",
