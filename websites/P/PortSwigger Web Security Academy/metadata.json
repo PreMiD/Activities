@@ -23,52 +23,73 @@
   ],
   "settings": [
     {
-      "id": "showTimestamp",
-      "title": "Show elapsed time",
-      "icon": "fa-solid fa-clock",
-      "value": true
-    },
-    {
-      "id": "showButtons",
-      "title": "Show view page button",
-      "icon": "fa-solid fa-link",
-      "value": true
-    },
-    {
       "id": "privacyMode",
       "title": "Privacy mode",
       "icon": "fa-solid fa-user-lock",
       "value": false
     },
     {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fa-solid fa-clock",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show view page button",
+      "icon": "fa-solid fa-link",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
       "id": "showRank",
       "title": "Show Hall of Fame rank",
       "icon": "fa-solid fa-ranking-star",
-      "value": true
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
     },
     {
       "id": "showProgress",
       "title": "Show solved labs and progress",
       "icon": "fa-solid fa-chart-simple",
-      "value": true
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
     },
     {
       "id": "showLevel",
       "title": "Show current level",
       "icon": "fa-solid fa-award",
-      "value": true
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
     },
     {
       "id": "showUsername",
       "title": "Show username",
       "icon": "fa-solid fa-user",
-      "value": true
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
     },
     {
       "id": "showDifficulty",
       "title": "Show lab difficulty",
       "icon": "fa-solid fa-signal",
-      "value": false
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
     }
   ]
 }
