@@ -43,5 +43,6 @@
       "icon": "fad fa-compass",
       "value": true
     }
-  ]
+  ],
+  "allowURLOverrides": true
 }
