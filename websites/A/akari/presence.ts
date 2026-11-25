@@ -16,7 +16,9 @@ presence.on('UpdateData', async () => {
 
   if (path.startsWith('/p/')) {
     const video = document.querySelector<HTMLVideoElement>('video')
-    const isPlaying = video ? !video.paused && !video.ended : false
+    const isPlaying = video
+      ? !video.paused && !video.ended
+      : false
 
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
@@ -47,7 +49,9 @@ presence.on('UpdateData', async () => {
     else if (path.startsWith('/u/')) {
       const username = path.split('/')[2]
       details = 'Viewing a profile'
-      state = username ? `@${username}` : 'a profile'
+      state = username
+        ? `@${username}`
+        : 'a profile'
     }
     else if (path.startsWith('/genre') || path.startsWith('/tag')) {
       state = isHomePage ? 'a category' : pageTitle

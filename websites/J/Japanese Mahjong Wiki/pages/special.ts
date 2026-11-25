@@ -62,7 +62,12 @@ const yaku = new Set([
   'Tenhou_and_chiihou',
   'Nagashi_mangan',
 ])
-const games = new Set(['Riichi_City', 'Majsoul', 'Sega_MJ', 'Tenhou.net'])
+const games = new Set([
+  'Riichi_City',
+  'Majsoul',
+  'Sega_MJ',
+  'Tenhou.net',
+])
 const SLIDESHOW_TIMEOUT = 6000
 
 /**
@@ -115,7 +120,9 @@ export async function specialPageHandler(
       case firstPath?.startsWith('User:'): {
         presenceData.details = 'Viewing a user page'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View User Page', url: href }]
+        presenceData.buttons = [
+          { label: 'View User Page', url: href },
+        ]
         break
       }
       case firstPath?.startsWith('User_talk:'): {
@@ -134,7 +141,9 @@ export async function specialPageHandler(
       case firstPath?.startsWith('Category:'): {
         presenceData.details = 'Viewing a category'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View Category', url: href }]
+        presenceData.buttons = [
+          { label: 'View Category', url: href },
+        ]
         break
       }
       case firstPath === 'Special:Upload': {
@@ -221,7 +230,9 @@ export async function specialPageHandler(
           tmpPresenceData.state = `${mainName?.textContent} (${englishName?.textContent}) - ${sectionHeader?.textContent}`
           tmpPresenceData.smallImageKey = Assets.Question
           tmpPresenceData.smallImageText = `${closed?.textContent} - ${description?.textContent}`
-          tmpPresenceData.buttons = [{ label: 'View Yaku', url: mainName }]
+          tmpPresenceData.buttons = [
+            { label: 'View Yaku', url: mainName },
+          ]
           slideshow.addSlide(
             mainName?.textContent ?? '',
             tmpPresenceData,
@@ -278,7 +289,9 @@ export async function specialPageHandler(
       if (firstPath === strategy) {
         presenceData.details = 'Reading about a strategy'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View Strategy', url: href }]
+        presenceData.buttons = [
+          { label: 'View Strategy', url: href },
+        ]
         break
       }
     }
@@ -286,7 +299,9 @@ export async function specialPageHandler(
       if (firstPath === yakuPage) {
         presenceData.details = 'Reading about a yaku'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View Yaku', url: href }]
+        presenceData.buttons = [
+          { label: 'View Yaku', url: href },
+        ]
         break
       }
     }
@@ -294,7 +309,9 @@ export async function specialPageHandler(
       if (firstPath === game) {
         presenceData.details = 'Reading about a mahjong game'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View Game', url: href }]
+        presenceData.buttons = [
+          { label: 'View Game', url: href },
+        ]
         break
       }
     }

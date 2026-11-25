@@ -18,7 +18,9 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     name: strings.title,
   }
-  const rows = [...document.querySelectorAll<HTMLDivElement>('.grid > div')]
+  const rows = [
+    ...document.querySelectorAll<HTMLDivElement>('.grid > div'),
+  ]
   const nextIndex = rows.findIndex(row =>
     [...row.children].every(
       tile =>
@@ -35,13 +37,17 @@ presence.on('UpdateData', async () => {
   )
 
   if (isComplete) {
-    const finalScore = nextIndex === -1 ? 12 : nextIndex
+    const finalScore = nextIndex === -1
+      ? 12
+      : nextIndex
     let outcome = ''
     for (let i = 0; i < finalScore; i++) {
       outcome += getRowEmojis(rows[i]!)
       outcome += ' | '
     }
-    presenceData.details = nextIndex === -1 ? strings.failure : strings.victory
+    presenceData.details = nextIndex === -1
+      ? strings.failure
+      : strings.victory
     presenceData.state = `${finalScore}/12 - ${getRowEmojis(
       rows[finalScore - 1]!,
     )}`
@@ -61,8 +67,11 @@ presence.on('UpdateData', async () => {
 
 function getRowEmojis(row: HTMLDivElement): string {
   const darkMode = document.documentElement.classList.contains('dark')
-  if (!row)
-    return darkMode ? '⬛'.repeat(4) : '⬜'.repeat(4)
+  if (!row) {
+    return darkMode
+      ? '⬛'.repeat(4)
+      : '⬜'.repeat(4)
+  }
   let emojis = ''
   for (let i = 0; i < row.children.length; i++) {
     const tile = row.children[i]

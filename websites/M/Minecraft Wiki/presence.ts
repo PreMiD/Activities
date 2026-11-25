@@ -103,13 +103,19 @@ async function prepare(): Promise<PresenceData> {
     // User namespace
     presenceData.details = strings.viewUser
     presenceData.state = wgTitle
-    presenceData.buttons = [{ label: strings.buttonViewProfile, url: href }]
+    presenceData.buttons = [
+      { label: strings.buttonViewProfile, url: href },
+    ]
   }
   else if (wgNamespaceNumber % 2 === 1) {
     // All talk namespaces
     presenceData.details = strings.viewAThread
-    presenceData.state = wgNamespaceNumber === 1 ? wgTitle : pageTitle
-    presenceData.buttons = [{ label: strings.btnViewThread, url: href }]
+    presenceData.state = wgNamespaceNumber === 1
+      ? wgTitle
+      : pageTitle
+    presenceData.buttons = [
+      { label: strings.btnViewThread, url: href },
+    ]
   }
   else if (wgNamespaceNumber === -1) {
     // Special namespace
@@ -160,7 +166,9 @@ async function prepare(): Promise<PresenceData> {
     // Not main namespace
     presenceData.details = `${strings.readingAbout} ${pageTitle.split(':')[0]}`
     presenceData.state = wgTitle
-    presenceData.buttons = [{ label: strings.buttonViewPage, url: href }]
+    presenceData.buttons = [
+      { label: strings.buttonViewPage, url: href },
+    ]
   }
   else if (wgIsMainPage) {
     presenceData.details = strings.viewHome
@@ -168,7 +176,9 @@ async function prepare(): Promise<PresenceData> {
   else {
     presenceData.details = strings.viewAPage
     presenceData.state = pageTitle
-    presenceData.buttons = [{ label: strings.buttonViewPage, url: href }]
+    presenceData.buttons = [
+      { label: strings.buttonViewPage, url: href },
+    ]
   }
   return presenceData
 }

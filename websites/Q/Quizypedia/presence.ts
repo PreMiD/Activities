@@ -129,7 +129,9 @@ presence.on('UpdateData', async () => {
 
         const rankInfo = Array.from(rankElem.childNodes)
           .reduce((acc: string, node: Node) => {
-            return acc + (node.nodeType === Node.TEXT_NODE ? node.textContent || '' : '')
+            return acc + (node.nodeType === Node.TEXT_NODE
+              ? node.textContent || ''
+              : '')
           }, '')
           .replace(/[()e]/g, '')
           .replace('points', '')
@@ -163,12 +165,16 @@ presence.on('UpdateData', async () => {
             let score, time
             if (scoreElem) {
               score = Array.from(scoreElem.childNodes).reduce((acc: string, node: Node) => {
-                return acc + (node.nodeType === Node.TEXT_NODE ? node.textContent || '' : '')
+                return acc + (node.nodeType === Node.TEXT_NODE
+                  ? node.textContent || ''
+                  : '')
               }, '').replace(/\s+/g, '')
             }
             if (timeElem) {
               time = Array.from(timeElem.childNodes).reduce((acc: string, node: Node) => {
-                return acc + (node.nodeType === Node.TEXT_NODE ? node.textContent || '' : '')
+                return acc + (node.nodeType === Node.TEXT_NODE
+                  ? node.textContent || ''
+                  : '')
               }, '').replace(/\s+/g, '')
             }
             if (score && time)
@@ -194,7 +200,11 @@ presence.on('UpdateData', async () => {
             const duelColor = document.querySelector('.question_icon')?.classList[1]
             const duelTitle = duelColor ? themeColors[duelColor] : ''
             const scoreElem = document.querySelector('.resultContainer')?.querySelector('.res_main_msg')
-            let score = scoreElem ? Array.from(scoreElem.childNodes).reduce((acc: string, node: Node) => acc + (node.nodeType === Node.TEXT_NODE ? node.textContent || '' : ''), '').replace(/\s+/g, '') : ''
+            let score = scoreElem
+              ? Array.from(scoreElem.childNodes).reduce((acc: string, node: Node) => acc + (node.nodeType === Node.TEXT_NODE
+                  ? node.textContent || ''
+                  : ''), '').replace(/\s+/g, '')
+              : ''
             score = score.replace('Résultat', '').replace(':', '').replace(' ', '')
             presenceData.state = `${duelTitle} ${score ? '| Score :' : ''} ${score}`
           }
@@ -218,14 +228,18 @@ presence.on('UpdateData', async () => {
         if (scoreElem) {
           score = Array.from(scoreElem.childNodes)
             .reduce((acc: string, node: Node) => {
-              return acc + (node.nodeType === Node.TEXT_NODE ? node.textContent || '' : '')
+              return acc + (node.nodeType === Node.TEXT_NODE
+                ? node.textContent || ''
+                : '')
             }, '')
             .replace(/\s+/g, '')
         }
         if (timeElem) {
           time = Array.from(timeElem.childNodes)
             .reduce((acc: string, node: Node) => {
-              return acc + (node.nodeType === Node.TEXT_NODE ? node.textContent || '' : '')
+              return acc + (node.nodeType === Node.TEXT_NODE
+                ? node.textContent || ''
+                : '')
             }, '')
             .replace(/\s+/g, '')
         }

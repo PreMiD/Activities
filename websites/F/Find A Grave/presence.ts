@@ -61,7 +61,9 @@ presence.on('UpdateData', async () => {
       .replace(/\s+V$/g, '')
 
     presenceData.details = name
-    presenceData.state = dates ? `${strings.browsingMemorials} • ${dates}` : strings.browsingMemorials
+    presenceData.state = dates
+      ? `${strings.browsingMemorials} • ${dates}`
+      : strings.browsingMemorials
   }
   else if (path.includes('/memorial') || path.includes('/search')) {
     const query = new URLSearchParams(document.location.search).get('firstname')

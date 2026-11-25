@@ -12,7 +12,9 @@ import { getTimelineState } from './timelineTracker.js'
 
 function getCurrentTimelineState(): TimelineState | null {
   const gti = getCurrentPlayback()?.gti
-  return gti ? getTimelineState(gti) : null
+  return gti
+    ? getTimelineState(gti)
+    : null
 }
 
 // Duration (s) of off-content elements before `currentTime`: intro jingle + ad cuts
@@ -68,7 +70,9 @@ export function getTimelineInfo(video: HTMLVideoElement): TimelineInfo {
   // `full` = title duration without ads (including the intro jingle); otherwise, `duration` minus the known ads
   const totalAds = state.breaks.reduce((total, item) => total + item.a, 0)
   const total = (state.full ?? video.duration - totalAds) - state.intro
-  const duration = total > position && total <= video.duration ? total : video.duration - offset
+  const duration = total > position && total <= video.duration
+    ? total
+    : video.duration - offset
 
   return { position, duration, inAd: current.inAd }
 }

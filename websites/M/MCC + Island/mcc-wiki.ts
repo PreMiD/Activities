@@ -85,7 +85,9 @@ function preferenceSection(): string {
   const panel = document.querySelector('.oo-ui-tabPanelLayout-active .mw-prefs-section-fieldset[id]')
   const hash = document.location.hash.replace(/^#/, '')
   return panel?.id.replace(/^mw-prefsection-/, '')
-    || (/^mw-prefsection-[a-z]+$/.test(hash) ? hash.replace(/^mw-prefsection-/, '') : '')
+    || (/^mw-prefsection-[a-z]+$/.test(hash)
+      ? hash.replace(/^mw-prefsection-/, '')
+      : '')
 }
 
 export function wikiSelection(): string {
@@ -152,7 +154,9 @@ function indexIcons(url: string): Promise<Map<string, WikiIcon>> {
   const cached = iconIndexes.get(url)
   if (cached)
     return cached
-  const pending = fetch(url, { signal: AbortSignal.timeout(4000) })
+  const pending = fetch(url, {
+    signal: AbortSignal.timeout(4000),
+  })
     .then(async (response) => {
       if (!response.ok)
         throw new Error('Wiki index unavailable')
@@ -193,7 +197,9 @@ async function pageIcon(title: string): Promise<string | undefined> {
     const exact = index.get(key)
     if (exact)
       return exact.image
-    const parent = [...index.entries()]
+    const parent = [
+      ...index.entries(),
+    ]
       .filter(([name, entry]) => (key.startsWith(`${name} `) || key.startsWith(`${name}/`))
         && !visited.has(entry.page) && !/^[^/]+:/.test(name))
       .sort(([left], [right]) => right.length - left.length)[0]?.[1]
@@ -214,17 +220,23 @@ export async function getWikiData(privacy: boolean, showButtons: boolean, logo: 
   const url = new URL(document.location.href)
   const title = pageName(url)
   const isHome = title.toLowerCase() === 'home' || title === 'index.php'
-  const special = /^Special:/i.test(title) ? title.slice(8).split('/')[0]!.toLowerCase() : undefined
+  const special = /^Special:/i.test(title)
+    ? title.slice(8).split('/')[0]!.toLowerCase()
+    : undefined
   const action = url.searchParams.get('action')?.toLowerCase() || 'view'
   const heading = () => {
     const current = text(document.querySelector('#firstHeadingTitle, #firstHeading .mw-page-title-main, #firstHeading')?.textContent)
     const normalize = (value: string) => value.replace(/^[^:]+:/, '').replace(/_/g, ' ').toLowerCase()
     // During navigation the old heading can outlive its URL. Never publish that title.
-    return current && normalize(current) === normalize(title) ? current : text(title)
+    return current && normalize(current) === normalize(title)
+      ? current
+      : text(title)
   }
   const data: Partial<PresenceData> = {
     name: 'MCC Island Wiki',
-    largeImageKey: logo === 1 ? TransparentLogo : Logo,
+    largeImageKey: logo === 1
+      ? TransparentLogo
+      : Logo,
     largeImageText: 'MCC Island Wiki',
     smallImageKey: Eyes,
     smallImageText: 'Watching the MCCI Wiki',
@@ -259,7 +271,9 @@ export async function getWikiData(privacy: boolean, showButtons: boolean, logo: 
       data.state = text(title)
   }
   else if (url.searchParams.has('diff') || action === 'history') {
-    data.details = url.searchParams.has('diff') ? 'Comparing revisions' : 'Looking at page history'
+    data.details = url.searchParams.has('diff')
+      ? 'Comparing revisions'
+      : 'Looking at page history'
     if (!privacy)
       data.state = heading() ?? text(title)
     publicPage = true
@@ -281,7 +295,9 @@ export async function getWikiData(privacy: boolean, showButtons: boolean, logo: 
     data.state = 'MCC Island Wiki'
   }
   else {
-    const namespace = title.includes(':') ? title.split(':')[0]!.toLowerCase() : ''
+    const namespace = title.includes(':')
+      ? title.split(':')[0]!.toLowerCase()
+      : ''
     data.details = namespace.endsWith('talk')
       ? 'Looking at a discussion'
       : namespace === 'category'
@@ -294,7 +310,9 @@ export async function getWikiData(privacy: boolean, showButtons: boolean, logo: 
               ? 'Looking at a template'
               : namespace === 'module'
                 ? 'Looking at a module'
-                : namespace === 'help' ? 'Looking at wiki help' : 'Looking at a wiki page'
+                : namespace === 'help'
+                  ? 'Looking at wiki help'
+                  : 'Looking at a wiki page'
     if (!privacy) {
       data.state = heading() ?? text(title)
       showIcon = !namespace || namespace === 'category'
@@ -316,7 +334,9 @@ export async function getWikiData(privacy: boolean, showButtons: boolean, logo: 
     target.hash = ''
     if (url.pathname === '/index.php')
       target.searchParams.set('title', title)
-    data.buttons = [{ label: 'Open Wiki Page', url: target.href }]
+    data.buttons = [
+      { label: 'Open Wiki Page', url: target.href },
+    ]
     if (showIcon && data.smallImageKey !== Eyes)
       data.smallImageUrl = target.href
   }

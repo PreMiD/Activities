@@ -95,21 +95,31 @@ presence.on('UpdateData', async () => {
   const programTitle = document.querySelector('.shaka-video-container .ProgramInfoHeaderTitles div:nth-of-type(1)') || document.querySelector('.LiveChannelRowContainer.selected .LiveChannelTitle') || document.querySelector('.ProgramTitle')
   const programSubtitle = document.querySelector('.shaka-video-container .ProgramInfoHeaderTitles div:nth-of-type(2)') || document.querySelector('.LiveChannelRowContainer.selected .LiveChannelSubtitle')
   const programTimestamp = document.querySelectorAll('.shaka-video-container .SeekBarTimestamp')
-  const seasonEpisode = programTitle ? extractSeasonEpisode(programTitle.textContent || '') : ''
+  const seasonEpisode = programTitle
+    ? extractSeasonEpisode(programTitle.textContent || '')
+    : ''
   const thumbnail = document.querySelector<HTMLImageElement>('.UIThumbnailPictureImage') || document.querySelector<HTMLImageElement>('.UIThumbnail img')
 
   switch (true) {
     case playerContainer !== null:
       if (!privacy && showChannelOnHomepage) {
-        presenceData.name = usePresenceName && programTitle?.textContent ? cleanTitle(programTitle.textContent.trim()) : 'FreeTV'
-        presenceData.details = programTitle ? cleanTitle(programTitle.textContent?.trim() || '') : strings.watchingFreeTV
-        presenceData.state = programSubtitle?.textContent !== '' ? cleanTitle(programSubtitle?.textContent?.trim() || '') : channelName?.textContent || ''
+        presenceData.name = usePresenceName && programTitle?.textContent
+          ? cleanTitle(programTitle.textContent.trim())
+          : 'FreeTV'
+        presenceData.details = programTitle
+          ? cleanTitle(programTitle.textContent?.trim() || '')
+          : strings.watchingFreeTV
+        presenceData.state = programSubtitle?.textContent !== ''
+          ? cleanTitle(programSubtitle?.textContent?.trim() || '')
+          : channelName?.textContent || ''
         if (programTimestamp[0] && programTimestamp[1] && programTimestamp[2]) {
           [presenceData.startTimestamp, presenceData.endTimestamp] = formatTimestamps(playerContainer.currentTime, programTimestamp[1]?.textContent, programTimestamp[2]?.textContent)
         }
         if (showChannelLogo && channelIcon) {
           const highResSrc = channelIcon?.src?.replace(/\/w\d+$/, '')
-          presenceData.largeImageKey = highResSrc ? `https://wsrv.nl/?url=${encodeURIComponent(highResSrc)}&w=512&h=512&fit=contain&cbg=transparent` : ActivityAssets.Logo
+          presenceData.largeImageKey = highResSrc
+            ? `https://wsrv.nl/?url=${encodeURIComponent(highResSrc)}&w=512&h=512&fit=contain&cbg=transparent`
+            : ActivityAssets.Logo
         }
         presenceData.largeImageText = seasonEpisode || channelName?.textContent?.trim() || ''
       }
@@ -129,11 +139,17 @@ presence.on('UpdateData', async () => {
       break
     case path.includes('/replay_collection'): {
       presenceData.details = strings.browsingReplayCollections
-      presenceData.state = !privacy ? programTitle?.textContent?.trim() || '' : ''
+      presenceData.state = !privacy
+        ? programTitle?.textContent?.trim() || ''
+        : ''
       if (!privacy && showChannelLogo && channelIcon) {
-        presenceData.largeImageKey = !privacy ? thumbnail?.src || ActivityAssets.Logo : ActivityAssets.Logo
+        presenceData.largeImageKey = !privacy
+          ? thumbnail?.src || ActivityAssets.Logo
+          : ActivityAssets.Logo
         const highResSrc = channelIcon?.src?.replace(/\/w\d+$/, '')
-        presenceData.smallImageKey = highResSrc ? `https://wsrv.nl/?url=${encodeURIComponent(highResSrc)}&w=512&h=512&fit=contain&cbg=transparent` : ''
+        presenceData.smallImageKey = highResSrc
+          ? `https://wsrv.nl/?url=${encodeURIComponent(highResSrc)}&w=512&h=512&fit=contain&cbg=transparent`
+          : ''
       }
       break
     }
@@ -142,8 +158,12 @@ presence.on('UpdateData', async () => {
       break
     case path.includes('/vod/contents'):
       presenceData.details = strings.browsingVOD
-      presenceData.state = !privacy ? document.querySelector('.content .details .header .h3')?.textContent?.trim() || '' : ''
-      presenceData.largeImageKey = !privacy ? thumbnail?.src || ActivityAssets.Logo : ActivityAssets.Logo
+      presenceData.state = !privacy
+        ? document.querySelector('.content .details .header .h3')?.textContent?.trim() || ''
+        : ''
+      presenceData.largeImageKey = !privacy
+        ? thumbnail?.src || ActivityAssets.Logo
+        : ActivityAssets.Logo
       break
     case path.includes('/home/tv_guide'):
       presenceData.details = strings.browsingTVGuide

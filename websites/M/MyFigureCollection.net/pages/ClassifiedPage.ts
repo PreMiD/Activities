@@ -5,7 +5,9 @@ export class ClassifiedPage extends BasePage {
   override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewAd
     presenceData.state = document.querySelector('.classified-data .data-value .stamp-data') ?? getTitle()
-    presenceData.buttons = [getButton(strings.buttonViewAd)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewAd),
+    ]
     return false
   }
 }

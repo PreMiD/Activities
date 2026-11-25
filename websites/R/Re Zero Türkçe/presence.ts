@@ -36,7 +36,9 @@ function cleanText(value: string | null | undefined, fallback = '', maxLength = 
   const text = Array.from(value ?? '', (char) => {
     const code = char.charCodeAt(0)
 
-    return code <= 31 || code === 127 ? ' ' : char
+    return code <= 31 || code === 127
+      ? ' '
+      : char
   })
     .join('')
     .replace(/\s+/g, ' ')
@@ -91,8 +93,11 @@ function getSafeUrl(rawUrl: string | null | undefined, allowSubdomains = false):
 
     if (url.protocol !== 'https:')
       return undefined
-    if (allowSubdomains ? !isOwnHost(url.hostname) : url.hostname !== 'www.rezeroturkce.com' && url.hostname !== 'rezeroturkce.com')
+    if (allowSubdomains
+      ? !isOwnHost(url.hostname)
+      : url.hostname !== 'www.rezeroturkce.com' && url.hostname !== 'rezeroturkce.com') {
       return undefined
+    }
 
     return url.href
   }
@@ -148,7 +153,9 @@ function getPathSegments(): string[] {
 function getStorySectionName(segments = getPathSegments()): string {
   const section = segments[0]
 
-  return section ? storySectionLabels[section] ?? 'Hikâye' : 'Hikâye'
+  return section
+    ? storySectionLabels[section] ?? 'Hikâye'
+    : 'Hikâye'
 }
 
 function getVideo(): HTMLVideoElement | null {
@@ -180,7 +187,12 @@ function getAnimeEpisodeParts(): { main: string, subtitle?: string } {
   const linkText = cleanText(currentEpisodeLink?.textContent)
   const quotedTitle = linkText.match(/["“]([^"”]+)["”]/)?.[1]
 
-  return quotedTitle ? { main: title, subtitle: cleanQuotedText(quotedTitle) } : { main: title }
+  return quotedTitle
+    ? {
+        main: title,
+        subtitle: cleanQuotedText(quotedTitle),
+      }
+    : { main: title }
 }
 
 function getVideoTimestamps(video: HTMLVideoElement): [number, number] | undefined {
@@ -191,7 +203,10 @@ function getVideoTimestamps(video: HTMLVideoElement): [number, number] | undefin
   const duration = Math.max(currentTime, video.duration)
   const now = nowInSeconds()
 
-  return [Math.floor(now - currentTime), Math.floor(now + duration - currentTime)]
+  return [
+    Math.floor(now - currentTime),
+    Math.floor(now + duration - currentTime),
+  ]
 }
 
 function isStoryReadingPage(segments: string[]): boolean {
@@ -212,7 +227,9 @@ function buildChoosingPresence(details: string, state = 'Bölüm seçiyor...', i
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
     largeImageText: serviceName,
-    details: includeServiceName ? `${serviceName} - ${details}` : details,
+    details: includeServiceName
+      ? `${serviceName} - ${details}`
+      : details,
     state,
     startTimestamp: pageTimestamp,
     buttons: getButtons('Bulunduğu Sayfa'),
@@ -277,7 +294,9 @@ function buildAnimePresence(): PresenceData {
 
 function buildFallbackPresence(): PresenceData {
   const isHome = new URL(getCurrentUrl()).href === homeUrl
-  const details = isHome ? 'Sitede geziniyor...' : getTitle()
+  const details = isHome
+    ? 'Sitede geziniyor...'
+    : getTitle()
 
   return {
     type: ActivityType.Watching,
@@ -298,16 +317,22 @@ presence.on('UpdateData', async () => {
   let presenceData: PresenceData
 
   if (storySections.has(section)) {
-    presenceData = isStoryReadingPage(segments) ? buildStoryPresence(segments) : buildChoosingPresence(getStorySectionName(segments))
+    presenceData = isStoryReadingPage(segments)
+      ? buildStoryPresence(segments)
+      : buildChoosingPresence(getStorySectionName(segments))
   }
   else if (section === 'manga') {
-    presenceData = isContentPage(segments) ? buildMangaPresence() : buildChoosingPresence('Manga Kütüphanesi', 'Seçim yapıyor...')
+    presenceData = isContentPage(segments)
+      ? buildMangaPresence()
+      : buildChoosingPresence('Manga Kütüphanesi', 'Seçim yapıyor...')
   }
   else if (section === 'mangalar' || section === 'tum-mangalar') {
     presenceData = buildChoosingPresence('Manga Kütüphanesi', 'Seçim yapıyor...')
   }
   else if (section === 'anime-izle') {
-    presenceData = isContentPage(segments) ? buildAnimePresence() : buildChoosingPresence('Anime Kütüphanesi', 'Seçim yapıyor...')
+    presenceData = isContentPage(segments)
+      ? buildAnimePresence()
+      : buildChoosingPresence('Anime Kütüphanesi', 'Seçim yapıyor...')
   }
   else if (section === 'animeler' || section === 'anime-kutuphanesi') {
     presenceData = buildChoosingPresence('Anime Kütüphanesi', 'Seçim yapıyor...')

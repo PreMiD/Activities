@@ -63,7 +63,9 @@ function getTodayGoals(): { completed: number, total: number, percent: number } 
 
   const completed = Number(match[1])
   const total = Number(match[2])
-  const percent = total > 0 ? Math.round((completed / total) * 100) : 0
+  const percent = total > 0
+    ? Math.round((completed / total) * 100)
+    : 0
 
   return { completed, total, percent }
 }
@@ -101,7 +103,9 @@ function getNextExam(): { name: string, date: string, daysLeft: number } | null 
     daysLeft = Number(inMatch[1])
   }
   else if (/\b(?:today|tomorrow)\b/i.test(date)) {
-    daysLeft = /\btoday\b/i.test(date) ? 0 : 1
+    daysLeft = /\btoday\b/i.test(date)
+      ? 0
+      : 1
   }
 
   return { name, date, daysLeft }

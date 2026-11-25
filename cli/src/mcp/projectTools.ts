@@ -80,7 +80,10 @@ export async function createActivity(input: {
 }): Promise<{ folder: string, files: string[] } | ToolError> {
   try {
     const { authorId, authorName, ...rest } = input
-    return await scaffoldActivity({ ...rest, author: { id: authorId, name: authorName } })
+    return await scaffoldActivity({
+      ...rest,
+      author: { id: authorId, name: authorName },
+    })
   }
   catch (error) {
     return { error: (error as Error).message }
@@ -91,7 +94,14 @@ export async function buildActivity({ service, validate = true }: { service: str
   try {
     const activity = await findActivity(service)
 
-    return await runCli(['build', activity.metadata.service, '--no-kill', ...(validate ? ['--validate'] : [])])
+    return await runCli([
+      'build',
+      activity.metadata.service,
+      '--no-kill',
+      ...(validate
+        ? ['--validate']
+        : []),
+    ])
   }
   catch (error) {
     return { error: (error as Error).message }

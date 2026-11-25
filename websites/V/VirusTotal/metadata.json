@@ -21,7 +21,7 @@
   },
   "url": "www.virustotal.com",
   "regExp": "^https?[:][/][/](www[.])?virustotal[.]com[/]",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VirusTotal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VirusTotal/assets/thumbnail.png",
   "color": "#397eff",

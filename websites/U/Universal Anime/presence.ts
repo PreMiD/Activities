@@ -86,7 +86,9 @@ presence.on('UpdateData', async () => {
   else if (path.includes('#stagionali')) {
     presenceData.details = 'Esplorando gli anime stagionali'
     presenceData.state = selectedSeason && selectedYear
-      ? `${selectedSeason} ${selectedYear}${seasonalPage ? ` • ${seasonalPage}` : ''}`
+      ? `${selectedSeason} ${selectedYear}${seasonalPage
+        ? ` • ${seasonalPage}`
+        : ''}`
       : 'Consultando le stagioni anime'
   }
 

@@ -77,7 +77,9 @@ presence.on('UpdateData', async () => {
             case 'info': {
               presenceData.details = 'Viewing a shared deck'
               presenceData.state = document.querySelector('h1')?.textContent
-              presenceData.buttons = [{ label: 'View Deck', url: href }]
+              presenceData.buttons = [
+                { label: 'View Deck', url: href },
+              ]
               break
             }
             case 'mine': {
@@ -191,7 +193,9 @@ presence.on('UpdateData', async () => {
             .querySelector<HTMLSpanElement>('.fancy-title')
             ?.textContent
             ?.trim()
-          presenceData.buttons = [{ label: 'View Topic', url: href }]
+          presenceData.buttons = [
+            { label: 'View Topic', url: href },
+          ]
           break
         }
         case 'top': {

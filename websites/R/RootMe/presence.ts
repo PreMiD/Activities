@@ -12,7 +12,9 @@ function parseQueryString(queryString?: string): { [key: string]: string } {
   for (const indexQuery of queries) {
     const indexPair = indexQuery.split('=')
     params[decodeURIComponent(indexPair[0]!)] = decodeURIComponent(
-      indexPair.length > 1 ? indexPair[1]! : '',
+      indexPair.length > 1
+        ? indexPair[1]!
+        : '',
     )
   }
   return params

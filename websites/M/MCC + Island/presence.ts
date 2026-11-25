@@ -2,7 +2,7 @@ import { ActivityType } from 'premid'
 import { AccountIcons } from './account-icons.js'
 import { communityAvatarFallback, communityHost, communitySelection, fitCommunityImage, getCommunityData, waitForCommunityProfile } from './community-sites.js'
 import { ActivityAssets, StaticImageUrls } from './image-assets.js'
-import { getMccLiveData, mccLiveSelection } from './mcc-live.js'
+import { getMccLiveData, isLiveMccView, mccLiveSelection } from './mcc-live.js'
 import { applyWikiImageFallback, getWikiData, wikiCanPublish, wikiSelection } from './mcc-wiki.js'
 import { getReafyData, reafySelection } from './reafy-stats.js'
 
@@ -34,7 +34,9 @@ function findForumInfo(source: Document, node?: string, category?: string): { ic
     const link = Array.from(source.querySelectorAll<HTMLAnchorElement>('.uix_categoryTitle[href]'))
       .find((anchor) => {
         const hash = new URL(anchor.href, document.location.href).hash
-        return category.endsWith('.') ? hash.startsWith(category) : hash === category
+        return category.endsWith('.')
+          ? hash.startsWith(category)
+          : hash === category
       })
     image = link?.closest('.block--category')?.querySelector<HTMLImageElement>('.uix_categoryStrip__icon img') ?? null
     name = cleanText(link?.textContent)
@@ -43,7 +45,12 @@ function findForumInfo(source: Document, node?: string, category?: string): { ic
   if (!src)
     return { name }
   const url = new URL(src, new URL('/feeds/', document.location.href))
-  return { name, icon: url.protocol === 'https:' ? url.href : undefined }
+  return {
+    name,
+    icon: url.protocol === 'https:'
+      ? url.href
+      : undefined,
+  }
 }
 
 async function getForumInfo(path: string): Promise<{ icon?: string, name?: string } | undefined> {
@@ -52,14 +59,18 @@ async function getForumInfo(path: string): Promise<{ icon?: string, name?: strin
     ? document.location.hash
     : /^\/feeds\/mcc-island\.10(?:\/|$)/.test(path)
       ? '#mcc-island.'
-      : /^\/feeds\/mcc-event\.11(?:\/|$)/.test(path) ? '#mcc-event.' : undefined
+      : /^\/feeds\/mcc-event\.11(?:\/|$)/.test(path)
+        ? '#mcc-event.'
+        : undefined
   if (!node && !category)
     return undefined
   const current = findForumInfo(document, node, category)
   if (current.icon || current.name)
     return current
   if (!forumListDocument) {
-    forumListDocument = fetch(new URL('/feeds/', document.location.href).href, { signal: AbortSignal.timeout(10000) })
+    forumListDocument = fetch(new URL('/feeds/', document.location.href).href, {
+      signal: AbortSignal.timeout(10000),
+    })
       .then(async (response) => {
         if (!response.ok)
           throw new Error('Forum list unavailable')
@@ -71,7 +82,9 @@ async function getForumInfo(path: string): Promise<{ icon?: string, name?: strin
       })
   }
   const source = await forumListDocument
-  return source ? findForumInfo(source, node, category) : undefined
+  return source
+    ? findForumInfo(source, node, category)
+    : undefined
 }
 
 function resolveImage(image: string | Blob, fit = false): Promise<string | Blob | undefined> {
@@ -81,19 +94,25 @@ function resolveImage(image: string | Blob, fit = false): Promise<string | Blob 
     return Promise.resolve(image)
   if (!image)
     return Promise.resolve(undefined)
-  const cacheKey = fit ? `512:${image}` : image
+  const cacheKey = fit
+    ? `512:${image}`
+    : image
   const cached = imageCache.get(cacheKey)
   if (cached)
     return cached
   // Let PreMiD handle image bytes instead of sending the image-host URL to Discord.
-  const pending = fetch(image, { signal: AbortSignal.timeout(10000) })
+  const pending = fetch(image, {
+    signal: AbortSignal.timeout(10000),
+  })
     .then(async (response) => {
       if (!response.ok)
         throw new Error(`Image request failed: ${response.status}`)
       const blob = await response.blob()
       if (!blob.type.startsWith('image/') || !blob.size)
         throw new Error('Invalid image response')
-      return fit ? await fitCommunityImage(blob) : blob
+      return fit
+        ? await fitCommunityImage(blob)
+        : blob
     })
     .catch(() => {
       imageCache.delete(cacheKey)
@@ -103,14 +122,45 @@ function resolveImage(image: string | Blob, fit = false): Promise<string | Blob 
   return pending
 }
 
-const islandNodes = new Set([65, 73, 76, 77, 78, 79, 80, 81, 82, 94, 99, 128, 133, 137, 141])
+const islandNodes = new Set([
+  65,
+  73,
+  76,
+  77,
+  78,
+  79,
+  80,
+  81,
+  82,
+  94,
+  99,
+  128,
+  133,
+  137,
+  141,
+])
 const eventNodes = new Set([72, 83, 84, 85, 86])
 const accountPages: Record<string, { details: string, changing?: boolean, icon?: string | Blob, tooltip?: string }> = {
-  '/account': { details: 'Changing account settings', changing: true, icon: AccountIcons.Account, tooltip: 'Account settings' },
-  '/account/account-details': { details: 'Changing account settings', changing: true, icon: AccountIcons.Account, tooltip: 'Account settings' },
+  '/account': {
+    details: 'Changing account settings',
+    changing: true,
+    icon: AccountIcons.Account,
+    tooltip: 'Account settings',
+  },
+  '/account/account-details': {
+    details: 'Changing account settings',
+    changing: true,
+    icon: AccountIcons.Account,
+    tooltip: 'Account settings',
+  },
   '/account/reactions': { details: 'Looking at reactions', icon: AccountIcons.Reactions, tooltip: 'Reactions' },
   '/account/alerts': { details: 'Looking at alerts', icon: AccountIcons.Alerts, tooltip: 'Alerts' },
-  '/account/privacy': { details: 'Changing privacy settings', changing: true, icon: AccountIcons.Privacy, tooltip: 'Privacy settings' },
+  '/account/privacy': {
+    details: 'Changing privacy settings',
+    changing: true,
+    icon: AccountIcons.Privacy,
+    tooltip: 'Privacy settings',
+  },
   '/account/preferences': { details: 'Changing preferences', changing: true },
   '/account/following': { details: 'Looking at followed users' },
   '/account/ignored': { details: 'Looking at ignored users' },
@@ -203,7 +253,12 @@ function getProfile(): { name?: string, avatar?: string } {
   if (!source)
     return { name }
   const url = new URL(source, document.location.href)
-  return { name, avatar: url.protocol === 'https:' ? url.href : undefined }
+  return {
+    name,
+    avatar: url.protocol === 'https:'
+      ? url.href
+      : undefined,
+  }
 }
 
 async function getThreadAuthor(): Promise<{ name?: string, avatar?: HTMLImageElement | Blob, profileUrl?: string }> {
@@ -215,14 +270,18 @@ async function getThreadAuthor(): Promise<{ name?: string, avatar?: HTMLImageEle
     ?? cleanText(post.querySelector('.message-userDetails .username, .message-attribution-user .username, .message-articleUserName .username')?.textContent)
   const profileLink = post.querySelector<HTMLAnchorElement>('.message-avatar a.avatar[href], .message-attribution-user a.username[href], .message-articleUserName a.username[href], .message-userDetails a.username[href], .message-articleUserInfo a.avatar[href]')
   const profileHref = profileLink?.getAttribute('href')
-  const profileUrl = profileHref && URL.canParse(profileHref, document.location.href) ? new URL(profileHref, document.location.href) : undefined
+  const profileUrl = profileHref && URL.canParse(profileHref, document.location.href)
+    ? new URL(profileHref, document.location.href)
+    : undefined
   if (profileUrl) {
     profileUrl.search = ''
     profileUrl.hash = ''
   }
   const identity = {
     name,
-    profileUrl: profileUrl?.protocol === 'https:' && profileUrl.origin === document.location.origin && /^\/members\/(?:[^/]+\.)?\d+\/?$/.test(profileUrl.pathname) ? profileUrl.href : undefined,
+    profileUrl: profileUrl?.protocol === 'https:' && profileUrl.origin === document.location.origin && /^\/members\/(?:[^/]+\.)?\d+\/?$/.test(profileUrl.pathname)
+      ? profileUrl.href
+      : undefined,
   }
   const image = post.querySelector<HTMLImageElement>('.message-avatar img, .message-attribution-user .avatar img, .message-articleUserInfo .avatar img')
   const source = image?.currentSrc
@@ -258,7 +317,12 @@ async function getThreadAuthor(): Promise<{ name?: string, avatar?: HTMLImageEle
   }
   const url = new URL(source, document.location.href)
   // Pass the original page image through PreMiD's native image handling.
-  return { ...identity, avatar: url.protocol === 'https:' ? image ?? undefined : undefined }
+  return {
+    ...identity,
+    avatar: url.protocol === 'https:'
+      ? image ?? undefined
+      : undefined,
+  }
 }
 
 function nodeBrand(node: number): 'island' | 'event' | undefined {
@@ -280,7 +344,9 @@ function urlBrand(url: URL): 'island' | 'event' | undefined {
       return 'event'
   }
   const node = url.pathname.match(/^\/forums\/(?:[^/]*\.)?(\d+)(?:\/|$)/)?.[1]
-  return node ? nodeBrand(Number(node)) : undefined
+  return node
+    ? nodeBrand(Number(node))
+    : undefined
 }
 
 function getBrand(): 'island' | 'event' {
@@ -288,7 +354,9 @@ function getBrand(): 'island' | 'event' {
   if (direct)
     return direct
   const node = document.documentElement.getAttribute('data-container-key')?.match(/^node-(\d+)$/)?.[1]
-  const containerBrand = node ? nodeBrand(Number(node)) : undefined
+  const containerBrand = node
+    ? nodeBrand(Number(node))
+    : undefined
   if (containerBrand)
     return containerBrand
   // Only ancestors identify a thread's category; sidebar links are unrelated.
@@ -394,8 +462,12 @@ presence.on('UpdateData', async () => {
 
   const privacy = privacySetting !== false
   const mccLive = /^(?:www\.)?mcc\.live$/i.test(document.location.hostname)
-  const selectedWikiPage = wiki ? wikiSelection() : undefined
-  const liveSelection = mccLive ? mccLiveSelection() : undefined
+  const selectedWikiPage = wiki
+    ? wikiSelection()
+    : undefined
+  const liveSelection = mccLive
+    ? mccLiveSelection()
+    : undefined
   const community = communityHost(document.location.hostname)
   const reafy = /^(?:www\.)?reafystats\.com$/i.test(document.location.hostname)
   if ((community || reafy) && document.visibilityState === 'hidden')
@@ -404,8 +476,12 @@ presence.on('UpdateData', async () => {
     await waitForCommunityProfile(community, privacy)
   if (sequence !== updateSequence || document.location.href !== pageUrl)
     return
-  const selectedCommunityPage = community ? communitySelection(community, privacy) : undefined
-  const selectedReafyPage = reafy ? reafySelection(privacy) : undefined
+  const selectedCommunityPage = community
+    ? communitySelection(community, privacy)
+    : undefined
+  const selectedReafyPage = reafy
+    ? reafySelection(privacy)
+    : undefined
   const path = normalizedPath()
   const island = getBrand() === 'island'
   const forum = isForumPage(path) || isThreadPage(path)
@@ -413,8 +489,14 @@ presence.on('UpdateData', async () => {
   const feedback = isFeedbackPage(path) || (isThreadPage(path) && getThreadContainer() === 'node-98')
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    name: feedback ? 'Minecraft Championship + Island Forum' : forum ? `${brandName} Forum` : brandName,
-    largeImageKey: island ? getMcciLogo(mcciLogo) : getMccLogo(mccLogo),
+    name: feedback
+      ? 'Minecraft Championship + Island Forum'
+      : forum
+        ? `${brandName} Forum`
+        : brandName,
+    largeImageKey: island
+      ? getMcciLogo(mcciLogo)
+      : getMccLogo(mccLogo),
     largeImageText: island ? 'MCC Island' : 'Minecraft Championship',
   }
 
@@ -436,6 +518,8 @@ presence.on('UpdateData', async () => {
     }
     case mccLive: {
       Object.assign(presenceData, getMccLiveData(privacy))
+      if (isLiveMccView())
+        delete presenceData.startTimestamp
       presenceData.largeImageKey = ActivityAssets.MccRed
       presenceData.largeImageText = 'Minecraft Championship'
       break
@@ -453,7 +537,9 @@ presence.on('UpdateData', async () => {
       presenceData.name = forum ? 'MCC Island Forum' : 'MCC Island'
       presenceData.details = /^\/form\/4(?:\/|$)/.test(path) || /\/(?:post-thread|create-thread)(?:\/|$)/.test(path)
         ? strings.bugReport
-        : isThreadPage(path) ? strings.viewingBugReport : strings.ownBugReports
+        : isThreadPage(path)
+          ? strings.viewingBugReport
+          : strings.ownBugReports
       presenceData.largeImageKey = getMcciLogo(mcciLogo)
       presenceData.largeImageText = 'MCC Island'
       // Only the public forum index is consulted, never a report's content.
@@ -579,12 +665,16 @@ presence.on('UpdateData', async () => {
       break
     }
     case isFeedbackPage(path): {
-      const info = privacy ? undefined : await getForumInfo(path)
+      const info = privacy
+        ? undefined
+        : await getForumInfo(path)
       presenceData.details = privacy ? strings.forums : strings.category
       if (!privacy)
         presenceData.state = (info?.name ?? strings.feedback).slice(0, 128)
       presenceData.smallImageKey = info?.icon ?? ActivityAssets.MccInitialsColor
-      presenceData.smallImageText = typeof presenceData.state === 'string' ? presenceData.state : `${brandName} Forum`
+      presenceData.smallImageText = typeof presenceData.state === 'string'
+        ? presenceData.state
+        : `${brandName} Forum`
       if (showButtons && !privacy) {
         const target = setButton(presenceData, 'View Feedback')
         if (info?.icon)
@@ -594,7 +684,9 @@ presence.on('UpdateData', async () => {
     }
     case isForumLanding(path):
     case isForumPage(path): {
-      const info = privacy ? undefined : await getForumInfo(path)
+      const info = privacy
+        ? undefined
+        : await getForumInfo(path)
       presenceData.details = privacy
         ? strings.forums
         : /^\/forums\/(?:[^/]*\.)?73(?:\/|$)/.test(path)
@@ -607,7 +699,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = (info?.name ?? heading ?? strings.forumList).slice(0, 128)
       }
       presenceData.smallImageKey = info?.icon ?? ActivityAssets.MccInitialsColor
-      presenceData.smallImageText = typeof presenceData.state === 'string' ? presenceData.state : `${brandName} Forum`
+      presenceData.smallImageText = typeof presenceData.state === 'string'
+        ? presenceData.state
+        : `${brandName} Forum`
       if (showButtons && !privacy) {
         const target = setButton(presenceData, 'View Forums', Boolean(info?.icon && (isForumLanding(path) || path === '/forums/-/list')))
         if (info?.icon)
@@ -641,7 +735,9 @@ presence.on('UpdateData', async () => {
 
   const image = presenceData.largeImageKey
   const resolvedImage = image instanceof Blob || typeof image === 'string'
-    ? reafy ? image : await resolveImage(image, Boolean(community))
+    ? reafy
+      ? image
+      : await resolveImage(image, Boolean(community))
     : undefined
 
   if (document.location.href !== pageUrl)

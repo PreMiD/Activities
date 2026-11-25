@@ -71,7 +71,9 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = await getShortURL(
           document.querySelector<HTMLImageElement>('.thumbnail_link img')!.src,
         )
-        presenceData.buttons = [{ label: 'View Artist', url: href }]
+        presenceData.buttons = [
+          { label: 'View Artist', url: href },
+        ]
       }
       break
     }
@@ -99,7 +101,9 @@ presence.on('UpdateData', async () => {
       if (pathSplit[2]) {
         presenceData.details = 'Viewing a dig'
         presenceData.state = pageTitle?.textContent
-        presenceData.buttons = [{ label: 'View Dig', url: href }]
+        presenceData.buttons = [
+          { label: 'View Dig', url: href },
+        ]
       }
       else if (pathSplit[1]) {
         presenceData.details = 'Browsing digs'
@@ -123,7 +127,9 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Viewing a forum thread'
             presenceData.state = pageTitle?.textContent
-            presenceData.buttons = [{ label: 'View Thread', url: href }]
+            presenceData.buttons = [
+              { label: 'View Thread', url: href },
+            ]
           }
           break
         }
@@ -146,7 +152,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing a genre'
       const title = pageTitle?.textContent?.trim().split(' ')
       presenceData.state = title?.slice(0, title.length - 1).join(' ')
-      presenceData.buttons = [{ label: 'View Genre', url: href }]
+      presenceData.buttons = [
+        { label: 'View Genre', url: href },
+      ]
       break
     }
     case 'group': {
@@ -186,7 +194,9 @@ presence.on('UpdateData', async () => {
         case 'thread': {
           presenceData.details = 'Viewing a group thread'
           presenceData.state = pageTitle?.textContent
-          presenceData.buttons = [{ label: 'View Thread', url: href }]
+          presenceData.buttons = [
+            { label: 'View Thread', url: href },
+          ]
           break
         }
         case 'watched': {
@@ -202,7 +212,9 @@ presence.on('UpdateData', async () => {
           }
           else {
             presenceData.details = 'Viewing a group'
-            presenceData.buttons = [{ label: 'View Group', url: href }]
+            presenceData.buttons = [
+              { label: 'View Group', url: href },
+            ]
           }
           presenceData.state = document
             .querySelector('h1')
@@ -222,7 +234,9 @@ presence.on('UpdateData', async () => {
         case 'articles': {
           presenceData.details = 'Reading a help article'
           presenceData.state = pageTitle?.textContent
-          presenceData.buttons = [{ label: 'Read Article', url: href }]
+          presenceData.buttons = [
+            { label: 'Read Article', url: href },
+          ]
           break
         }
         case 'categories':
@@ -249,7 +263,9 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = await getShortURL(
           document.querySelector<HTMLImageElement>('.thumbnail_link img')!.src,
         )
-        presenceData.buttons = [{ label: 'View Label', url: href }]
+        presenceData.buttons = [
+          { label: 'View Label', url: href },
+        ]
       }
       break
     }
@@ -280,7 +296,9 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = await getShortURL(
           document.querySelector<HTMLImageElement>('picture > img')!.src,
         )
-        presenceData.buttons = [{ label: 'View Release', url: href }]
+        presenceData.buttons = [
+          { label: 'View Release', url: href },
+        ]
       }
       break
     }
@@ -312,7 +330,9 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = await getShortURL(
           document.querySelector<HTMLImageElement>('picture > img')!.src,
         )
-        presenceData.buttons = [{ label: 'View Release', url: href }]
+        presenceData.buttons = [
+          { label: 'View Release', url: href },
+        ]
       }
       break
     }
@@ -372,7 +392,9 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = await getShortURL(
             document.querySelector<HTMLImageElement>('.thumbnail_link img')!.src,
           )
-          presenceData.buttons = [{ label: 'View Item', url: href }]
+          presenceData.buttons = [
+            { label: 'View Item', url: href },
+          ]
           break
         }
       }
@@ -389,7 +411,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing a style'
       const title = pageTitle?.textContent?.trim().split(' ')
       presenceData.state = title?.slice(0, title.length - 1).join(' ')
-      presenceData.buttons = [{ label: 'View Style', url: href }]
+      presenceData.buttons = [
+        { label: 'View Style', url: href },
+      ]
       break
     }
     case 'submissions': {
@@ -420,7 +444,9 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageKey = await getShortURL(
             document.querySelector<HTMLImageElement>('.user_avatar > img')!.src,
           )
-          presenceData.buttons = [{ label: 'View User', url: href }]
+          presenceData.buttons = [
+            { label: 'View User', url: href },
+          ]
         }
       }
       break

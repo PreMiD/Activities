@@ -45,7 +45,9 @@ function parseBookString(raw: string): { title: string | null, author: string | 
   else {
     author = null
     const pdfIdx = raw.toLowerCase().indexOf('.pdf')
-    title = (pdfIdx !== -1 ? raw.slice(0, pdfIdx) : raw).trim() || null
+    title = (pdfIdx !== -1
+      ? raw.slice(0, pdfIdx)
+      : raw).trim() || null
   }
 
   return { title, author }
@@ -65,8 +67,13 @@ function titleSimilarity(a: string, b: string): number {
     if (wb.has(w))
       common++
   }
-  const union = new Set([...wa, ...wb]).size
-  return union === 0 ? 0 : common / union
+  const union = new Set([
+    ...wa,
+    ...wb,
+  ]).size
+  return union === 0
+    ? 0
+    : common / union
 }
 
 let cachedBook: { key: string, data: BookData, timestamp: number } | null = null
@@ -102,7 +109,9 @@ async function fetchBookData(): Promise<void> {
   }
 
   const queryTitle = encodeURIComponent(pdfTitle)
-  const queryAuthor = author ? encodeURIComponent(author) : null
+  const queryAuthor = author
+    ? encodeURIComponent(author)
+    : null
   const query = queryAuthor
     ? `https://openlibrary.org/search.json?author=${queryAuthor}&q=${queryTitle}`
     : `https://openlibrary.org/search.json?q=${queryTitle}`
@@ -139,7 +148,11 @@ async function fetchBookData(): Promise<void> {
       currentCoverUrl = ActivityAssets.Logo
     }
 
-    cachedBook = { key: cacheKey, data: bestBook, timestamp: Date.now() }
+    cachedBook = {
+      key: cacheKey,
+      data: bestBook,
+      timestamp: Date.now(),
+    }
     currentBookData = bestBook
   }
   catch {

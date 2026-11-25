@@ -31,7 +31,9 @@ async function getSeasonInformation(seasonId: string) {
   const rawTitle: string | null = document.location.href
     .match(/\/details\/[^/]+\/([^?]+)/)?.[1] ?? null
 
-  const seasonTitle: string | null = rawTitle ? rawTitle.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : ''
+  const seasonTitle: string | null = rawTitle
+    ? rawTitle.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    : ''
   const bannerUrl = document!.querySelector<HTMLElement>('#main-container > div > div:nth-child(1)')!.style!.backgroundImage!.match(/url\("(.+?)"\)/)![1] || ActivityAssets.Logo
 
   if (seasonTitle) {
@@ -64,7 +66,9 @@ async function getAnimeInformation(episodeId: string) {
   const rawTitle: string | null = document.location.href
     .match(/\/watch\/[^/]+\/([^?]+)/)?.[1] ?? null
 
-  const animeTitle: string | null = rawTitle ? rawTitle.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : ''
+  const animeTitle: string | null = rawTitle
+    ? rawTitle.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    : ''
 
   const titleEpisode = document.querySelector('#assetTitleContainer')?.textContent || ''
 

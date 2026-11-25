@@ -8,15 +8,43 @@ const strings = presence.getStrings({
   pause: 'general.paused',
   browsing: 'general.browsing',
 })
-const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'wav', 'ogg', 'oga', 'm4a', 'aac', 'wma', 'opus', 'aiff', 'ape'])
-const VIDEO_EXTENSIONS = new Set(['mp4', 'mkv', 'avi', 'mov', 'webm', 'wmv', 'flv', 'm4v', 'mpg', 'mpeg', 'ts', '3gp'])
+const AUDIO_EXTENSIONS = new Set([
+  'mp3',
+  'flac',
+  'wav',
+  'ogg',
+  'oga',
+  'm4a',
+  'aac',
+  'wma',
+  'opus',
+  'aiff',
+  'ape',
+])
+const VIDEO_EXTENSIONS = new Set([
+  'mp4',
+  'mkv',
+  'avi',
+  'mov',
+  'webm',
+  'wmv',
+  'flv',
+  'm4v',
+  'mpg',
+  'mpeg',
+  'ts',
+  '3gp',
+])
 
 function splitExtension(filename: string) {
   const lastDot = filename.lastIndexOf('.')
   if (lastDot <= 0)
     return { name: filename, ext: '' }
 
-  return { name: filename.slice(0, lastDot), ext: filename.slice(lastDot + 1).toLowerCase() }
+  return {
+    name: filename.slice(0, lastDot),
+    ext: filename.slice(lastDot + 1).toLowerCase(),
+  }
 }
 
 const media: MediaObj = {
@@ -82,8 +110,12 @@ presence.on('UpdateData', async () => {
       : { name: '', ext: '' }
 
     const inferredType = media.Type
-      || (AUDIO_EXTENSIONS.has(fileExt) ? 'Audio' : undefined)
-      || (VIDEO_EXTENSIONS.has(fileExt) ? 'Video' : undefined)
+      || (AUDIO_EXTENSIONS.has(fileExt)
+        ? 'Audio'
+        : undefined)
+      || (VIDEO_EXTENSIONS.has(fileExt)
+        ? 'Video'
+        : undefined)
 
     if (inferredType === 'Audio')
       (presenceData as PresenceData).type = ActivityType.Listening
@@ -115,8 +147,12 @@ presence.on('UpdateData', async () => {
           media.album = undefined
 
         presenceData.details = ((media.title ?? fileNameNoExt)
-          + (media.trackNumber ? ` Track N°${media.trackNumber}` : '')
-          || 'A song') + (media.album ? ` on ${media.album}` : '')
+          + (media.trackNumber
+            ? ` Track N°${media.trackNumber}`
+            : '')
+          || 'A song') + (media.album
+          ? ` on ${media.album}`
+          : '')
         media.artist
           ? (presenceData.state = `by ${media.artist}`)
           : fileExt
@@ -398,7 +434,9 @@ const getStatus = setLoop(() => {
     )
     req.send()
   }
-}, (navigator.userAgent.toLowerCase().includes('firefox') ? 5 : 2) * 1000)
+}, (navigator.userAgent.toLowerCase().includes('firefox')
+  ? 5
+  : 2) * 1000)
 
 interface MediaObj {
   time?: string

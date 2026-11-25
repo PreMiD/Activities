@@ -22,7 +22,9 @@ presence.on('UpdateData', async () => {
         return l && l.includes(label.toLowerCase())
       })
     const value = metric?.querySelector('.summary-metric-value')?.textContent?.trim()
-    return value && value.length > 0 ? value : null
+    return value && value.length > 0
+      ? value
+      : null
   }
 
   // Twemoji helper for smallImageKey
@@ -41,7 +43,9 @@ presence.on('UpdateData', async () => {
 
     if (games || achievements || completions) {
       buttonLabel = 'View Profile'
-      details = username ? `${username}'s Profile` : 'Loading Profile...'
+      details = username
+        ? `${username}'s Profile`
+        : 'Loading Profile...'
       const parts = []
       if (games) {
         parts.push(`${games} Games`)
@@ -72,7 +76,9 @@ presence.on('UpdateData', async () => {
 
     if (games || achievements || completions) {
       buttonLabel = 'View Profile'
-      details = username ? `${username}'s Profile` : 'Loading Profile...'
+      details = username
+        ? `${username}'s Profile`
+        : 'Loading Profile...'
       const parts = []
       if (games) {
         parts.push(`${games} Games`)

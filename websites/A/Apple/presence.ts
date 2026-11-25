@@ -370,7 +370,9 @@ presence.on('UpdateData', async () => {
       const event = document.querySelector('h1.hero-headline.typography-headline')
         || document.querySelector('p.hero-subhead.typography-quote-reduced')
 
-      presenceData.details = event ? `${strings.viewEvent}:` : 'Apple Events'
+      presenceData.details = event
+        ? `${strings.viewEvent}:`
+        : 'Apple Events'
       if (event)
         presenceData.state = event.textContent
 
@@ -406,7 +408,9 @@ presence.on('UpdateData', async () => {
     (urlpath[1] === 'shop' || urlpath[2] === 'shop')
     && window.location.hostname === 'www.apple.com'
   ) {
-    const num = urlpath[1] === 'shop' ? 2 : 3
+    const num = urlpath[1] === 'shop'
+      ? 2
+      : 3
 
     presenceData.largeImageKey = ActivityAssets.AppleStore
 
@@ -689,7 +693,9 @@ presence.on('UpdateData', async () => {
 
                   if (iframeData.currentMailSender && showICloudMailSender) {
                     state = `${iframeData.currentMailSender}${
-                      state !== '' ? `: ${state}` : ''
+                      state !== ''
+                        ? `: ${state}`
+                        : ''
                     }`
                   }
 

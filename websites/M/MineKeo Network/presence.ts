@@ -12,7 +12,9 @@ enum ActivityAssets {
 // Counters on the site show "--" until their data loads and "!" on error.
 function readCount(selector: string): number | null {
   const text = document.querySelector(selector)?.textContent?.trim()
-  return text && /^\d+$/.test(text) ? Number(text) : null
+  return text && /^\d+$/.test(text)
+    ? Number(text)
+    : null
 }
 
 presence.on('UpdateData', async () => {

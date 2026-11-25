@@ -36,7 +36,10 @@ let lastPathname = document.location.pathname
 
 presence.on('iFrameData', (data: IFrameData) => {
   const frameKey = data.frameUrl || 'unknown-frame'
-  iFrameDataByUrl.set(frameKey, { ...data, receivedAt: Date.now() })
+  iFrameDataByUrl.set(frameKey, {
+    ...data,
+    receivedAt: Date.now(),
+  })
 })
 
 function cleanText(value?: string | null): string {
@@ -45,7 +48,9 @@ function cleanText(value?: string | null): string {
 
 function truncate(value: string, maxLength = 128): string {
   const cleaned = cleanText(value)
-  return cleaned.length <= maxLength ? cleaned : `${cleaned.slice(0, Math.max(0, maxLength - 1)).trim()}…`
+  return cleaned.length <= maxLength
+    ? cleaned
+    : `${cleaned.slice(0, Math.max(0, maxLength - 1)).trim()}…`
 }
 
 function normalizePath(pathname: string): string {
@@ -69,7 +74,9 @@ function dedupeExactRepeatedTitle(value: string): string {
   const half = words.length / 2
   const first = words.slice(0, half).join(' ')
   const second = words.slice(half).join(' ')
-  return normalizeForCompare(first) === normalizeForCompare(second) ? first : cleanText(value)
+  return normalizeForCompare(first) === normalizeForCompare(second)
+    ? first
+    : cleanText(value)
 }
 
 function getHeading(): string {
@@ -93,7 +100,9 @@ function getTitleFromWatchHeading(heading: string, episodeNumber?: string): stri
     return dedupeExactRepeatedTitle(heading)
 
   const episodeLabel = heading.match(/\s+(?:Episodi|Episode)\s*\d+(?:[.,]\d+)?/i)
-  const stripped = episodeLabel?.index === undefined ? heading : heading.slice(0, episodeLabel.index)
+  const stripped = episodeLabel?.index === undefined
+    ? heading
+    : heading.slice(0, episodeLabel.index)
   return dedupeExactRepeatedTitle(cleanText(stripped) || heading)
 }
 
@@ -226,7 +235,9 @@ function getWatchInfo(): WatchInfo | undefined {
   return {
     title,
     episodeNumber,
-    episodeTitle: episodeNumber ? getCurrentEpisodeTitle(episodeNumber) : undefined,
+    episodeTitle: episodeNumber
+      ? getCurrentEpisodeTitle(episodeNumber)
+      : undefined,
     isMovie,
     cover: getPoster(title),
     animeUrl: getAnimeUrl(title),
@@ -270,8 +281,12 @@ function getActiveIFrameData(): IFrameData {
     return {}
 
   activeEntries.sort((a, b) => {
-    const aPlaying = a.video?.paused === false && a.video?.ended !== true ? 1 : 0
-    const bPlaying = b.video?.paused === false && b.video?.ended !== true ? 1 : 0
+    const aPlaying = a.video?.paused === false && a.video?.ended !== true
+      ? 1
+      : 0
+    const bPlaying = b.video?.paused === false && b.video?.ended !== true
+      ? 1
+      : 0
 
     if (aPlaying !== bPlaying)
       return bPlaying - aPlaying

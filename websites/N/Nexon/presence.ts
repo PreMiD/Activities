@@ -106,7 +106,9 @@ presence.on('UpdateData', async () => {
               ? 'Exploring a page'
               : 'Browsing'
           presenceData.smallImageKey = Assets.Reading
-          presenceData.buttons = [{ label: 'View Tours', url: href }]
+          presenceData.buttons = [
+            { label: 'View Tours', url: href },
+          ]
           break
         }
         case pathname === '/bank': {
@@ -115,7 +117,9 @@ presence.on('UpdateData', async () => {
             : privacy === 2
               ? 'Viewing a page'
               : 'Browsing'
-          presenceData.buttons = [{ label: 'View Bank', url: href }]
+          presenceData.buttons = [
+            { label: 'View Bank', url: href },
+          ]
           break
         }
         case pathname === '/stats': {
@@ -125,7 +129,9 @@ presence.on('UpdateData', async () => {
               ? 'Viewing a page'
               : 'Browsing'
           presenceData.smallImageKey = Assets.Reading
-          presenceData.buttons = [{ label: 'View Stats', url: href }]
+          presenceData.buttons = [
+            { label: 'View Stats', url: href },
+          ]
           break
         }
         case pathname === '/ranks': {
@@ -135,7 +141,9 @@ presence.on('UpdateData', async () => {
               ? 'Viewing a page'
               : 'Browsing'
           presenceData.smallImageKey = Assets.Reading
-          presenceData.buttons = [{ label: 'View Ranks', url: href }]
+          presenceData.buttons = [
+            { label: 'View Ranks', url: href },
+          ]
           break
         }
         case pathname === '/cargomarket': {
@@ -145,9 +153,13 @@ presence.on('UpdateData', async () => {
               ? 'Viewing a page'
               : 'Browsing'
           const sortedBy = document.querySelector('[aria-controls="radix-«rbh»"] > span')?.textContent
-          presenceData.state = sortedBy ? `Sorted by: ${sortedBy}` : ''
+          presenceData.state = sortedBy
+            ? `Sorted by: ${sortedBy}`
+            : ''
           presenceData.smallImageKey = Assets.Reading
-          presenceData.buttons = [{ label: 'View Cargomarket', url: href }]
+          presenceData.buttons = [
+            { label: 'View Cargomarket', url: href },
+          ]
           break
         }
         case pathname === '/marketplace': {
@@ -157,9 +169,13 @@ presence.on('UpdateData', async () => {
               ? 'Viewing a page'
               : 'Browsing'
           const sortedBy = document.querySelector('[data-state="active"]')?.textContent
-          presenceData.state = sortedBy !== 'All' ? `Filtered for: ${sortedBy}` : ''
+          presenceData.state = sortedBy !== 'All'
+            ? `Filtered for: ${sortedBy}`
+            : ''
           presenceData.smallImageKey = Assets.Reading
-          presenceData.buttons = [{ label: 'View Marketplace', url: href }]
+          presenceData.buttons = [
+            { label: 'View Marketplace', url: href },
+          ]
           break
         }
         case pathname === '/fleets': {
@@ -169,7 +185,9 @@ presence.on('UpdateData', async () => {
               ? 'Viewing a page'
               : 'Browsing'
           presenceData.smallImageKey = Assets.Reading
-          presenceData.buttons = [{ label: 'View Fleets', url: href }]
+          presenceData.buttons = [
+            { label: 'View Fleets', url: href },
+          ]
           break
         }
         case pathname === '/rules': {
@@ -179,7 +197,9 @@ presence.on('UpdateData', async () => {
               ? 'Reading page'
               : 'Browsing'
           presenceData.smallImageKey = Assets.Reading
-          presenceData.buttons = [{ label: 'Read The Rules', url: href }]
+          presenceData.buttons = [
+            { label: 'Read The Rules', url: href },
+          ]
           break
         }
         case pathname === '/gallery': {
@@ -191,7 +211,9 @@ presence.on('UpdateData', async () => {
               : privacy === 2
                 ? 'Viewing page'
                 : 'Browsing'
-          presenceData.buttons = [{ label: 'View Images', url: href }]
+          presenceData.buttons = [
+            { label: 'View Images', url: href },
+          ]
           break
         }
         case pathname === '/events': {
@@ -200,7 +222,9 @@ presence.on('UpdateData', async () => {
             : privacy === 2
               ? 'Viewing page'
               : 'Browsing'
-          presenceData.buttons = [{ label: 'View All Events', url: href }]
+          presenceData.buttons = [
+            { label: 'View All Events', url: href },
+          ]
           break
         }
         case pathname.includes('/events/'): {
@@ -212,7 +236,9 @@ presence.on('UpdateData', async () => {
                 ? 'Viewing page'
                 : 'Browsing'
           presenceData.state = document.querySelector('h3')?.textContent
-          presenceData.buttons = [{ label: 'View Event', url: href }]
+          presenceData.buttons = [
+            { label: 'View Event', url: href },
+          ]
           break
         }
         case pathname === '/news': {
@@ -238,7 +264,9 @@ presence.on('UpdateData', async () => {
           presenceData.state = document.querySelectorAll('div.flex.items-center.gap-2')?.[1]?.textContent
           presenceData.smallImageKey = Assets.Reading
           presenceData.smallImageText = 'Reading'
-          presenceData.buttons = [{ label: 'Read Article', url: href }]
+          presenceData.buttons = [
+            { label: 'Read Article', url: href },
+          ]
         }
       }
       break
@@ -282,7 +310,9 @@ presence.on('UpdateData', async () => {
                 : 'Browsing'
           presenceData.state
             = document.querySelector('.product_section')?.textContent
-          presenceData.buttons = [{ label: 'View Product', url: href }]
+          presenceData.buttons = [
+            { label: 'View Product', url: href },
+          ]
           presenceData.largeImageKey
             = document.querySelector<HTMLImageElement>('[alt="IMG-PRODUCT"]')
               ?.src ?? ActivityAssets.Logo
@@ -302,7 +332,9 @@ presence.on('UpdateData', async () => {
             ?.textContent
             ?.toLowerCase()
           presenceData.smallImageKey = Assets.Reading
-          presenceData.buttons = [{ label: 'Read Article', url: href }]
+          presenceData.buttons = [
+            { label: 'Read Article', url: href },
+          ]
           break
         }
       }
@@ -388,7 +420,13 @@ presence.on('UpdateData', async () => {
             : privacy === 2
               ? 'Viewing a page'
               : 'Browsing'
-          presenceData.state = items.menu && items.submenu ? `${items.menu} - ${items.submenu}` : items.menu ? `${items.menu}` : items.submenu ? `${items.submenu}` : 'Unknown menu'
+          presenceData.state = items.menu && items.submenu
+            ? `${items.menu} - ${items.submenu}`
+            : items.menu
+              ? `${items.menu}`
+              : items.submenu
+                ? `${items.submenu}`
+                : 'Unknown menu'
           break
         }
         case pathname === '/tourbonus': {
@@ -600,7 +638,9 @@ presence.on('UpdateData', async () => {
             : privacy === 2
               ? 'Viewing a page'
               : 'Browsing'
-          presenceData.buttons = [{ label: 'View The Leaderboard', url: href }]
+          presenceData.buttons = [
+            { label: 'View The Leaderboard', url: href },
+          ]
           break
         }
         case pathname.includes('/members'): {
@@ -609,7 +649,9 @@ presence.on('UpdateData', async () => {
             : privacy === 2
               ? 'Viewing a page'
               : 'Browsing'
-          presenceData.buttons = [{ label: 'View All Members', url: href }]
+          presenceData.buttons = [
+            { label: 'View All Members', url: href },
+          ]
           break
         }
         case pathname.includes('/flights/'): {
@@ -621,7 +663,9 @@ presence.on('UpdateData', async () => {
                 ? 'Viewing a page'
                 : 'Browsing'
           presenceData.state = document.querySelector('h3')?.textContent
-          presenceData.buttons = [{ label: 'View Flight', url: href }]
+          presenceData.buttons = [
+            { label: 'View Flight', url: href },
+          ]
           break
         }
         case pathname.includes('/profile/'): {
@@ -641,7 +685,9 @@ presence.on('UpdateData', async () => {
                 ? 'Viewing a page'
                 : 'Browsing'
           presenceData.state = document.querySelector('h4')?.textContent
-          presenceData.buttons = [{ label: 'View Profile', url: href }]
+          presenceData.buttons = [
+            { label: 'View Profile', url: href },
+          ]
           break
         }
         case !!document.querySelector('.active'): {

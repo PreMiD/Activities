@@ -30,7 +30,7 @@
     "dic.nicovideo.jp"
   ],
   "regExp": "^https?[:][/][/](www|live2?|seiga|ch|dic)[.]nicovideo[.]jp[/]",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/thumbnail.jpg",
   "color": "#272727",

@@ -59,8 +59,12 @@ presence.on('UpdateData', async () => {
   }
 
   for (const [path, data] of Object.entries(pages)) {
-    if (document.location.pathname.includes(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (document.location.pathname.includes(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   const pagesSubdomain: Record<string, PresenceData> = {
@@ -74,8 +78,12 @@ presence.on('UpdateData', async () => {
   }
 
   for (const [path, data] of Object.entries(pagesSubdomain)) {
-    if (document.location.hostname.startsWith(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (document.location.hostname.startsWith(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   if (document.location.hostname.startsWith('help')) {

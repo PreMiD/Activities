@@ -27,7 +27,9 @@ presence.on('UpdateData', async () => {
   const setShowButtons = await presence.getSetting<boolean>('showButtons')
   const setSmallImages = await presence.getSetting<boolean>('showSmallImages')
   const urlpath = window.location.pathname.split('/')
-  const urlpNum = /nl|fr|de/.test(urlpath[1]!) ? 1 : 0
+  const urlpNum = /nl|fr|de/.test(urlpath[1]!)
+    ? 1
+    : 0
 
   if (setTimeElapsed)
     presenceData.startTimestamp = browsingTimestamp
@@ -192,7 +194,9 @@ presence.on('UpdateData', async () => {
 
   if (setSmallImages) {
     if (smallimage === 'com') {
-      smallimage = document.location.hostname === 'www.snipesusa.com' ? 'usa' : 'de'
+      smallimage = document.location.hostname === 'www.snipesusa.com'
+        ? 'usa'
+        : 'de'
     }
 
     presenceData.smallImageKey = assets[smallimage as keyof typeof assets]

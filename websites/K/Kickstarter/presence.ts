@@ -43,7 +43,9 @@ presence.on('UpdateData', async () => {
   const showButtons = await presence.getSetting<boolean>('buttons')
 
   if (pathArr[1] === 'projects') {
-    presenceData.details = presenceDataSlide.details = pathArr.length > 4 ? staticsTabsProject[pathArr[4]!] : 'Viewing a project'
+    presenceData.details = presenceDataSlide.details = pathArr.length > 4
+      ? staticsTabsProject[pathArr[4]!]
+      : 'Viewing a project'
     presenceData.state = document.querySelector('.project-name')?.textContent
       ?? document.querySelector('span > a')?.textContent
     if (!pathname.includes('pledge')) {

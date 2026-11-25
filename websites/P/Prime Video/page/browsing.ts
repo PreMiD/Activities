@@ -37,12 +37,30 @@ const RULES: BrowsingRule[] = [
       applyCover(presenceData, bannerImg, { showCover, imageType })
     },
   },
-  { match: pathname => pathname.includes('/movie'), apply: browsing('Viewing Movies') },
-  { match: pathname => pathname.includes('/tv'), apply: browsing('Viewing TV-Series') },
-  { match: pathname => pathname.includes('/sports'), apply: browsing('Viewing Sports') },
-  { match: pathname => pathname.includes('/categories'), apply: browsing('Viewing Categories') },
-  { match: pathname => pathname.includes('/kids/'), apply: browsing('Viewing Movies for kids') },
-  { match: pathname => pathname.includes('/livetv'), apply: browsing('Viewing Live TV') },
+  {
+    match: pathname => pathname.includes('/movie'),
+    apply: browsing('Viewing Movies'),
+  },
+  {
+    match: pathname => pathname.includes('/tv'),
+    apply: browsing('Viewing TV-Series'),
+  },
+  {
+    match: pathname => pathname.includes('/sports'),
+    apply: browsing('Viewing Sports'),
+  },
+  {
+    match: pathname => pathname.includes('/categories'),
+    apply: browsing('Viewing Categories'),
+  },
+  {
+    match: pathname => pathname.includes('/kids/'),
+    apply: browsing('Viewing Movies for kids'),
+  },
+  {
+    match: pathname => pathname.includes('/livetv'),
+    apply: browsing('Viewing Live TV'),
+  },
   {
     match: pathname => pathname.includes('/search/') && !!document.querySelector(SELECTORS.searchSummary),
     apply: (presenceData) => {
@@ -55,7 +73,10 @@ const RULES: BrowsingRule[] = [
       presenceData.smallImageKey = Assets.Search
     },
   },
-  { match: pathname => pathname.includes('/genre/'), apply: browsing('Viewing Genres') },
+  {
+    match: pathname => pathname.includes('/genre/'),
+    apply: browsing('Viewing Genres'),
+  },
   {
     match: pathname => pathname.includes('shop'),
     apply: (presenceData) => {

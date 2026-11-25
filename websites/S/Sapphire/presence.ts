@@ -10,7 +10,9 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 function getServerId(url: string): string | null {
   const match = url.match(/\/(\d{17,19})(?:[/?#]|$)/)
-  return match ? (match[1] ?? null) : null
+  return match
+    ? (match[1] ?? null)
+    : null
 }
 
 function getServerInfo(): { name: string, icon: string } | null {
@@ -31,7 +33,9 @@ presence.on('UpdateData', async () => {
   const rawUrl = document.location.href
   const hostname = document.location.hostname
   const isDashboard = hostname === 'dashboard.sapph.xyz'
-  const fullUrl = hostname === 'docs.sapph.xyz' ? rawUrl.replace('docs.sapph.xyz/', 'docs.sapph.xyz/#/') : rawUrl
+  const fullUrl = hostname === 'docs.sapph.xyz'
+    ? rawUrl.replace('docs.sapph.xyz/', 'docs.sapph.xyz/#/')
+    : rawUrl
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -593,7 +597,9 @@ presence.on('UpdateData', async () => {
 
   // Privacy Mode Override
   if (enablePrivacyMode) {
-    presenceData.details = hostname === 'docs.sapph.xyz' ? 'Browsing documentation' : 'Browsing dashboard'
+    presenceData.details = hostname === 'docs.sapph.xyz'
+      ? 'Browsing documentation'
+      : 'Browsing dashboard'
     delete presenceData.state
     delete presenceData.smallImageKey
     delete presenceData.smallImageText

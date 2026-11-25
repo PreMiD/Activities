@@ -23,7 +23,9 @@ presence.on('UpdateData', async () => {
       if (document.querySelector('.container-game') && playerCount) {
         presenceData.details = 'Playing public lobby'
         presenceData.state = `${playerCount} player${
-          playerCount === 1 ? '' : 's'
+          playerCount === 1
+            ? ''
+            : 's'
         }`
       }
       else {
@@ -67,13 +69,17 @@ presence.on('UpdateData', async () => {
       if (document.querySelector('.container-game') && playerCount) {
         presenceData.details = 'Playing custom lobby'
         presenceData.state = `${playerCount} player${
-          playerCount === 1 ? '' : 's'
+          playerCount === 1
+            ? ''
+            : 's'
         }`
       }
       else if (playerCount) {
         presenceData.details = 'In custom lobby'
         presenceData.state = `${playerCount} player${
-          playerCount === 1 ? '' : 's'
+          playerCount === 1
+            ? ''
+            : 's'
         }`
       }
       if (joinButton) {

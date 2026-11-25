@@ -54,8 +54,12 @@ presence.on('UpdateData', async () => {
   // /n1234ab/ が目次、/n1234ab/5/ のように末尾が数字だと各話。
   // 短編は話番号なしのURLのまま本文が表示されるため、本文要素の有無でも判定する
   const segments = pathname.split('/').filter(s => s !== '')
-  const ncode = segments[0] && /^n[a-z0-9]+$/.test(segments[0]) ? segments[0] : null
-  const episodeNum = segments[1] && /^\d+$/.test(segments[1]) ? segments[1] : undefined
+  const ncode = segments[0] && /^n[a-z0-9]+$/.test(segments[0])
+    ? segments[0]
+    : null
+  const episodeNum = segments[1] && /^\d+$/.test(segments[1])
+    ? segments[1]
+    : undefined
   if (hostname === 'ncode.syosetu.com' && ncode) {
     const isEpisode = !!episodeNum
     const isReading = isEpisode || !!document.querySelector('.p-novel__text')
@@ -71,8 +75,12 @@ presence.on('UpdateData', async () => {
     }
     if (showNovel) {
       const title = getNovelTitle(ncode, isEpisode)
-      const episode = showEpisode ? getEpisodeTitle(isEpisode) : null
-      const state = title && episode ? `${title} - ${episode}` : (title ?? episode)
+      const episode = showEpisode
+        ? getEpisodeTitle(isEpisode)
+        : null
+      const state = title && episode
+        ? `${title} - ${episode}`
+        : (title ?? episode)
       if (state)
         presenceData.state = state
     }

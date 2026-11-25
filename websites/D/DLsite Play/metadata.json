@@ -24,7 +24,7 @@
   },
   "url": "play.dlsite.com",
   "regExp": "^https[:][/][/]play[.]dlsite[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DLsite%20Play/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DLsite%20Play/assets/thumbnail.png",
   "color": "#188AEA",

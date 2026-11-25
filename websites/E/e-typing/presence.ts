@@ -60,7 +60,9 @@ function getTypingContentWindowInfo() {
       return { windowTitle, wordTitle: `お題: ${wordTitle}` }
     }
     else {
-      const replacedWindowTitle = location.search.includes('trysc.trysc.trysc') ? '腕試しレベルチェック' : windowTitle.replace(sessionStorageWordTitle, '')
+      const replacedWindowTitle = location.search.includes('trysc.trysc.trysc')
+        ? '腕試しレベルチェック'
+        : windowTitle.replace(sessionStorageWordTitle, '')
 
       return { windowTitle: replacedWindowTitle, wordTitle: `お題: ${sessionStorageWordTitle}` }
     }

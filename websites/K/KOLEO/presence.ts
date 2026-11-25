@@ -78,13 +78,21 @@ presence.on('UpdateData', async () => {
       const date = document.querySelector<HTMLInputElement>('input[readonly]')
       const isMainPage = href.endsWith('koleo.pl/') || href.endsWith('koleo.pl/#')
 
-      presenceData.smallImageText = isMainPage ? 'Rozkład KOLEO' : operatorNames[pathname.split('/')[1] ?? ''] || 'Rozkład KOLEO'
+      presenceData.smallImageText = isMainPage
+        ? 'Rozkład KOLEO'
+        : operatorNames[pathname.split('/')[1] ?? ''] || 'Rozkład KOLEO'
 
       if ((startStation && startStation.value.length > 0) || (endStation && endStation.value.length > 0)) {
         presenceData.name = 'KOLEO - rozkład jazdy'
         presenceData.state = isMainPage ? 'Wpisuje dane' : 'Wybiera połączenia'
         if (!privacySetting) {
-          presenceData.details = `${startStation?.value ? `Z ${startStation.value}` : ''} ${(startStation?.value && endStation?.value) ? '-' : ''} ${endStation?.value ? `Do ${endStation.value}` : ''} - Na ${date?.value}`
+          presenceData.details = `${startStation?.value
+            ? `Z ${startStation.value}`
+            : ''} ${(startStation?.value && endStation?.value)
+            ? '-'
+            : ''} ${endStation?.value
+            ? `Do ${endStation.value}`
+            : ''} - Na ${date?.value}`
         }
       }
       else {
@@ -103,7 +111,13 @@ presence.on('UpdateData', async () => {
       if ((startStation && startStation.value.length > 0) || (endStation && endStation.value.length > 0)) {
         presenceData.name = 'KOLEO - rozkład jazdy'
         if (!privacySetting) {
-          presenceData.details = `${startStation?.value ? `Z ${startStation.value}` : ''} ${(startStation?.value && endStation?.value) ? '-' : ''} ${endStation?.value ? `Do ${endStation.value}` : ''} - Na ${date?.value}`
+          presenceData.details = `${startStation?.value
+            ? `Z ${startStation.value}`
+            : ''} ${(startStation?.value && endStation?.value)
+            ? '-'
+            : ''} ${endStation?.value
+            ? `Do ${endStation.value}`
+            : ''} - Na ${date?.value}`
         }
         presenceData.state = 'Wybiera połączenia'
       }
@@ -146,7 +160,11 @@ presence.on('UpdateData', async () => {
       if (part === '1') {
         presenceData.name = 'KOLEO - połączenie'
         if (!privacySetting) {
-          presenceData.state = `${people ? `z ${people} ${people === 1 ? 'pasażerem' : 'pasażerami'}` : ''} za ${cost || 'nieznaną cenę'}`
+          presenceData.state = `${people
+            ? `z ${people} ${people === 1
+              ? 'pasażerem'
+              : 'pasażerami'}`
+            : ''} za ${cost || 'nieznaną cenę'}`
         }
         presenceData.smallImageText = 'Krok 1 - Tablica z informacjami o połączeniu'
       }
@@ -160,7 +178,9 @@ presence.on('UpdateData', async () => {
       else if (part === '3') {
         presenceData.name = 'KOLEO - połączenie - płatność i podsumowanie'
         if (!privacySetting) {
-          presenceData.state = `bilet za ${cost || 'nieznaną cenę'}${paymentMethod ? `, za pomocą ${paymentMethod}` : ''}`
+          presenceData.state = `bilet za ${cost || 'nieznaną cenę'}${paymentMethod
+            ? `, za pomocą ${paymentMethod}`
+            : ''}`
         }
         presenceData.smallImageText = 'Krok 3 - Płatność i podsumowanie'
       }
@@ -170,7 +190,9 @@ presence.on('UpdateData', async () => {
     else if (pathname.includes('bilety-miesieczne')) {
       const transportation = document.querySelector('h1.top-banner__heading')
       if (transportation) {
-        presenceData.state = `Przegląda bilety miesięczne${privacySetting ? '.' : ` w ${transportation.textContent}.`}`
+        presenceData.state = `Przegląda bilety miesięczne${privacySetting
+          ? '.'
+          : ` w ${transportation.textContent}.`}`
         presenceData.smallImageText = 'Przegląda bilety'
         presenceData.smallImageKey = ActivityAssets.Ticket
       }
@@ -182,7 +204,9 @@ presence.on('UpdateData', async () => {
         const stepOfBuying = document.querySelector('.step-breadcrumbs__step--is-active .step-breadcrumbs__number-badge')?.textContent
         const offers = document.querySelector('.carrier-season-ticket__total-price')
 
-        presenceData.details = `Kupuje ${privacySetting ? 'bilet miesięczny.' : `${typeOfTicket.textContent?.toLowerCase()} na ${date?.value || 'nieznaną datę'}`}`
+        presenceData.details = `Kupuje ${privacySetting
+          ? 'bilet miesięczny.'
+          : `${typeOfTicket.textContent?.toLowerCase()} na ${date?.value || 'nieznaną datę'}`}`
         presenceData.state = `W ${document.querySelector('.active-ticket__carrier-name')?.textContent}.`
         presenceData.smallImageKey = ActivityAssets.Buy
 
@@ -200,7 +224,11 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageKey = ActivityAssets.Train
 
             if (!privacySetting) {
-              presenceData.state = `Szuka połączenia ${startText && startText.length > 0 ? `z ${startText}` : ''} ${endText && endText.length > 0 ? `do ${endText}` : ''} na ${dateText}`
+              presenceData.state = `Szuka połączenia ${startText && startText.length > 0
+                ? `z ${startText}`
+                : ''} ${endText && endText.length > 0
+                ? `do ${endText}`
+                : ''} na ${dateText}`
             }
             else {
               presenceData.state = 'Szuka połączenia'
@@ -282,14 +310,24 @@ presence.on('UpdateData', async () => {
         const trainClasses = mergedTicketData.trainClasses.join(', ')
         const operators = mergedTicketData.operators.join(', ')
 
-        presenceData.details = `Przegląda ${tickets.length > 1 ? 'bilety' : 'bilet'} z ${stations.split(' - ')[0]} do ${stations.split(' - ')[stations.split(' - ').length - 1]} (${mergedTicketData.distance}) za ${mergedTicketData.price}.`
-        presenceData.state = `${trainClasses.length > 1 ? 'Klasy pociągów' : 'Klasa pociągu'}: ${trainClasses}, ${operators.length > 1 ? 'Operatorzy' : 'Operator'}: ${operators}.`
+        presenceData.details = `Przegląda ${tickets.length > 1
+          ? 'bilety'
+          : 'bilet'} z ${stations.split(' - ')[0]} do ${stations.split(' - ')[stations.split(' - ').length - 1]} (${mergedTicketData.distance}) za ${mergedTicketData.price}.`
+        presenceData.state = `${trainClasses.length > 1
+          ? 'Klasy pociągów'
+          : 'Klasa pociągu'}: ${trainClasses}, ${operators.length > 1
+          ? 'Operatorzy'
+          : 'Operator'}: ${operators}.`
       }
       else {
-        presenceData.details = `Przegląda ${tickets.length > 1 ? 'swoje bilety' : 'swój bilet'}.`
+        presenceData.details = `Przegląda ${tickets.length > 1
+          ? 'swoje bilety'
+          : 'swój bilet'}.`
       }
 
-      presenceData.smallImageText = `Przegląda ${tickets.length > 1 ? 'bilety' : 'bilet'}`
+      presenceData.smallImageText = `Przegląda ${tickets.length > 1
+        ? 'bilety'
+        : 'bilet'}`
       presenceData.smallImageKey = ActivityAssets.Ticket
     }
     else if (pathname.startsWith('/my')) {
@@ -457,7 +495,9 @@ presence.on('UpdateData', async () => {
         const articleTitle = document.querySelector('.hkb-article__title') || document.querySelector('.entry-header .entry-title')
         const searchTab = document.querySelector<HTMLInputElement>('#hkb-search')
 
-        presenceData.state = `Czyta artykuł${articleTitle ? ` - ${articleTitle.textContent}` : '.'}`
+        presenceData.state = `Czyta artykuł${articleTitle
+          ? ` - ${articleTitle.textContent}`
+          : '.'}`
 
         if (searchTab && searchTab.value.length > 0) {
           presenceData.details = `Korzysta z wyszukiwarki: ${searchTab.value}`
@@ -523,7 +563,9 @@ presence.on('UpdateData', async () => {
       const dateOfPage = metaOfPage?.querySelector('div.meta-date span')?.textContent
 
       if (authorOfPage) {
-        presenceData.details = `Czyta temat${!privacySetting ? ` napisany przez ${authorOfPage}` : ''}.`
+        presenceData.details = `Czyta temat${!privacySetting
+          ? ` napisany przez ${authorOfPage}`
+          : ''}.`
 
         if (!privacySetting) {
           presenceData.state = [topicOfPage, dateOfPage, metaOfPage?.querySelector('div.meta-rtime')?.textContent].filter(Boolean).join(' | ')
@@ -533,7 +575,9 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = Assets.Reading
       }
       else {
-        presenceData.details = `Przegląda artykuły${!privacySetting ? ` zawierające ${document.querySelector('.module-title h1.h2')?.textContent}` : ''}.`
+        presenceData.details = `Przegląda artykuły${!privacySetting
+          ? ` zawierające ${document.querySelector('.module-title h1.h2')?.textContent}`
+          : ''}.`
 
         if (!privacySetting) {
           presenceData.state = `Ilość artykułów: ${document.querySelector('.gridlove-posts')?.children.length} | Utworzono: ${dateOfPage}`
@@ -560,7 +604,9 @@ presence.on('UpdateData', async () => {
         const dateOfPage = document.querySelector('.entry-meta div.meta-date span')?.textContent
 
         if (dateOfPage) {
-          presenceData.details = `Czyta informacje${authorOfPage && !privacySetting ? ` napisane przez ${authorOfPage}` : ''}`
+          presenceData.details = `Czyta informacje${authorOfPage && !privacySetting
+            ? ` napisane przez ${authorOfPage}`
+            : ''}`
 
           if (!privacySetting) {
             presenceData.state = [topicOfPage, dateOfPage].filter(Boolean).join(' | ')
@@ -570,7 +616,9 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageKey = Assets.Reading
         }
         else {
-          presenceData.details = `Przegląda informacji${!privacySetting ? ` o ${topicOfPage.toLowerCase()}` : ''}.`
+          presenceData.details = `Przegląda informacji${!privacySetting
+            ? ` o ${topicOfPage.toLowerCase()}`
+            : ''}.`
 
           if (!privacySetting) {
             presenceData.state = `Ilość informacji: ${document.querySelector('.gridlove-posts')?.children.length}`
@@ -623,7 +671,11 @@ presence.on('UpdateData', async () => {
       && !document.querySelector('.product_title')
     ) {
       const pageNumber = document.querySelector('.page-numbers.current')?.textContent
-      presenceData.details = `Przegląda produkty ${pathname.startsWith('/marka') ? 'marki' : 'katalogu'}${!privacySetting ? ` - ${document.querySelector('.woocommerce-products-header__title')?.textContent}` : ''}.`
+      presenceData.details = `Przegląda produkty ${pathname.startsWith('/marka')
+        ? 'marki'
+        : 'katalogu'}${!privacySetting
+        ? ` - ${document.querySelector('.woocommerce-products-header__title')?.textContent}`
+        : ''}.`
       if (pageNumber)
         presenceData.state = `Strona: ${pageNumber}`
       presenceData.smallImageText = 'Przegląda katalog'
@@ -635,7 +687,9 @@ presence.on('UpdateData', async () => {
       const productTitle = document.querySelector('.product_title')
 
       if (productTitle) {
-        presenceData.details = `Przegląda pass${privacySetting ? '' : ` - ${productTitle.textContent}`}.`
+        presenceData.details = `Przegląda pass${privacySetting
+          ? ''
+          : ` - ${productTitle.textContent}`}.`
         presenceData.smallImageText = 'Przegląda pass'
 
         if (!privacySetting) {
@@ -663,7 +717,9 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Realizuje swoje zamówienie.'
 
         if (!privacySetting) {
-          presenceData.state = `Cena za ${cartItems.length > 1 ? `${cartItems.length} produktów` : `${cartItems.length} produkt`} wynosi ${document.querySelector('.order-total .woocommerce-Price-amount bdi')?.textContent}`
+          presenceData.state = `Cena za ${cartItems.length > 1
+            ? `${cartItems.length} produktów`
+            : `${cartItems.length} produkt`} wynosi ${document.querySelector('.order-total .woocommerce-Price-amount bdi')?.textContent}`
         }
 
         presenceData.smallImageText = 'Realizuje zamówienie'
@@ -722,11 +778,15 @@ presence.on('UpdateData', async () => {
       const productTitle = document.querySelector('.product_title')
 
       if (productTitle) {
-        presenceData.details = `Przegląda produkt${privacySetting ? '' : ` - ${productTitle.textContent}`}.`
+        presenceData.details = `Przegląda produkt${privacySetting
+          ? ''
+          : ` - ${productTitle.textContent}`}.`
         presenceData.smallImageText = 'Przegląda produkt'
 
         if (!privacySetting) {
-          presenceData.state = `${document.querySelector('.pwb-single-product-brands a') ? `Marka: ${document.querySelector('.pwb-single-product-brands a')?.textContent} | ` : ''}Cena: ${document.querySelector('.price span.woocommerce-Price-amount bdi')?.textContent}`
+          presenceData.state = `${document.querySelector('.pwb-single-product-brands a')
+            ? `Marka: ${document.querySelector('.pwb-single-product-brands a')?.textContent} | `
+            : ''}Cena: ${document.querySelector('.price span.woocommerce-Price-amount bdi')?.textContent}`
         }
       }
       else {

@@ -36,7 +36,9 @@ function toPoster(url: string): string {
 }
 
 function plural(value: string, one: string, many: string): string {
-  return `${value} ${value === '1' ? one : many}`
+  return `${value} ${value === '1'
+    ? one
+    : many}`
 }
 
 // Procura a capa vertical no HTML da página do anime (og:image / twitter:image)
@@ -89,7 +91,9 @@ function liveHero(id: string): string | null {
   }
 
   const src = document.querySelector<HTMLImageElement>('img[alt="Hero art"]')?.currentSrc
-  return src?.includes('image.tmdb.org') ? toPoster(src) : null
+  return src?.includes('image.tmdb.org')
+    ? toPoster(src)
+    : null
 }
 
 function coverFor(id: string | null): string {
@@ -172,7 +176,9 @@ function getProfileStats() {
     }
   }
 
-  const label = [...document.querySelectorAll('h2 span')].find(el => text(el) === 'Assistidos')
+  const label = [
+    ...document.querySelectorAll('h2 span'),
+  ].find(el => text(el) === 'Assistidos')
   stats.watched = text(label?.closest('h2')?.nextElementSibling).match(/\d[\d.,]*/)?.[0]
 
   return stats
@@ -184,7 +190,9 @@ function buildPresence(viewPage: string): PresenceData {
   const path = pathname.replace(/\/+$/, '') || '/'
   const genre = new URLSearchParams(search).get('genre')
   const player = getPlayer()
-  const buttons: PresenceData['buttons'] = [{ label: viewPage, url: href }]
+  const buttons: PresenceData['buttons'] = [
+    { label: viewPage, url: href },
+  ]
 
   if (player) {
     const { video, title, episode, id } = player
@@ -200,8 +208,16 @@ function buildPresence(viewPage: string): PresenceData {
       largeImageKey: coverFor(id),
       smallImageKey: video.paused ? Assets.Pause : Assets.Play,
       smallImageText: video.paused ? 'Pausado' : 'Assistindo',
-      ...(video.paused ? {} : { startTimestamp, endTimestamp }),
-      ...(id ? { buttons: [{ label: viewPage, url: `${origin}/anime/${id}` }] } : {}),
+      ...(video.paused
+        ? {}
+        : { startTimestamp, endTimestamp }),
+      ...(id
+        ? {
+            buttons: [
+              { label: viewPage, url: `${origin}/anime/${id}` },
+            ],
+          }
+        : {}),
     }
   }
 
@@ -223,7 +239,9 @@ function buildPresence(viewPage: string): PresenceData {
       type: ActivityType.Watching,
       name: serviceName,
       details: 'Explorando Catálogo:',
-      state: showGenre ? `${catalog} - ${genre}` : catalog,
+      state: showGenre
+        ? `${catalog} - ${genre}`
+        : catalog,
       largeImageKey: ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
       buttons,
@@ -244,7 +262,9 @@ function buildPresence(viewPage: string): PresenceData {
       type: ActivityType.Watching,
       name: serviceName,
       details: username || 'Visualizando perfil',
-      ...(stats ? { state: stats } : {}),
+      ...(stats
+        ? { state: stats }
+        : {}),
       largeImageKey: avatar || ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
       buttons,

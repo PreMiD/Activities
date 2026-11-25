@@ -15,7 +15,7 @@
   },
   "url": "www.music-flo.com",
   "regExp": "^https?[:][/][/](www[.])?music-flo[.]com[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FLO/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FLO/assets/thumbnail.png",
   "color": "#3f3fff",

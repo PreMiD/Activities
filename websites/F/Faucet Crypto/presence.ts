@@ -99,6 +99,28 @@ presence.on('UpdateData', async () => {
     const numberOnly = query.replace(/\D/g, '')
     presenceData.state = `${numberOnly} available`
   }
+  // Social jobs
+  else if (pathname.includes('/social-jobs')) {
+    presenceData.details = 'Viewing Social Jobs'
+    const socialJobsItem = Array.from(document.querySelectorAll('a')).find(
+      el => el.textContent?.toLowerCase().includes('social jobs')
+        || el.getAttribute('aria-label')?.includes('social jobs'),
+    )
+    const query = socialJobsItem?.textContent?.trim() || ''
+    const numberOnly = query.replace(/\D/g, '')
+    presenceData.state = `${numberOnly} available`
+  }
+  // Fast tasks
+  else if (pathname.includes('/fast-tasks')) {
+    presenceData.details = 'Solving Fast Tasks'
+    const fastTasksItem = Array.from(document.querySelectorAll('a')).find(
+      el => el.textContent?.toLowerCase().includes('fast tasks')
+        || el.getAttribute('aria-label')?.includes('fast tasks'),
+    )
+    const query = fastTasksItem?.textContent?.trim() || ''
+    const numberOnly = query.replace(/\D/g, '')
+    presenceData.state = `${numberOnly} available`
+  }
   // Offerwalls
   else if (pathname.includes('/offerwall')) {
     presenceData.details = 'Viewing Offerwalls'

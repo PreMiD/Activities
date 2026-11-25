@@ -47,9 +47,13 @@ presence.on('UpdateData', async () => {
     if (tags?.textContent) {
       const resultWords = tags.textContent.split(' ').filter(word => !wordsToRemove.has(word))
       const restag = resultWords?.join(' ')
-      presenceData.details = (tags != null) ? `タグ: ${restag}` : `タグ: なし`
+      presenceData.details = (tags != null)
+        ? `タグ: ${restag}`
+        : `タグ: なし`
     }
-    presenceData.name = (search?.value == null) ? `検索中` : `検索: ${search.value}`
+    presenceData.name = (search?.value == null)
+      ? `検索中`
+      : `検索: ${search.value}`
     // ついでにブースのURLをボタンに登録する
     presenceData.buttons = [
       {

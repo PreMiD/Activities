@@ -49,7 +49,10 @@ function selection(): ReafyView {
     return { type: 'events' }
   const player = path.match(/^\/players\/([\w-]{1,32})$/i)?.[1]
   if (player) {
-    const view: ReafyView = { type: 'player', game: gameSelection() }
+    const view: ReafyView = {
+      type: 'player',
+      game: gameSelection(),
+    }
     const season = document.querySelector<HTMLSelectElement>('#seasonSelect')?.selectedOptions[0]?.value
     if (season && /^[1-9]\d?$/.test(season))
       view.season = `Season ${season}`
@@ -64,7 +67,10 @@ function selection(): ReafyView {
   }
   const event = path.match(/^\/events\/([\w-]+)$/i)?.[1]
   if (event) {
-    const view: ReafyView = { type: 'event', game: gameSelection() }
+    const view: ReafyView = {
+      type: 'event',
+      game: gameSelection(),
+    }
     const name = text(document.querySelector('h1')?.textContent)
     const team = Array.from(document.querySelectorAll<HTMLImageElement>('img[alt]'))
       .some(image => image.alt.toLowerCase().startsWith(`${event.toLowerCase()} `) && image.getAttribute('src')?.includes('/team-icons/'))
@@ -79,7 +85,12 @@ function selection(): ReafyView {
 }
 
 export function reafySelection(privacy: boolean): string {
-  return JSON.stringify([document.location.href, privacy ? 'private' : selection()])
+  return JSON.stringify([
+    document.location.href,
+    privacy
+      ? 'private'
+      : selection(),
+  ])
 }
 
 export function getReafyData(privacy: boolean, showButtons: boolean): Partial<PresenceData> {
@@ -108,7 +119,13 @@ export function getReafyData(privacy: boolean, showButtons: boolean): Partial<Pr
   else if (view.type === 'player') {
     data.details = 'Looking at player statistics'
     if (view.player) {
-      data.state = [view.player, view.game === 'all' ? 'All Games' : ReafyGames[view.game ?? ''], view.season].filter(Boolean).join(' · ').slice(0, 128)
+      data.state = [
+        view.player,
+        view.game === 'all'
+          ? 'All Games'
+          : ReafyGames[view.game ?? ''],
+        view.season,
+      ].filter(Boolean).join(' · ').slice(0, 128)
       if (view.head) {
         data.largeImageKey = view.head
         data.largeImageText = view.player
@@ -131,7 +148,9 @@ export function getReafyData(privacy: boolean, showButtons: boolean): Partial<Pr
     const url = new URL(document.location.href)
     url.search = ''
     url.hash = ''
-    data.buttons = [{ label, url: url.href }]
+    data.buttons = [
+      { label, url: url.href },
+    ]
   }
   return data
 }

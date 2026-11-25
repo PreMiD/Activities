@@ -42,7 +42,9 @@ presence.on('UpdateData', async () => {
 
     if (showCount && subCount && subCount > 0) {
       presenceData.state = `${subCount - 1} ${
-        subCount > 2 ? 'Subscriptions' : 'Subscription'
+        subCount > 2
+          ? 'Subscriptions'
+          : 'Subscription'
       }`
     }
   }
@@ -104,7 +106,9 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = assets[pageType?.toLowerCase() as keyof typeof assets]
         presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/F/Floatplane/assets/logo.png'
         presenceData.smallImageText = document.title
-        presenceData.buttons = [{ label: 'View Channel', url: location.href }]
+        presenceData.buttons = [
+          { label: 'View Channel', url: location.href },
+        ]
 
         if (pageTypeType === 'live') {
           // Stream
@@ -144,7 +148,9 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = 'Viewing user:'
             presenceData.state = channelTitle
-            presenceData.buttons = [{ label: 'View User', url: location.href }]
+            presenceData.buttons = [
+              { label: 'View User', url: location.href },
+            ]
 
             break
           }

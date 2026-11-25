@@ -34,7 +34,9 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = ActivityAssets.Logo
       }
     }
-    presenceData.buttons = [{ label: 'View Album', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Album', url: document.URL },
+    ]
   }
   else if (pathname.startsWith('/artist')) {
     presenceData.details = 'Viewing an artist:'
@@ -58,16 +60,22 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/V/VGMdb/assets/logo.png'
       }
     }
-    presenceData.buttons = [{ label: 'View Artist', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Artist', url: document.URL },
+    ]
   }
   else if (pathname.startsWith('/org') || pathname.startsWith('/product')) {
     if (pathname.startsWith('/org')) {
       presenceData.details = 'Viewing a label/organization:'
-      presenceData.buttons = [{ label: 'View Label/Org', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Label/Org', url: document.URL },
+      ]
     }
     else if (pathname.startsWith('/product')) {
       presenceData.details = 'Viewing a product:'
-      presenceData.buttons = [{ label: 'View Product', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Product', url: document.URL },
+      ]
     }
     presenceData.state = shortTitle
     if (cover) {

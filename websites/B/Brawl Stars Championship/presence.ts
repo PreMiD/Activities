@@ -13,7 +13,9 @@ enum ActivityAssets {
 function getText(selector: string): string | undefined {
   const el = document.querySelector(selector)
   const text = el?.textContent?.trim()
-  return text && text.length > 0 ? text : undefined
+  return text && text.length > 0
+    ? text
+    : undefined
 }
 
 presence.on('UpdateData', async () => {
@@ -50,7 +52,9 @@ presence.on('UpdateData', async () => {
     const match = getText('.eventIndicator__text')
 
     presenceData.details = 'Viewing Live Rewards'
-    presenceData.state = points ? `Points: ${points}` : (match || 'Brawl Stars Championship')
+    presenceData.state = points
+      ? `Points: ${points}`
+      : (match || 'Brawl Stars Championship')
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Rewards'
 
@@ -66,7 +70,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/rewards')) {
     const points = getText('.pointsBar__label')
     presenceData.details = 'Viewing Rewards Track'
-    presenceData.state = points ? `Points: ${points}` : 'Brawl Stars Championship'
+    presenceData.state = points
+      ? `Points: ${points}`
+      : 'Brawl Stars Championship'
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Rewards'
 

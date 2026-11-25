@@ -179,7 +179,9 @@ presence.on('UpdateData', async () => {
         else if (/\/(?:ligne|line|linea)(?:\/|$)/.test(completePath)) {
           const status = document.querySelector('.traffic-list > h3')?.firstChild?.textContent || document.querySelector('.traffic-list p')?.textContent
           const number = document.querySelector('.traffic-list > h3 > span')?.textContent
-          presenceData.state = `${status} ${number ? `: ${number}` : ''}`
+          presenceData.state = `${status} ${number
+            ? `: ${number}`
+            : ''}`
           svgImg = document.querySelector<HTMLImageElement>('.tbm-lines-name-wrapper > img')
           if (svgImg) {
             presenceData.smallImageKey = await svgToPng(svgImg?.src)
@@ -219,7 +221,11 @@ presence.on('UpdateData', async () => {
           const lineCode = document.querySelector('.plan-dynamic .lc-active-line .lc-line img')?.getAttribute('alt')
           const lineDirection = document.querySelector('.plan-dynamic .lc-line-header .lc-direction > strong')
           const selectedStop = document.querySelector('.plan-dynamic .lc-stop-opened > span')
-          presenceData.state = selectedStop ? `${strings.stop} ${selectedStop?.textContent} - ${strings.direction} ${lineDirection?.textContent}` : (activeLine ? `${strings.direction} ${lineDirection?.textContent}` : document.querySelector('.plan-dynamic .lc-board-title')?.textContent)
+          presenceData.state = selectedStop
+            ? `${strings.stop} ${selectedStop?.textContent} - ${strings.direction} ${lineDirection?.textContent}`
+            : (activeLine
+                ? `${strings.direction} ${lineDirection?.textContent}`
+                : document.querySelector('.plan-dynamic .lc-board-title')?.textContent)
           if (lineCode && activeLine) {
             const lineData = await getSpecificLineInfos(lineCode)
             presenceData.smallImageKey = await svgToPng(lineData!.iconUrl!)
@@ -240,7 +246,9 @@ presence.on('UpdateData', async () => {
           const departureStop = document.querySelector('.lines > h2:nth-of-type(1)')
           const arrivalStop = document.querySelector('.lines > h2:nth-of-type(2)')
           presenceData.details = strings.viewLineInfo
-          presenceData.state = `${departureStop?.textContent}${arrivalStop ? ` ↔ ${arrivalStop?.textContent}` : ''}`
+          presenceData.state = `${departureStop?.textContent}${arrivalStop
+            ? ` ↔ ${arrivalStop?.textContent}`
+            : ''}`
           svgImg = document.querySelector<HTMLImageElement>('.tbm-icon-picto > img')
           if (svgImg) {
             presenceData.smallImageKey = await svgToPng(svgImg?.src)

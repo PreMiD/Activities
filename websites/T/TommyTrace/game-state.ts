@@ -26,7 +26,9 @@ function text(document: Document, id: string): string {
 
 function regionFrom(value: string): string {
   const key = value.toLowerCase().match(/\b(world|malaysia|sabah)\b/)?.[1]
-  return key ? REGIONS[key] || '' : ''
+  return key
+    ? REGIONS[key] || ''
+    : ''
 }
 
 function modeFrom(badge: string): string {
@@ -47,7 +49,9 @@ function modeFrom(badge: string): string {
 
 function roundFrom(value: string): string {
   const match = value.match(/^\s*([1-5])\s*\/\s*5\s*$/)
-  return match ? `Round ${Number(match[1])} of 5` : 'In a round'
+  return match
+    ? `Round ${Number(match[1])} of 5`
+    : 'In a round'
 }
 
 /**
@@ -66,7 +70,9 @@ export function createPresenceData(
   if (!['/', '/index.html'].includes(url.pathname))
     return null
 
-  const screen = [...document.querySelectorAll('.screen.active')].find(visible)
+  const screen = [
+    ...document.querySelectorAll('.screen.active'),
+  ].find(visible)
   if (!screen)
     return null
 
@@ -93,10 +99,15 @@ export function createPresenceData(
   else if (screen.id === 'lobbyScreen') {
     // The rendered label is kept in sync for both hosts and guests. A hidden
     // region select can retain a default value, so it is not authoritative.
-    details = ['Private Multiplayer', regionFrom(text(document, 'lobbyRegion'))].filter(Boolean).join(' · ')
+    details = [
+      'Private Multiplayer',
+      regionFrom(text(document, 'lobbyRegion')),
+    ].filter(Boolean).join(' · ')
     state = 'In lobby'
     const rawCount = text(document, 'lobbyPlayerCount')
-    const count = /^\d+$/.test(rawCount) ? Number(rawCount) : 0
+    const count = /^\d+$/.test(rawCount)
+      ? Number(rawCount)
+      : 0
     if (count >= 1 && count <= 4) {
       state = `In lobby · ${count} of 4 players`
       // PreMiD 2.14+: native Discord party badge. No room ID is disclosed.
@@ -113,19 +124,29 @@ export function createPresenceData(
     details = 'Private Multiplayer'
     state = 'Creating or joining a lobby'
   }
-  else if (['gameScreen', 'resultScreen', 'finalScreen', 'mpResultScreen', 'mpFinalScreen'].includes(screen.id)) {
+  else if ([
+    'gameScreen',
+    'resultScreen',
+    'finalScreen',
+    'mpResultScreen',
+    'mpFinalScreen',
+  ].includes(screen.id)) {
     const badge = text(document, 'modeBadge')
     let mode = modeFrom(badge)
     if (['mpResultScreen', 'mpFinalScreen'].includes(screen.id) && mode === 'Solo Expedition')
       mode = 'Private Multiplayer'
-    const region = mode === 'Learning to play' ? '' : regionFrom(badge)
+    const region = mode === 'Learning to play'
+      ? ''
+      : regionFrom(badge)
     details = [mode, region].filter(Boolean).join(' · ')
 
     if (screen.id === 'mpFinalScreen') {
       state = 'Match complete'
     }
     else if (screen.id === 'finalScreen') {
-      state = mode === 'Daily Challenge' || mode === 'Friend Challenge' ? 'Challenge complete' : 'Expedition complete'
+      state = mode === 'Daily Challenge' || mode === 'Friend Challenge'
+        ? 'Challenge complete'
+        : 'Expedition complete'
     }
     else if (mode === 'Learning to play') {
       state = 'Practice round'
@@ -146,7 +167,11 @@ export function createPresenceData(
     details,
     state,
     largeImageKey: `${HOME}favicon.png`,
-    ...(party ? { party } : {}),
-    ...(options.showTimestamp !== false ? { startTimestamp: startedAt } : {}),
+    ...(party
+      ? { party }
+      : {}),
+    ...(options.showTimestamp !== false
+      ? { startTimestamp: startedAt }
+      : {}),
   }
 }

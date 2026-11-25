@@ -109,8 +109,12 @@ presence.on('UpdateData', async () => {
     .find(Boolean)
 
   // Browsing info is only shown when nothing is actively playing, unless the user asked for browsing info only
-  if (showBrowsing && page && (browseInfo || !hasTrack || paused))
-    return presence.setActivity({ ...presenceData, ...page } as PresenceData)
+  if (showBrowsing && page && (browseInfo || !hasTrack || paused)) {
+    return presence.setActivity({
+      ...presenceData,
+      ...page,
+    } as PresenceData)
+  }
 
   if (!hasTrack || (hidePaused && paused))
     return presence.clearActivity()
