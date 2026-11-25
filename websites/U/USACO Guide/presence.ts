@@ -25,11 +25,15 @@ presence.on('UpdateData', async () => {
 
   if (hostname === 'ide.usaco.guide') {
     presenceData.details = 'Using IDE'
-    presenceData.state = title === 'USACO IDE' || !title ? 'Coding' : title
+    presenceData.state = title === 'USACO IDE' || !title
+      ? 'Coding'
+      : title
   }
   else if (hostname === 'forum.usaco.guide') {
     presenceData.details = 'Browsing Forum'
-    presenceData.state = title === 'USACO Forum' || !title ? 'Homepage' : title
+    presenceData.state = title === 'USACO Forum' || !title
+      ? 'Homepage'
+      : title
   }
   else {
     const pathParts = pathname.split('/').filter(Boolean)
@@ -65,15 +69,21 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.details = 'Solving Problem'
       }
-      presenceData.state = title === 'USACO Guide' || !title ? problemName : title
+      presenceData.state = title === 'USACO Guide' || !title
+        ? problemName
+        : title
     }
     else if (section && sections[section]) {
       presenceData.details = `Browsing ${sections[section]}`
-      presenceData.state = title === 'USACO Guide' || !title ? 'Exploring guides' : title
+      presenceData.state = title === 'USACO Guide' || !title
+        ? 'Exploring guides'
+        : title
     }
     else {
       presenceData.details = 'Browsing USACO Guide'
-      presenceData.state = title === 'USACO Guide' || !title ? 'Exploring guides' : title
+      presenceData.state = title === 'USACO Guide' || !title
+        ? 'Exploring guides'
+        : title
     }
   }
 

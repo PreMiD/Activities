@@ -58,9 +58,13 @@ function parseDisplayedTime(value: string): number {
 }
 
 function readLegacySnapshot(): PresenceSnapshot {
-  const modeControl = [...document.querySelectorAll('.rt-SegmentedControlRoot')]
+  const modeControl = [
+    ...document.querySelectorAll('.rt-SegmentedControlRoot'),
+  ]
     .find(control => control.querySelectorAll('.rt-SegmentedControlItem').length === 3)
-  const modeItems = [...(modeControl?.querySelectorAll('.rt-SegmentedControlItem') ?? [])]
+  const modeItems = [
+    ...(modeControl?.querySelectorAll('.rt-SegmentedControlItem') ?? []),
+  ]
   const activeModeIndex = modeItems.findIndex(item =>
     item.getAttribute('aria-checked') === 'true'
     || item.getAttribute('data-state') === 'on',
@@ -71,19 +75,25 @@ function readLegacySnapshot(): PresenceSnapshot {
       ? 'preview'
       : 'edit'
 
-  const projectButton = [...document.querySelectorAll<HTMLButtonElement>('button')]
+  const projectButton = [
+    ...document.querySelectorAll<HTMLButtonElement>('button'),
+  ]
     .find(button => /\.(?:ttml|lrc|txt)\b/i.test(button.textContent ?? ''))
   const title = (projectButton?.textContent ?? '')
     .trim()
     .replace(/\.(?:ttml|lrc|txt)\s*$/i, '')
 
-  const renderedLines = [...document.querySelectorAll<HTMLElement>('[data-lyric-line-id]')]
+  const renderedLines = [
+    ...document.querySelectorAll<HTMLElement>('[data-lyric-line-id]'),
+  ]
   const uniqueLineIds = new Set(renderedLines.map(line => line.dataset.lyricLineId).filter(Boolean))
   const selectedLine = document.querySelector<HTMLElement>(
     '[class*="_selected_"] [data-lyric-line-id], [class*="_selected_"][data-lyric-line-id]',
   )
   const selectedId = selectedLine?.dataset.lyricLineId
-  const selectedIndex = selectedId ? [...uniqueLineIds].indexOf(selectedId) : -1
+  const selectedIndex = selectedId
+    ? [...uniqueLineIds].indexOf(selectedId)
+    : -1
   const legacySelectedIndex = Number.parseInt(
     document.querySelector('div[class*="_selected_"]')?.firstChild?.textContent ?? '',
   )
@@ -91,12 +101,16 @@ function readLegacySnapshot(): PresenceSnapshot {
     'div[class*="lyricLine_"], div[class*="lyricLineContainer"]',
   ).length
 
-  const timeLabels = [...document.querySelectorAll<HTMLElement>('.rt-Text')]
+  const timeLabels = [
+    ...document.querySelectorAll<HTMLElement>('.rt-Text'),
+  ]
     .map(element => element.textContent?.trim() ?? '')
     .filter(value => /^(?:\d+:)?\d+:\d+(?:\.\d+)?$/.test(value))
   const positionSeconds = parseDisplayedTime(timeLabels[0] ?? '0:00')
   const durationSeconds = parseDisplayedTime(timeLabels.at(-1) ?? '0:00')
-  const playPauseButton = [...document.querySelectorAll<HTMLButtonElement>('button.rt-IconButton')]
+  const playPauseButton = [
+    ...document.querySelectorAll<HTMLButtonElement>('button.rt-IconButton'),
+  ]
     .find((button) => {
       const path = button.querySelector('svg path')?.getAttribute('d')
       return path?.startsWith('M17.22') || path?.startsWith('M5 2')
@@ -113,7 +127,9 @@ function readLegacySnapshot(): PresenceSnapshot {
     artist: '',
     currentLine: selectedIndex >= 0
       ? selectedIndex + 1
-      : Number.isNaN(legacySelectedIndex) ? null : legacySelectedIndex,
+      : Number.isNaN(legacySelectedIndex)
+        ? null
+        : legacySelectedIndex,
     totalLines,
     playing,
     positionSeconds,

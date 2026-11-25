@@ -22,7 +22,9 @@ export default function applyFehPassDetails(
         presenceData.state = `${
           document.querySelector<HTMLLIElement>('.chara_name.anime')?.textContent
         }: ${
-          [...activeText?.classList ?? []].find(c => /\d$/.test(c))?.match(/\d+/)?.[0]
+          [
+            ...activeText?.classList ?? [],
+          ].find(c => /\d$/.test(c))?.match(/\d+/)?.[0]
         } / ${
           [
             ...document.querySelector<HTMLLIElement>('.text:last-of-type')

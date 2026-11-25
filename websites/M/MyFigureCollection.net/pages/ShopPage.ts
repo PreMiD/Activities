@@ -7,7 +7,9 @@ export class ShopPage extends BasePage {
     presenceData.state = getTitle()
     presenceData.smallImageKey = await squareImage(getThumbnail())
     presenceData.smallImageText = getCurrentLink()
-    presenceData.buttons = [getButton(strings.buttonViewShop)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewShop),
+    ]
     return false
   }
 }

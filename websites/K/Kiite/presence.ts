@@ -79,8 +79,14 @@ function nicoThumbnailUrlsInCssText(css: string): string[] {
 function pickBestNicoThumbnailUrl(urls: string[]): string | undefined {
   if (urls.length === 0)
     return undefined
-  const rank = (u: string) => (u.endsWith('.L') ? 3 : u.endsWith('.M') ? 2 : 1)
-  return urls.reduce((best, curr) => (rank(curr) > rank(best) ? curr : best))
+  const rank = (u: string) => (u.endsWith('.L')
+    ? 3
+    : u.endsWith('.M')
+      ? 2
+      : 1)
+  return urls.reduce((best, curr) => (rank(curr) > rank(best)
+    ? curr
+    : best))
 }
 
 function thumbnailFromNicoHeadStyles(): string | undefined {
@@ -132,12 +138,16 @@ function playerThumbnail(): string | undefined {
     if (!video)
       return undefined
     const poster = video.getAttribute('poster') || video.poster
-    return poster && !isPlaceholderThumbnail(poster) ? poster : undefined
+    return poster && !isPlaceholderThumbnail(poster)
+      ? poster
+      : undefined
   })()
 
   return (
     fromThumb
-    ?? (fromRow && !isPlaceholderThumbnail(fromRow) ? fromRow : undefined)
+    ?? (fromRow && !isPlaceholderThumbnail(fromRow)
+      ? fromRow
+      : undefined)
     ?? fromPoster
     ?? thumbnailFromNicoHeadStyles()
   )
@@ -204,7 +214,9 @@ function listeningPresence(
     details: title,
     smallImageKey: playing ? Assets.Play : Assets.Pause,
     smallImageText: playing ? strings.playing : strings.paused,
-    buttons: [{ label: strings.buttonViewPage, url: href }],
+    buttons: [
+      { label: strings.buttonViewPage, url: href },
+    ],
   }
   if (artist)
     presenceData.state = artist
@@ -297,7 +309,9 @@ function handleMainSite(
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     details: strings.browsing,
-    buttons: [{ label: strings.buttonViewPage, url: href }],
+    buttons: [
+      { label: strings.buttonViewPage, url: href },
+    ],
   }
   applyMainBrowsingState(pathname, search, strings, presenceData)
   return presenceData
@@ -342,7 +356,9 @@ function handleCafe(strings: PresenceStrings, href: string): PresenceData {
     details: strings.browsing,
     state: 'Kiite Cafe',
     smallImageKey: Assets.Reading,
-    buttons: [{ label: strings.buttonViewPage, url: href }],
+    buttons: [
+      { label: strings.buttonViewPage, url: href },
+    ],
   }
 }
 
@@ -362,7 +378,9 @@ function handleCheck(strings: PresenceStrings, href: string): PresenceData {
       href,
       title,
       artist || undefined,
-      thumbnail && !isPlaceholderThumbnail(thumbnail) ? thumbnail : undefined,
+      thumbnail && !isPlaceholderThumbnail(thumbnail)
+        ? thumbnail
+        : undefined,
       true,
     )
   }
@@ -372,7 +390,9 @@ function handleCheck(strings: PresenceStrings, href: string): PresenceData {
     details: strings.browsing,
     state: 'Kiite Check',
     smallImageKey: Assets.Reading,
-    buttons: [{ label: strings.buttonViewPage, url: href }],
+    buttons: [
+      { label: strings.buttonViewPage, url: href },
+    ],
   }
 }
 
@@ -413,7 +433,9 @@ function handleWorld(strings: PresenceStrings, href: string): PresenceData {
     details: strings.browsing,
     state: 'Kiite World',
     smallImageKey: Assets.Reading,
-    buttons: [{ label: strings.buttonViewPage, url: href }],
+    buttons: [
+      { label: strings.buttonViewPage, url: href },
+    ],
   }
 }
 
@@ -426,7 +448,9 @@ function handleRadar(strings: PresenceStrings, href: string): PresenceData {
     details: strings.browsing,
     state: title || 'Kiite Radar',
     smallImageKey: Assets.Reading,
-    buttons: [{ label: strings.buttonViewPage, url: href }],
+    buttons: [
+      { label: strings.buttonViewPage, url: href },
+    ],
   }
 }
 
@@ -439,9 +463,13 @@ function handleGenericHost(
   return {
     largeImageKey: ActivityAssets.Logo,
     details: strings.browsing,
-    state: label === 'kiite' ? 'Kiite' : `Kiite ${label.charAt(0).toUpperCase()}${label.slice(1)}`,
+    state: label === 'kiite'
+      ? 'Kiite'
+      : `Kiite ${label.charAt(0).toUpperCase()}${label.slice(1)}`,
     smallImageKey: Assets.Reading,
-    buttons: [{ label: strings.buttonViewPage, url: href }],
+    buttons: [
+      { label: strings.buttonViewPage, url: href },
+    ],
   }
 }
 

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "glitchy_0x0",
+    "id": "367721666664464386"
+  },
+  "service": "Xperify",
+  "description": {
+    "en": "Free aim trainer in your browser. Test your reaction time, then train flicks, tracking and angle holding for Valorant, CS2, Apex Legends, Warzone and Overwatch 2, with monthly leaderboards and a daily challenge."
+  },
+  "url": "xperify.in",
+  "regExp": "^https?[:][/][/](www[.])?xperify[.]in[/]",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/X/Xperify/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/X/Xperify/assets/thumbnail.png",
+  "color": "#22FF88",
+  "category": "games",
+  "tags": [
+    "aim-trainer",
+    "aimtrainer",
+    "reaction-test",
+    "fps",
+    "valorant",
+    "cs2",
+    "game"
+  ],
+  "settings": [
+    {
+      "id": "score",
+      "title": "Show score",
+      "icon": "fas fa-trophy",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}

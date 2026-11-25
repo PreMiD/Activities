@@ -33,7 +33,7 @@ function lowerCaseIt(string: string | undefined | null) {
 function removePlural(string: string) {
   if (!string)
     return 'Undefined'
-  else if (string.slice(-1) === 's')
+  else if (string.endsWith('s'))
     return string.slice(0, -1)
   else return string
 }

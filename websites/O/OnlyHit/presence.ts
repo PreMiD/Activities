@@ -52,8 +52,16 @@ presence.on('UpdateData', async () => {
   presenceData.state = format2
     .replace('%song%', data.title)
     .replace('%artist%', data.artist)
-  presenceData.smallImageKey = data.isPlaying ? data.duration === 0 ? Assets.Live : Assets.Play : Assets.Pause
-  presenceData.smallImageText = data.isPlaying ? data.duration === 0 ? strings.live : strings.play : strings.pause
+  presenceData.smallImageKey = data.isPlaying
+    ? data.duration === 0
+      ? Assets.Live
+      : Assets.Play
+    : Assets.Pause
+  presenceData.smallImageText = data.isPlaying
+    ? data.duration === 0
+      ? strings.live
+      : strings.play
+    : strings.pause
   presenceData.largeImageKey = `https://onlyhit.us/cdn/${data.cover ? data.cover : data.station.logo}?width=512`
   if (data.duration !== 0 && data.isPlaying) {
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(Date.now() / 1000) - data.start_time, data.duration)

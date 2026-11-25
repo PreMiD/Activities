@@ -100,7 +100,9 @@ export function safeDecode(value: string): string {
 
 export function shortenId(value: string, size = 6): string {
   const text = normalizeText(value)
-  return text ? text.slice(0, size).toUpperCase() : ''
+  return text
+    ? text.slice(0, size).toUpperCase()
+    : ''
 }
 
 export function toAbsoluteUrl(value: string): string {
@@ -118,7 +120,9 @@ export function toAbsoluteUrl(value: string): string {
 
 export function toTmdbImageUrl(path: unknown, size = 'w500'): string {
   const text = normalizeText(path)
-  return text ? `${TMDB_IMAGE_BASE}/${size}${text}` : ''
+  return text
+    ? `${TMDB_IMAGE_BASE}/${size}${text}`
+    : ''
 }
 
 export function isImageUrlAllowed(value: string): boolean {
@@ -242,7 +246,9 @@ export function findTitleAttribute(predicate: (title: string) => boolean): strin
     }
 
     const title = normalizeText(element.getAttribute('title'))
-    return title && predicate(title) ? title : ''
+    return title && predicate(title)
+      ? title
+      : ''
   })
 
   if (visibleTitle) {
@@ -251,7 +257,9 @@ export function findTitleAttribute(predicate: (title: string) => boolean): strin
 
   return findLatestValue(elements, (element) => {
     const title = normalizeText(element.getAttribute('title'))
-    return title && predicate(title) ? title : ''
+    return title && predicate(title)
+      ? title
+      : ''
   })
 }
 
@@ -268,8 +276,12 @@ export function getCurrentVideoElement(): HTMLVideoElement | null {
     }
 
     const isVisible = isRelevantDomElement(video)
-    const rect = isVisible ? video.getBoundingClientRect() : null
-    const area = rect ? rect.width * rect.height : 0
+    const rect = isVisible
+      ? video.getBoundingClientRect()
+      : null
+    const area = rect
+      ? rect.width * rect.height
+      : 0
 
     let score = 0
     if (isVisible) {
@@ -493,7 +505,9 @@ export function createWatchingPresence(options: {
           : options.title),
       )
   const prefix
-    = !routeWatchMediaType && season && episode ? `S${season}E${episode} - ` : ''
+    = !routeWatchMediaType && season && episode
+      ? `S${season}E${episode} - `
+      : ''
   const watchContext = getWatchContext()
   const activeEmbedFrame = getActiveEmbedFrame()
   const embedSourceLabel = privacy
@@ -708,7 +722,9 @@ export function getPartyContext(): PartyContext {
     episode: normalizeText(element.getAttribute('data-premid-party-episode')),
     poster: normalizeText(element.getAttribute('data-premid-party-poster')),
     participants:
-      Number.isFinite(participants) && participants > 0 ? participants : 0,
+      Number.isFinite(participants) && participants > 0
+        ? participants
+        : 0,
   }
 }
 
@@ -821,12 +837,16 @@ export function formatWatchSourceDisplay(label: unknown, detail: unknown): strin
   })
 
   const cleanedDetail = kept.join(' - ')
-  return cleanedDetail ? `${sourceLabel} - ${cleanedDetail}` : sourceLabel
+  return cleanedDetail
+    ? `${sourceLabel} - ${cleanedDetail}`
+    : sourceLabel
 }
 
 export function formatWatchSourceState(label: unknown, detail: unknown): string {
   const sourceDisplay = formatWatchSourceDisplay(label, detail)
-  return sourceDisplay ? `Via ${sourceDisplay}` : ''
+  return sourceDisplay
+    ? `Via ${sourceDisplay}`
+    : ''
 }
 
 export function isLikelyEmbedSource(value: unknown): boolean {
@@ -865,7 +885,9 @@ export function getEmbedSourceLabelFromUrl(value: unknown): string {
 
   try {
     const hostname = new URL(
-      normalized.includes('://') ? normalized : `https://${normalized}`,
+      normalized.includes('://')
+        ? normalized
+        : `https://${normalized}`,
     ).hostname.replace(WWW_PREFIX_PATTERN, '')
     const root = hostname.split('.')[0] || ''
     return formatWatchSourceLabel(root)
@@ -987,7 +1009,9 @@ export function getFormattedWatchTitle(
   if (mediaType === 'tv' || mediaType === 'anime') {
     const season = normalizeText(context.season) || seasonFallback
     const episode = normalizeText(context.episode) || episodeFallback
-    const episodeCode = season && episode ? `S${season}E${episode}` : ''
+    const episodeCode = season && episode
+      ? `S${season}E${episode}`
+      : ''
     const episodeTitle = sanitizeWatchEpisodeTitle(context.episodeTitle)
 
     return [title, episodeCode, episodeTitle].filter(Boolean).join(' - ')
@@ -997,7 +1021,9 @@ export function getFormattedWatchTitle(
 }
 
 export function getWatchEpisodeHoverLabel(season: string, episode: string): string {
-  const episodeCode = season && episode ? `S${season}E${episode}` : ''
+  const episodeCode = season && episode
+    ? `S${season}E${episode}`
+    : ''
   const episodeTitle = sanitizeWatchEpisodeTitle(getWatchContext().episodeTitle)
 
   return [episodeCode, episodeTitle].filter(Boolean).join(' - ')

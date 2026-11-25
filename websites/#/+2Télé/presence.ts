@@ -150,7 +150,9 @@ presence.on('UpdateData', async () => {
       const channel = channelLink?.textContent?.trim()
 
       presenceData.details = heading ?? 'Zapping'
-      presenceData.state = channel ? `Zapping • ${channel}` : 'Zapping'
+      presenceData.state = channel
+        ? `Zapping • ${channel}`
+        : 'Zapping'
       setVideo(presenceData, t)
       if (playerLink)
         buttons.push({ label: t.buttonWatchVideo, url: playerLink.href })
@@ -258,8 +260,11 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (showButtons && buttons[0])
-    presenceData.buttons = buttons[1] ? [buttons[0], buttons[1]] : [buttons[0]]
+  if (showButtons && buttons[0]) {
+    presenceData.buttons = buttons[1]
+      ? [buttons[0], buttons[1]]
+      : [buttons[0]]
+  }
 
   presence.setActivity(presenceData)
 })

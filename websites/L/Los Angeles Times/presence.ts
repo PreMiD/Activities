@@ -69,7 +69,9 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = 'Viewing an Author'
     presenceData.state = `${author.name}${
-      author.title ? ` (${author.title})` : ''
+      author.title
+        ? ` (${author.title})`
+        : ''
     }`
 
     if (author.avatar) {
@@ -87,7 +89,9 @@ presence.on('UpdateData', async () => {
     const authors = document.querySelector('div.authors > div.author-name')
     const headline = document.querySelector('h1.headline')?.textContent ?? title
 
-    presenceData.details = !showMoreDetails ? 'Reading an Article' : headline
+    presenceData.details = !showMoreDetails
+      ? 'Reading an Article'
+      : headline
 
     if (!privacyMode) {
       presenceData.state = showMoreDetails

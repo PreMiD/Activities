@@ -76,7 +76,9 @@ test('listening to a song', async ({ page, activity }) => {
     expect(presence.endTimestamp).toEqual(expect.any(Number))
 })
 
-test('privacy mode hides the song title', { settings: { privacy: true } }, async ({ page, activity }) => {
+test('privacy mode hides the song title', {
+  settings: { privacy: true },
+}, async ({ page, activity }) => {
   await page.goto('https://music.youtube.com/watch?v=dQw4w9WgXcQ')
   await page.waitForUser('Accept the consent screen or sign in', consentOrLogin)
 

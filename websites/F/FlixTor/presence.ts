@@ -95,7 +95,9 @@ presence.on('UpdateData', async () => {
         : 'Title not found...'
       presenceData.buttons = [
         {
-          label: presenceData.state!.length >= 30 ? 'Watch Now' : presenceData.state,
+          label: presenceData.state!.length >= 30
+            ? 'Watch Now'
+            : presenceData.state,
           url: document.location.href,
         },
       ]

@@ -77,15 +77,21 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Searching for articles'
       }
       else if (path.startsWith('/hc/en-us/search?')) {
-        presenceData.state = !privacyMode ? `Searching '${params.get('query')}'` : 'Searching for articles'
+        presenceData.state = !privacyMode
+          ? `Searching '${params.get('query')}'`
+          : 'Searching for articles'
       }
       else if (path.startsWith('/hc/en-us/articles/')) {
-        presenceData.state = !privacyMode ? `Reading '${document.title.substring(0, document.title.length - 10)}'` : 'Reading an article'
+        presenceData.state = !privacyMode
+          ? `Reading '${document.title.substring(0, document.title.length - 10)}'`
+          : 'Reading an article'
         if (!privacyMode) {
-          presenceData.buttons = [{
-            label: 'View Article',
-            url: document.location.href,
-          }]
+          presenceData.buttons = [
+            {
+              label: 'View Article',
+              url: document.location.href,
+            },
+          ]
         }
       }
       else if (path.startsWith('/hc/en-us/requests/')) {
@@ -139,22 +145,30 @@ presence.on('UpdateData', async () => {
       }
       else if (path.startsWith('/set/')) {
         const setName: string = document.title.substring(0, document.title.length - 10)
-        presenceData.state = !privacyMode ? `Viewing a set: '${setName}'` : 'Viewing a set'
+        presenceData.state = !privacyMode
+          ? `Viewing a set: '${setName}'`
+          : 'Viewing a set'
         if (!privacyMode) {
-          presenceData.buttons = [{
-            label: 'View Set',
-            url: document.location.href,
-          }]
+          presenceData.buttons = [
+            {
+              label: 'View Set',
+              url: document.location.href,
+            },
+          ]
         }
       }
       else if (path.startsWith('/user/')) {
         const userProfile: string = path.split('/')[2] as string
-        presenceData.state = !privacyMode ? `Viewing ${userProfile}'s profile` : `Viewing a user's profile`
+        presenceData.state = !privacyMode
+          ? `Viewing ${userProfile}'s profile`
+          : `Viewing a user's profile`
         if (!privacyMode) {
-          presenceData.buttons = [{
-            label: 'View Set',
-            url: document.location.href,
-          }]
+          presenceData.buttons = [
+            {
+              label: 'View Set',
+              url: document.location.href,
+            },
+          ]
         }
       }
       else if (path.startsWith('/assign/')) {
@@ -210,13 +224,17 @@ presence.on('UpdateData', async () => {
     case 'coco.blooket.com': {
       // new blooket modes
       const codename: string = host.split('.')[0] as string
-      presenceData.details = `${path.endsWith('/host') ? 'Hosting' : 'Playing'} ${codenameToFullName[codename]}`
+      presenceData.details = `${path.endsWith('/host')
+        ? 'Hosting'
+        : 'Playing'} ${codenameToFullName[codename]}`
 
       if (path.endsWith('/host') && privacyMode !== true) {
         const playerCountText: HTMLDivElement | undefined = getDivFromClass('_playerNumber')
         if (playerCountText) {
           const playerCount: number = Number.parseInt(playerCountText.textContent || '0')
-          presenceData.state = `with ${playerCount} player${playerCount !== 1 ? 's' : ''}`
+          presenceData.state = `with ${playerCount} player${playerCount !== 1
+            ? 's'
+            : ''}`
         }
         else {
           presenceData.state = ''
@@ -237,7 +255,9 @@ presence.on('UpdateData', async () => {
     case 'blookrush.blooket.com':
     case 'classic.blooket.com': {
       const codename2: string = host.split('.')[0] as string
-      presenceData.details = `${path.includes('host') ? 'Hosting' : 'Playing'} ${codenameToFullName[codename2]}`
+      presenceData.details = `${path.includes('host')
+        ? 'Hosting'
+        : 'Playing'} ${codenameToFullName[codename2]}`
       presenceData.largeImageKey = presenceImages[codename2]
 
       if (path.startsWith('/landing')) {
@@ -250,7 +270,9 @@ presence.on('UpdateData', async () => {
         const playerCountText: HTMLDivElement | undefined = getDivFromClass('_playerNumber')
         if (playerCountText && privacyMode !== true) {
           const playerCount: number = Number.parseInt(playerCountText.textContent || '0')
-          presenceData.state = `with ${playerCount} player${playerCount !== 1 ? 's' : ''}`
+          presenceData.state = `with ${playerCount} player${playerCount !== 1
+            ? 's'
+            : ''}`
         }
         else {
           presenceData.state = ''

@@ -113,9 +113,13 @@ async function resolveCoverFromOutline(): Promise<string | null> {
 }
 
 const browserLang = navigator.language
-const userLang = browserLang.includes('zh') ? 'zh' : 'en'
+const userLang = browserLang.includes('zh')
+  ? 'zh'
+  : 'en'
 function t(zh: string, en: string): string {
-  return userLang === 'zh' ? zh : en
+  return userLang === 'zh'
+    ? zh
+    : en
 }
 
 presence.on('UpdateData', async () => {
@@ -152,9 +156,15 @@ presence.on('UpdateData', async () => {
 
           // 按优先级获取显示值，符合“不限”则返回 undefined
           const novelTypeName = NovelType[novelTypeId]?.[userLang] ?? undefined
-          const progressStatusName = novelProgressStatus !== 2 ? (NovelProgressStatusMap[novelProgressStatus]?.[userLang] ?? undefined) : undefined
-          const updatedWithinName = novelUpdatedWithinDays !== -1 ? (UpdatedWithinDaysMap[novelUpdatedWithinDays]?.[userLang] ?? undefined) : undefined
-          const initialLetterName = (novelInitialLetter !== '*' && novelInitialLetter !== '') ? novelInitialLetter : undefined
+          const progressStatusName = novelProgressStatus !== 2
+            ? (NovelProgressStatusMap[novelProgressStatus]?.[userLang] ?? undefined)
+            : undefined
+          const updatedWithinName = novelUpdatedWithinDays !== -1
+            ? (UpdatedWithinDaysMap[novelUpdatedWithinDays]?.[userLang] ?? undefined)
+            : undefined
+          const initialLetterName = (novelInitialLetter !== '*' && novelInitialLetter !== '')
+            ? novelInitialLetter
+            : undefined
 
           // 先按顺序把可能的值放进数组
           const stateParts = [novelTypeName, progressStatusName, updatedWithinName]
@@ -228,7 +238,9 @@ presence.on('UpdateData', async () => {
               presenceData.largeImageKey = coverUrl
               presenceData.details = t('查看章节目录', 'Viewing chapter index')
               const novelTitle = document.querySelector('h1')?.textContent?.trim()
-              presenceData.state = novelTitle ? `《${novelTitle}》` : t('未知作品', 'Unknow Title')
+              presenceData.state = novelTitle
+                ? `《${novelTitle}》`
+                : t('未知作品', 'Unknow Title')
               break
             }
             case /^\/Novel\/\d+\/\d+\/\d+\/?$/.test(currentPathname): {
@@ -240,7 +252,9 @@ presence.on('UpdateData', async () => {
               const chapterName = document.querySelector('h1')?.textContent?.trim()
               const authorText = document.querySelector('.article-desc .text')?.textContent
               const author = authorText?.replace(/^作者：/, '').trim()
-              const detailsText = title ? `${t('阅读', 'Reading')}《${title}》` : t('未知作品', 'Unknow Title')
+              const detailsText = title
+                ? `${t('阅读', 'Reading')}《${title}》`
+                : t('未知作品', 'Unknow Title')
               let stateText: string | undefined
               if (chapterName && author) {
                 stateText = `${chapterName} · ${author}`
@@ -270,7 +284,9 @@ presence.on('UpdateData', async () => {
       const key = urlParams.get('Key') ?? ''
       const decodedKey = decodeSearchKey(key) ?? undefined
       presenceData.details = t('搜索小说', 'Searching Novels')
-      presenceData.state = decodedKey ? `>> "${decodedKey}"` : t('未知关键词', 'Unknow Keys')
+      presenceData.state = decodedKey
+        ? `>> "${decodedKey}"`
+        : t('未知关键词', 'Unknow Keys')
     }
   }
   presence.setActivity(presenceData)

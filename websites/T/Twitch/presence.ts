@@ -31,7 +31,9 @@ function getElement(query: string): string | undefined {
 function getMetaContent(query: string): string | undefined {
   const content = document.querySelector<HTMLMetaElement>(query)?.content?.trim()
 
-  return content && content.length > 0 ? content : undefined
+  return content && content.length > 0
+    ? content
+    : undefined
 }
 function getImageSource(...sources: (string | undefined)[]): string | undefined {
   return sources.find(source => source && !source.startsWith('data:'))?.replace(
@@ -333,7 +335,10 @@ presence.on('UpdateData', async () => {
           if (path.match(k)) {
             presenceData.smallImageKey = Assets.Reading
             presenceData.smallImageText = strings.browse
-            presenceData = { ...presenceData, ...v }
+            presenceData = {
+              ...presenceData,
+              ...v,
+            }
           }
         }
 
@@ -358,7 +363,9 @@ presence.on('UpdateData', async () => {
               ?.querySelector<HTMLImageElement>('img[class*="image-avatar"]')
           )?.src?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
           ?? (logoArr[logo] || ActivityAssets.Logo)
-          user += tab ? ` (${tab})` : ''
+          user += tab
+            ? ` (${tab})`
+            : ''
 
           presenceData.details = strings.viewProfile
           presenceData.state = user
@@ -706,7 +713,10 @@ presence.on('UpdateData', async () => {
           if (path.match(k)) {
             presenceData.smallImageKey = Assets.Reading
             presenceData.smallImageText = strings.browse
-            presenceData = { ...presenceData, ...v }
+            presenceData = {
+              ...presenceData,
+              ...v,
+            }
           }
         }
 
@@ -745,7 +755,10 @@ presence.on('UpdateData', async () => {
           if (path.match(k)) {
             presenceData.smallImageKey = Assets.Reading
             presenceData.smallImageText = strings.browse
-            presenceData = { ...presenceData, ...v }
+            presenceData = {
+              ...presenceData,
+              ...v,
+            }
           }
         }
 
@@ -800,7 +813,10 @@ presence.on('UpdateData', async () => {
           if (path.match(k)) {
             presenceData.smallImageKey = Assets.Reading
             presenceData.smallImageText = strings.browse
-            presenceData = { ...presenceData, ...v }
+            presenceData = {
+              ...presenceData,
+              ...v,
+            }
           }
         }
 
@@ -837,7 +853,10 @@ presence.on('UpdateData', async () => {
           if (path.match(k)) {
             presenceData.smallImageKey = Assets.Reading
             presenceData.smallImageText = strings.browse
-            presenceData = { ...presenceData, ...v }
+            presenceData = {
+              ...presenceData,
+              ...v,
+            }
           }
         }
 
@@ -901,7 +920,10 @@ presence.on('UpdateData', async () => {
           if (path.match(k)) {
             presenceData.smallImageKey = Assets.Reading
             presenceData.smallImageText = strings.browse
-            presenceData = { ...presenceData, ...v }
+            presenceData = {
+              ...presenceData,
+              ...v,
+            }
           }
         }
 
@@ -940,7 +962,10 @@ presence.on('UpdateData', async () => {
           if (path.match(k)) {
             presenceData.smallImageKey = Assets.Reading
             presenceData.smallImageText = strings.browse
-            presenceData = { ...presenceData, ...v }
+            presenceData = {
+              ...presenceData,
+              ...v,
+            }
           }
         }
 
@@ -981,7 +1006,10 @@ presence.on('UpdateData', async () => {
           if (path.match(k)) {
             presenceData.smallImageKey = Assets.Reading
             presenceData.smallImageText = strings.browse
-            presenceData = { ...presenceData, ...v }
+            presenceData = {
+              ...presenceData,
+              ...v,
+            }
           }
         }
 

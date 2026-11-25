@@ -28,7 +28,9 @@ presence.on('UpdateData', async () => {
         pathname.includes('/api/v2/')
         || pathname.includes('/enterprise/api/')
       ) {
-        const activeLabel = [...document.querySelectorAll('label')].find(c =>
+        const activeLabel = [
+          ...document.querySelectorAll('label'),
+        ].find(c =>
           c.className?.includes('active'),
         )
 
@@ -36,7 +38,9 @@ presence.on('UpdateData', async () => {
           isEnterprise ? 'Enterprise ' : ''
         }API documentation`
 
-        presenceData.state = [...(activeLabel?.children ?? [])]
+        presenceData.state = [
+          ...(activeLabel?.children ?? []),
+        ]
           .map((c, i, a) =>
             a.length >= 1 && i === 0
               ? c.textContent?.toUpperCase()
@@ -95,12 +99,16 @@ presence.on('UpdateData', async () => {
           ?.querySelector('h1')
           ?.childNodes[0]
           ?.textContent
-        presenceData.buttons = [{ label: 'View developer', url: href }]
+        presenceData.buttons = [
+          { label: 'View developer', url: href },
+        ]
       }
       else if (appName) {
         presenceData.details = 'Viewing app'
         presenceData.state = appName
-        presenceData.buttons = [{ label: 'View app', url: href }]
+        presenceData.buttons = [
+          { label: 'View app', url: href },
+        ]
       }
       else {
         // Tags and other filter elements are intentionally not supported despite there being pathnames for them
@@ -115,7 +123,9 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Browsing the store'
         presenceData.state = category
           && `${
-            category.includes('categories') ? category : `${category} category`
+            category.includes('categories')
+              ? category
+              : `${category} category`
           }`
       }
 
@@ -381,7 +391,9 @@ presence.on('UpdateData', async () => {
           }
 
           presenceData.state = `${profileName?.textContent}${
-            profileNickname ? ` - ${profileNickname.textContent}` : ''
+            profileNickname
+              ? ` - ${profileNickname.textContent}`
+              : ''
           }`
 
           presenceData.buttons = [

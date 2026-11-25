@@ -15,7 +15,7 @@
   },
   "url": "yumezone.live",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?yumezone[.]live[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YumeZone/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YumeZone/assets/thumbnail.png",
   "color": "#91b8b1",

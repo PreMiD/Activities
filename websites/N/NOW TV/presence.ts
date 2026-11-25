@@ -113,7 +113,9 @@ presence.on('UpdateData', async () => {
     const assetTitle = document.querySelector<HTMLMetaElement>(
       'title',
     )
-    presenceData.state = assetTitle?.textContent ? assetTitle.textContent.replace(' - NOW', '') : undefined
+    presenceData.state = assetTitle?.textContent
+      ? assetTitle.textContent.replace(' - NOW', '')
+      : undefined
     presenceData.details = 'Browsing details'
   }
 

@@ -172,7 +172,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = document.querySelector<HTMLHeadingElement>(
           'div.container-fluid > h1 > strong > a',
         )?.textContent
-        presenceData.buttons = [{ label: 'View Team Page', url: href }]
+        presenceData.buttons = [
+          { label: 'View Team Page', url: href },
+        ]
       }
       break
     case 'character':
@@ -186,7 +188,9 @@ presence.on('UpdateData', async () => {
         ?.textContent
         ?.trim()}`
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('div > a > img')?.src
-      presenceData.buttons = [{ label: 'View character', url: href }]
+      presenceData.buttons = [
+        { label: 'View character', url: href },
+      ]
       break
     default:
       if (pathArr[1]?.startsWith('~')) {
@@ -202,7 +206,9 @@ presence.on('UpdateData', async () => {
           ?.style
           ?.backgroundImage
           ?.split('"')[1]
-        presenceData.buttons = [{ label: 'View artist profile', url: href }]
+        presenceData.buttons = [
+          { label: 'View artist profile', url: href },
+        ]
       }
   }
 

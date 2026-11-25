@@ -61,7 +61,9 @@ presence.on('UpdateData', async () => {
           ? `Viewing REPL: ${title} | File: ${hash.split('#')?.[1]}`
           : `Viewing REPL: ${title}`
         presenceData.state = `Created by: ${pathname.split('/')[1]}`
-        presenceData.buttons = [{ label: 'View REPL', url: href }]
+        presenceData.buttons = [
+          { label: 'View REPL', url: href },
+        ]
         if (activeLine || lineNumbers) {
           presenceData.smallImageKey = ActivityAssets.CodeLine
           presenceData.smallImageText = !activeLine && lineNumbers
@@ -76,7 +78,9 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.details = 'Viewing a user\'s profile'
         presenceData.state = title
-        presenceData.buttons = [{ label: 'View Profile', url: href }]
+        presenceData.buttons = [
+          { label: 'View Profile', url: href },
+        ]
       }
       break
     }

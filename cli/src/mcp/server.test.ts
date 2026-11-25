@@ -5,7 +5,9 @@ describe('toToolResult', () => {
   it('maps a handler error to a tool error', () => {
     expect(toToolResult({ error: 'Activity Nope not found' })).toEqual({
       isError: true,
-      content: [{ type: 'text', text: 'Activity Nope not found' }],
+      content: [
+        { type: 'text', text: 'Activity Nope not found' },
+      ],
     })
   })
 

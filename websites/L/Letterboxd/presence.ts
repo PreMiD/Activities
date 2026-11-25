@@ -17,9 +17,14 @@ function getLoggedInUser(): string | undefined {
 
 // Fixed type signature to accept string | Node | null
 function generateButtonText(text?: string | Node | null): [ButtonData] {
-  if (!text)
-    return [{ label: '', url: document.location.href }]
-  const str = typeof text === 'string' ? text : text.textContent ?? ''
+  if (!text) {
+    return [
+      { label: '', url: document.location.href },
+    ]
+  }
+  const str = typeof text === 'string'
+    ? text
+    : text.textContent ?? ''
   return [
     {
       label: str.replace(/^Viewing\s+/i, 'View '),
@@ -172,7 +177,9 @@ presence.on('UpdateData', async () => {
             ?.firstElementChild as HTMLImageElement
         )?.src
 
-        presenceData.details = cleanHeader ? `Viewing ${cleanHeader}` : 'Viewing person page'
+        presenceData.details = cleanHeader
+          ? `Viewing ${cleanHeader}`
+          : 'Viewing person page'
         if (pfp)
           presenceData.largeImageKey = pfp
 
@@ -484,7 +491,9 @@ presence.on('UpdateData', async () => {
 
               const rating = ratingValue === undefined
                 ? 'Not rated'
-                : '★'.repeat(Math.floor(ratingValue)) + (ratingValue % 1 !== 0 ? '½' : '')
+                : '★'.repeat(Math.floor(ratingValue)) + (ratingValue % 1 !== 0
+                  ? '½'
+                  : '')
 
               presenceData.details = `Review of ${title}`
               presenceData.state = `By ${rater ?? path[0]} (${rating})`
@@ -537,7 +546,9 @@ presence.on('UpdateData', async () => {
           const name = document.querySelectorAll('.title-1')[0]?.textContent?.trim()
           const displayName = name || path[0]
 
-          presenceData.details = `Viewing ${path[0] === user ? 'their own' : `${displayName}'s`} profile`
+          presenceData.details = `Viewing ${path[0] === user
+            ? 'their own'
+            : `${displayName}'s`} profile`
           presenceData.state = path[0] === user && name
             ? `(${name}/${path[0]})`
             : `(${path[0]})`

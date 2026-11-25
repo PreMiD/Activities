@@ -4,7 +4,7 @@
   "private": true,
   "license": "MPL-2.0",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.22.0"
   },
   "scripts": {
     "prepare": "cd cli && npm ci && npm run build && cd .. && npm ci --ignore-scripts",
@@ -13,17 +13,22 @@
     "dev": "pmd dev"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^8.3.0",
+    "@antfu/eslint-config": "^10.0.0",
     "@total-typescript/tsconfig": "^1.0.4",
-    "@types/node": "^25.9.5",
-    "@vitest/coverage-v8": "^4.1.11",
-    "@vitest/ui": "^4.1.11",
-    "eslint": "^10.8.1",
+    "@types/node": "^26.6.6",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@vitest/ui": "^5.1.1",
+    "eslint": "^10.15.0",
     "eslint-plugin-format": "^2.0.1",
-    "eslint-plugin-json-schema-validator": "^6.3.1",
+    "eslint-plugin-json-schema-validator": "^6.3.2",
     "pmd": "file:cli",
     "premid": "file:premid",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.11"
+    "vitest": "^5.1.1"
+  },
+  "overrides": {
+    "tinypool": "^2.2.0",
+    "minimatch": "^11.0.9",
+    "katex": "^0.19.1"
   }
 }

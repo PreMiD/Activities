@@ -44,21 +44,23 @@ export const stringMap = {
 }
 
 // eslint-disable-next-line import/no-mutable-exports
-export let strings: Awaited<
-  typeof stringMap
->
+export let strings: { [K in keyof typeof stringMap]: string }
 
 let oldLang: string | null = null
 let currentTargetLang: string | null = null
 let fetchingStrings = false
+let stringFetchId = 0
 let stringFetchTimeout: ReturnType<typeof setTimeout> | null = null
 
 function fetchStrings() {
+  if (!currentTargetLang)
+    return
   if (oldLang === currentTargetLang && strings)
     return
   if (fetchingStrings)
     return
   const targetLang = currentTargetLang
+  const fetchId = ++stringFetchId
   fetchingStrings = true
   stringFetchTimeout = setTimeout(() => {
     presence.error(`Failed to fetch strings for ${targetLang}.`)
@@ -69,18 +71,24 @@ function fetchStrings() {
   presence
     .getStrings(stringMap)
     .then((result) => {
-      if (targetLang !== currentTargetLang)
+      if (fetchId !== stringFetchId)
         return
       if (stringFetchTimeout) {
         clearTimeout(stringFetchTimeout)
         stringFetchTimeout = null
       }
-      strings = result
       fetchingStrings = false
+      if (targetLang !== currentTargetLang) {
+        fetchStrings()
+        return
+      }
+      strings = result
       oldLang = targetLang
       presence.info(`Fetched strings for ${targetLang}.`)
     })
     .catch((err) => {
+      if (fetchId !== stringFetchId)
+        return
       // Ensure we always reset state and clear timeout on failure so subsequent attempts can run.
       if (stringFetchTimeout) {
         clearTimeout(stringFetchTimeout)
@@ -92,14 +100,13 @@ function fetchStrings() {
 }
 
 setInterval(fetchStrings, 3000)
-fetchStrings()
 
-// Sets the current language to fetch strings for and returns whether any strings are loaded.
-export function checkStringLanguage(lang: string): boolean {
+// Keep the last loaded strings while the selected language is loading.
+export function updateStringLanguage(lang: string): boolean {
   currentTargetLang = lang
   // Trigger an immediate fetch when the language changes so callers don't have to wait for the interval.
   fetchStrings()
-  return !!strings && oldLang === lang
+  return !!strings
 }
 
 const settingsFetchStatus: Record<string, number> = {}
@@ -195,6 +202,181 @@ export function exist(selector: string): boolean {
   return document.querySelector(selector) !== null
 }
 
+const activeWarnings = new Set<string>()
+const missingSince = new Map<string, number>()
+
+export function warnMissing(key: string, missing: boolean, message: string) {
+  if (!missing) {
+    activeWarnings.delete(key)
+    missingSince.delete(key)
+    return
+  }
+  const firstMissing = missingSince.get(key) ?? Date.now()
+  missingSince.set(key, firstMissing)
+  if (Date.now() - firstMissing < 5000)
+    return
+  if (!activeWarnings.has(key)) {
+    console.warn(`[RTBF Auvio] ${message} The presence may need an update to match the website.`)
+    activeWarnings.add(key)
+  }
+}
+
+export function resetWarnings() {
+  activeWarnings.clear()
+  missingSince.clear()
+}
+
+export function textOr(value: unknown, fallback = ''): string {
+  return typeof value === 'string' && value.trim()
+    ? value.trim()
+    : fallback
+}
+
+export function decodeImageUrl(value: string): string {
+  try {
+    return decodeURIComponent(value.replace('/_next/image?url=', '').split('&w')[0] ?? '')
+  }
+  catch {
+    warnMissing('image-url', true, 'An image URL could not be decoded; using the original URL.')
+    return value
+  }
+}
+
+export function parseSchedule(value: unknown): number | null {
+  if (typeof value !== 'string' && typeof value !== 'number')
+    return null
+  const timestamp = new Date(value).getTime() / 1000
+  return Number.isFinite(timestamp)
+    ? timestamp
+    : null
+}
+
+export function normalizeTitle(value: string) {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replaceAll(/[\u0300-\u036F]/g, '')
+    .replaceAll(/[^a-z0-9]+/g, ' ')
+    .trim()
+}
+
+export function getPreferredTitle(baseTitle: string, baseSubtitle: string, useOnlyLastBreadcrumb = false) {
+  const detailSubtitle = getDomText('[class*=DetailsTitle_subtitle]', '')
+  const playerSubtitle = getDomText('[class*=TitleDetails_subtitle]', '')
+  const preferredSubtitle = baseSubtitle || detailSubtitle || playerSubtitle
+
+  if (!baseTitle || !preferredSubtitle)
+    return baseTitle
+
+  const lastBreadcrumbTitle = getDomText('[aria-current="page"], [class*=Breadcrumb_breadcrumb] > ul > li:last-child > span', '')
+  const detailTitle = getDomText('div[class*=DetailsTitle_title] > h1', '').replace(detailSubtitle, '')
+  const playerTitle = getDomText('h1[class*=TitleDetails_title]', '')
+
+  if (useOnlyLastBreadcrumb) {
+    const normalizedBreadcrumb = normalizeTitle(lastBreadcrumbTitle)
+    return normalizedBreadcrumb && [detailTitle, playerTitle, baseTitle].some(currentTitle => normalizeTitle(currentTitle) === normalizedBreadcrumb)
+      ? preferredSubtitle
+      : baseTitle
+  }
+
+  return [detailTitle, playerTitle, lastBreadcrumbTitle].some(currentTitle => normalizeTitle(currentTitle) === normalizeTitle(baseTitle))
+    ? preferredSubtitle
+    : baseTitle
+}
+
+export function clearTimestamps(data: PresenceData) {
+  delete data.startTimestamp
+  delete data.endTimestamp
+}
+
+export function getDomText(selector: string, fallback = ''): string {
+  const element = document.querySelector(selector)
+  const value = element?.textContent?.trim() ?? fallback
+
+  if (element === null && fallback !== '') {
+    presence.info(`[getDomText] fallback used for selector "${selector}" -> "${fallback}"`)
+  }
+
+  return value
+}
+
+export function getDomAttribute(selector: string, attribute: string, fallback = ''): string {
+  return document.querySelector(selector)?.getAttribute(attribute)?.trim() ?? fallback
+}
+
+export async function safeGetThumbnail(url: string, preset: unknown, color: string | number[][] | undefined): Promise<string> {
+  try {
+    if (!url)
+      return ActivityAssets.Logo
+    const resolvedColor = color ?? '#ffcc00'
+    return await getThumbnail(url, preset as never, resolvedColor)
+  }
+  catch (error) {
+    console.warn(`[safeGetThumbnail] fallback used for "${url}"`, error)
+    return ActivityAssets.Logo
+  }
+}
+
+const failedMetadataUrls = new Set<string>()
+const METADATA_CACHE_TTL = 15000
+const METADATA_FAILURE_TTL = 5000
+let cachedMetadata: { url: string, value: any, expiresAt: number } | null = null
+const metadataInFlight = new Map<string, Promise<any>>()
+
+export async function safeFetchMetadata(url: string): Promise<any> {
+  if (cachedMetadata?.url === url && cachedMetadata.expiresAt > Date.now())
+    return cachedMetadata.value
+
+  const inFlight = metadataInFlight.get(url)
+  if (inFlight)
+    return inFlight
+
+  const request = fetchMetadata(url)
+  metadataInFlight.set(url, request)
+  try {
+    const value = await request
+    cachedMetadata = { url, value, expiresAt: Date.now() + (value === null
+      ? METADATA_FAILURE_TTL
+      : METADATA_CACHE_TTL) }
+    return value
+  }
+  finally {
+    metadataInFlight.delete(url)
+  }
+}
+
+async function fetchMetadata(url: string): Promise<any> {
+  try {
+    const response = await fetch(url, {
+      signal: AbortSignal.timeout(10000),
+    })
+    if (!response?.ok) {
+      if (!failedMetadataUrls.has(url))
+        console.warn(`[safeFetchMetadata] fallback used for "${url}" (status ${response?.status ?? 'unknown'})`)
+      failedMetadataUrls.add(url)
+      return null
+    }
+
+    const dataString = await response.text()
+    if (!dataString) {
+      if (!failedMetadataUrls.has(url))
+        console.warn(`[safeFetchMetadata] fallback used for "${url}" (empty response body)`)
+      failedMetadataUrls.add(url)
+      return null
+    }
+
+    const data = JSON.parse(dataString)
+    failedMetadataUrls.delete(url)
+    return data
+  }
+  catch (error) {
+    if (!failedMetadataUrls.has(url))
+      console.warn(`[safeFetchMetadata] fallback used for "${url}"`, error)
+    failedMetadataUrls.add(url)
+    return null
+  }
+}
+
 // Mainly used to truncate largeImageKeyText because the limit is 128 characters
 export function limitText(input: string, maxLength = 128): string {
   const ellipsis = ' ...'
@@ -210,23 +392,31 @@ export function limitText(input: string, maxLength = 128): string {
   return truncated + ellipsis
 }
 
-export function formatDuration(time: string | number) {
+export function formatDuration(time: unknown) {
   let totalSeconds: number
 
   if (typeof time === 'string') {
-    const parts = time.split(':').map(Number)
-    if (parts.length !== 3 || parts.some(Number.isNaN)) {
-      throw new Error('Invalid time format. Expected HH:MM:SS')
-    }
-    const [hours, minutes, seconds] = parts
-    totalSeconds = hours! * 3600 + minutes! * 60 + seconds!
+    const iso = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?$/i.exec(time)
+    const parts = /^\d+(?::\d+){1,2}$/.test(time)
+      ? time.split(':').map(Number)
+      : []
+    if (iso && iso.slice(1).some(Boolean))
+      totalSeconds = Number(iso[1] ?? 0) * 3600 + Number(iso[2] ?? 0) * 60 + Number(iso[3] ?? 0)
+    else if (parts.length)
+      totalSeconds = parts.reduce((total, part) => total * 60 + part, 0)
+    else
+      return ''
   }
   else if (typeof time === 'number') {
     totalSeconds = time
   }
   else {
-    throw new TypeError('Invalid input. Expected a string or number.')
+    return ''
   }
+
+  if (!Number.isFinite(totalSeconds) || totalSeconds < 0)
+    return ''
+  totalSeconds = Math.floor(totalSeconds)
 
   const weeks = Math.floor(totalSeconds / (7 * 24 * 3600))
   const days = Math.floor((totalSeconds % (7 * 24 * 3600)) / (24 * 3600))
@@ -235,13 +425,21 @@ export function formatDuration(time: string | number) {
   const seconds = totalSeconds % 60
 
   if (weeks > 0) {
-    return days > 0 ? `${weeks}s & ${days}j` : `${weeks}s`
+    return days > 0
+      ? `${weeks}s & ${days}j`
+      : `${weeks}s`
   }
   else if (days > 0) {
-    return hours > 0 ? `${days}j & ${hours}h` : `${days}d`
+    return hours > 0
+      ? `${days}j & ${hours}h`
+      : `${days}d`
   }
   else if (hours > 0) {
-    return minutes > 0 ? `${hours}h${minutes < 10 ? `0${minutes}` : minutes}` : `${hours}h`
+    return minutes > 0
+      ? `${hours}h${minutes < 10
+        ? `0${minutes}`
+        : minutes}`
+      : `${hours}h`
   }
   else if (minutes > 0) {
     return `${minutes} min`
@@ -583,9 +781,11 @@ export async function getThumbnail(
   borderWidth = 15,
   progress = 2,
 ): Promise<string> {
+  if (!src)
+    return ActivityAssets.Logo
   // Use cache key based on src + crop settings + border/progress so variations
   // produce different thumbnails.
-  const cacheKey = `${src}|${JSON.stringify(cropPercentages)}|${borderWidth}|${progress}`
+  const cacheKey = `${src}|${JSON.stringify(cropPercentages)}|${JSON.stringify(borderColor)}|${borderWidth}|${progress}`
 
   // Return cached thumbnail if still valid
   const cached = thumbnailCache.get(cacheKey)
@@ -598,7 +798,15 @@ export async function getThumbnail(
     return inFlight
 
   if (!src.match('data:image')) {
-    const generationPromise = new Promise<string>((resolve) => {
+    const generationPromise = new Promise<string>((complete) => {
+      const timeout = setTimeout(() => {
+        console.warn('[RTBF Auvio] Artwork took too long to load; using the default logo.')
+        complete(ActivityAssets.Logo)
+      }, 10000)
+      const resolve = (value: string) => {
+        clearTimeout(timeout)
+        complete(value)
+      }
       const img = new Image()
       const wh = 320 // Size of the square thumbnail
 
@@ -711,7 +919,15 @@ export async function getThumbnail(
 
       // Strategy 1: Try with CORS first (for ds.static.rtbf.be)
       img.crossOrigin = 'anonymous'
-      img.onload = () => processImage(img)
+      img.onload = () => {
+        try {
+          processImage(img)
+        }
+        catch (error) {
+          console.warn('[RTBF Auvio] Could not prepare artwork; using the default logo.', error)
+          resolve(ActivityAssets.Logo)
+        }
+      }
 
       img.onerror = () => {
         // Strategy 2: Try loading the image without CORS.
@@ -738,7 +954,10 @@ export async function getThumbnail(
     // When completed, cache the result and remove in-flight entry
     generationPromise.then((data) => {
       thumbnailInFlight.delete(cacheKey)
-      thumbnailCache.set(cacheKey, { data, timestamp: Date.now() })
+      thumbnailCache.set(cacheKey, {
+        data,
+        timestamp: Date.now(),
+      })
     }).catch(() => {
       thumbnailInFlight.delete(cacheKey)
     })

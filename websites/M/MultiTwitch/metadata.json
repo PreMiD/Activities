@@ -14,7 +14,7 @@
     "www.multitwitch.tv"
   ],
   "regExp": "^https?[:][/][/](www[.])?multitwitch[.]tv[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MultiTwitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MultiTwitch/assets/thumbnail.png",
   "color": "#6441a5",

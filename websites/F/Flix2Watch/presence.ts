@@ -64,7 +64,9 @@ presence.on('UpdateData', async () => {
         || document.querySelector('#detail-title')?.textContent?.trim()
         || 'Loading title…'
 
-    const mediaType = bridge?.dataset.mediaType === 'tv' ? 'tv' : 'movie'
+    const mediaType = bridge?.dataset.mediaType === 'tv'
+      ? 'tv'
+      : 'movie'
     const status = bridge?.dataset.status || 'watching'
     const position = Number(bridge?.dataset.position || 0)
     const duration = Number(bridge?.dataset.duration || 0)
@@ -76,7 +78,9 @@ presence.on('UpdateData', async () => {
       name: 'Flix2Watch',
       type: ActivityType.Watching,
       details: title,
-      largeImageKey: showPoster && poster ? poster : ActivityAssets.Logo,
+      largeImageKey: showPoster && poster
+        ? poster
+        : ActivityAssets.Logo,
       largeImageText: `Flix2Watch • ${title}`,
     }
 
@@ -115,10 +119,12 @@ presence.on('UpdateData', async () => {
     }
 
     if (showButtons) {
-      presenceData.buttons = [{
-        label: 'Watch on Flix2Watch',
-        url: href,
-      }]
+      presenceData.buttons = [
+        {
+          label: 'Watch on Flix2Watch',
+          url: href,
+        },
+      ]
     }
 
     presence.setActivity(presenceData)

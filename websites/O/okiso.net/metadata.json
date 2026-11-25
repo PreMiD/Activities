@@ -11,7 +11,7 @@
   },
   "url": "okiso.net",
   "regExp": "^https?[:][/][/](www[.])?okiso[.]net[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/okiso.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/okiso.net/assets/thumbnail.png",
   "color": "#FF7EB3",

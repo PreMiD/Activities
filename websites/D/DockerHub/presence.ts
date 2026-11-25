@@ -61,14 +61,20 @@ presence.on('UpdateData', async () => {
       arch = (arch && decodeURIComponent(arch)) || null
 
       presenceData.details = `Searching for${
-        query ? `: ${query}` : ` ${edition} ${type}s`
+        query
+          ? `: ${query}`
+          : ` ${edition} ${type}s`
       }`
 
       if (query && edition)
         presenceData.state = `${capitalize(edition)} ${type}s`
       if (os || arch) {
-        presenceData.state = `${os ? `${capitalize(os)} ` : ''}${
-          arch ? arch.toUpperCase() : ''
+        presenceData.state = `${os
+          ? `${capitalize(os)} `
+          : ''}${
+          arch
+            ? arch.toUpperCase()
+            : ''
         }`
       }
     }
@@ -93,7 +99,9 @@ presence.on('UpdateData', async () => {
 
       tab = params.get(searchItems.tab)
 
-      presenceData.details = `On image ${tab ? `${tab} ` : ''}page`
+      presenceData.details = `On image ${tab
+        ? `${tab} `
+        : ''}page`
       presenceData.state = `${name}`
     }
     else if (
@@ -109,7 +117,9 @@ presence.on('UpdateData', async () => {
       page = params.get(searchItems.page)
 
       presenceData.details = `On image ${tab ?? ''} page${
-        page ? ` ${page}` : ''
+        page
+          ? ` ${page}`
+          : ''
       }`
       presenceData.state = `${owner}/${name}`
     }
@@ -169,7 +179,9 @@ presence.on('UpdateData', async () => {
       else if (/\/builds\//.test(document.location.pathname))
         tab = 'builds'
 
-      presenceData.state = `${capitalize(tab!)}${page ? ` ${page}` : ''}`
+      presenceData.state = `${capitalize(tab!)}${page
+        ? ` ${page}`
+        : ''}`
     }
     else if (
       /^\/support\/(?:doc)?(?:contact)?/.test(document.location.pathname)

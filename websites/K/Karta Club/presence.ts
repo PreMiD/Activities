@@ -140,7 +140,9 @@ function mode(): string {
       return m
   }
   catch {}
-  return has('.ingame-chat') ? 'Online' : 'Casual'
+  return has('.ingame-chat')
+    ? 'Online'
+    : 'Casual'
 }
 
 // ---------- QUEUE ----------
@@ -182,7 +184,9 @@ function readSharedQueue(): Queue | null {
     const q = JSON.parse(
       localStorage.getItem(QUEUE_KEY) ?? 'null',
     ) as Queue | null
-    return q && Date.now() - q.ts < QUEUE_STALE_MS ? q : null
+    return q && Date.now() - q.ts < QUEUE_STALE_MS
+      ? q
+      : null
   }
   catch {
     return null
@@ -236,7 +240,12 @@ function findQueueInMenu(): { mode: string, game: string } | null {
     card = card.parentElement
   }
 
-  return { mode: modeWord ? cap(modeWord) : 'Ranked', game }
+  return {
+    mode: modeWord
+      ? cap(modeWord)
+      : 'Ranked',
+    game,
+  }
 }
 
 function pageText(): string {
@@ -252,7 +261,9 @@ function pageText(): string {
 
 function detectQueueHere(): Queue | null {
   const title = document.title
-  const text = document.body ? pageText() : ''
+  const text = document.body
+    ? pageText()
+    : ''
   if (!/finding a match/i.test(text) && !/queue/i.test(title))
     return null
 
@@ -260,14 +271,24 @@ function detectQueueHere(): Queue | null {
   const pl = text.match(/players\s*(\d+)\s*\/\s*(\d+)/i)
   const qt = text.match(/queue time\s*(\d+):(\d+)/i)
 
-  const seconds = qt?.[1] && qt?.[2] ? Number(qt[1]) * 60 + Number(qt[2]) : 0
+  const seconds = qt?.[1] && qt?.[2]
+    ? Number(qt[1]) * 60 + Number(qt[2])
+    : 0
   const prev = readSharedQueue()
 
   return {
-    mode: gm?.[1] ? cap(gm[1]) : 'Ranked',
-    game: gm?.[2] ? cap(gm[2]) : 'a card game',
-    players: pl?.[1] ? Number(pl[1]) : undefined,
-    max: pl?.[2] ? Number(pl[2]) : undefined,
+    mode: gm?.[1]
+      ? cap(gm[1])
+      : 'Ranked',
+    game: gm?.[2]
+      ? cap(gm[2])
+      : 'a card game',
+    players: pl?.[1]
+      ? Number(pl[1])
+      : undefined,
+    max: pl?.[2]
+      ? Number(pl[2])
+      : undefined,
     start: prev?.start ?? nowSec() - seconds,
     ts: Date.now(),
   }
@@ -281,9 +302,15 @@ presence.on('UpdateData', async () => {
   const showName = await presence.getSetting<boolean>('showName')
 
   const playing = inGame()
-  const here = playing ? null : detectQueueHere()
-  const inMenuQueue = playing ? null : findQueueInMenu()
-  const user = showName ? currentUser() : null
+  const here = playing
+    ? null
+    : detectQueueHere()
+  const inMenuQueue = playing
+    ? null
+    : findQueueInMenu()
+  const user = showName
+    ? currentUser()
+    : null
 
   if (here) {
     try {
@@ -326,7 +353,11 @@ presence.on('UpdateData', async () => {
 
   let state: State = { view: 'menu' }
   if (playing) {
-    state = { view: 'game', game: gameName(), mode: mode() }
+    state = {
+      view: 'game',
+      game: gameName(),
+      mode: mode(),
+    }
   }
   else if (queue) {
     state = {
@@ -349,12 +380,16 @@ presence.on('UpdateData', async () => {
     since = nowSec()
   }
 
-  const withUser = (s: string) => (user ? `${s} · ${user}` : s)
+  const withUser = (s: string) => (user
+    ? `${s} · ${user}`
+    : s)
 
   const presenceData: PresenceData = {
     type: ActivityType.Playing,
     largeImageKey: LOGO,
-    startTimestamp: state.view === 'queue' ? state.start : since,
+    startTimestamp: state.view === 'queue'
+      ? state.start
+      : since,
   }
 
   if (state.view === 'menu') {

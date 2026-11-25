@@ -18,7 +18,15 @@ const LOCALE_PREFIX = /^\/(?:ru|en|uk)(?=\/|$)/
 const TICK_STALE_MS = 5000
 
 // Приватные разделы: состояние в Discord не отдаём.
-const PRIVATE_PATHS = ['/auth', '/settings', '/admin', '/desktop-auth', '/desktop-connect', '/banned', '/unsubscribe']
+const PRIVATE_PATHS = [
+  '/auth',
+  '/settings',
+  '/admin',
+  '/desktop-auth',
+  '/desktop-connect',
+  '/banned',
+  '/unsubscribe',
+]
 
 interface PlayerState {
   currentTime: number
@@ -61,9 +69,17 @@ window.addEventListener('message', (event: MessageEvent) => {
       case 'kodik_player_duration_update': {
         if (seconds == null)
           return
-        if (iframePlayer)
+        if (iframePlayer) {
           iframePlayer.duration = seconds
-        else iframePlayer = { currentTime: 0, duration: seconds, paused: true, lastTickAt: Date.now() }
+        }
+        else {
+          iframePlayer = {
+            currentTime: 0,
+            duration: seconds,
+            paused: true,
+            lastTickAt: Date.now(),
+          }
+        }
         return
       }
       case 'kodik_player_pause': {
@@ -106,7 +122,9 @@ window.addEventListener('message', (event: MessageEvent) => {
     const duration = (data as { duration?: unknown }).duration
     iframePlayer = {
       currentTime: time,
-      duration: typeof duration === 'number' ? duration : iframePlayer?.duration ?? 0,
+      duration: typeof duration === 'number'
+        ? duration
+        : iframePlayer?.duration ?? 0,
       paused: false,
       lastTickAt: Date.now(),
     }
@@ -132,7 +150,12 @@ function getNativePlayer(): PlayerState | null {
     return null
   if (!Number.isFinite(video.duration) || video.duration <= 0)
     return null
-  return { currentTime: video.currentTime, duration: video.duration, paused: video.paused, lastTickAt: Date.now() }
+  return {
+    currentTime: video.currentTime,
+    duration: video.duration,
+    paused: video.paused,
+    lastTickAt: Date.now(),
+  }
 }
 
 function getActivePlayer(): PlayerState | null {
@@ -150,7 +173,9 @@ function getTitleLd(): Record<string, unknown> | null {
   for (const el of document.querySelectorAll('script[type="application/ld+json"]')) {
     try {
       const parsed: unknown = JSON.parse(el.textContent ?? '')
-      for (const item of Array.isArray(parsed) ? parsed : [parsed]) {
+      for (const item of Array.isArray(parsed)
+        ? parsed
+        : [parsed]) {
         const record = item as Record<string, unknown>
         if (record && (record['@type'] === 'TVSeries' || record['@type'] === 'Movie'))
           return record
@@ -165,7 +190,9 @@ function getTitleLd(): Record<string, unknown> | null {
 
 function getLdString(ld: Record<string, unknown> | null, field: string): string | null {
   const value = ld?.[field]
-  return typeof value === 'string' && value.length > 0 ? value : null
+  return typeof value === 'string' && value.length > 0
+    ? value
+    : null
 }
 
 // Имена эпизодов (публичный API сайта, данные AniList). Кэшируется на
@@ -178,7 +205,9 @@ function loadEpisodeNames(id: string): void {
     return
   episodeNamesCache.set(id, {})
   fetch(`https://api.anicat.cc/v1/titles/${id}/episode-names`)
-    .then(res => (res.ok ? res.json() : null))
+    .then(res => (res.ok
+      ? res.json()
+      : null))
     .then((data: { episodes?: Record<number, string> } | null) => {
       episodeNamesCache.set(id, data?.episodes ?? {})
     })
@@ -257,7 +286,9 @@ presence.on('UpdateData', async () => {
     const stateParts: string[] = []
     if (season > 1)
       stateParts.push(`${strings.season} ${season}`)
-    stateParts.push(isMovie ? strings.watchingAnime : `${strings.episode} ${episode}`)
+    stateParts.push(isMovie
+      ? strings.watchingAnime
+      : `${strings.episode} ${episode}`)
     const episodeName = episodeNamesCache.get(titleId)?.[Number(episode)]
     if (episodeName)
       stateParts.push(episodeName)
@@ -268,8 +299,12 @@ presence.on('UpdateData', async () => {
       type: ActivityType.Watching,
       details: title,
       state: stateParts.join(' · '),
-      largeImageKey: showPoster && poster ? poster : ActivityAssets.Logo,
-      largeImageText: season > 1 ? `Season ${season}, Episode ${episode}` : title,
+      largeImageKey: showPoster && poster
+        ? poster
+        : ActivityAssets.Logo,
+      largeImageText: season > 1
+        ? `Season ${season}, Episode ${episode}`
+        : title,
       startTimestamp: browsingTimestamp,
     }
 
@@ -324,8 +359,11 @@ presence.on('UpdateData', async () => {
       presenceData.state = title ?? strings.browse
       if (showPoster && poster)
         presenceData.largeImageKey = poster
-      if (showButtons)
-        presenceData.buttons = [{ label: strings.viewAnimeButton, url: href }]
+      if (showButtons) {
+        presenceData.buttons = [
+          { label: strings.viewAnimeButton, url: href },
+        ]
+      }
     }
     else if (path.startsWith('/schedule')) {
       presenceData.details = strings.schedule

@@ -108,8 +108,12 @@ presence.on('UpdateData', async () => {
   }
 
   for (const [path, data] of Object.entries(staticPages)) {
-    if (pathname.startsWith(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (pathname.startsWith(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   switch (pathSplit[0]) {
@@ -118,7 +122,9 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Reading an Article'
         presenceData.state = pageTitle
         presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.articleimg-img')?.src
-        presenceData.buttons = [{ label: 'Read Article', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Article', url: href },
+        ]
       }
       else {
         presenceData.details = 'Viewing Articles'
@@ -128,7 +134,9 @@ presence.on('UpdateData', async () => {
       if (pathSplit[1]) {
         presenceData.details = 'Viewing an Auction'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View Auction', url: href }]
+        presenceData.buttons = [
+          { label: 'View Auction', url: href },
+        ]
       }
       else {
         presenceData.details = 'Viewing the Auction HQ'
@@ -138,7 +146,9 @@ presence.on('UpdateData', async () => {
       if (pathSplit[1] === 'info') {
         presenceData.details = 'Viewing a Card'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View Card', url: href }]
+        presenceData.buttons = [
+          { label: 'View Card', url: href },
+        ]
       }
       else {
         presenceData.details = 'Viewing the Cards'
@@ -150,7 +160,9 @@ presence.on('UpdateData', async () => {
         if (pathSplit[2]) {
           presenceData.details = 'Viewing an Event Card'
           presenceData.state = pageTitle
-          presenceData.buttons = [{ label: 'View Card', url: href }]
+          presenceData.buttons = [
+            { label: 'View Card', url: href },
+          ]
         }
         else {
           presenceData.state = `${
@@ -179,23 +191,31 @@ presence.on('UpdateData', async () => {
       break
     case 'market':
       presenceData.details = 'Viewing the Market'
-      presenceData.buttons = [{ label: 'View Market', url: href }]
+      presenceData.buttons = [
+        { label: 'View Market', url: href },
+      ]
       break
     case 'mini-games':
       if (pathSplit[1]) {
         presenceData.details = 'Playing a Mini Game'
-        presenceData.buttons = [{ label: 'View Mini-Game', url: href }]
+        presenceData.buttons = [
+          { label: 'View Mini-Game', url: href },
+        ]
       }
       else {
         presenceData.details = 'Viewing Mini-Games'
-        presenceData.buttons = [{ label: 'View Mini-Games', url: href }]
+        presenceData.buttons = [
+          { label: 'View Mini-Games', url: href },
+        ]
       }
       break
     case 'servers':
       if (pathSplit[1]) {
         presenceData.details = 'Viewing a Server'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View Server', url: href }]
+        presenceData.buttons = [
+          { label: 'View Server', url: href },
+        ]
       }
       else {
         presenceData.details = 'Viewing Servers'
@@ -210,7 +230,9 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Viewing a Shop Item'
         presenceData.state = pageTitle
         presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.item-pic-img')?.src
-        presenceData.buttons = [{ label: 'View Item', url: href }]
+        presenceData.buttons = [
+          { label: 'View Item', url: href },
+        ]
       }
       else {
         presenceData.details = 'Browsing the Shop'
@@ -226,7 +248,9 @@ presence.on('UpdateData', async () => {
         case 'thread': {
           presenceData.details = 'Viewing a Support Thread'
           presenceData.state = pageTitle
-          presenceData.buttons = [{ label: 'View Thread', url: href }]
+          presenceData.buttons = [
+            { label: 'View Thread', url: href },
+          ]
           break
         }
         default: {
@@ -259,7 +283,9 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.state = `Their ${tab}`
       }
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
       break
     }
   }

@@ -65,15 +65,21 @@ presence.on('UpdateData', async () => {
       startTimestamp: browsingTimestamp,
       details: `Title: ${document.querySelector('#song-ttl')?.textContent || document.querySelector('[aria-label="title"]')?.textContent}`,
       state: `Author: ${document.querySelector('#song-artist')?.textContent || document.querySelector('[aria-label="artist"]')?.textContent}`,
-      buttons: [{ label: 'Play Yourself', url: document.location.href }],
+      buttons: [
+        { label: 'Play Yourself', url: document.location.href },
+      ],
     }, 5000)
 
     slideshow.addSlide('instrumentInfo', {
       largeImageKey: ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
       details: `Instrument: ${instrument}`,
-      state: !instrument?.includes('Drums') ? `Tuning: ${tuning}` : null, // No tuning if instrument is Drums
-      buttons: [{ label: 'Play Yourself', url: document.location.href }],
+      state: !instrument?.includes('Drums')
+        ? `Tuning: ${tuning}`
+        : null, // No tuning if instrument is Drums
+      buttons: [
+        { label: 'Play Yourself', url: document.location.href },
+      ],
     }, 5000)
   }
 

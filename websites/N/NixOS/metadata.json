@@ -11,7 +11,7 @@
   },
   "url": "nixos.org",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nixos[.]org[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NixOS/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NixOS/assets/thumbnail.png",
   "color": "#4d6fb7",

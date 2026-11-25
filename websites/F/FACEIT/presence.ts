@@ -117,7 +117,9 @@ function getSelfPartyUser(): { levelAsset: string | null, elo: number } | null {
     const nonKickableSlots = slots.filter(slot =>
       !slot.querySelector('button[aria-label="Kick"], [data-testid="close-icon"][aria-label="Kick"]'),
     )
-    const selfSlot = nonKickableSlots.length === 1 ? nonKickableSlots[0] : slots[0]
+    const selfSlot = nonKickableSlots.length === 1
+      ? nonKickableSlots[0]
+      : slots[0]
 
     return {
       levelAsset: getSkillLevelAsset(selfSlot),
@@ -212,7 +214,9 @@ presence.on('UpdateData', async () => {
     else if (pathname.startsWith('/club')) {
       const name = document.querySelector('h6[class*="HeadingTruncated"]')?.textContent?.trim() ?? strings.unknownClub
       presenceData.details = `${strings.viewingClub} @${name}`
-      presenceData.buttons = [{ label: 'View Club', url: document.location.href }]
+      presenceData.buttons = [
+        { label: 'View Club', url: document.location.href },
+      ]
     }
   }
 
@@ -249,8 +253,14 @@ presence.on('UpdateData', async () => {
     const { team, levelAsset, elo } = getSelfUser()
     const vetoContainer = document.querySelector('[data-testid="matchroomVeto"]')
 
-    presenceData.smallImageKey = !showElo ? null : levelAsset ?? (team ? Assets.Live : null)
-    presenceData.smallImageText = !showElo ? null : elo > 0 ? `${strings.elo}: ${elo}` : (team ? strings.unranked : null)
+    presenceData.smallImageKey = !showElo
+      ? null
+      : levelAsset ?? (team ? Assets.Live : null)
+    presenceData.smallImageText = !showElo
+      ? null
+      : elo > 0
+        ? `${strings.elo}: ${elo}`
+        : (team ? strings.unranked : null)
 
     // Veto Phase
     if (vetoContainer) {
@@ -273,7 +283,9 @@ presence.on('UpdateData', async () => {
 
         const t1 = getFaction(factions[0])
         const t2 = getFaction(factions[1])
-        const [sL, sR] = team === 2 ? [t2.score, t1.score] : [t1.score, t2.score]
+        const [sL, sR] = team === 2
+          ? [t2.score, t1.score]
+          : [t1.score, t2.score]
         const scoreDisplay = `[ ${sL} : ${sR} ]`
 
         const timerText = header.querySelector('[class*="MatchStateText"]')?.textContent?.trim() ?? null
@@ -323,7 +335,9 @@ presence.on('UpdateData', async () => {
             : `${strings.watching} ${mapName}`
 
           const resultLabel = isFinished ? strings.finished : strings.inWarmup
-          presenceData.state = isLive ? `${strings.competitive} ${scoreDisplay}` : `${resultLabel} ${mapName} ${scoreDisplay}`
+          presenceData.state = isLive
+            ? `${strings.competitive} ${scoreDisplay}`
+            : `${resultLabel} ${mapName} ${scoreDisplay}`
 
           if (isLive) {
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
@@ -335,7 +349,9 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    presenceData.buttons = [{ label: strings.matchroom, url: document.location.href }]
+    presenceData.buttons = [
+      { label: strings.matchroom, url: document.location.href },
+    ]
   }
 
   presence.setActivity(presenceData)

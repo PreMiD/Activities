@@ -89,7 +89,9 @@ async function updateActivity(): Promise<void> {
 
     presenceData.details = privacy
       ? (isPickem ? 'Viewing a Pick\'em bracket' : 'Viewing an event')
-      : (eventName ? `${isPickem ? 'Pick\'em: ' : ''}${eventName}` : 'Viewing an event')
+      : (eventName
+          ? `${isPickem ? 'Pick\'em: ' : ''}${eventName}`
+          : 'Viewing an event')
 
     if (!privacy) {
       const stateParts = [dates, prize].filter(Boolean)
@@ -123,7 +125,9 @@ async function updateActivity(): Promise<void> {
     const country = getText('.team-header-country')
     const teamLogo = document.querySelector<HTMLImageElement>('.team-header-logo img')?.src
 
-    presenceData.details = privacy ? 'Viewing a team' : (teamName || 'Viewing a team')
+    presenceData.details = privacy
+      ? 'Viewing a team'
+      : (teamName || 'Viewing a team')
 
     if (!privacy && country)
       presenceData.state = country
@@ -153,7 +157,11 @@ async function updateActivity(): Promise<void> {
     const eventName = getText('h1.wf-title a')
     const author = getText('a[href^="/user/"]')
 
-    presenceData.details = privacy ? 'Viewing a Pick\'em' : (eventName ? `Pick'em: ${eventName}` : 'Viewing a Pick\'em')
+    presenceData.details = privacy
+      ? 'Viewing a Pick\'em'
+      : (eventName
+          ? `Pick'em: ${eventName}`
+          : 'Viewing a Pick\'em')
 
     if (!privacy && author)
       presenceData.state = `by ${author}`
@@ -182,7 +190,9 @@ async function updateActivity(): Promise<void> {
     const country = document.querySelector('.player-header i.flag')?.parentElement?.textContent?.replace(/\s+/g, ' ').trim()
     const photo = document.querySelector<HTMLImageElement>('.player-header .wf-avatar img')?.src
 
-    presenceData.details = privacy ? 'Viewing a player' : (playerName || 'Viewing a player')
+    presenceData.details = privacy
+      ? 'Viewing a player'
+      : (playerName || 'Viewing a player')
 
     if (!privacy) {
       const stateParts = [realName, country].filter(Boolean)
@@ -228,11 +238,15 @@ async function updateActivity(): Promise<void> {
     const isUpcoming = !!stateNote?.querySelector('.mod-upcoming')
     const countdown = stateNote?.querySelector('.mod-upcoming')?.textContent?.trim()
 
-    const scoreSpans = [...document.querySelectorAll('.match-header-vs-score .sp-hide span:not(.match-header-vs-score-colon)')]
+    const scoreSpans = [
+      ...document.querySelectorAll('.match-header-vs-score .sp-hide span:not(.match-header-vs-score-colon)'),
+    ]
     const score1 = scoreSpans[0]?.textContent?.trim()
     const score2 = scoreSpans[1]?.textContent?.trim()
 
-    const matchup = team1 && team2 ? `${team1} vs ${team2}` : 'a Valorant match'
+    const matchup = team1 && team2
+      ? `${team1} vs ${team2}`
+      : 'a Valorant match'
 
     if (isLive)
       (presenceData as PresenceData).type = ActivityType.Watching
@@ -302,7 +316,9 @@ async function updateActivity(): Promise<void> {
     const eventName = getText('.article-header-event')
     const author = getText('.article-meta-author')
 
-    presenceData.details = privacy ? 'Reading VLR.gg news' : (headline || 'Reading an article')
+    presenceData.details = privacy
+      ? 'Reading VLR.gg news'
+      : (headline || 'Reading an article')
 
     if (!privacy) {
       const state = eventName || author
@@ -331,7 +347,9 @@ async function updateActivity(): Promise<void> {
     const title = getText('.thread-header-title h1')
     const category = getText('.thread-header-desc a')
 
-    presenceData.details = privacy ? 'Reading a forum thread' : (title || 'Reading a forum thread')
+    presenceData.details = privacy
+      ? 'Reading a forum thread'
+      : (title || 'Reading a forum thread')
 
     if (!privacy && category)
       presenceData.state = category

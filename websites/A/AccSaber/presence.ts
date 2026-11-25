@@ -49,7 +49,9 @@ presence.on('UpdateData', async () => {
             ?.slice(1)}`
         }
         presenceData.largeImageKey = profilePicture
-        presenceData.buttons = [{ url: href, label: 'View Profile' }]
+        presenceData.buttons = [
+          { url: href, label: 'View Profile' },
+        ]
         break
       }
       case 'maps': {
@@ -66,7 +68,9 @@ presence.on('UpdateData', async () => {
             document.querySelector<HTMLDivElement>('h1 > div')!.title
           ]
           presenceData.smallImageText = document.querySelector<HTMLDivElement>('h1 > div')!.title
-          presenceData.buttons = [{ url: href, label: 'View Leaderboard' }]
+          presenceData.buttons = [
+            { url: href, label: 'View Leaderboard' },
+          ]
         }
         break
       }

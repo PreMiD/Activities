@@ -38,7 +38,12 @@ presence.on('UpdateData', async () => {
     numEquations = 0
   }
   else if (
-    ['scientific', 'fourfunction', 'matrix', 'practice'].includes(urlPage)
+    [
+      'scientific',
+      'fourfunction',
+      'matrix',
+      'practice',
+    ].includes(urlPage)
   ) {
     graphing = 1 // "Using Desmos Scientific/Fourfunction etc. "
     if (pageType === 'Scientific' || pageType === 'Fourfunction') {

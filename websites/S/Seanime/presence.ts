@@ -96,13 +96,18 @@ function getPlayerTimes(): [number, number] | null {
     return null
 
   const parsed = timestampFromFormat(cleanCurrent)
-  const current = isRemaining ? duration - parsed : parsed
+  const current = isRemaining
+    ? duration - parsed
+    : parsed
 
   // Sanity bounds — reject garbage reads
   if (current < 0 || current > duration + 1)
     return null
 
-  return [Math.min(current, duration), duration]
+  return [
+    Math.min(current, duration),
+    duration,
+  ]
 }
 
 /**
@@ -208,7 +213,9 @@ presence.on('UpdateData', async () => {
       est = { position: uiTimes[0], at: now }
     }
 
-    const duration = uiTimes?.[1] ?? (anchor ? anchor.end - anchor.start : 0)
+    const duration = uiTimes?.[1] ?? (anchor
+      ? anchor.end - anchor.start
+      : 0)
 
     // ── Send timestamps ───────────────────────────────────────────────
     // Discord ticks the bar at 1x on its own. That's only correct while

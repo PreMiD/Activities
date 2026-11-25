@@ -40,7 +40,9 @@ export enum ImageTexts {
  */
 export function format(text: string, ...args: string[] | number[]): string {
   return text.replace(/\{(\d+)\}/g, (match, number) =>
-    typeof args[number] !== 'undefined' ? String(args[number]) : match)
+    typeof args[number] !== 'undefined'
+      ? String(args[number])
+      : match)
 }
 
 export function getRenderingState(): string | null {

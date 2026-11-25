@@ -14,7 +14,7 @@
     "www.vlr.gg"
   ],
   "regExp": "^https?[:][/][/](www[.])?vlr[.]gg[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VLR.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VLR.gg/assets/thumbnail.png",
   "color": "#da626c",

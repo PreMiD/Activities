@@ -192,21 +192,27 @@ presence.on('UpdateData', async () => {
         if (pathname.includes('detail.series')) {
           presenceData.details = 'Viewing novel:'
           presenceData.state = document.querySelector('#content h2')
-          presenceData.buttons = [{ url: href, label: 'View Novel' }]
+          presenceData.buttons = [
+            { url: href, label: 'View Novel' },
+          ]
         }
       }
       else if (pathname.startsWith('/webnovel')) {
         if (pathname.includes('/list')) {
           presenceData.details = 'Viewing web novel:'
           presenceData.state = document.querySelector('h2.title')
-          presenceData.buttons = [{ url: href, label: 'View Novel' }]
+          presenceData.buttons = [
+            { url: href, label: 'View Novel' },
+          ]
         }
         else if (pathname.includes('/detail')) {
           presenceData.details = document.querySelector(
             '#menuFloatingLayer > a',
           )?.textContent
           presenceData.state = document.querySelector('#topVolumeList')?.textContent
-          presenceData.buttons = [{ url: href, label: 'Read Epiosde' }]
+          presenceData.buttons = [
+            { url: href, label: 'Read Epiosde' },
+          ]
           presenceData.smallImageKey = MainAssets.Book
         }
       }
@@ -218,7 +224,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = document.querySelector(
           'h2[class^=EpisodeListInfo__title]',
         )
-        presenceData.buttons = [{ url: href, label: 'View Webtoon' }]
+        presenceData.buttons = [
+          { url: href, label: 'View Webtoon' },
+        ]
       }
       else if (pathname.startsWith('/webtoon/detail')) {
         const [title, ep] = document
@@ -227,7 +235,9 @@ presence.on('UpdateData', async () => {
           .split(' - ') ?? []
         presenceData.details = ep
         presenceData.state = title
-        presenceData.buttons = [{ url: href, label: 'Read Episode' }]
+        presenceData.buttons = [
+          { url: href, label: 'Read Episode' },
+        ]
         presenceData.smallImageKey = MainAssets.Book
       }
       break

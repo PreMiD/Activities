@@ -12,7 +12,9 @@ function getChapterTitle(): string {
   const title = titleMatch?.[1] ?? document.title
 
   // truncate long titles and add ellipsis on it
-  return title.length > 128 ? `${title.substring(0, 125)}...` : title
+  return title.length > 128
+    ? `${title.substring(0, 125)}...`
+    : title
 }
 
 presence.on('UpdateData', async () => {
@@ -39,7 +41,9 @@ presence.on('UpdateData', async () => {
   else if (/^\/arc-\d+\/?$/.test(pathname)) {
     const arcNumber = pathname.match(/\d+/)?.[0]
     presenceData.details = i18n.browsing
-    presenceData.state = arcNumber ? `Arc ${arcNumber}` : 'Browsing an arc'
+    presenceData.state = arcNumber
+      ? `Arc ${arcNumber}`
+      : 'Browsing an arc'
   }
   else if (/^\/\d{4}\/\d{2}\/\d{2}\/[^/]+\/?$/.test(pathname)) {
     presenceData.details = i18n.reading

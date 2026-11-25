@@ -65,7 +65,9 @@ presence.on('UpdateData', async () => {
           || document.querySelector('h2')?.textContent
           || document.querySelector('h4')?.textContent
         if (article) {
-          presenceData.state = article.length > 128 ? `${article.slice(0, 125)}...` : article
+          presenceData.state = article.length > 128
+            ? `${article.slice(0, 125)}...`
+            : article
           presenceData.buttons = [
             {
               label: 'Open Article',
@@ -366,7 +368,9 @@ presence.on('UpdateData', async () => {
                       ?? 'Unknown'
 
                     presenceData.state = `Dev-Post: ${
-                      title.length > 118 ? `${title.slice(0, 115)}...` : title
+                      title.length > 118
+                        ? `${title.slice(0, 115)}...`
+                        : title
                     }`
 
                     presenceData.buttons.push({

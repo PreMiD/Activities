@@ -53,17 +53,25 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/manhwa/')) {
     const title = document.querySelector('h2')?.textContent?.trim() || strings.loading
     const cover = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content || document.querySelector<HTMLImageElement>('img.w-full.object-cover')?.src
-    presenceData.details = privacy ? strings.viewing : `${strings.viewing}: ${title}`
+    presenceData.details = privacy
+      ? strings.viewing
+      : `${strings.viewing}: ${title}`
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = strings.viewing
-    presenceData.largeImageKey = !privacy && showCover && cover ? cover : ActivityAssets.Logo
+    presenceData.largeImageKey = !privacy && showCover && cover
+      ? cover
+      : ActivityAssets.Logo
   }
   else if (pathname.startsWith('/leer/')) {
     const title = document.querySelector('div.text-center')?.textContent?.trim()
     const chapterMatch = document.title.match(/Cap[ií]tulo\s+(\d+)/i)
     const chapter = chapterMatch?.[1] ?? strings.unknownChapter
-    presenceData.details = privacy ? strings.reading : `${strings.reading}: ${title}`
-    presenceData.state = privacy ? undefined : `${strings.chapter} ${chapter}`
+    presenceData.details = privacy
+      ? strings.reading
+      : `${strings.reading}: ${title}`
+    presenceData.state = privacy
+      ? undefined
+      : `${strings.chapter} ${chapter}`
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = strings.reading
     presenceData.largeImageKey = ActivityAssets.Logo

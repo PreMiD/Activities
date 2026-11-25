@@ -22,12 +22,16 @@ presence.on('UpdateData', async () => {
     else if (subPath.includes('video')) {
       presenceData.details = `Watching a ${type} video`
       presenceData.state = pageTitle
-      presenceData.buttons = [{ label: 'Watch Video', url: href }]
+      presenceData.buttons = [
+        { label: 'Watch Video', url: href },
+      ]
     }
     else if (subPath.includes('news')) {
       presenceData.details = `Reading a ${type} article`
       presenceData.state = pageTitle
-      presenceData.buttons = [{ label: 'Read Article', url: href }]
+      presenceData.buttons = [
+        { label: 'Read Article', url: href },
+      ]
     }
   }
 
@@ -93,7 +97,9 @@ presence.on('UpdateData', async () => {
       case 'maps': {
         presenceData.details = 'Viewing a map'
         presenceData.state = pageTitle
-        presenceData.buttons = [{ label: 'View Map', url: href }]
+        presenceData.buttons = [
+          { label: 'View Map', url: href },
+        ]
         break
       }
       case 'member': {
@@ -195,7 +201,9 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = 'Reading an article'
       presenceData.state = pageTitle
-      presenceData.buttons = [{ label: 'Read Article', url: href }]
+      presenceData.buttons = [
+        { label: 'Read Article', url: href },
+      ]
     }
   }
 

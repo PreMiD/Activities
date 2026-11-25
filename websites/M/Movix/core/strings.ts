@@ -146,6 +146,8 @@ export function format(
 ): string {
   return template.replace(/\{(\d+)\}/g, (match, index) => {
     const value = args[Number(index)]
-    return value === undefined ? match : String(value)
+    return value === undefined
+      ? match
+      : String(value)
   })
 }

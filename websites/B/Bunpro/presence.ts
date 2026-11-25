@@ -33,8 +33,11 @@ function applyItemDetails(presenceData: PresenceData) {
   const { pathname, href } = document.location
   presenceData.details = 'Viewing an item'
   presenceData.state = `${removeRubyCharacters(document.querySelector('h1 span span')!)} - ${document.querySelector('h1 span:nth-child(2)')?.textContent}`
-  if (!pathname.startsWith('/learn'))
-    presenceData.buttons = [{ label: 'View Grammar Point', url: href }]
+  if (!pathname.startsWith('/learn')) {
+    presenceData.buttons = [
+      { label: 'View Grammar Point', url: href },
+    ]
+  }
 }
 
 function applyReviewDetails(presenceData: PresenceData) {
@@ -118,7 +121,9 @@ presence.on('UpdateData', async () => {
       case 't': {
         presenceData.details = 'Viewing a community topic'
         presenceData.state = document.querySelector('h1')?.textContent
-        presenceData.buttons = [{ label: 'View Topic', url: href }]
+        presenceData.buttons = [
+          { label: 'View Topic', url: href },
+        ]
         break
       }
       case 'top': {
@@ -142,7 +147,9 @@ presence.on('UpdateData', async () => {
             ?.title
             ?.match(/\d+/)?.[0] ?? 0
         }`
-        presenceData.buttons = [{ label: 'View Profile', url: href }]
+        presenceData.buttons = [
+          { label: 'View Profile', url: href },
+        ]
         break
       }
       case 'unread': {
@@ -189,7 +196,9 @@ presence.on('UpdateData', async () => {
           '#js-tour-dash-quicklinks>li:first-child>div>*:not(.hidden) p',
         )!.textContent!
         presenceData.details = 'Viewing dashboard'
-        presenceData.state = `${learned} learned | ${reviews} review${reviews === '1' ? '' : 's'}`
+        presenceData.state = `${learned} learned | ${reviews} review${reviews === '1'
+          ? ''
+          : 's'}`
         const hideOnDone = await presence.getSetting('hideOnDone')
         // 'learned' is a string of format x/y with x and y as numbers in strings, lessons are done if x === y
         if (hideOnDone && +reviews === 0 && +learned.split('/')[0]! === +learned.split('/')[1]!)
@@ -216,7 +225,9 @@ presence.on('UpdateData', async () => {
         if (pathSplit[1]) {
           presenceData.details = 'Practicing reading'
           presenceData.state = document.querySelector('h2')?.textContent?.trim()
-          presenceData.buttons = [{ label: 'View Lesson', url: href }]
+          presenceData.buttons = [
+            { label: 'View Lesson', url: href },
+          ]
         }
         else {
           presenceData.details = 'Viewing lessons'
@@ -235,7 +246,9 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Viewing a grammar path'
             presenceData.state = document.querySelector('h2')?.textContent
-            presenceData.buttons = [{ label: 'View Grammar Path', url: href }]
+            presenceData.buttons = [
+              { label: 'View Grammar Path', url: href },
+            ]
           }
         }
         else {
@@ -337,7 +350,9 @@ presence.on('UpdateData', async () => {
           presenceData.state = `${removeRubyCharacters(
             document.querySelector<HTMLDivElement>('h1 span span')!,
           )} - ${document.querySelector('h1 span:nth-child(2)')?.textContent}`
-          presenceData.buttons = [{ label: 'View Vocabulary', url: href }]
+          presenceData.buttons = [
+            { label: 'View Vocabulary', url: href },
+          ]
         }
         else {
           presenceData.details = 'Searching for vocabulary'

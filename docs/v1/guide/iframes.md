@@ -234,7 +234,10 @@ let iFrameData: {
 // Listen for iFrame data
 presence.on('iFrameData', (data) => {
   // Merge the new data with the existing data
-  iFrameData = { ...iFrameData, ...data }
+  iFrameData = {
+    ...iFrameData,
+    ...data
+  }
 })
 
 presence.on('UpdateData', async () => {

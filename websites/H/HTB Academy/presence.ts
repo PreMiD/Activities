@@ -39,13 +39,17 @@ presence.on('UpdateData', async () => {
     const sectionName = document.querySelector('.text-4xl.text-primary.font-bold.mb-4')?.textContent || 'Section'
 
     presenceData.details = `Reading Module: ${moduleName}`
-    presenceData.state = sectionName ? `Section: ${sectionName}` : ''
+    presenceData.state = sectionName
+      ? `Section: ${sectionName}`
+      : ''
   }
 
   else if (pathname.includes('/module')) {
     const title = document.querySelector('.module-header-title')?.textContent
     presenceData.details = 'Reading details about module:'
-    presenceData.state = title ? `"${title}"` : 'Unknown Module'
+    presenceData.state = title
+      ? `"${title}"`
+      : 'Unknown Module'
   }
 
   else if (pathname.includes('/certificates')) {

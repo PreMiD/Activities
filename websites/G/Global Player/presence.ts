@@ -42,10 +42,12 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = image
         presenceData.statusDisplayType = StatusDisplayType.Details
         if (subtitleLink) {
-          presenceData.buttons = [{
-            label: 'View Radio',
-            url: subtitleLink.href,
-          }]
+          presenceData.buttons = [
+            {
+              label: 'View Radio',
+              url: subtitleLink.href,
+            },
+          ]
         }
         presenceData.smallImageKey = Assets.Live
         presenceData.smallImageText = 'Live'
@@ -58,10 +60,12 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = image
         presenceData.statusDisplayType = StatusDisplayType.Details
         if (subtitleLink) {
-          presenceData.buttons = [{
-            label: 'View Playlist',
-            url: subtitleLink.href,
-          }]
+          presenceData.buttons = [
+            {
+              label: 'View Playlist',
+              url: subtitleLink.href,
+            },
+          ]
         }
         presenceData.detailsUrl = subtitleLink?.href
         break
@@ -77,10 +81,12 @@ presence.on('UpdateData', async () => {
           [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
         }
         if (subtitleLink) {
-          presenceData.buttons = [{
-            label: 'View Podcast',
-            url: subtitleLink.href,
-          }]
+          presenceData.buttons = [
+            {
+              label: 'View Podcast',
+              url: subtitleLink.href,
+            },
+          ]
         }
         presenceData.detailsUrl = subtitleLink?.href
         break
@@ -106,10 +112,12 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = image
         presenceData.statusDisplayType = StatusDisplayType.Details
         if (subtitleLink) {
-          presenceData.buttons = [{
-            label: 'View Radio',
-            url: subtitleLink.href,
-          }]
+          presenceData.buttons = [
+            {
+              label: 'View Radio',
+              url: subtitleLink.href,
+            },
+          ]
         }
         presenceData.smallImageKey = Assets.Repeat
         presenceData.smallImageText = 'Replay'
@@ -123,10 +131,12 @@ presence.on('UpdateData', async () => {
     const videoDetails = document.querySelector('[class^="style_videoDetails"]')
     presenceData.details = videoDetails?.querySelector('[class^="style_title"]')?.textContent
     presenceData.state = videoDetails?.querySelector('[class^="style_timeAgo"]')?.textContent
-    presenceData.buttons = [{
-      label: 'Watch Video',
-      url: document.location.href,
-    }]
+    presenceData.buttons = [
+      {
+        label: 'Watch Video',
+        url: document.location.href,
+      },
+    ]
     const video = document.querySelector<HTMLVideoElement>('#globalVideoPlayer video')
     if (video) {
       if (!video.paused)

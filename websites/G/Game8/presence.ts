@@ -36,7 +36,9 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Reading an article'
             presenceData.state = document.querySelector('h1')
-            presenceData.buttons = [{ label: 'Read Article', url: href }]
+            presenceData.buttons = [
+              { label: 'Read Article', url: href },
+            ]
           }
         }
         else if (pathList[1] === 'author') {
@@ -82,7 +84,9 @@ presence.on('UpdateData', async () => {
               document.querySelector('h1')?.textContent
             }`
             : document.querySelector('h1')
-          presenceData.buttons = [{ label: 'Read Walkthrough', url: href }]
+          presenceData.buttons = [
+            { label: 'Read Walkthrough', url: href },
+          ]
         }
         else if (pathList[2] === 'search') {
           presenceData.details = 'Searching for articles'
@@ -91,7 +95,9 @@ presence.on('UpdateData', async () => {
         else {
           presenceData.details = 'Viewing a game'
           presenceData.state = gameTitle
-          presenceData.buttons = [{ label: 'View Game', url: href }]
+          presenceData.buttons = [
+            { label: 'View Game', url: href },
+          ]
         }
       }
       else {

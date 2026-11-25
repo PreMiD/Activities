@@ -37,7 +37,9 @@ presence.on('UpdateData', async () => {
       )?.src
       presenceData.smallImageKey = ActivityAssets.Logo
     }
-    presenceData.buttons = [{ label: 'View Game', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Game', url: document.URL },
+    ]
   }
   else if (
     document.querySelector<HTMLHeadingElement>(
@@ -56,10 +58,14 @@ presence.on('UpdateData', async () => {
     presenceData.details = `Viewing ${
       document.querySelector(':is(div > a > h1, p > span + a)')?.textContent
     }'s profile`
-    presenceData.buttons = [{ label: 'View Profile', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Profile', url: document.URL },
+    ]
     if (listname) {
       presenceData.state = listname.textContent
-      presenceData.buttons = [{ label: 'View List', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View List', url: document.URL },
+      ]
     }
     if (cover && profilePicture) {
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
@@ -112,7 +118,9 @@ presence.on('UpdateData', async () => {
       )?.src
       presenceData.smallImageKey = ActivityAssets.Logo
     }
-    presenceData.buttons = [{ label: 'Read Review', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'Read Review', url: document.URL },
+    ]
   }
   else if (path.startsWith('/home')) {
     presenceData.details = 'At Home page'
@@ -132,14 +140,18 @@ presence.on('UpdateData', async () => {
       )?.src
       presenceData.smallImageKey = ActivityAssets.Logo
     }
-    presenceData.buttons = [{ label: 'View Lists', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Lists', url: document.URL },
+    ]
   }
   else if (path.includes('/lists/')) {
     presenceData.details = 'Viewing List:'
     presenceData.state = document.querySelector<HTMLHeadingElement>(
       '#root > div > div.css-1dbjc4n > div > div.flex.flex-col.flex-1.w-full.z-10.px-2.sm\\:px-4 > div > div:nth-child(1) > div.flex.flex-col.flex-grow > div.flex.flex-col > h1',
     )?.textContent
-    presenceData.buttons = [{ label: 'View List', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View List', url: document.URL },
+    ]
   }
   if (!buttons)
     delete presenceData.buttons

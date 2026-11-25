@@ -77,7 +77,9 @@ presence.on('UpdateData', async () => {
         .querySelector('title')
         ?.textContent
         ?.replace(/ - OneTouch TV/g, '') ?? ''
-      presenceData.buttons = [{ label: 'View Actor', url: href }]
+      presenceData.buttons = [
+        { label: 'View Actor', url: href },
+      ]
       break
     }
     case pathname.includes('/detail/'): {
@@ -111,10 +113,14 @@ presence.on('UpdateData', async () => {
           [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         }
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-        presenceData.buttons = [{ label: 'Watch Video', url: href }]
+        presenceData.buttons = [
+          { label: 'Watch Video', url: href },
+        ]
       }
       else {
-        presenceData.buttons = [{ label: 'View Content', url: href }]
+        presenceData.buttons = [
+          { label: 'View Content', url: href },
+        ]
       }
       break
     }
