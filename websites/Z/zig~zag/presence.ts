@@ -1,11 +1,11 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: 'YOUR_DISCORD_APPLICATION_ID', // the Discord application named "zig~zag"
+  clientId: '1570559752864268389', // the Discord application named "zig~zag"
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/REPLACE_LOGO.png',
+  Logo = 'https://i.imgur.com/RVoWxox.png',
 }
 
 interface PlayerData {
@@ -89,7 +89,7 @@ function readBoatParty(): BoatParty | null {
   }
 }
 
-/** The party's name: the first item in the header row that holds the party timer (e.g. "S.S. LOCKED DOORS"). */
+/** The party's name: the first item in the header row that holds the party timer (e.g. "S.S. EARTH"). */
 function readPartyName(label: HTMLElement, labelRect: DOMRect): string {
   let box: HTMLElement = label
   for (let i = 0; i < 10 && box.parentElement; i++) {
