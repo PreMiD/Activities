@@ -13,9 +13,9 @@ enum ActivityAssets {
 
 // Each surface gets its own icon instead of sharing the music app's logo.
 const siteLogos: Record<string, string> = {
-  'vishaljadhav.me': 'https://vishy.dino.icu/images/avatar-256.png',
-  'vishy.dino.icu': 'https://vishy.dino.icu/images/avatar-256.png',
-  'toolbox.vishaljadhav.me': 'https://toolbox.vishaljadhav.me/icon.png',
+  'vishaljadhav.me': 'https://files.catbox.moe/wa4nvo.png',
+  'vishy.dino.icu': 'https://files.catbox.moe/wa4nvo.png',
+  'toolbox.vishaljadhav.me': 'https://files.catbox.moe/bhox8u.png',
 }
 
 function logoFor(host: string): string {
