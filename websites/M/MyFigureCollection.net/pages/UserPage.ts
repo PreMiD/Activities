@@ -6,7 +6,9 @@ export class UserPage extends BasePage {
     presenceData.details = strings.viewProfile
     presenceData.state = getTitle()
     presenceData.smallImageKey = await squareImage(getThumbnail())
-    presenceData.buttons = [getButton(strings.buttonViewProfile)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewProfile),
+    ]
     return false
   }
 

@@ -42,7 +42,9 @@ presence.on('UpdateData', async () => {
       // query game name and provider only when on a games page
       gameName = document.querySelector('div.title-wrap > h1')?.textContent?.trim() ?? 'unknown game'
       gameProvider = document.querySelector('div.title-wrap > a')?.textContent?.trim() ?? 'unknown provider'
-      presenceData.state = `Playing "${gameName}"${showGameProvider ? ` by ${gameProvider}` : ''}`
+      presenceData.state = `Playing "${gameName}"${showGameProvider
+        ? ` by ${gameProvider}`
+        : ''}`
     }
   }
   else {
@@ -66,7 +68,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = `Balance: (In Play) (${currency})`
     }
     else {
-      presenceData.details = `Balance: ${isSweeps ? `$${balanceText}` : balanceText} (${currency})`
+      presenceData.details = `Balance: ${isSweeps
+        ? `$${balanceText}`
+        : balanceText} (${currency})`
     }
   }
 

@@ -430,11 +430,15 @@ presence.on('UpdateData', async () => {
         || pathThree === 'feature'
         || pathThree === 'preview'
       ) {
-        presenceData.details = pathThree === 'video' ? strings.watching : strings.readingArticle
+        presenceData.details = pathThree === 'video'
+          ? strings.watching
+          : strings.readingArticle
         presenceData.state = document.querySelector('#id_title')?.textContent
         presenceData.buttons = [
           {
-            label: pathThree === 'video' ? strings.buttonWatchVideo : strings.buttonReadArticle,
+            label: pathThree === 'video'
+              ? strings.buttonWatchVideo
+              : strings.buttonReadArticle,
             url: href,
           },
         ]

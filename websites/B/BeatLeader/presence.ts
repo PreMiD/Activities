@@ -186,7 +186,9 @@ presence.on('UpdateData', async () => {
     ]
   }
   else {
-    presenceData.largeImageKey = logo === 0 ? dynamicLogo : logoArr[logo]
+    presenceData.largeImageKey = logo === 0
+      ? dynamicLogo
+      : logoArr[logo]
     switch (pathname.split('/')[1]) {
       case 'u': {
         presenceData.details = 'Viewing profile'
@@ -238,7 +240,9 @@ presence.on('UpdateData', async () => {
           }`
           presenceData.smallImageKey = leaderboardImages[
             simplifyKey(
-              `${mapSmallImages === 0 || mapSmallImages === 1 ? mode : ''}${
+              `${mapSmallImages === 0 || mapSmallImages === 1
+                ? mode
+                : ''}${
                 mapSmallImages === 0 || mapSmallImages === 2
                   ? difficulty?.replace('+', 'Plus')
                   : ''

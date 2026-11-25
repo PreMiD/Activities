@@ -55,7 +55,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${document.querySelector(
         '[data-test-id="profile-name"]',
       )?.textContent} (@${pathList[0]})`
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
       break
     }
 
@@ -91,7 +93,9 @@ presence.on('UpdateData', async () => {
                 url: creatorProfile,
               },
             ]
-          : [{ label: 'Watch Video Pin', url: href }]
+          : [
+              { label: 'Watch Video Pin', url: href },
+            ]
       }
       else {
         if (likesEl) {
@@ -111,7 +115,9 @@ presence.on('UpdateData', async () => {
                 url: creatorProfile,
               },
             ]
-          : [{ label: 'View Pin', url: href }]
+          : [
+              { label: 'View Pin', url: href },
+            ]
       }
       break
     }
@@ -123,7 +129,9 @@ presence.on('UpdateData', async () => {
       )
         .map(x => x?.textContent)
         .join(' => ')
-      presenceData.buttons = [{ label: 'Browse Through Ideas', url: href }]
+      presenceData.buttons = [
+        { label: 'Browse Through Ideas', url: href },
+      ]
       break
     }
     case pathname.includes('/videos/'): {

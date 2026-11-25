@@ -8,12 +8,18 @@ export default function watch(context: RouteContext) {
 
   const parts = [context.watchingStateLabel, context.language].filter(Boolean)
 
-  const name = !context.privacy && context.displayType === 1 ? context.animeTitle : undefined
+  const name = !context.privacy && context.displayType === 1
+    ? context.animeTitle
+    : undefined
   const presenceData: PresenceData = {
     name,
     type: ActivityType.Watching,
-    largeImageKey: context.privacy ? ActivityAssets.Logo : context.poster || ActivityAssets.Logo,
-    largeImageText: context.privacy ? 'Re:Anime' : context.seasonEpisodeText || 'Re:Anime',
+    largeImageKey: context.privacy
+      ? ActivityAssets.Logo
+      : context.poster || ActivityAssets.Logo,
+    largeImageText: context.privacy
+      ? 'Re:Anime'
+      : context.seasonEpisodeText || 'Re:Anime',
     details: context.privacy ? 'Watching Anime' : context.animeTitle,
     smallImageKey: context.paused ? Assets.Pause : Assets.Play,
     smallImageText: context.paused ? 'Paused' : 'Watching',

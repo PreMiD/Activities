@@ -284,7 +284,9 @@ presence.on('UpdateData', async () => {
 
     showFormat3 = true
 
-    presenceData.buttons = [{ label: 'Listen along!', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'Listen along!', url: document.URL },
+    ]
 
     if (!paused) {
       presenceData.startTimestamp = Date.parse(channel?.timeStart ?? '')

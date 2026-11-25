@@ -52,7 +52,9 @@ function formatShowDateRange(value: string): string {
   const dates = segments.map((segment) => {
     const withoutWeekday = segment.replace(/^[a-z]+,\s*/i, '')
     const date = new Date(withoutWeekday)
-    return Number.isNaN(date.getTime()) ? null : date
+    return Number.isNaN(date.getTime())
+      ? null
+      : date
   })
 
   if (dates.some(date => !date))
@@ -149,8 +151,12 @@ function applyStreamState(
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
   }
 
-  presenceData.smallImageKey = isPaused || currentTime <= 0 ? Assets.Pause : Assets.Play
-  presenceData.smallImageText = isPaused || currentTime <= 0 ? 'Paused' : 'Playing'
+  presenceData.smallImageKey = isPaused || currentTime <= 0
+    ? Assets.Pause
+    : Assets.Play
+  presenceData.smallImageText = isPaused || currentTime <= 0
+    ? 'Paused'
+    : 'Playing'
 
   return presenceData
 }

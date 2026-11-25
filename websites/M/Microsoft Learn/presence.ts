@@ -192,7 +192,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Checking a Course'
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Browsing'
-    presenceData.state = privacy ? 'A course' : titleElement || 'Course'
+    presenceData.state = privacy
+      ? 'A course'
+      : titleElement || 'Course'
     if (showButton) {
       presenceData.buttons = [
         {

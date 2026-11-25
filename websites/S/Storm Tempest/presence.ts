@@ -104,7 +104,9 @@ function isInServerControl(element: Element): boolean {
     labelledBy,
     group.id,
     group.getAttribute('class'),
-    group.hasAttribute('data-server') ? 'server' : '',
+    group.hasAttribute('data-server')
+      ? 'server'
+      : '',
   ].join(' ')
 
   return /server|source|provider/i.test(label)

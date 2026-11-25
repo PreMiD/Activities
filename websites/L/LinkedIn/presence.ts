@@ -169,7 +169,9 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.startsWith('/search/results/')) {
     const keyword = params.get('keywords') || 'something'
-    presenceData.details = privacyMode ? 'Searching...' : `Searching for ${keyword}`
+    presenceData.details = privacyMode
+      ? 'Searching...'
+      : `Searching for ${keyword}`
     presenceData.smallImageKey = Assets.Search
   }
   else if (pathname.startsWith('/messaging/')) {
@@ -260,7 +262,9 @@ presence.on('UpdateData', async () => {
     const authorName = document.querySelector(
       '.update-components-actor__title .visually-hidden',
     )?.textContent || 'someone'
-    presenceData.state = privacyMode ? 'from someone' : `from ${authorName}`
+    presenceData.state = privacyMode
+      ? 'from someone'
+      : `from ${authorName}`
     presenceData.smallImageKey = Assets.Reading
   }
 

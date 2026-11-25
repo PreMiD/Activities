@@ -26,8 +26,12 @@ presence.on('UpdateData', async () => {
   }
 
   const separator = fullText.indexOf('—')
-  let title = separator !== -1 ? fullText.substring(separator + 1).trim() : fullText
-  const artist = separator !== -1 ? fullText.substring(0, separator).trim() : ''
+  let title = separator !== -1
+    ? fullText.substring(separator + 1).trim()
+    : fullText
+  const artist = separator !== -1
+    ? fullText.substring(0, separator).trim()
+    : ''
 
   // Get remix/version info and track URL from the title element
   const titleContainer = document.querySelector('[data-testid="audioplayeraudioinfo-title"]')

@@ -130,10 +130,12 @@ presence.on('UpdateData', async () => {
           case 'game':
             presenceData.details = strings.viewGame
             presenceData.state = document.querySelector('.productcard-basics__title')?.textContent
-            presenceData.buttons = [{
-              label: strings.buttonViewGame,
-              url: href,
-            }]
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewGame,
+                url: href,
+              },
+            ]
             presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property="thumbnail"]')?.content ?? ActivityAssets.Logo
             break
           case 'wallet':

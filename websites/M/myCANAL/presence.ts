@@ -263,7 +263,9 @@ async function handleCinemaContent(presenceData: MediaPresenceData | NonMediaPre
   }
 
   presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-  presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
+  presenceData.smallImageText = video.paused
+    ? (await strings).pause
+    : (await strings).play
 }
 
 async function handleSeriesContent(presenceData: PresenceData, video: HTMLVideoElement, showCover: boolean, showTitleAsActivity: boolean, mainTitle: Element | null) {
@@ -303,5 +305,7 @@ async function handleSeriesContent(presenceData: PresenceData, video: HTMLVideoE
   presenceData.largeImageText = `${showSeason}, ${showEpisode}`
 
   presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-  presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
+  presenceData.smallImageText = video.paused
+    ? (await strings).pause
+    : (await strings).play
 }

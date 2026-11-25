@@ -56,7 +56,9 @@ presence.on('UpdateData', async () => {
       if (!privacy)
         presenceData.state = `${segments[1]}/${segments[2]}`
       if (!privacy && showButtons) {
-        presenceData.buttons = [{ label: 'View Dataset', url: href }]
+        presenceData.buttons = [
+          { label: 'View Dataset', url: href },
+        ]
       }
     }
     else if (query) {
@@ -74,7 +76,9 @@ presence.on('UpdateData', async () => {
       if (!privacy)
         presenceData.state = `${segments[1]}/${segments[2]}`
       if (!privacy && showButtons) {
-        presenceData.buttons = [{ label: 'View Space', url: href }]
+        presenceData.buttons = [
+          { label: 'View Space', url: href },
+        ]
       }
     }
     else if (query) {
@@ -146,7 +150,9 @@ presence.on('UpdateData', async () => {
     if (!privacy) {
       presenceData.state = segments[0]
       if (showButtons) {
-        presenceData.buttons = [{ label: 'View Profile', url: href }]
+        presenceData.buttons = [
+          { label: 'View Profile', url: href },
+        ]
       }
     }
   }
@@ -171,7 +177,9 @@ presence.on('UpdateData', async () => {
         if (!privacy)
           presenceData.state = `${owner}/${repo}`
         if (!privacy && showButtons) {
-          presenceData.buttons = [{ label: 'View Model', url: href }]
+          presenceData.buttons = [
+            { label: 'View Model', url: href },
+          ]
         }
       }
     }

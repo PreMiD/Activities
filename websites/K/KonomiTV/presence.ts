@@ -413,7 +413,18 @@ async function resolveLogo(ch: ChannelInfo): Promise<string | null> {
   if (ch.type === 'GR' && ch.name.startsWith('NHKEテレ'))
     candidates.push('NID32737-SID1032')
   // ケーブルテレビのコミュニティチャンネルは地域ごとに ID が違うため、チャンネル名で決め打ち
-  const community = ['J:COMテレビ', 'J:COMチャンネル', 'イッツコムch10', 'イッツコムch11', 'スカパー！ナビ1', 'スカパー！ナビ2', 'eo光チャンネル', 'ZTV', 'BaycomCH', 'ベイコム12CH']
+  const community = [
+    'J:COMテレビ',
+    'J:COMチャンネル',
+    'イッツコムch10',
+    'イッツコムch11',
+    'スカパー！ナビ1',
+    'スカパー！ナビ2',
+    'eo光チャンネル',
+    'ZTV',
+    'BaycomCH',
+    'ベイコム12CH',
+  ]
     .find(n => ch.type === 'GR' && ch.name.startsWith(n))
   if (community)
     return `${LOGO_BASE}community-channels/${encodeURIComponent(community.replace(':', '：'))}.png`
@@ -426,12 +437,16 @@ async function resolveLogo(ch: ChannelInfo): Promise<string | null> {
     const main = Object.values(all ?? {})
       .flat()
       .filter(c => c.network_id === ch.network_id)
-      .reduce<ChannelInfo | null>((min, c) => (!min || c.service_id < min.service_id ? c : min), null)
+      .reduce<ChannelInfo | null>((min, c) => (!min || c.service_id < min.service_id
+        ? c
+        : min), null)
     if (main)
       candidates.push(main.id)
   }
   const hit = candidates.find(id => BUNDLED.has(id))
-  return hit ? `${LOGO_BASE}${hit}.png` : null
+  return hit
+    ? `${LOGO_BASE}${hit}.png`
+    : null
 }
 
 async function getLogo(ch: ChannelInfo | null | undefined): Promise<string | null> {
@@ -470,7 +485,9 @@ async function fetchJson<T>(path: string): Promise<T | null> {
 
 async function getChannel(id: string): Promise<ChannelInfo | null> {
   const now = Date.now()
-  const end = channelCache?.program_present ? new Date(channelCache.program_present.end_time).getTime() : 0
+  const end = channelCache?.program_present
+    ? new Date(channelCache.program_present.end_time).getTime()
+    : 0
   // チャンネルが変わった・30秒経った・番組が終わった ときに取り直す
   if (cacheKey !== `ch:${id}` || now - cacheTime > 30000 || (end && now > end)) {
     channelCache = await fetchJson<ChannelInfo>(`/api/channels/${encodeURIComponent(id)}`)
@@ -526,7 +543,9 @@ presence.on('UpdateData', async () => {
   if (live) {
     const ch = await getChannel(live[1]!)
     const prog = ch?.program_present
-    presenceData.details = showProgram ? (prog?.title ?? 'テレビを視聴中') : 'テレビを視聴中'
+    presenceData.details = showProgram
+      ? (prog?.title ?? 'テレビを視聴中')
+      : 'テレビを視聴中'
     presenceData.state = ch?.name ?? live[1]
     const liveLogo = await getLogo(ch)
     if (liveLogo) {
@@ -551,7 +570,9 @@ presence.on('UpdateData', async () => {
   const rec = pathname.match(/^\/videos\/watch\/([^/]+)/)
   if (rec) {
     const v = await getVideo(rec[1]!)
-    presenceData.details = showProgram ? (v?.title ?? '録画番組を視聴中') : '録画番組を視聴中'
+    presenceData.details = showProgram
+      ? (v?.title ?? '録画番組を視聴中')
+      : '録画番組を視聴中'
     presenceData.state = v?.channel?.name ?? '録画番組'
     const recLogo = await getLogo(v?.channel)
     if (recLogo) {
@@ -575,7 +596,9 @@ presence.on('UpdateData', async () => {
     presence.clearActivity()
     return
   }
-  presenceData.details = pathname.startsWith('/settings') ? '設定' : (pageNames[pathname] ?? 'ブラウジング中')
+  presenceData.details = pathname.startsWith('/settings')
+    ? '設定'
+    : (pageNames[pathname] ?? 'ブラウジング中')
   if (pathname === '/tv/search' || pathname === '/videos/search') {
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = '検索中'

@@ -32,5 +32,11 @@ presence.on('UpdateData', async () => {
     return
 
   const page = readPage(new URL(document.location.href), document)
-  await presence.setActivity(buildActivity(page, { privacy, buttons, ads, pause, playback }, strings))
+  await presence.setActivity(buildActivity(page, {
+    privacy,
+    buttons,
+    ads,
+    pause,
+    playback,
+  }, strings))
 })

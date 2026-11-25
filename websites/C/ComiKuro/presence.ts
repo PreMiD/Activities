@@ -6,7 +6,9 @@ let activePageKey = ''
 let pageStartTimestamp = Math.floor(Date.now() / 1000)
 
 function truncate(value: string, maxLength: number): string {
-  return value.length > maxLength ? `${value.slice(0, maxLength - 1)}…` : value
+  return value.length > maxLength
+    ? `${value.slice(0, maxLength - 1)}…`
+    : value
 }
 
 function getMeta(name: string): string {
@@ -115,7 +117,9 @@ function normalizeImageUrl(value: string): string {
       return ''
 
     const normalized = url.href
-    return normalized.length <= 256 ? normalized : ''
+    return normalized.length <= 256
+      ? normalized
+      : ''
   }
   catch {
     return ''
@@ -259,14 +263,18 @@ presence.on('UpdateData', () => {
   const isReaderPage = pageType === 'reader' || pathname.startsWith('/read/')
   const shouldUseMangaCover = isMangaPage || isReaderPage
   const shouldHideMangaCover = shouldUseMangaCover && isSensitiveManga()
-  const mangaCoverUrl = shouldUseMangaCover && !shouldHideMangaCover ? getMangaCoverUrl() : ''
+  const mangaCoverUrl = shouldUseMangaCover && !shouldHideMangaCover
+    ? getMangaCoverUrl()
+    : ''
 
   const presenceData: PresenceData = {
     startTimestamp: pageStartTimestamp,
   }
 
   const logoUrl = 'https://cdn.rcd.gg/PreMiD/websites/C/ComiKuro/assets/logo.png'
-  ;(presenceData as Record<string, unknown>).largeImageKey = shouldUseMangaCover && mangaCoverUrl ? mangaCoverUrl : logoUrl
+  ;(presenceData as Record<string, unknown>).largeImageKey = shouldUseMangaCover && mangaCoverUrl
+    ? mangaCoverUrl
+    : logoUrl
 
   if (shouldHideMangaCover) {
     ;(presenceData as Record<string, unknown>).largeImageText = 'Cover hidden for sensitive content'
@@ -277,7 +285,9 @@ presence.on('UpdateData', () => {
 
   if (document.location.hostname.includes('comikuro.to')) {
     presenceData.details = 'ComiKuro'
-    presenceData.state = pathname === '/' ? 'Home' : pathname
+    presenceData.state = pathname === '/'
+      ? 'Home'
+      : pathname
   }
 
   if (pageType === 'manga') {
@@ -285,11 +295,15 @@ presence.on('UpdateData', () => {
     presenceData.state = mangaTitle
   }
   else if (pageType === 'reader') {
-    presenceData.details = chapterLabel ? `Reading ${workTypeLower} - ${chapterLabel}` : `Reading ${workTypeLower}`
+    presenceData.details = chapterLabel
+      ? `Reading ${workTypeLower} - ${chapterLabel}`
+      : `Reading ${workTypeLower}`
     presenceData.state = mangaTitle
   }
   else if (pathname.startsWith('/read/')) {
-    presenceData.details = chapterLabel ? `Reading ${workTypeLower} - ${chapterLabel}` : `Reading ${workTypeLower}`
+    presenceData.details = chapterLabel
+      ? `Reading ${workTypeLower} - ${chapterLabel}`
+      : `Reading ${workTypeLower}`
     presenceData.state = mangaTitle
   }
   else if (pathname.startsWith('/manga/')) {
@@ -330,8 +344,11 @@ presence.on('UpdateData', () => {
     presenceData.state = document.title || 'Website'
   }
 
-  if (pageType === 'reader')
-    presenceData.smallImageText = chapterLabel || (mangaId ? `Manga ${mangaId}` : '')
+  if (pageType === 'reader') {
+    presenceData.smallImageText = chapterLabel || (mangaId
+      ? `Manga ${mangaId}`
+      : '')
+  }
 
   if (typeof presenceData.details === 'string')
     presenceData.details = truncate(presenceData.details, 128)

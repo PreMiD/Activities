@@ -54,7 +54,9 @@ test('browsing an event page', async ({ page, activity }) => {
   })
 })
 
-test('privacy mode hides the event title', { settings: { privacy: true } }, async ({ page, activity }) => {
+test('privacy mode hides the event title', {
+  settings: { privacy: true },
+}, async ({ page, activity }) => {
   await page.goto('https://spwn.jp/events/evt_26102901-jpmiko2ndlive')
   await page.waitFor('h2.no-translate')
 

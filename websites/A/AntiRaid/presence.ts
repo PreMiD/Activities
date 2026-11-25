@@ -10,7 +10,9 @@ enum ActivityAssets {
 }
 
 function formatNumber(num: number | string): string {
-  const n = typeof num === 'string' ? Number.parseInt(num.replace(/\D/g, ''), 10) : num
+  const n = typeof num === 'string'
+    ? Number.parseInt(num.replace(/\D/g, ''), 10)
+    : num
   if (Number.isNaN(n))
     return '0'
 
@@ -82,7 +84,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = `🔍 Searching: "${searchQuery}"`
       }
       else if (selectedModule) {
-        presenceData.state = `📂 ${selectedModule}${commandCount ? ` • ${formatNumber(commandCount)} commands` : ''}`
+        presenceData.state = `📂 ${selectedModule}${commandCount
+          ? ` • ${formatNumber(commandCount)} commands`
+          : ''}`
       }
       else if (commandCount) {
         presenceData.state = `📋 Browsing ${formatNumber(commandCount)} commands`
@@ -127,7 +131,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = `🔍 Searching: "${serverSearchQuery}"`
       }
       else {
-        presenceData.state = `📂 ${activeTab} • ${formatNumber(activeTab === 'Managed Servers' ? managedCount : yourCount)} servers`
+        presenceData.state = `📂 ${activeTab} • ${formatNumber(activeTab === 'Managed Servers'
+          ? managedCount
+          : yourCount)} servers`
       }
       break
     }
@@ -274,7 +280,9 @@ presence.on('UpdateData', async () => {
         || document.title?.replace(' | AntiRaid', '').replace(' - AntiRaid', '').trim()
 
       if (pageTitle && pageTitle.length > 0 && pageTitle !== 'AntiRaid') {
-        presenceData.state = `📄 ${pageTitle.length > 40 ? `${pageTitle.substring(0, 37)}...` : pageTitle}`
+        presenceData.state = `📄 ${pageTitle.length > 40
+          ? `${pageTitle.substring(0, 37)}...`
+          : pageTitle}`
       }
       else {
         presenceData.state = `👀 Viewing: ${pathname}`

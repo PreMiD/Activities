@@ -16,7 +16,7 @@
     "gensokyo.store"
   ],
   "regExp": "^https?[:][/][/](app[.]gensokyoradio[.]net|forum[.]gensokyoradio[.]net|(www[.])?gensokyo[.]store|(www[.])?gensokyoradio[.]net)[/].*$",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gensokyo%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gensokyo%20Radio/assets/thumbnail.png",
   "color": "#8a2f4a",

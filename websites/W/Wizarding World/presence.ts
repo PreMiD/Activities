@@ -30,7 +30,9 @@ presence.on('UpdateData', async () => {
       switch (urlpath[1]) {
         case 'news':
         case 'features': {
-          presenceData.details = urlpath[1] === 'news' ? 'News' : 'Features'
+          presenceData.details = urlpath[1] === 'news'
+            ? 'News'
+            : 'Features'
 
           if (urlpath[2]) {
             presenceData.state = document.querySelector('h1.ArticleHero_title__cOam6')

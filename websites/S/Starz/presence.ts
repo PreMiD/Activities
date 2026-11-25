@@ -15,7 +15,9 @@ const strings = presence.getStrings({
  * @param {boolean} live Is it a live video
  */
 function getStateText(paused: boolean, live: boolean) {
-  return live ? 'Live Broadcast' : paused ? 'Paused' : 'Watching'
+  return live
+    ? 'Live Broadcast'
+    : paused ? 'Paused' : 'Watching'
 }
 
 let elapsed: number, oldUrl: string

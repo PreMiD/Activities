@@ -82,13 +82,17 @@ presence.on('UpdateData', () => {
       const episodeUrl = new URL(window.location.href)
       episodeUrl.searchParams.set('episode', episode.toString())
 
-      presenceData.smallImageKey = playbackState === 'paused' ? Assets.Pause : Assets.Play
+      presenceData.smallImageKey = playbackState === 'paused'
+        ? Assets.Pause
+        : Assets.Play
 
       presenceData.smallImageText = `Watching - ${toProperCase(playbackState)}`
       presenceData.details = title
       presenceData.state = episodeName || '';
       [presenceData.startTimestamp, presenceData.endTimestamp] = time.snowflake
-      presenceData.buttons = [{ label: 'Watch', url: episodeUrl.href }]
+      presenceData.buttons = [
+        { label: 'Watch', url: episodeUrl.href },
+      ]
       break
     }
     case 'genre': {

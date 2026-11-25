@@ -72,7 +72,9 @@ presence.on('UpdateData', async () => {
         }
         if (memberCount()) {
           presenceData.state = `${memberCount()} user${
-            memberCount()! > 1 ? 's' : ''
+            memberCount()! > 1
+              ? 's'
+              : ''
           } in room`
         }
         presenceData.startTimestamp = browsingTimestamp
@@ -101,5 +103,7 @@ function memberCount() {
   const counter = document.querySelector<HTMLSpanElement>(
     '.footer-button__number-counter',
   )?.textContent
-  return counter === null ? null : Number(counter)
+  return counter === null
+    ? null
+    : Number(counter)
 }

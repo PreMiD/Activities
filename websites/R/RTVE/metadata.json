@@ -12,7 +12,7 @@
   },
   "url": "rtve.es",
   "regExp": "^https?[:][/][/](www[.])?rtve[.]es[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTVE/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTVE/assets/thumbnail.png",
   "color": "#f56b0d",

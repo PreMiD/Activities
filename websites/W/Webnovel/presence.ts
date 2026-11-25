@@ -82,7 +82,9 @@ presence.on('UpdateData', async () => {
               .querySelector<HTMLHeadingElement>('h2')
               ?.innerHTML
               .split(' <')[0]
-            presenceData.buttons = [{ label: 'View Book', url: document.URL }]
+            presenceData.buttons = [
+              { label: 'View Book', url: document.URL },
+            ]
           }
         }
       }
@@ -93,7 +95,9 @@ presence.on('UpdateData', async () => {
         }
         if (!privacy) {
           presenceData.state = document.querySelector<HTMLAnchorElement>('h3')?.textContent
-          presenceData.buttons = [{ label: 'View Profile', url: document.URL }]
+          presenceData.buttons = [
+            { label: 'View Profile', url: document.URL },
+          ]
         }
       }
       else if (pathname.startsWith('/search')) {
@@ -188,7 +192,9 @@ presence.on('UpdateData', async () => {
           presenceData.state = document.querySelector<HTMLHeadingElement>(
             '.PageHero-title',
           )?.textContent
-          presenceData.buttons = [{ label: 'Read Post', url: document.URL }]
+          presenceData.buttons = [
+            { label: 'Read Post', url: document.URL },
+          ]
         }
       }
 

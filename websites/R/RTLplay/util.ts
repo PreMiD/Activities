@@ -241,7 +241,12 @@ export function getChannel(channel: string): ChannelInfo {
         logo: ActivityAssets.RTLDistrict,
       }
     }
-    case ['rtlplay', 'rtlplay2', 'sports', 'rtlsports'].includes(channel): {
+    case [
+      'rtlplay',
+      'rtlplay2',
+      'sports',
+      'rtlsports',
+    ].includes(channel): {
       return {
         name: 'RTL sports',
         type: ActivityType.Watching,
@@ -353,7 +358,9 @@ export function getChannel(channel: string): ChannelInfo {
     // [3/8] Contact Summertime/KPOP
     case ['plus', 'kpop'].includes(channel): {
       return {
-        name: `Contact ${channel === 'plus' ? 'Summertime' : 'KPOP'}`,
+        name: `Contact ${channel === 'plus'
+          ? 'Summertime'
+          : 'KPOP'}`,
         type: ActivityType.Listening,
         logo: ActivityAssets.Contact,
         animated: ActivityAssets.ContactAnimated,

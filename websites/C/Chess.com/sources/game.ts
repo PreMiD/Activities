@@ -122,8 +122,12 @@ const gameResolver: Resolver = {
       if (state)
         return state
 
-      const p1 = bottom.rating ? `${bottom.name} (${bottom.rating})` : bottom.name
-      const p2 = top.rating ? `${top.name} (${top.rating})` : top.name
+      const p1 = bottom.rating
+        ? `${bottom.name} (${bottom.rating})`
+        : bottom.name
+      const p2 = top.rating
+        ? `${top.name} (${top.rating})`
+        : top.name
       return `${p1} ${t.vs_separator} ${p2}`
     }
 
@@ -139,7 +143,9 @@ const gameResolver: Resolver = {
     if (status !== GameStatus.Searching && status !== GameStatus.Loading && status !== GameStatus.Lobby) {
       const currentUrl = doc.location.href
       const cleanUrl = currentUrl.split('?')[0] || currentUrl
-      return [{ label: t.button_view_game, url: cleanUrl }]
+      return [
+        { label: t.button_view_game, url: cleanUrl },
+      ]
     }
     return undefined
   },

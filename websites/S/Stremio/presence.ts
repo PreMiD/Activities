@@ -124,7 +124,9 @@ presence.on('UpdateData', async () => {
       const video = findVideo()
 
       if (privacy) {
-        presenceData.state = video !== null ? 'Watching' : 'Browsing'
+        presenceData.state = video !== null
+          ? 'Watching'
+          : 'Browsing'
         break
       }
 
@@ -241,7 +243,9 @@ presence.on('UpdateData', async () => {
             },
           ]
           presenceData.details = `Discovering ${type ?? 'content'}${
-            type === 'series' ? '' : 's'
+            type === 'series'
+              ? ''
+              : 's'
           }`
           presenceData.state = `${category ?? 'All'}${
             genre && !['none', 'genre'].includes(genre.toLowerCase())
@@ -331,7 +335,9 @@ presence.on('UpdateData', async () => {
             const recentLibrary = JSON.parse(localStorage.library_recent) as RecentLibraryStorage
             const mostRecent = Object.values(recentLibrary.items).reduce<RecentLibraryItem | null>(
               (latest, item) =>
-                !latest || item._mtime > latest._mtime ? item : latest,
+                !latest || item._mtime > latest._mtime
+                  ? item
+                  : latest,
               null,
             )
 

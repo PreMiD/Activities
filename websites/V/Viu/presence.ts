@@ -142,7 +142,12 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     details: strings.browse,
     smallImageKey: Assets.Reading,
-    largeImageKey: [ActivityAssets.Logo, ActivityAssets.LogoText, ActivityAssets.Logo, ActivityAssets.Logo][
+    largeImageKey: [
+      ActivityAssets.Logo,
+      ActivityAssets.LogoText,
+      ActivityAssets.Logo,
+      ActivityAssets.Logo,
+    ][
       presenceLogo
     ],
     startTimestamp: browsingTimestamp,
@@ -175,8 +180,12 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.state = `EP.${episodeNumber}${
-          part ? ` • ${part[0]} ` : ''
-        }${hasEpName ? ` • ${episodeName}` : ''}`
+          part
+            ? ` • ${part[0]} `
+            : ''
+        }${hasEpName
+          ? ` • ${episodeName}`
+          : ''}`
       }
 
       const coverPortraitImage = seriesInfo?.[0]?.series_cover_portrait_image_url

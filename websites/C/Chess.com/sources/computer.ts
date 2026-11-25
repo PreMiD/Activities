@@ -14,9 +14,13 @@ const computerResolver: Resolver = {
       return t.computer_selecting
 
     const ratingEl = doc.querySelector('[data-cy="user-tagline-rating"]')
-    const rating = ratingEl?.textContent ? cleanRating(ratingEl.textContent) : null
+    const rating = ratingEl?.textContent
+      ? cleanRating(ratingEl.textContent)
+      : null
 
-    return (rating && !hideRating) ? `${name} (${rating})` : name
+    return (rating && !hideRating)
+      ? `${name} (${rating})`
+      : name
   },
 
   getLargeImageKey: (t, doc) => {

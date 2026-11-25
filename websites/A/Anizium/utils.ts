@@ -102,6 +102,8 @@ export class Utils {
       'Destek Talebi': 'Destek taleplerini görüntülüyor',
     }
 
-    return tabName ? tabMap[tabName] || 'Hesap ayarlarını yönetiyor' : null
+    return tabName
+      ? tabMap[tabName] || 'Hesap ayarlarını yönetiyor'
+      : null
   }
 }

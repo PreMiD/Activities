@@ -131,7 +131,9 @@ async function getEpisodeInfo(text: string) {
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
 
-  const currentLang = navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en'
+  const currentLang = navigator.language.toLowerCase().startsWith('es')
+    ? 'es'
+    : 'en'
   if (!strings || oldLang !== currentLang) {
     strings = await getStrings()
     oldLang = currentLang

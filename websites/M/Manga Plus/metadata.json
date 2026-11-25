@@ -11,7 +11,7 @@
   },
   "url": "mangaplus.shueisha.co.jp",
   "regExp": "^https?[:][/][/]mangaplus[.]shueisha[.]co[.]jp[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Manga%20Plus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Manga%20Plus/assets/thumbnail.png",
   "color": "#E83608",

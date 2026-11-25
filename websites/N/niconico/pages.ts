@@ -79,7 +79,9 @@ function readVideo(url: URL, document: Document, id: string): Page {
     title,
     creator,
     image: image(document),
-    playback: advertisement ? undefined : playback(media),
+    playback: advertisement
+      ? undefined
+      : playback(media),
     advertisement,
   }
 }
@@ -110,7 +112,11 @@ export function readPage(url: URL, document: Document): Page {
     const search = pathname.match(/^\/(?:search|tag|search_shorts|tag_shorts|mylist_search|user_search|series_search)\/(.*)$/)?.[1]
     if (search !== undefined) {
       try {
-        return { kind: 'search', url: url.href, query: decodeURIComponent(search).trim() }
+        return {
+          kind: 'search',
+          url: url.href,
+          query: decodeURIComponent(search).trim(),
+        }
       }
       catch {
         return browsing

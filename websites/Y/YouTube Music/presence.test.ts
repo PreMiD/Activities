@@ -3,7 +3,7 @@ import { ActivityType, Assets } from 'premid'
 import { expect, test } from 'premid/test'
 
 const consentOrLogin = {
-  until: () => !!document.querySelector('ytmusic-app ytmusic-player-bar'),
+  until: () => !!document.querySelector('ytmusic-app ytmusic-player-bar, ytmusic-app ytmusic-miniplayer'),
 }
 
 // A pre-roll ad also plays in the video element, and the song can come up paused after it.
@@ -15,7 +15,10 @@ function playSong() {
     video.muted = true
     void video.play()
   }
-  const title = document.querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')?.textContent?.trim()
+  const title = document
+    .querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title, .ytmusicTrackInfoTitle')
+    ?.textContent
+    ?.trim()
   return !!video && !video.paused && !adShowing && !!title
 }
 
@@ -73,14 +76,17 @@ test('listening to a song', async ({ page, activity }) => {
     expect(presence.endTimestamp).toEqual(expect.any(Number))
 })
 
-test('privacy mode hides the song title', { settings: { privacy: true } }, async ({ page, activity }) => {
+test('privacy mode hides the song title', {
+  settings: { privacy: true },
+}, async ({ page, activity }) => {
   await page.goto('https://music.youtube.com/watch?v=dQw4w9WgXcQ')
   await page.waitForUser('Accept the consent screen or sign in', consentOrLogin)
 
   await startPlayback(page)
 
   const title = await page.evaluate(() => {
-    return document.querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')
+    return document
+      .querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title, .ytmusicTrackInfoTitle')
       ?.textContent
       ?.trim() ?? ''
   })

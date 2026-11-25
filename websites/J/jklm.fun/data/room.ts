@@ -14,7 +14,9 @@ export function getRoomData(gameType: GameType): RoomData {
 
   const roomData: RoomData = {
     code: roomCodeElement?.textContent ?? null,
-    players: playersElement ? Number.parseInt(playersElement.textContent || '0', 10) : null,
+    players: playersElement
+      ? Number.parseInt(playersElement.textContent || '0', 10)
+      : null,
     activePlayers: null,
     isPrivateRoom,
   }
@@ -22,12 +24,16 @@ export function getRoomData(gameType: GameType): RoomData {
   if (gameType === GameType.BombParty) {
     const playersRow = document.querySelector('.statsTable tbody')
 
-    roomData.activePlayers = playersRow ? playersRow.querySelectorAll('tr').length : null
+    roomData.activePlayers = playersRow
+      ? playersRow.querySelectorAll('tr').length
+      : null
   }
   else if (gameType === GameType.PopSauce) {
     const playersRow = document.querySelector('.scoreboard')
 
-    roomData.activePlayers = playersRow ? playersRow.querySelectorAll('.entry').length : null
+    roomData.activePlayers = playersRow
+      ? playersRow.querySelectorAll('.entry').length
+      : null
   }
   else {
     return {

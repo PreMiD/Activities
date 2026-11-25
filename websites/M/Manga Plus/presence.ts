@@ -52,7 +52,9 @@ presence.on('UpdateData', async () => {
       document.title.lastIndexOf('-') + 1,
       document.title.lastIndexOf('|') - 1,
     )
-    presenceData.buttons = [{ label: 'View series', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View series', url: document.URL },
+    ]
   }
   else if (pathname.startsWith('/viewer')) {
     presenceData.details = `Reading: ${

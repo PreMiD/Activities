@@ -147,7 +147,9 @@ function getOtherDetails(
       if (channelName || !(rssLink?.href && title))
         return
 
-      channelName = title.includes(' | ') ? title.split(' | ')[0] || null : null
+      channelName = title.includes(' | ')
+        ? title.split(' | ')[0] || null
+        : null
     }
 
     const isPodcast = !channelName
@@ -268,6 +270,8 @@ function parseQueryParams(): QueryParams {
 }
 
 function getRootUrl(): string {
-  return `${document.location.protocol}//${document.location.hostname}${document.location.port ? `:${document.location.port}` : ''
+  return `${document.location.protocol}//${document.location.hostname}${document.location.port
+    ? `:${document.location.port}`
+    : ''
   }`
 }

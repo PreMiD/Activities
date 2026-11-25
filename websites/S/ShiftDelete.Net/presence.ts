@@ -183,7 +183,9 @@ presence.on('UpdateData', async () => {
           author && author.textContent !== ''
             ? author.textContent
             : 'Belirsiz Gönderi Sahibi'
-        } ${time && time.textContent !== '' ? `(${time.textContent})` : ''}`,
+        } ${time && time.textContent !== ''
+          ? `(${time.textContent})`
+          : ''}`,
         smallImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/ShiftDelete.Net/assets/0.png',
         smallImageText: 'Bir forum gönderisi okuyor.',
         startTimestamp: Math.floor(Date.now() / 1000),

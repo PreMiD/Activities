@@ -75,7 +75,9 @@ presence.on('UpdateData', async () => {
       )?.dataset?.src
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Viewing'
-      presenceData.buttons = [{ label: strings.buttonViewPage, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewPage, url: href },
+      ]
       break
 
     case 'content':

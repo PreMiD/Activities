@@ -97,7 +97,16 @@ async function refreshSettings(): Promise<void> {
       readToggle('showButtons', true),
     ])
 
-  settings = { privacy, showBrowsing, usePresenceName, showCover, showSynopsis, showWatchParty, showTimestamp, showButtons }
+  settings = {
+    privacy,
+    showBrowsing,
+    usePresenceName,
+    showCover,
+    showSynopsis,
+    showWatchParty,
+    showTimestamp,
+    showButtons,
+  }
 
   if (!strings || language !== lang) {
     language = lang
@@ -109,7 +118,9 @@ function readNumber(value: string | undefined): number | null {
   if (!value)
     return null
   const parsed = Number(value)
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null
+  return Number.isFinite(parsed) && parsed >= 0
+    ? parsed
+    : null
 }
 
 function readHeiwaUrl(value: string | undefined): string | null {
@@ -118,7 +129,9 @@ function readHeiwaUrl(value: string | undefined): string | null {
 
   try {
     const url = new URL(value)
-    return url.protocol === 'https:' && supportedHosts.has(url.hostname) ? url.href : null
+    return url.protocol === 'https:' && supportedHosts.has(url.hostname)
+      ? url.href
+      : null
   }
   catch {
     return null
@@ -141,7 +154,9 @@ function clamp(text: string, limit = textLimit): string {
     return text
   const cut = text.slice(0, limit - 1)
   const space = cut.lastIndexOf(' ')
-  return `${(space > limit / 2 ? cut.slice(0, space) : cut).trimEnd()}…`
+  return `${(space > limit / 2
+    ? cut.slice(0, space)
+    : cut).trimEnd()}…`
 }
 
 function join(...parts: (string | null | undefined)[]): string {
@@ -182,10 +197,16 @@ function updateActivity(): void {
       type: ActivityType.Watching,
       details: clamp(browseTitle),
       state: strings.choosing,
-      largeImageKey: settings.showCover ? (data.premidBrowsePoster ?? ActivityAssets.Logo) : ActivityAssets.Logo,
+      largeImageKey: settings.showCover
+        ? (data.premidBrowsePoster ?? ActivityAssets.Logo)
+        : ActivityAssets.Logo,
       largeImageText: join(
-        browseYear ? String(browseYear) : null,
-        browseType === 'movie' && browseRuntime ? strings.duration.replace('{0}', String(browseRuntime)) : null,
+        browseYear
+          ? String(browseYear)
+          : null,
+        browseType === 'movie' && browseRuntime
+          ? strings.duration.replace('{0}', String(browseRuntime))
+          : null,
       ) || 'HeiwaStream',
       smallImageKey: Assets.Viewing,
       smallImageText: strings.choosing,
@@ -198,14 +219,16 @@ function updateActivity(): void {
       presenceData.detailsUrl = pageUrl
       presenceData.largeImageUrl = pageUrl
       if (settings.showButtons) {
-        presenceData.buttons = [{
-          label: browseType === 'movie'
-            ? strings.viewMovie
-            : browseType === 'anime'
-              ? strings.viewAnime
-              : strings.viewSeries,
-          url: pageUrl,
-        }]
+        presenceData.buttons = [
+          {
+            label: browseType === 'movie'
+              ? strings.viewMovie
+              : browseType === 'anime'
+                ? strings.viewAnime
+                : strings.viewSeries,
+            url: pageUrl,
+          },
+        ]
       }
     }
 
@@ -253,8 +276,12 @@ function updateActivity(): void {
   const runtime = readNumber(data.premidRuntime)
   const year = readNumber(data.premidYear)
   const audio = data.premidLanguage
-  const runtimeLabel = runtime ? strings.duration.replace('{0}', String(runtime)) : null
-  const synopsis = settings.showSynopsis ? data.premidOverview?.trim() : undefined
+  const runtimeLabel = runtime
+    ? strings.duration.replace('{0}', String(runtime))
+    : null
+  const synopsis = settings.showSynopsis
+    ? data.premidOverview?.trim()
+    : undefined
 
   const roomCode = settings.showWatchParty ? data.premidRoom : undefined
   const roomSize = readNumber(data.premidRoomSize)
@@ -276,7 +303,9 @@ function updateActivity(): void {
     ? join(data.premidQuality, audio)
     : join(episodeCode || null, runtimeLabel, audio)
   const secondLine = isMovie
-    ? join(year ? String(year) : null, runtimeLabel)
+    ? join(year
+        ? String(year)
+        : null, runtimeLabel)
     : join(episodeCode || null, episodeTitle)
 
   const presenceData: PresenceData = {
@@ -284,7 +313,9 @@ function updateActivity(): void {
     type: ActivityType.Watching,
     details: title,
     state: secondLine || stateLabel,
-    largeImageKey: settings.showCover ? (data.premidPoster ?? ActivityAssets.Logo) : ActivityAssets.Logo,
+    largeImageKey: settings.showCover
+      ? (data.premidPoster ?? ActivityAssets.Logo)
+      : ActivityAssets.Logo,
     largeImageText: badge || 'HeiwaStream',
     smallImageKey: paused ? Assets.Pause : Assets.Play,
     smallImageText: stateLabel,
@@ -299,7 +330,9 @@ function updateActivity(): void {
     presenceData.name = clamp(title)
     // Without a year or runtime, a movie has nothing to add under its title:
     // the details line is dropped and the synopsis moves up.
-    const topLine = isMovie ? secondLine : (episodeTitle || episodeCode)
+    const topLine = isMovie
+      ? secondLine
+      : (episodeTitle || episodeCode)
     if (topLine)
       presenceData.details = topLine
     else
@@ -336,7 +369,11 @@ function updateActivity(): void {
       buttons.push({ label: strings.joinWatchParty, url: roomUrl })
       if (pageUrl) {
         buttons.push({
-          label: isMovie ? strings.viewMovie : contentType === 'anime' ? strings.viewAnime : strings.viewSeries,
+          label: isMovie
+            ? strings.viewMovie
+            : contentType === 'anime'
+              ? strings.viewAnime
+              : strings.viewSeries,
           url: pageUrl,
         })
       }
@@ -346,13 +383,22 @@ function updateActivity(): void {
     }
     else if (episodeCode && mediaUrl) {
       buttons.push({ label: strings.watchEpisode, url: mediaUrl })
-      if (pageUrl && pageUrl !== mediaUrl)
-        buttons.push({ label: contentType === 'anime' ? strings.viewAnime : strings.viewSeries, url: pageUrl })
+      if (pageUrl && pageUrl !== mediaUrl) {
+        buttons.push({
+          label: contentType === 'anime'
+            ? strings.viewAnime
+            : strings.viewSeries,
+          url: pageUrl,
+        })
+      }
     }
 
     // Only pass the buttons that exist.
-    if (buttons[0])
-      presenceData.buttons = buttons[1] ? [buttons[0], buttons[1]] : [buttons[0]]
+    if (buttons[0]) {
+      presenceData.buttons = buttons[1]
+        ? [buttons[0], buttons[1]]
+        : [buttons[0]]
+    }
   }
 
   if (

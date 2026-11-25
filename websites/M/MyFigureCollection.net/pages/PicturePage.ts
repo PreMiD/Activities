@@ -10,7 +10,9 @@ export class PicturePage extends BasePage {
       const data = { ...presenceData }
       const link = picture.querySelector('a')?.href ?? document.location.href
       data.smallImageKey = picture.querySelector('span')?.style.background.match(BACKGROUND_URL_REGEX)?.[1]
-      data.buttons = [{ label: strings.buttonViewPicture, url: link }]
+      data.buttons = [
+        { label: strings.buttonViewPicture, url: link },
+      ]
       slideshow.addSlide(link, data, MIN_SLIDE_TIME)
     }
     return true
@@ -24,11 +26,16 @@ export class PicturePage extends BasePage {
       '{author}',
       document.querySelector('.object-meta .user-anchor')?.textContent ?? 'Unknown',
     )
-    presenceData.buttons = [getButton(strings.buttonViewPicture)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewPicture),
+    ]
     const relatedItem = document.querySelector('.tbx-target-ITEMS .stamp')
     if (relatedItem) {
       presenceData.state += ` - ${relatedItem.textContent}`
-      presenceData.buttons.push({ label: strings.viewItem, url: relatedItem.querySelector('a') })
+      presenceData.buttons.push({
+        label: strings.viewItem,
+        url: relatedItem.querySelector('a'),
+      })
     }
     return false
   }

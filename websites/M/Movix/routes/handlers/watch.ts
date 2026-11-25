@@ -104,7 +104,9 @@ export async function handleWatchRoutes(
   if (pathname === '/watchparty/create') {
     const party = getPartyContext()
     let episodeCode
-      = party.season && party.episode ? `S${party.season}E${party.episode}` : ''
+      = party.season && party.episode
+        ? `S${party.season}E${party.episode}`
+        : ''
 
     if (!episodeCode) {
       const badgeMatch = (document.body.textContent || '').match(
@@ -143,7 +145,9 @@ export async function handleWatchRoutes(
     const roomId = getMatchPart(watchpartyRoomMatch, 1)
     const party = getPartyContext()
     const fallbackImage
-      = contentImage === FALLBACK_LOGO ? pageImage : contentImage
+      = contentImage === FALLBACK_LOGO
+        ? pageImage
+        : contentImage
 
     if (party.title && !isPrivacyModeEnabled()) {
       const episodeCode

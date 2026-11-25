@@ -39,8 +39,12 @@ presence.on('UpdateData', async () => {
 
   const data: PresenceData = {
     type: ActivityType.Playing,
-    details: showGameDetails ? game.title.slice(0, 128) : 'Playing a game',
-    state: game.status === 'paused' ? 'Paused' : game.multiplayer ? 'Multiplayer' : 'Single player',
+    details: showGameDetails
+      ? game.title.slice(0, 128)
+      : 'Playing a game',
+    state: game.status === 'paused'
+      ? 'Paused'
+      : game.multiplayer ? 'Multiplayer' : 'Single player',
     largeImageKey: logo,
   }
   if (showGameDetails) {
@@ -48,7 +52,9 @@ presence.on('UpdateData', async () => {
     if (typeof game.artwork === 'string' && URL.canParse(game.artwork)) {
       const artwork = new URL(game.artwork)
       if (artwork.protocol === 'https:' && !artwork.username && !artwork.password) {
-        for (const key of [...artwork.searchParams.keys()]) {
+        for (const key of [
+          ...artwork.searchParams.keys(),
+        ]) {
           if (key.toLowerCase().startsWith('utm_'))
             artwork.searchParams.delete(key)
         }
@@ -56,7 +62,9 @@ presence.on('UpdateData', async () => {
       }
     }
     if (showButtons && Number.isSafeInteger(game.gameId) && game.gameId > 0) {
-      data.buttons = [{ label: 'View game', url: `https://app.rebit.cc/games/${game.gameId}` }]
+      data.buttons = [
+        { label: 'View game', url: `https://app.rebit.cc/games/${game.gameId}` },
+      ]
     }
   }
   if (game.status === 'running')

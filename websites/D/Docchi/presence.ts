@@ -61,12 +61,22 @@ presence.on('UpdateData', async () => {
 
   presenceData.smallImageKey = Assets.Viewing
 
-  const production = pathname.startsWith('/production/as') ? pathname : null
-  const community = pathname.startsWith('/community') ? pathname : null
-  const panel = pathname.startsWith('/panel') ? pathname : null
-  const ht = pathname.startsWith('/hentai') ? pathname : null
+  const production = pathname.startsWith('/production/as')
+    ? pathname
+    : null
+  const community = pathname.startsWith('/community')
+    ? pathname
+    : null
+  const panel = pathname.startsWith('/panel')
+    ? pathname
+    : null
+  const ht = pathname.startsWith('/hentai')
+    ? pathname
+    : null
   switch (pathname) {
-    case pathname.startsWith('/settings') ? pathname : null:
+    case pathname.startsWith('/settings')
+      ? pathname
+      : null:
       presenceData.details = 'Przegląda ustawienia'
       presenceData.state = document
         .querySelector('div.text-sm-start')
@@ -74,7 +84,9 @@ presence.on('UpdateData', async () => {
         ?.textContent
         || 'Nieznana zakładka'
       break
-    case pathname.startsWith('/profile') ? pathname : null:
+    case pathname.startsWith('/profile')
+      ? pathname
+      : null:
       privacy
         ? (presenceData.details = 'Przegląda profil')
         : (presenceData.details = `Przegląda profil - ${
@@ -89,14 +101,18 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = document
         ?.querySelector('img.profile_page_profile_avatar__NwKeS')
         ?.getAttribute('src')
-      presenceData.buttons = [{ label: 'Zobacz Profil', url: href }]
+      presenceData.buttons = [
+        { label: 'Zobacz Profil', url: href },
+      ]
       break
     case community:
       presenceData.smallImageKey = Assets.Reading
       if (community!.split('/').length === 3) {
         presenceData.details = 'Przegląda post na forum'
         presenceData.state = document.querySelector('h1')?.textContent
-        presenceData.buttons = [{ label: 'Zobacz Post', url: href }]
+        presenceData.buttons = [
+          { label: 'Zobacz Post', url: href },
+        ]
       }
       else {
         presenceData.details = 'Przegląda forum...'
@@ -118,10 +134,14 @@ presence.on('UpdateData', async () => {
           presenceData.state = document.querySelector(
             'a[mal_sync=\'title\']',
           )?.textContent
-          presenceData.buttons = [{ label: 'Zobacz Serię', url: href }]
+          presenceData.buttons = [
+            { label: 'Zobacz Serię', url: href },
+          ]
         }
         else {
-          const animetype = [...document.querySelectorAll('h4')].find(
+          const animetype = [
+            ...document.querySelectorAll('h4'),
+          ].find(
             h4 => h4.textContent?.trim() === 'Rodzaj',
           )?.nextElementSibling?.textContent
           if (animetype === 'Movie') {
@@ -130,7 +150,9 @@ presence.on('UpdateData', async () => {
               : (presenceData.name = document.querySelector(
                   'a[mal_sync=\'title\']',
                 )!.textContent!)
-            presenceData.buttons = [{ label: 'Oglądaj', url: href }]
+            presenceData.buttons = [
+              { label: 'Oglądaj', url: href },
+            ]
           }
           else {
             privacy
@@ -171,14 +193,18 @@ presence.on('UpdateData', async () => {
         ?.textContent
       presenceData.smallImageKey = Assets.Writing
       if (panel!.startsWith('/panel/anime')) {
-        const title = [...document.querySelectorAll('p')]
+        const title = [
+          ...document.querySelectorAll('p'),
+        ]
           .find(p => p.textContent?.trim() === 'Tytuł')
           ?.nextElementSibling
           ?.getAttribute('value')
         presenceData.state = title
       }
       else if (panel!.startsWith('/panel/episode')) {
-        const title = [...document.querySelectorAll('p')]
+        const title = [
+          ...document.querySelectorAll('p'),
+        ]
           .find(p => p.textContent?.trim() === 'Anime')
           ?.nextElementSibling
           ?.getAttribute('value')
@@ -198,7 +224,9 @@ presence.on('UpdateData', async () => {
           presenceData.state = document
             .querySelector('a[mal_sync=\'title\']')
             ?.textContent
-          presenceData.buttons = [{ label: 'Zobacz Serię', url: href }]
+          presenceData.buttons = [
+            { label: 'Zobacz Serię', url: href },
+          ]
         }
         else {
           privacy

@@ -24,7 +24,9 @@ function updateGlobals() {
 
 presence.on('UpdateData', async () => {
   const coordinatesPrivacy = await presence.getSetting<boolean>('coordinatesPrivacy')
-  const countryPrivacy = !coordinatesPrivacy ? false : await presence.getSetting<boolean>('countryPrivacy')
+  const countryPrivacy = !coordinatesPrivacy
+    ? false
+    : await presence.getSetting<boolean>('countryPrivacy')
 
   updateGlobals()
   const presenceData: PresenceData = {
@@ -44,20 +46,27 @@ presence.on('UpdateData', async () => {
   const getState = (): string => {
     if (!loggedIn)
       return 'Logged out'
-    if (pixelsPainted === 'Unknown')
-      return level === 'Unknown' ? '' : `Level ${level}`
+    if (pixelsPainted === 'Unknown') {
+      return level === 'Unknown'
+        ? ''
+        : `Level ${level}`
+    }
     return `${pixelsPainted} Pixels painted (level ${level})`
   }
 
   // Set presence details and state based on available data
   if (coordinates === 'Unknown') {
     if (level === 'Unknown') {
-      presenceData.details = !loggedIn ? 'Looking at the map' : 'Placing pixels'
+      presenceData.details = !loggedIn
+        ? 'Looking at the map'
+        : 'Placing pixels'
       if (loggedIn)
         presenceData.state = getState()
     }
     else {
-      presenceData.details = !isPainting ? 'Looking at the map' : 'Placing pixels'
+      presenceData.details = !isPainting
+        ? 'Looking at the map'
+        : 'Placing pixels'
       presenceData.state = getState()
     }
   }
