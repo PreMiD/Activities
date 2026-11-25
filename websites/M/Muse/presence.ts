@@ -39,6 +39,30 @@ function isTyping(): boolean {
   }
   return false
 }
+function countWords(text: string | null | undefined): number {
+  const trimmed = text?.trim()
+  return trimmed ? trimmed.split(/\s+/).length : 0
+}
+
+function getConversationStats(): string | null {
+  const userMessages = document.querySelectorAll(
+    '[data-message-role="user"]',
+  )
+  if (!userMessages.length)
+    return null
+  let wordCount = 0
+  for (const el of document.querySelectorAll('[data-message-role]')) {
+    const clone = el.cloneNode(true) as HTMLElement
+    clone
+      .querySelectorAll(
+        '[data-message-accessibility-surrogate], [data-message-search-surrogate]',
+      )
+      .forEach(node => node.remove())
+    wordCount += countWords(clone.textContent)
+  }
+  return `asked ${userMessages.length} times | ${wordCount} words`
+}
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let chatKey = ''
@@ -173,6 +197,7 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.smallImageKey = Assets.Writing
       presenceData.smallImageText = 'Chatting'
+      chatState = getConversationStats() ?? 'Chatting'
     }
     // タイトルが「Muse」単体でないときはチャットタイトルとして使う
     const title = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
