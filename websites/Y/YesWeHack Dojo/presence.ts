@@ -6,7 +6,7 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const LOGO = 'https://i.imgur.com/Wo4reYe.jpeg'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/Y/YesWeHack%20Dojo/assets/logo.jpeg'
 
 type PresenceIcon = 'reading' | 'search' | 'viewing' | 'solving'
 
@@ -96,7 +96,9 @@ function pickTitle(
     }
   }
 
-  return fallbackSlug ? slugToTitle(fallbackSlug) : undefined
+  return fallbackSlug
+    ? slugToTitle(fallbackSlug)
+    : undefined
 }
 
 function clamp(value: string, max = 128): string {
@@ -136,7 +138,9 @@ function classifyLearn(input: ClassifyInput): ClassifiedPresence {
     const label = categoryLabel(second ?? '') ?? slugToTitle(second ?? '')
 
     return {
-      details: label ? `Browsing ${label} lessons` : 'Browsing training modules',
+      details: label
+        ? `Browsing ${label} lessons`
+        : 'Browsing training modules',
       state: label ? 'Training modules' : 'All categories',
       icon: 'search',
     }
@@ -157,7 +161,9 @@ function classifyMonthlyChallenge(input: ClassifyInput): ClassifiedPresence {
       ? 'Browsing monthly challenges'
       : `Solving ${pickTitle([challengeHeading, title], segments.at(-1)) ?? 'monthly challenge'}`,
     state: 'Challenge of the month',
-    icon: segments.length === 1 ? 'search' : 'solving',
+    icon: segments.length === 1
+      ? 'search'
+      : 'solving',
   }
 }
 
@@ -195,10 +201,14 @@ function classifyChallenge(input: ClassifyInput, variant: string | undefined): C
 }
 
 function classifyProfile(input: ClassifyInput): ClassifiedPresence {
-  const profileName = input.hideProfileName ? undefined : pickTitle([input.title])
+  const profileName = input.hideProfileName
+    ? undefined
+    : pickTitle([input.title])
 
   return {
-    details: profileName ? `Viewing ${profileName}` : 'Viewing a Dojo profile',
+    details: profileName
+      ? `Viewing ${profileName}`
+      : 'Viewing a Dojo profile',
     state: 'Dojo profile',
     icon: 'viewing',
   }
@@ -246,7 +256,11 @@ function buildPresence(data: ClassifiedPresence): PresenceData {
 
   return {
     details: clamp(data.details),
-    ...(data.state ? { state: clamp(data.state) } : {}),
+    ...(data.state
+      ? {
+          state: clamp(data.state),
+        }
+      : {}),
     largeImageKey: LOGO,
     smallImageKey: icon.key,
     smallImageText: icon.text,

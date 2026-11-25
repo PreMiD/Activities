@@ -11,9 +11,9 @@
   },
   "url": "dojo-yeswehack.com",
   "regExp": "^https?[:][/][/]dojo-yeswehack[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/Wo4reYe.jpeg",
-  "thumbnail": "https://i.imgur.com/P0ONfr8.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YesWeHack%20Dojo/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YesWeHack%20Dojo/assets/thumbnail.png",
   "color": "#115e59",
   "category": "other",
   "tags": [
