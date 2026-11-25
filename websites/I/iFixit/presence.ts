@@ -118,7 +118,9 @@ presence.on('UpdateData', async () => {
                       .replace('{1}', `${steps.length}`)
               }`
               presenceData.largeImageKey
-                = thumbnailType === 1 ? image.standard : stepImage
+                = thumbnailType === 1
+                  ? image.standard
+                  : stepImage
               presenceData.smallImageKey
                 = iconType === 1
                   ? Icons.Time
@@ -327,7 +329,9 @@ presence.on('UpdateData', async () => {
             .props ?? 'null',
         )
         presenceData.state = data?.sidebarData.userCardData.summaryData.name
-        presenceData.buttons = [{ label: strings.buttonViewProfile, url: href }]
+        presenceData.buttons = [
+          { label: strings.buttonViewProfile, url: href },
+        ]
       }
       break
     }
@@ -341,7 +345,9 @@ presence.on('UpdateData', async () => {
             '.profile-avatar img',
           )
         }
-        presenceData.buttons = [{ label: strings.buttonViewTeam, url: href }]
+        presenceData.buttons = [
+          { label: strings.buttonViewTeam, url: href },
+        ]
       }
       break
     }

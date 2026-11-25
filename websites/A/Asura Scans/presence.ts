@@ -74,9 +74,13 @@ presence.on('UpdateData', async () => {
     }
 
     if (displayChapter) {
-      const progress = displayPercentage ? getChapterProgress() : null
+      const progress = displayPercentage
+        ? getChapterProgress()
+        : null
 
-      presenceData.state = `Chapter ${getChapterNumber()} ${progress !== null ? ` - ${progress}%` : ''}`
+      presenceData.state = `Chapter ${getChapterNumber()} ${progress !== null
+        ? ` - ${progress}%`
+        : ''}`
       if (displayButtons) {
         presenceData.buttons?.push({
           label: 'Visit Chapter',
@@ -172,7 +176,9 @@ function getChapterProgress(): number | null {
     const progress = ((visibleBottom - containerTop) / totalHeight) * 100
 
     const clamped = Math.max(0, Math.min(100, progress))
-    return Number.isFinite(clamped) ? Number(clamped.toFixed(1)) : null
+    return Number.isFinite(clamped)
+      ? Number(clamped.toFixed(1))
+      : null
   }
   catch {
     return null

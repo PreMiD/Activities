@@ -12,13 +12,17 @@ export class ItemPage extends BasePage {
     presenceData.details = strings.viewItem
     presenceData.state = getTitle()
     presenceData.smallImageKey = await squareImage(document.querySelector<HTMLImageElement>('.main img'))
-    presenceData.buttons = [getButton(strings.buttonViewItem)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewItem),
+    ]
 
     const dataFields = document.querySelectorAll('.object .data-field')
     for (const field of dataFields) {
       const heading = field.querySelector('.data-label')?.textContent ?? 'Unknown'
       const value = field.querySelector('.data-value')
-      const elements = [...value?.querySelectorAll('.item-entries') ?? []]
+      const elements = [
+        ...value?.querySelectorAll('.item-entries') ?? [],
+      ]
       const data = { ...presenceData }
       if (elements.length) {
         data.smallImageText = `${heading} - ${value?.textContent}`
@@ -34,7 +38,9 @@ export class ItemPage extends BasePage {
   override async executeTab(presenceData: PresenceData, _tab: string): Promise<boolean> {
     presenceData.details = strings.viewItemComments
     presenceData.state = getSubtitle()
-    presenceData.buttons = [getButton(strings.buttonViewItem)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewItem),
+    ]
     return true
   }
 }

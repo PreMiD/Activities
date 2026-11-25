@@ -112,7 +112,9 @@ presence.on('UpdateData', async () => {
         : video
           ? getTimestampsFromMedia(video)[1]
           : null,
-      buttons: [{ label: strings.buttonWatchVideo, url: document.URL }],
+      buttons: [
+        { label: strings.buttonWatchVideo, url: document.URL },
+      ],
     },
     '/trivia/': {
       details: privacy
@@ -165,12 +167,16 @@ presence.on('UpdateData', async () => {
       endTimestamp: iframePau
         ? 0
         : getTimestamps(iframeCur, iframeDur)[1],
-      buttons: [{ label: strings.buttonPlayTrivia, url: document.URL }],
+      buttons: [
+        { label: strings.buttonPlayTrivia, url: document.URL },
+      ],
     },
     '/blog/(\\d*)/(\\d*)/(\\d*)/': {
       details: strings.article,
       state: document.querySelector('h1')?.textContent,
-      buttons: [{ label: strings.buttonReadArticle, url: document.URL }],
+      buttons: [
+        { label: strings.buttonReadArticle, url: document.URL },
+      ],
     },
     '/categories/': {
       details: strings.category,
@@ -181,7 +187,9 @@ presence.on('UpdateData', async () => {
     '/channels/': {
       details: strings.viewChannel,
       state: location.pathname.split('/')[2],
-      buttons: [{ label: strings.buttonViewChannel, url: document.URL }],
+      buttons: [
+        { label: strings.buttonViewChannel, url: document.URL },
+      ],
     },
     '/search/': {
       details: strings.searchFor,
@@ -207,7 +215,10 @@ presence.on('UpdateData', async () => {
       ) {
         presenceData.smallImageKey = Assets.Reading
         presenceData.smallImageText = strings.browse
-        presenceData = { ...presenceData, ...v } as PresenceData
+        presenceData = {
+          ...presenceData,
+          ...v,
+        } as PresenceData
       }
     }
   }
@@ -234,6 +245,6 @@ presence.on('UpdateData', async () => {
     delete presenceData.endTimestamp
 
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

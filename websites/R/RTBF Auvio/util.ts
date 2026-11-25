@@ -227,7 +227,9 @@ export function resetWarnings() {
 }
 
 export function textOr(value: unknown, fallback = ''): string {
-  return typeof value === 'string' && value.trim() ? value.trim() : fallback
+  return typeof value === 'string' && value.trim()
+    ? value.trim()
+    : fallback
 }
 
 export function decodeImageUrl(value: string): string {
@@ -244,7 +246,9 @@ export function parseSchedule(value: unknown): number | null {
   if (typeof value !== 'string' && typeof value !== 'number')
     return null
   const timestamp = new Date(value).getTime() / 1000
-  return Number.isFinite(timestamp) ? timestamp : null
+  return Number.isFinite(timestamp)
+    ? timestamp
+    : null
 }
 
 export function normalizeTitle(value: string) {
@@ -331,7 +335,9 @@ export async function safeFetchMetadata(url: string): Promise<any> {
   metadataInFlight.set(url, request)
   try {
     const value = await request
-    cachedMetadata = { url, value, expiresAt: Date.now() + (value === null ? METADATA_FAILURE_TTL : METADATA_CACHE_TTL) }
+    cachedMetadata = { url, value, expiresAt: Date.now() + (value === null
+      ? METADATA_FAILURE_TTL
+      : METADATA_CACHE_TTL) }
     return value
   }
   finally {
@@ -341,7 +347,9 @@ export async function safeFetchMetadata(url: string): Promise<any> {
 
 async function fetchMetadata(url: string): Promise<any> {
   try {
-    const response = await fetch(url, { signal: AbortSignal.timeout(10000) })
+    const response = await fetch(url, {
+      signal: AbortSignal.timeout(10000),
+    })
     if (!response?.ok) {
       if (!failedMetadataUrls.has(url))
         console.warn(`[safeFetchMetadata] fallback used for "${url}" (status ${response?.status ?? 'unknown'})`)
@@ -389,7 +397,9 @@ export function formatDuration(time: unknown) {
 
   if (typeof time === 'string') {
     const iso = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?$/i.exec(time)
-    const parts = /^\d+(?::\d+){1,2}$/.test(time) ? time.split(':').map(Number) : []
+    const parts = /^\d+(?::\d+){1,2}$/.test(time)
+      ? time.split(':').map(Number)
+      : []
     if (iso && iso.slice(1).some(Boolean))
       totalSeconds = Number(iso[1] ?? 0) * 3600 + Number(iso[2] ?? 0) * 60 + Number(iso[3] ?? 0)
     else if (parts.length)
@@ -415,13 +425,21 @@ export function formatDuration(time: unknown) {
   const seconds = totalSeconds % 60
 
   if (weeks > 0) {
-    return days > 0 ? `${weeks}s & ${days}j` : `${weeks}s`
+    return days > 0
+      ? `${weeks}s & ${days}j`
+      : `${weeks}s`
   }
   else if (days > 0) {
-    return hours > 0 ? `${days}j & ${hours}h` : `${days}d`
+    return hours > 0
+      ? `${days}j & ${hours}h`
+      : `${days}d`
   }
   else if (hours > 0) {
-    return minutes > 0 ? `${hours}h${minutes < 10 ? `0${minutes}` : minutes}` : `${hours}h`
+    return minutes > 0
+      ? `${hours}h${minutes < 10
+        ? `0${minutes}`
+        : minutes}`
+      : `${hours}h`
   }
   else if (minutes > 0) {
     return `${minutes} min`
@@ -936,7 +954,10 @@ export async function getThumbnail(
     // When completed, cache the result and remove in-flight entry
     generationPromise.then((data) => {
       thumbnailInFlight.delete(cacheKey)
-      thumbnailCache.set(cacheKey, { data, timestamp: Date.now() })
+      thumbnailCache.set(cacheKey, {
+        data,
+        timestamp: Date.now(),
+      })
     }).catch(() => {
       thumbnailInFlight.delete(cacheKey)
     })

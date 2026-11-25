@@ -15,7 +15,9 @@ function applySubPathState(
   path = '',
   type: string,
 ) {
-  const n = /^[aiueo]/i.test(type) ? 'n' : ''
+  const n = /^[aiueo]/i.test(type)
+    ? 'n'
+    : ''
   switch (path) {
     case '': {
       presenceData.details = `Viewing a${n} ${type}`

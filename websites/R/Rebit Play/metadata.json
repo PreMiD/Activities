@@ -11,7 +11,7 @@
   },
   "url": "app.rebit.cc",
   "regExp": "^https?[:][/][/]app[.]rebit[.]cc[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rebit%20Play/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rebit%20Play/assets/thumbnail.png",
   "color": "#2DD4BF",

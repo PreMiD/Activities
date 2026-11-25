@@ -7,7 +7,9 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       // adjust terminology
       if (pathList[1]) {
         presenceData.details = 'Viewing an Agent'
-        presenceData.buttons = [{ label: 'View Agent', url: document.location.href }]
+        presenceData.buttons = [
+          { label: 'View Agent', url: document.location.href },
+        ]
       }
       else {
         presenceData.details = 'Browsing Agents'

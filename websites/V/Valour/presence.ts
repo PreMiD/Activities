@@ -84,26 +84,70 @@ function getActiveTab(): ActiveTab | undefined {
   const tabId = wrapper?.id
   const icon = wrapper?.querySelector<HTMLImageElement>('.tab-icon')
   const iconSrc = icon?.getAttribute('src') ?? undefined
-  const iconUrl = iconSrc?.startsWith('http') ? iconSrc : undefined
+  const iconUrl = iconSrc?.startsWith('http')
+    ? iconSrc
+    : undefined
 
   const homeMatch = title.match(HOME_TITLE_RE)
-  if (homeMatch)
-    return { title, label: title, kind: 'thread-home', tabId, planetName: homeMatch[1], planetId: getUrlPlanetId(iconSrc), iconUrl }
+  if (homeMatch) {
+    return {
+      title,
+      label: title,
+      kind: 'thread-home',
+      tabId,
+      planetName: homeMatch[1],
+      planetId: getUrlPlanetId(iconSrc),
+      iconUrl,
+    }
+  }
 
   const aboutMatch = title.match(ABOUT_TITLE_RE)
-  if (aboutMatch)
-    return { title, label: title, kind: 'about', tabId, planetName: aboutMatch[1], planetId: getUrlPlanetId(iconSrc), iconUrl }
+  if (aboutMatch) {
+    return {
+      title,
+      label: title,
+      kind: 'about',
+      tabId,
+      planetName: aboutMatch[1],
+      planetId: getUrlPlanetId(iconSrc),
+      iconUrl,
+    }
+  }
 
   const rulesMatch = title.match(RULES_TITLE_RE)
-  if (rulesMatch)
-    return { title, label: title, kind: 'rules', tabId, planetName: rulesMatch[1], planetId: getUrlPlanetId(iconSrc), iconUrl }
+  if (rulesMatch) {
+    return {
+      title,
+      label: title,
+      kind: 'rules',
+      tabId,
+      planetName: rulesMatch[1],
+      planetId: getUrlPlanetId(iconSrc),
+      iconUrl,
+    }
+  }
 
-  if (!icon?.classList.contains('circle'))
-    return { title, label: title.replace(CHAT_WITH_RE, ''), kind: 'dm', tabId, iconUrl }
+  if (!icon?.classList.contains('circle')) {
+    return {
+      title,
+      label: title.replace(CHAT_WITH_RE, ''),
+      kind: 'dm',
+      tabId,
+      iconUrl,
+    }
+  }
 
   const planetId = getUrlPlanetId(iconSrc)
   const planetName = (planetId && findPlanetNameByIcon(planetId)) || findPlanetNameByChannelTitle(title)
-  return { title, label: `#${title}`, kind: 'channel', tabId, planetName, planetId, iconUrl }
+  return {
+    title,
+    label: `#${title}`,
+    kind: 'channel',
+    tabId,
+    planetName,
+    planetId,
+    iconUrl,
+  }
 };
 
 function formatDetails(tab: ActiveTab): string {
@@ -115,9 +159,13 @@ function formatDetails(tab: ActiveTab): string {
     case 'dm':
       return `Talking to ${tab.label}`
     case 'about':
-      return tab.planetName ? `Reading About ${tab.planetName}` : 'Reading About a Planet'
+      return tab.planetName
+        ? `Reading About ${tab.planetName}`
+        : 'Reading About a Planet'
     case 'rules':
-      return tab.planetName ? `Reading the Rules of ${tab.planetName}` : 'Reading Planet Rules'
+      return tab.planetName
+        ? `Reading the Rules of ${tab.planetName}`
+        : 'Reading Planet Rules'
   };
 };
 
@@ -147,7 +195,9 @@ async function getUserCount(): Promise<number | undefined> {
     try {
       const res = await fetch('https://skyjoshua.xyz/valour/api/count')
       const data = await res.json()
-      cachedUserCount = typeof data === 'number' ? data : data.count
+      cachedUserCount = typeof data === 'number'
+        ? data
+        : data.count
       userCountFetchedAt = now
     }
     catch {}
@@ -158,15 +208,21 @@ async function getUserCount(): Promise<number | undefined> {
 function getActivityName(mode: number, channelLabel: string | undefined, planetName: string | undefined): string | undefined {
   switch (mode) {
     case 1:
-      return planetName ? `Valour - ${planetName}` : undefined
+      return planetName
+        ? `Valour - ${planetName}`
+        : undefined
     case 2:
-      return channelLabel ? `Valour - ${channelLabel}` : undefined
+      return channelLabel
+        ? `Valour - ${channelLabel}`
+        : undefined
     case 3:
       return planetName
     case 4:
       return channelLabel
     case 5:
-      return planetName && channelLabel ? `${planetName} - ${channelLabel}` : (planetName ?? channelLabel)
+      return planetName && channelLabel
+        ? `${planetName} - ${channelLabel}`
+        : (planetName ?? channelLabel)
     default:
       return undefined
   }
@@ -215,9 +271,15 @@ presence.on('UpdateData', async () => {
     presence.setActivity({
       largeImageKey: LOGO,
       details: 'Taking a look around',
-      state: userCount !== undefined ? `Valournauts: ${userCount.toLocaleString()}` : undefined,
+      state: userCount !== undefined
+        ? `Valournauts: ${userCount.toLocaleString()}`
+        : undefined,
       startTimestamp: SESSION_START,
-      buttons: showButton ? [{ label: 'Open Valour', url: 'https://valour.gg' }] : undefined,
+      buttons: showButton
+        ? [
+            { label: 'Open Valour', url: 'https://valour.gg' },
+          ]
+        : undefined,
     })
     return
   };
@@ -238,7 +300,9 @@ presence.on('UpdateData', async () => {
     name: getActivityName(activityNameMode, canShowChannel ? tab!.label : undefined, visiblePlanetName),
     largeImageKey: (largeImageMode === 1 && canShowChannel && tab?.iconUrl) || LOGO,
     details: 'Taking a look around',
-    startTimestamp: perChannelTimestamp ? getTabStartTimestamp(tab?.tabId) : SESSION_START,
+    startTimestamp: perChannelTimestamp
+      ? getTabStartTimestamp(tab?.tabId)
+      : SESSION_START,
   }
 
   if (canShowChannel) {
@@ -260,20 +324,26 @@ presence.on('UpdateData', async () => {
 
   const smallImageKey = smallImageMode === 1
     ? (avatarUrl ?? LOGO)
-    : smallImageMode === 2 ? ((canShowChannel && tab?.iconUrl) || LOGO) : undefined
+    : smallImageMode === 2
+      ? ((canShowChannel && tab?.iconUrl) || LOGO)
+      : undefined
 
   const smallImageText = smallImageMode === 0
     ? undefined
     : smallImageTextMode === 1
       ? username
-      : smallImageTextMode === 2 ? (canShowChannel ? tab!.label : undefined) : undefined
+      : smallImageTextMode === 2
+        ? (canShowChannel ? tab!.label : undefined)
+        : undefined
 
   if (smallImageKey || smallImageText) {
     presenceData.smallImageKey = smallImageKey ?? LOGO
     presenceData.smallImageText = smallImageText
   };
 
-  const openValourButton = showButton ? { label: 'Open Valour', url: document.URL } : undefined
+  const openValourButton = showButton
+    ? { label: 'Open Valour', url: document.URL }
+    : undefined
   const viewPlanetButton = showJoinPlanetButton && tab?.planetId && await isPlanetDiscoverable(tab.planetId)
     ? { label: 'Join Planet', url: `https://app.valour.gg/D/${tab.planetId}` }
     : undefined

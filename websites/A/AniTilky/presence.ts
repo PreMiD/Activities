@@ -38,7 +38,7 @@ async function getSettings(): Promise<PluginSettings> {
     showProfiles,
     showSmallImages,
   ] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+    presence.getSetting<string>('lang').then(lang => lang || 'en').catch(() => 'en'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showCover'),
     presence.getSetting<boolean>('showTimestamp'),
@@ -237,7 +237,9 @@ presence.on('UpdateData', async () => {
 
       const tab = segments[1]
       const username = getProfileUsernameFromDom()
-      const userInfo = username ? await fetchUser(username) : null
+      const userInfo = username
+        ? await fetchUser(username)
+        : null
 
       presenceData.details = strings.ownProfile
       presenceData.state = userInfo?.username || getProfileTabLabel(tab, strings) || strings.viewPage
@@ -249,7 +251,10 @@ presence.on('UpdateData', async () => {
       }
 
       applyButtons(presenceData, settings, [
-        { label: (strings.viewProfile || 'Profile Git').slice(0, 32), url: `${BASE_URL}/profile` },
+        {
+          label: (strings.viewProfile || 'Profile Git').slice(0, 32),
+          url: `${BASE_URL}/profile`,
+        },
       ])
       break
     }
@@ -278,7 +283,10 @@ presence.on('UpdateData', async () => {
       }
 
       applyButtons(presenceData, settings, [
-        { label: (strings.viewProfile || 'Profile Git').slice(0, 32), url: `${BASE_URL}/u/${username}` },
+        {
+          label: (strings.viewProfile || 'Profile Git').slice(0, 32),
+          url: `${BASE_URL}/u/${username}`,
+        },
       ])
       break
     }

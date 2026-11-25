@@ -97,7 +97,9 @@ export default async function applyCYLDetails(
                   '.hero-result-vote-count, .HeroItem__VoteCount, .vote-count',
                 )?.textContent
               } votes`,
-              buttons: [{ label: 'View Results', url: document.location.href }],
+              buttons: [
+                { label: 'View Results', url: document.location.href },
+              ],
             }
           }),
         )

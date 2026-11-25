@@ -61,17 +61,23 @@ presence.on('UpdateData', async () => {
       .querySelector('button[aria-selected="true"]')
       ?.textContent
       ?.toLowerCase()} in the chat with ${
-      !showRecipient ? 'someone' : name
+      !showRecipient
+        ? 'someone'
+        : name
     }`
   }
   else if (document.querySelector('._2Ts6i._1xFRo > span > div')) {
     // If contact windows is open
     presenceData.details = `Viewing contact info of ${
-      !showRecipient ? 'someone' : name
+      !showRecipient
+        ? 'someone'
+        : name
     }`
   }
   else {
-    presenceData.details = `Texting with ${!showRecipient ? 'someone' : name}`
+    presenceData.details = `Texting with ${!showRecipient
+      ? 'someone'
+      : name}`
     presenceData.state = (typing?.textContent && 'Typing...') || 'Just reading...'
   }
 

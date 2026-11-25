@@ -49,7 +49,9 @@ presence.on('UpdateData', async () => {
   else if (document.location.pathname.startsWith('/calendar/')) {
     if (eventDialog) {
       presenceData.details = strings.viewingAnEvent
-      presenceData.state = privacy ? '' : eventDialog?.querySelector('span[role="heading"]')?.textContent || ''
+      presenceData.state = privacy
+        ? ''
+        : eventDialog?.querySelector('span[role="heading"]')?.textContent || ''
     }
     else if (document.location.pathname.includes('/r/day')) {
       presenceData.details = strings.daySchedule
@@ -76,7 +78,9 @@ presence.on('UpdateData', async () => {
     }
     else if (document.location.pathname.includes('/r/eventedit')) {
       presenceData.details = strings.editingAnEvent
-      presenceData.state = privacy ? '' : document.querySelector<HTMLInputElement>('div[role="main"] input[type="text"]')?.value || ''
+      presenceData.state = privacy
+        ? ''
+        : document.querySelector<HTMLInputElement>('div[role="main"] input[type="text"]')?.value || ''
     }
     else if (document.location.pathname.includes('/r/search')) {
       presenceData.details = strings.searchingEvent

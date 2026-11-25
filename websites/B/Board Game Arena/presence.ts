@@ -98,7 +98,9 @@ presence.on('UpdateData', async () => {
         case 'viewtopic.php': {
           presenceData.details = 'Viewing a forum topic'
           presenceData.state = forumTopic.title
-          presenceData.buttons = [{ label: 'View Topic', url: forumTopic.url }]
+          presenceData.buttons = [
+            { label: 'View Topic', url: forumTopic.url },
+          ]
           break
         }
         case 'viewforum.php': {

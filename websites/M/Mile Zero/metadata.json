@@ -17,7 +17,7 @@
   },
   "url": "milezero.live",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*milezero[.]live[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mile%20Zero/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mile%20Zero/assets/thumbnail.png",
   "color": "#3424AD",

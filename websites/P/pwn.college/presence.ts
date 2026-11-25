@@ -33,7 +33,9 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     smallImageKey: beltsURLs[currentBelt],
   }
-  presenceData.details = currentBelt !== 'blue' ? `🥋 Grinding for the ${nextBelt} belt!` : `☯️ You're now a sensei; help others cross the path!`
+  presenceData.details = currentBelt !== 'blue'
+    ? `🥋 Grinding for the ${nextBelt} belt!`
+    : `☯️ You're now a sensei; help others cross the path!`
 
   if (pathname === '/') {
     const cards = document.querySelectorAll<HTMLElement>('html body main div.container ul.card-list')[1]
@@ -51,12 +53,16 @@ presence.on('UpdateData', async () => {
 
   if (pathname.split('/').length === 3) {
     const moduleName = document.querySelector('h1.brand-white')?.textContent
-    presenceData.state = moduleName ? `📜 Meditating on module selection: ${moduleName}` : ''
+    presenceData.state = moduleName
+      ? `📜 Meditating on module selection: ${moduleName}`
+      : ''
   }
 
   if (pathname.split('/').length === 4) {
     const moduleName = document.querySelector('h1.brand-white')?.textContent
-    presenceData.state = moduleName ? `⚔️ Mastering ${moduleName}...` : ''
+    presenceData.state = moduleName
+      ? `⚔️ Mastering ${moduleName}...`
+      : ''
   }
 
   if (pathname.includes('/hacker')) {

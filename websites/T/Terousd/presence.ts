@@ -119,14 +119,18 @@ presence.on('UpdateData', async () => {
     }
     else if (pathname.startsWith('/search')) {
       presenceData.details = 'Searching'
-      presenceData.state = privacy ? 'Titles' : searchParams.get('q') || 'Titles'
+      presenceData.state = privacy
+        ? 'Titles'
+        : searchParams.get('q') || 'Titles'
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Searching'
     }
     else if (pathname.startsWith('/title')) {
       presenceData.details = 'Viewing a title'
       presenceData.state = privacy ? 'Details' : title
-      presenceData.buttons = [{ label: 'View Title', url: href }]
+      presenceData.buttons = [
+        { label: 'View Title', url: href },
+      ]
     }
   }
   else {

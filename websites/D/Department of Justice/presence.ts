@@ -18,7 +18,9 @@ function getPageTitle(): string {
     .find(part => part && part !== 'United States Department of Justice')
 
   const title = heading || openGraphTitle || documentTitle || ''
-  return title.length > 128 ? `${title.slice(0, 125)}...` : title
+  return title.length > 128
+    ? `${title.slice(0, 125)}...`
+    : title
 }
 
 presence.on('UpdateData', async () => {
@@ -43,7 +45,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/search')) {
     const query = new URLSearchParams(search).get('search_api_fulltext')?.trim()
     presenceData.details = 'Searching the website'
-    presenceData.state = query ? `Searching for: ${query}` : 'Viewing search results'
+    presenceData.state = query
+      ? `Searching for: ${query}`
+      : 'Viewing search results'
     presenceData.smallImageKey = Assets.Search
     buttonLabel = 'View Search Results'
   }
@@ -72,10 +76,14 @@ presence.on('UpdateData', async () => {
     buttonLabel = 'Watch Video'
   }
   else if (/\/(?:blog|podcast)\//.test(pathname)) {
-    presenceData.details = pathname.includes('/podcast/') ? 'Viewing a podcast' : 'Reading a blog post'
+    presenceData.details = pathname.includes('/podcast/')
+      ? 'Viewing a podcast'
+      : 'Reading a blog post'
     presenceData.state = pageTitle
     presenceData.smallImageKey = Assets.Reading
-    buttonLabel = pathname.includes('/podcast/') ? 'View Podcast' : 'Read Blog Post'
+    buttonLabel = pathname.includes('/podcast/')
+      ? 'View Podcast'
+      : 'Read Blog Post'
   }
   else if (/\/(?:media|document)\//.test(pathname)) {
     presenceData.details = 'Viewing a document'
@@ -103,7 +111,9 @@ presence.on('UpdateData', async () => {
     delete presenceData.buttons
   }
   else if (showButtons && pathname !== '/') {
-    presenceData.buttons = [{ label: buttonLabel, url: href }]
+    presenceData.buttons = [
+      { label: buttonLabel, url: href },
+    ]
   }
 
   presence.setActivity(presenceData)

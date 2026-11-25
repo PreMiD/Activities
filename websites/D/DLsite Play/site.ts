@@ -65,7 +65,9 @@ function getVideoRoot(): HTMLVideoElement | null {
   if (!getViewerWorkId(document.location.pathname))
     return null
   const videos = document.querySelectorAll<HTMLVideoElement>(selectors.video)
-  return videos.length === 1 ? videos[0]! : null
+  return videos.length === 1
+    ? videos[0]!
+    : null
 }
 
 function parseTime(value: string | null | undefined): number | null {
@@ -75,14 +77,18 @@ function parseTime(value: string | null | undefined): number | null {
   // Preserve minute-only labels longer than an hour while using the native
   // converter, which expects minutes below 60 when parsing MM:SS.
   const parts = text.split(':')
-  const minutes = parts.length === 2 ? Number(parts[0]) : 0
+  const minutes = parts.length === 2
+    ? Number(parts[0])
+    : 0
   if (!Number.isSafeInteger(minutes))
     return null
   const format = minutes >= 60
     ? `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, '0')}:${parts[1]}`
     : text
   const seconds = timestampFromFormat(format)
-  return Number.isFinite(seconds) ? seconds : null
+  return Number.isFinite(seconds)
+    ? seconds
+    : null
 }
 
 function workName(value: unknown): string | null {
@@ -91,7 +97,9 @@ function workName(value: unknown): string | null {
   if (value && typeof value === 'object') {
     const names = value as Record<string, unknown>
     const name = names.ja_JP || names.en_US
-    return typeof name === 'string' ? name.trim() || null : null
+    return typeof name === 'string'
+      ? name.trim() || null
+      : null
   }
   return null
 }
@@ -99,7 +107,9 @@ function workName(value: unknown): string | null {
 function matchesAlbum(work: PageWork, album: string): boolean {
   if (!album)
     return false
-  const names = typeof work.name === 'object' && work.name ? Object.values(work.name) : [work.name]
+  const names = typeof work.name === 'object' && work.name
+    ? Object.values(work.name)
+    : [work.name]
   return names.some(name => typeof name === 'string' && name.trim() === album)
 }
 
@@ -116,7 +126,9 @@ function extractWork(id: string, candidates: PageWork[], privacyMode: boolean): 
     return result
   const title = workName(work.name)
   const maker = work.original_maker ?? work.maker
-  const circle = id.startsWith('RJ') && (!work.is_community_translation || work.original_maker) ? workName(maker?.name) : null
+  const circle = id.startsWith('RJ') && (!work.is_community_translation || work.original_maker)
+    ? workName(maker?.name)
+    : null
   if (title)
     result.title = title
   if (circle)
@@ -139,7 +151,9 @@ async function readStoredRecord<T extends { workno?: string }>(store: string, id
     return null
   // The public client creates Play_<account>202205. No session/token reads.
   const names = (await indexedDB.databases()).flatMap(database =>
-    database.name && /^Play_[^/]+202205$/.test(database.name) ? [database.name] : [])
+    database.name && /^Play_[^/]+202205$/.test(database.name)
+      ? [database.name]
+      : [])
   if (names.length !== 1)
     return null
   return new Promise((resolve) => {
@@ -176,7 +190,9 @@ async function readStoredRecord<T extends { workno?: string }>(store: string, id
       try {
         const transaction = database.transaction(store, 'readonly')
         const record = transaction.objectStore(store).get(id)
-        record.onsuccess = () => finish(record.result?.workno === id ? record.result : null)
+        record.onsuccess = () => finish(record.result?.workno === id
+          ? record.result
+          : null)
         record.onerror = () => finish(null)
         transaction.onabort = () => finish(null)
       }
@@ -287,7 +303,9 @@ export class DlsiteReader {
           images: work.images,
           site_id: work.site_id,
           inservice: work.inservice,
-          ...('recommendable' in work ? { recommendable: work.recommendable } : {}),
+          ...('recommendable' in work
+            ? { recommendable: work.recommendable }
+            : {}),
         }
       : { workno: id, age: work.age, work_type: work.work_type })
     this.metadata.set(id, safe)
@@ -302,7 +320,9 @@ export class DlsiteReader {
 
   getContextKey(): string {
     const viewer = getViewerWorkId(document.location.pathname)
-    return viewer ? `viewer:${viewer}` : `audio:${this.audioIdentity()}`
+    return viewer
+      ? `viewer:${viewer}`
+      : `audio:${this.audioIdentity()}`
   }
 
   isBrowsing(): boolean {
@@ -318,8 +338,16 @@ export class DlsiteReader {
     const album = audio?.querySelector(selectors.album)?.textContent?.trim() ?? ''
     const track = audio?.querySelector(selectors.trackTitle)?.textContent?.trim() ?? ''
     const previous = this.verifiedAudio
-    const match = (value: string, known: string | undefined) => !value ? 'empty' : value === known ? 'same' : 'different'
-    const grace = this.missingAudioSince === null ? 'none' : Date.now() - this.missingAudioSince < 1000 ? 'active' : 'expired'
+    const match = (value: string, known: string | undefined) => !value
+      ? 'empty'
+      : value === known
+        ? 'same'
+        : 'different'
+    const grace = this.missingAudioSince === null
+      ? 'none'
+      : Date.now() - this.missingAudioSince < 1000
+        ? 'active'
+        : 'expired'
     return `audio=${Boolean(audio)}; album=${match(album, previous?.album)}; track=${match(track, previous?.identity.split('\n')[1])}; viewer=${Boolean(getViewerWorkId(document.location.pathname))}; grace=${grace}; issue=${this.issue ?? 'none'}`
   }
 
@@ -373,7 +401,11 @@ export class DlsiteReader {
     if (video)
       return video.paused || video.ended
     const icon = getAudioRoot()?.querySelector(selectors.playPause)?.getAttribute('d')
-    return icon === playPath ? true : icon === pausePath ? false : null
+    return icon === playPath
+      ? true
+      : icon === pausePath
+        ? false
+        : null
   }
 
   private notifyPlaybackChange = () => {
@@ -407,7 +439,13 @@ export class DlsiteReader {
     this.timelineTimer = null
     for (const event of ['pause', 'play', 'ended'])
       this.video?.removeEventListener(event, this.notifyPlaybackChange)
-    for (const event of ['seeking', 'seeked', 'ratechange', 'durationchange', 'loadedmetadata'])
+    for (const event of [
+      'seeking',
+      'seeked',
+      'ratechange',
+      'durationchange',
+      'loadedmetadata',
+    ])
       this.video?.removeEventListener(event, this.notifyTimelineChange)
     this.video = null
   }
@@ -433,18 +471,35 @@ export class DlsiteReader {
     }
     if (timeline && typeof MutationObserver !== 'undefined') {
       this.timelineObserver = new MutationObserver(this.notifyTimelineChange)
-      this.timelineObserver.observe(timeline, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['aria-valuenow', 'aria-valuemax', 'style'] })
+      this.timelineObserver.observe(timeline, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: ['aria-valuenow', 'aria-valuemax', 'style'],
+      })
     }
     for (const event of ['pointerup', 'keyup'])
       audio?.addEventListener?.(event, this.notifySeekCommit)
     // Observe only the native button, not the player clock or the whole page.
     if (controls && typeof MutationObserver !== 'undefined') {
       this.controlsObserver = new MutationObserver(this.notifyPlaybackChange)
-      this.controlsObserver.observe(controls, { childList: true, subtree: true, attributes: true, attributeFilter: ['d'] })
+      this.controlsObserver.observe(controls, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['d'],
+      })
     }
     for (const event of ['pause', 'play', 'ended'])
       video?.addEventListener(event, this.notifyPlaybackChange)
-    for (const event of ['seeking', 'seeked', 'ratechange', 'durationchange', 'loadedmetadata'])
+    for (const event of [
+      'seeking',
+      'seeked',
+      'ratechange',
+      'durationchange',
+      'loadedmetadata',
+    ])
       video?.addEventListener(event, this.notifyTimelineChange)
   }
 
@@ -515,7 +570,9 @@ export class DlsiteReader {
       return 'invalid'
     }
     this.missingAudioSince ??= Date.now()
-    return Date.now() - this.missingAudioSince < 1000 ? 'transient' : 'invalid'
+    return Date.now() - this.missingAudioSince < 1000
+      ? 'transient'
+      : 'invalid'
   }
 
   canKeepAudioPresence(id?: string): boolean {
@@ -526,8 +583,13 @@ export class DlsiteReader {
     if (this.verifiedAudio) {
       this.missingAudioSince ??= Date.now()
       const remaining = 1000 - (Date.now() - this.missingAudioSince)
-      if (remaining > 0)
-        return { work: null, playback: null, retryAfter: Math.min(200, remaining) }
+      if (remaining > 0) {
+        return {
+          work: null,
+          playback: null,
+          retryAfter: Math.min(200, remaining),
+        }
+      }
     }
     if (getAudioRoot())
       return { work: null, playback: null, retryAfter: 1000 }
@@ -558,11 +620,17 @@ export class DlsiteReader {
     const identity = this.audioIdentity()
     const routeId = document.location.pathname.match(/^\/(?:dllibrary\/)?work\/([^/]+)(?:\/|$)/)?.[1]
     const previous = this.verifiedAudio
-    const retainedId = previous?.album === album ? previous.work.id : null
+    const retainedId = previous?.album === album
+      ? previous.work.id
+      : null
     // Signed URLs are cached by the site. Returning to a known work may not
     // produce another signing request; bind using uniquely matched metadata.
-    const matching = [...this.metadata.values()].filter(work => work.age === 'all' && matchesAlbum(work, album))
-    const cachedId = matching.length === 1 ? matching[0]!.workno : null
+    const matching = [
+      ...this.metadata.values(),
+    ].filter(work => work.age === 'all' && matchesAlbum(work, album))
+    const cachedId = matching.length === 1
+      ? matching[0]!.workno
+      : null
     const audioId = cachedId ?? retainedId ?? routeId ?? this.signedWork?.id
     let id = viewerId ?? (audio ? audioId : null)
     if (!audio) {
@@ -578,7 +646,13 @@ export class DlsiteReader {
         this.issue = 'audio-work-unresolved'
         return this.retryAudioTransition()
       }
-      return { work: null, playback: null, ...(Date.now() < this.discoverAudioUntil ? { refreshAfter: 200 } : {}) }
+      return {
+        work: null,
+        playback: null,
+        ...(Date.now() < this.discoverAudioUntil
+          ? { refreshAfter: 200 }
+          : {}),
+      }
     }
     let stored: PageWork | null = null
     try {
@@ -595,9 +669,12 @@ export class DlsiteReader {
     // without navigating away; conversely an old signing hint can be stale.
     // Try the other observed ID only when the first has no matching album.
     const alternateId = this.signedWork?.id
-    if (!viewerId && audio && ![stored, this.metadata.get(id)].some(work => work && matchesAlbum(work, album))
-      && !(previous?.work.id === id && previous.album === album)
-      && alternateId && alternateId !== id) {
+    if (!viewerId && audio && ![
+      stored,
+      this.metadata.get(id),
+    ].some(work => work && matchesAlbum(work, album))
+    && !(previous?.work.id === id && previous.album === album)
+    && alternateId && alternateId !== id) {
       id = alternateId
       stored = null
       try {
@@ -611,7 +688,11 @@ export class DlsiteReader {
       if (stored?.workno === id)
         this.rememberWork(stored)
     }
-    const candidates = [stored, this.metadata.get(id), this.restricted.get(id)].filter((work): work is PageWork => work?.workno === id)
+    const candidates = [
+      stored,
+      this.metadata.get(id),
+      this.restricted.get(id),
+    ].filter((work): work is PageWork => work?.workno === id)
     // Re-read after IndexedDB completes: switching full/mini DOM nodes is not
     // a work change. A changed album or signing identity still invalidates it.
     if (!viewerId) {
@@ -623,7 +704,10 @@ export class DlsiteReader {
         this.issue = 'audio-work-unresolved'
         if (previous)
           return this.retryAudioTransition()
-        return { work: { id }, playback: null }
+        return {
+          work: { id },
+          playback: null,
+        }
       }
     }
     // Audio UI survives navigation. Bind it using its own request identity and
@@ -666,7 +750,10 @@ export class DlsiteReader {
           if (generation !== this.readGeneration || revision !== this.revision || context !== this.getContextKey())
             return { work: null, playback: null, stale: true }
           if (titles) {
-            this.tracks.set(id, { titles, checkedAt: Date.now() })
+            this.tracks.set(id, {
+              titles,
+              checkedAt: Date.now(),
+            })
             if (this.tracks.size > 8)
               this.tracks.delete(this.tracks.keys().next().value!)
           }
@@ -675,7 +762,11 @@ export class DlsiteReader {
         // visible. Only the confirmed general work's own file tree authorizes it.
         if (!trackTitle || !titles?.has(trackTitle)) {
           this.issue = 'audio-work-unresolved'
-          return { work: null, playback: null, retryAfter: titles ? 200 : 1000 }
+          return {
+            work: null,
+            playback: null,
+            retryAfter: titles ? 200 : 1000,
+          }
         }
         if (trackTitle)
           raw.trackTitle = trackTitle
@@ -685,7 +776,9 @@ export class DlsiteReader {
       }
       else if (viewerId && raw.workType === 'MOV') {
         const videos = document.querySelectorAll<HTMLVideoElement>(selectors.video)
-        const video = videos.length === 1 ? videos[0] : null
+        const video = videos.length === 1
+          ? videos[0]
+          : null
         if (video) {
           playback = {
             currentTime: video.currentTime,
@@ -704,8 +797,14 @@ export class DlsiteReader {
     if (!viewerId && identity !== this.audioIdentity()) {
       return this.retryAudioTransition()
     }
-    if (!viewerId && album && raw.age === 'all')
-      this.verifiedAudio = { album, identity, signingHint: this.signedWork?.id, work: { ...raw } }
+    if (!viewerId && album && raw.age === 'all') {
+      this.verifiedAudio = {
+        album,
+        identity,
+        signingHint: this.signedWork?.id,
+        work: { ...raw },
+      }
+    }
     this.missingAudioSince = null
     this.watchPlayback()
     return { work: raw, playback }
@@ -720,11 +819,17 @@ export class DlsiteReader {
       return null
     }
     const key = `${id}\n${track}`
-    const previous = track && this.lastProgress?.key === key ? this.lastProgress.playback : null
+    const previous = track && this.lastProgress?.key === key
+      ? this.lastProgress.playback
+      : null
     const position = slider?.getAttribute('aria-valuenow')
     const maximum = slider?.getAttribute('aria-valuemax')
-    let currentTime = position == null ? Number.NaN : Number(position)
-    let duration = maximum == null ? Number.NaN : Number(maximum)
+    let currentTime = position == null
+      ? Number.NaN
+      : Number(position)
+    let duration = maximum == null
+      ? Number.NaN
+      : Number(maximum)
     // Verified adjacent time labels are available even when the UI library
     // does not expose the values on its slider thumb.
     if (!Number.isFinite(currentTime) || !Number.isFinite(duration) || duration <= 0) {
@@ -741,7 +846,9 @@ export class DlsiteReader {
     if ((!Number.isFinite(duration) || duration <= 0) && track && this.trackDuration?.key === key) {
       const transform = audio.querySelector<HTMLElement>(selectors.miniProgress)?.style.transform
       const match = transform?.match(/^scaleX\(([\d.eE+-]+)\)$/)
-      const ratio = match ? Number(match[1]) : Number.NaN
+      const ratio = match
+        ? Number(match[1])
+        : Number.NaN
       if (Number.isFinite(ratio) && ratio >= 0 && ratio <= 1) {
         this.progressState = 'mini-ratio'
         duration = this.trackDuration.duration

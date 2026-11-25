@@ -231,7 +231,10 @@ function updatePresence() {
 
   for (const [path, data] of Object.entries(pages)) {
     if (pathname === path) {
-      presenceData = { ...presenceData, ...data }
+      presenceData = {
+        ...presenceData,
+        ...data,
+      }
       break
     }
   }

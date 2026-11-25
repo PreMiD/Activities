@@ -56,7 +56,9 @@ presence.on('UpdateData', async () => {
               '%artist%',
               document.querySelector('.stats-artist')?.textContent ?? '',
             )
-          presenceData.state = `${djType}${document.querySelector('.stats-djName')?.textContent}${djType === 'AutoDJ - ' ? '' : ' is currently live'}`
+          presenceData.state = `${djType}${document.querySelector('.stats-djName')?.textContent}${djType === 'AutoDJ - '
+            ? ''
+            : ' is currently live'}`
         }
         else {
           presenceData.details = format1
@@ -143,7 +145,9 @@ presence.on('UpdateData', async () => {
         type = 'Veterans'
       if (type === 'vips' || type === 'vip')
         type = 'VIP'
-      presenceData.details = `Viewing the ${type === 'Veterans' ? type : `${type} members`}`
+      presenceData.details = `Viewing the ${type === 'Veterans'
+        ? type
+        : `${type} members`}`
       presenceData.smallImageKey = Assets.Viewing
     }
     else if (document.location.pathname.includes('/Account.Applications')) {
@@ -160,7 +164,9 @@ presence.on('UpdateData', async () => {
       if (type?.toLowerCase() === 'shop')
         imageKey = 'view'
       presenceData.details = `Viewing the ${type}`
-      presenceData.smallImageKey = imageKey === 'view' ? Assets.Viewing : Assets.Reading
+      presenceData.smallImageKey = imageKey === 'view'
+        ? Assets.Viewing
+        : Assets.Reading
     }
 
     if (document.querySelector('#modalrequestFormModal')) {

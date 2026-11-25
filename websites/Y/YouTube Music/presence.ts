@@ -22,7 +22,13 @@ class PresenceState {
 
 const state = new PresenceState()
 
-const timestampEvents = ['seeked', 'play', 'loadedmetadata', 'durationchange', 'ratechange'] as const
+const timestampEvents = [
+  'seeked',
+  'play',
+  'loadedmetadata',
+  'durationchange',
+  'ratechange',
+] as const
 
 function updateTimestamps() {
   state.mediaTimestamps = updateSongTimestamps(state.dataGetter)

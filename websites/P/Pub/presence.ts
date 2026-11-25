@@ -31,7 +31,9 @@ presence.on('UpdateData', async () => {
       if (pathList[1]) {
         presenceData.details = 'Viewing a package'
         presenceData.state = pathList[1]
-        presenceData.buttons = [{ label: 'View Package', url: href }]
+        presenceData.buttons = [
+          { label: 'View Package', url: href },
+        ]
       }
       else if (searchParams.has('q')) {
         presenceData.details = 'Searching for packages'

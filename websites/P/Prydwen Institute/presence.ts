@@ -42,7 +42,9 @@ presence.on('UpdateData', () => {
           if (pathList[3]) {
             presenceData.details = 'Reading a Post'
             presenceData.state = document.querySelector('h1')
-            presenceData.buttons = [{ label: 'Read Post', url: href }]
+            presenceData.buttons = [
+              { label: 'Read Post', url: href },
+            ]
           }
           else {
             presenceData.details = 'Browsing Post Archives'
@@ -111,8 +113,12 @@ presence.on('UpdateData', () => {
           case 'stats':
           case 'characters-stats': {
             useSlideshow = true
-            const characters = [...document.querySelectorAll<HTMLDivElement>('tr')]
-            const statHeaders = [...(characters.splice(0, 1)[0]?.children ?? [])]
+            const characters = [
+              ...document.querySelectorAll<HTMLDivElement>('tr'),
+            ]
+            const statHeaders = [
+              ...(characters.splice(0, 1)[0]?.children ?? []),
+            ]
               .slice(1)
               .map(cell => cell.textContent)
 
@@ -127,7 +133,9 @@ presence.on('UpdateData', () => {
                   state: filterScripts(character.querySelector('.char')),
                   smallImageKey:
                           character.querySelector<HTMLImageElement>('[data-main-image]'),
-                  smallImageText: [...character.querySelectorAll('.stat')]
+                  smallImageText: [
+                    ...character.querySelectorAll('.stat'),
+                  ]
                     .map((stat, index) => `${stat.textContent} ${statHeaders[index]}`)
                     .join(', '),
                 }

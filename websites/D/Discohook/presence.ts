@@ -46,10 +46,16 @@ presence.on('UpdateData', async () => {
 
     presenceData.smallImageKey = Assets.Writing
     presenceData.smallImageText = 'Editing...'
-    presenceData.details = webhookCount > 1 ? `Editing ${webhookCount} webhooks` : 'Editing a webhook'
+    presenceData.details = webhookCount > 1
+      ? `Editing ${webhookCount} webhooks`
+      : 'Editing a webhook'
     presenceData.state = `${messageCount} message${
-      messageCount > 1 ? 's' : ''
-    } - ${embedCount} embed${embedCount > 1 || embedCount === 0 ? 's' : ''}`
+      messageCount > 1
+        ? 's'
+        : ''
+    } - ${embedCount} embed${embedCount > 1 || embedCount === 0
+      ? 's'
+      : ''}`
   }
 
   presence.setActivity(presenceData)

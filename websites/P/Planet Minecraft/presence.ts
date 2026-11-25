@@ -179,8 +179,11 @@ presence.on('UpdateData', async () => {
                     if (childElement?.tagName.toLowerCase() !== 'i') {
                       const { childNodes } = childElement!
                       for (const childNode of childNodes) {
-                        if (childNode.nodeType === Node.TEXT_NODE)
-                          text += (i > 0 ? ' > ' : '') + childNode.textContent
+                        if (childNode.nodeType === Node.TEXT_NODE) {
+                          text += (i > 0
+                            ? ' > '
+                            : '') + childNode.textContent
+                        }
                       }
                     }
                   }

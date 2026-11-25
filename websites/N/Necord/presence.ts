@@ -133,5 +133,7 @@ function getScrollPercentage() {
   const { scrollHeight } = document.body
   const percentage = (scrollY / (scrollHeight - innerHeight)) * 100
 
-  return percentage === 0 ? 0 : percentage || 100
+  return percentage === 0
+    ? 0
+    : percentage || 100
 }

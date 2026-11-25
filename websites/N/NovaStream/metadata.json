@@ -17,7 +17,7 @@
     "nova-2bn.pages.dev"
   ],
   "regExp": "^https?[:][/][/]((novastream)[.]vercel[.]app|(novastream-alt)[.]netlify[.]app|(novastream)[.]onrender[.]com|(nova-2bn)[.]pages[.]dev)[/]",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NovaStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NovaStream/assets/thumbnail.png",
   "color": "#5e24b8",

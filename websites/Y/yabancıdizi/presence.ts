@@ -78,7 +78,9 @@ presence.on('UpdateData', async () => {
       presence.setActivity({
         largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/yabanc%C4%B1dizi/assets/logo.png',
         details: 'Bir aktöre göz atıyor:',
-        state: actorName ? actorName.textContent?.trim() : 'Belirsiz',
+        state: actorName
+          ? actorName.textContent?.trim()
+          : 'Belirsiz',
         startTimestamp: Math.floor(Date.now() / 1000),
       })
     }

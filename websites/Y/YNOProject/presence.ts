@@ -36,9 +36,13 @@ presence.on('UpdateData', async () => {
     largeImageKey: await fetchCharacterFace().then(url => url || Logo),
     smallImageKey: await fetchBadge(),
     details: gameName || 'Choosing a game...',
-    state: gameName ? gameLocation || 'Disconnected' : null,
+    state: gameName
+      ? gameLocation || 'Disconnected'
+      : null,
     buttons: gameName
-      ? [{ label: `Play ${gameName}`, url: document.location.href }]
+      ? [
+          { label: `Play ${gameName}`, url: document.location.href },
+        ]
       : null,
   } as unknown as PresenceData
 

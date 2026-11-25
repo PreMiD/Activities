@@ -19,7 +19,17 @@ presence.on('UpdateData', async () => {
   presenceData.name = 'Duel.com | Crypto Casino'
 
   const { pathname } = document.location
-  const originals = ['blackjack', 'dice', 'crash', 'plinko', 'mines', 'beef', 'keno', 'castle-roulette', 'video-poker']
+  const originals = [
+    'blackjack',
+    'dice',
+    'crash',
+    'plinko',
+    'mines',
+    'beef',
+    'keno',
+    'castle-roulette',
+    'video-poker',
+  ]
   const toTitleCase = (str: string) => str.replace(/\b\w/g, l => l.toUpperCase())
   const currentOriginal = originals.find(game => pathname === `/${game}`)
 
@@ -38,7 +48,9 @@ presence.on('UpdateData', async () => {
       const parts = gameSlug.split('_')
       const gameProvider = toTitleCase(parts.slice(0, 2).join(' '))
       const gameName = toTitleCase(parts.slice(2).join(' '))
-      presenceData.state = `Playing "${gameName}"${showGameProvider ? ` by ${gameProvider}` : ''}`
+      presenceData.state = `Playing "${gameName}"${showGameProvider
+        ? ` by ${gameProvider}`
+        : ''}`
     }
   }
   else if (pathname.includes('/casino')) {

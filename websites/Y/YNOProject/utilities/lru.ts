@@ -22,7 +22,9 @@ export class SimpleLRU<V = unknown> {
   protected bubbleUp(key: LRUKey) {
     if (key === this.queue.at(0))
       return
-    this.queue.sort(a => (a === key ? -1 : 0))
+    this.queue.sort(a => (a === key
+      ? -1
+      : 0))
   }
 
   has(key: LRUKey) {

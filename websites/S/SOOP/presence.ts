@@ -69,7 +69,9 @@ presence.on('UpdateData', async () => {
           )
       }
 
-      presenceData.buttons = [{ url: href, label: strings.watchStream }]
+      presenceData.buttons = [
+        { url: href, label: strings.watchStream },
+      ]
       break
     }
     case 'vod': {
@@ -96,7 +98,9 @@ presence.on('UpdateData', async () => {
           ? strings.pause
           : strings.play
 
-        presenceData.buttons = [{ url: href, label: strings.watchVideo }];
+        presenceData.buttons = [
+          { url: href, label: strings.watchVideo },
+        ];
 
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 

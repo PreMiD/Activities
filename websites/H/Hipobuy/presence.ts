@@ -333,7 +333,9 @@ presence.on('UpdateData', async () => {
         TaoBao: strings.favoritesTabTaobao,
         WeiDian: strings.favoritesTabWeidian,
       }
-      presenceData.state = (tab && favTabMap[tab]) ? favTabMap[tab] : strings.favoritesTabAll
+      presenceData.state = (tab && favTabMap[tab])
+        ? favTabMap[tab]
+        : strings.favoritesTabAll
     }
     else if (pathname.includes('/order')) {
       const { key, text } = await getSmallImageKey(ActivityAssets.Parcel, 'orders', strings)
@@ -346,7 +348,9 @@ presence.on('UpdateData', async () => {
         'Payment Pending': strings.ordersTabPaymentPending,
         'Orders to be confirmed': strings.ordersTabToBeConfirmed,
       }
-      presenceData.state = (tab && orderTabMap[tab]) ? orderTabMap[tab] : strings.ordersTabAll
+      presenceData.state = (tab && orderTabMap[tab])
+        ? orderTabMap[tab]
+        : strings.ordersTabAll
     }
     else if (pathname.includes('/warehouse')) {
       const { key, text } = await getSmallImageKey(ActivityAssets.Cloud, 'warehouse', strings)
@@ -368,7 +372,9 @@ presence.on('UpdateData', async () => {
         'Completed': strings.shipmentsTabCompleted,
         'Cancel the Waybill': strings.shipmentsTabCancelled,
       }
-      presenceData.state = (tab && shipTabMap[tab]) ? shipTabMap[tab] : strings.shipmentsTabAll
+      presenceData.state = (tab && shipTabMap[tab])
+        ? shipTabMap[tab]
+        : strings.shipmentsTabAll
     }
     else if (pathname.includes('/assets')) {
       const { key, text } = await getSmallImageKey(ActivityAssets.Crown, 'assets', strings)
@@ -381,7 +387,9 @@ presence.on('UpdateData', async () => {
         'Hipo Coin': strings.assetsTabHipoCoin,
         'Third Payment': strings.assetsTabThirdPayment,
       }
-      presenceData.state = (tab && assetTabMap[tab]) ? assetTabMap[tab] : strings.assetsTabBalance
+      presenceData.state = (tab && assetTabMap[tab])
+        ? assetTabMap[tab]
+        : strings.assetsTabBalance
     }
     else if (pathname.includes('/review')) {
       const { key, text } = await getSmallImageKey(ActivityAssets.Pencil, 'review', strings)
@@ -525,7 +533,12 @@ presence.on('UpdateData', async () => {
       }
 
       if (!disableButtons) {
-        presenceData.buttons = [{ label: strings.viewProduct, url: cleanInviteCode(href) }]
+        presenceData.buttons = [
+          {
+            label: strings.viewProduct,
+            url: cleanInviteCode(href),
+          },
+        ]
       }
     }
     else if (pathname.startsWith('/goods/details')) {
@@ -554,7 +567,9 @@ presence.on('UpdateData', async () => {
       }
 
       const productPart = truncate(productName, 70)
-      const prefix = platformDisplay ? `${strings.productPrefix} ${strings.viewingProductFrom} ${platformDisplay}: ` : `${strings.productPrefix} `
+      const prefix = platformDisplay
+        ? `${strings.productPrefix} ${strings.viewingProductFrom} ${platformDisplay}: `
+        : `${strings.productPrefix} `
       if (priceStr) {
         presenceData.details = `${priceStr}⠀•⠀${prefix}${productPart}`
       }
@@ -579,7 +594,12 @@ presence.on('UpdateData', async () => {
         presenceData.state = stateParts.join('⠀•⠀')
       }
       if (!disableButtons) {
-        presenceData.buttons = [{ label: strings.viewProduct, url: cleanInviteCode(href) }]
+        presenceData.buttons = [
+          {
+            label: strings.viewProduct,
+            url: cleanInviteCode(href),
+          },
+        ]
       }
     }
     else if (pathname.startsWith('/shop/details')) {
@@ -594,7 +614,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.viewingShopDetails
       presenceData.state = shopName
       if (!disableButtons) {
-        presenceData.buttons = [{ label: strings.visitShop, url: href }]
+        presenceData.buttons = [
+          { label: strings.visitShop, url: href },
+        ]
       }
     }
     else if (pathname.startsWith('/categories')) {
@@ -644,9 +666,13 @@ presence.on('UpdateData', async () => {
         if (activeState) {
           stateParts.push(activeState)
         }
-        presenceData.state = stateParts.length ? stateParts.join(' · ') : undefined
+        presenceData.state = stateParts.length
+          ? stateParts.join(' · ')
+          : undefined
         if (!disableButtons) {
-          presenceData.buttons = [{ label: strings.search, url: href }]
+          presenceData.buttons = [
+            { label: strings.search, url: href },
+          ]
         }
       }
       else {

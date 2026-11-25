@@ -24,8 +24,8 @@
     "emby.media",
     "app.emby.media"
   ],
-  "regExp": "^https?[:][/][/].*[/]web[/]index[.]html[/]",
-  "version": "1.7.4",
+  "regExp": "^https?[:][/][/](app[.]emby[.]media[/]|emby[.]media[/]|.*[/]web[/]index[.]html)",
+  "version": "1.7.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emby/assets/thumbnail.png",
   "color": "#52B54B",

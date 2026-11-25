@@ -30,7 +30,9 @@ function getTimes(time: number): {
 }
 
 function lessTen(digit: number): string {
-  return digit < 10 ? '0' : ''
+  return digit < 10
+    ? '0'
+    : ''
 }
 
 function getTimestamp(time: number): string {
