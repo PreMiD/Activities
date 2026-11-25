@@ -7,6 +7,22 @@ const presence = new Presence({
 const defaultLogo = 'https://poska.pitsho.org/static/icon-512.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+function isWatchRoute(pathname: string): boolean {
+  if (pathname.startsWith('/watch/')) {
+    return true
+  }
+  if (pathname.startsWith('/player/')) {
+    return true
+  }
+  if (pathname.startsWith('/embed/')) {
+    return true
+  }
+  if (pathname.startsWith('/tv')) {
+    return true
+  }
+  return false
+}
+
 presence.on('UpdateData', async () => {
   const path = document.location.pathname
   const href = document.location.href
@@ -20,10 +36,10 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  const isWatchPage = ['/watch/', '/player/', '/embed/', '/tv'].some(prefix => path.startsWith(prefix))
+  const isWatchPage = isWatchRoute(path)
   const video = document.querySelector<HTMLVideoElement>('video')
 
-  if (isWatchPage && video && Number.isFinite(video.duration) && video.duration > 0) {
+  if (isWatchPage && video && video.duration > 0) {
     let metaTitle = document.querySelector('meta[name="poska:title"]')?.getAttribute('content')
     if (!metaTitle) {
       metaTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')?.replace(/ — POSKA.*$/, '')
@@ -34,7 +50,12 @@ presence.on('UpdateData', async () => {
 
     let metaMediaType = document.querySelector('meta[name="poska:media_type"]')?.getAttribute('content')
     if (!metaMediaType) {
-      metaMediaType = (path.includes('/tv/') || path.includes('/series')) ? 'tv' : 'movie'
+      if (path.includes('/tv/') || path.includes('/series')) {
+        metaMediaType = 'tv'
+      }
+      else {
+        metaMediaType = 'movie'
+      }
     }
 
     const metaSeason = document.querySelector('meta[name="poska:season"]')?.getAttribute('content')
@@ -64,7 +85,12 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = metaTitle || 'Film'
       const year = document.querySelector('meta[name="poska:year"]')?.getAttribute('content')
-      presenceData.state = year ? `Film (${year})` : 'Film'
+      if (year) {
+        presenceData.state = `Film (${year})`
+      }
+      else {
+        presenceData.state = 'Film'
+      }
       presenceData.largeImageText = `${metaTitle} — POSKA`
     }
 

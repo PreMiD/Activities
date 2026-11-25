@@ -10,9 +10,7 @@
     "en": "Watch free movies, TV series and live TV in high definition without ads on Poska.",
     "fr": "Regardez des films, séries et la TV en direct gratuitement en HD sans pub sur Poska."
   },
-  "url": [
-    "poska.pitsho.org"
-  ],
+  "url": "poska.pitsho.org",
   "regExp": "^https?[:][/][/]poska[.]pitsho[.]org[/]",
   "version": "1.0.0",
   "logo": "https://poska.pitsho.org/static/icon-512.png",
