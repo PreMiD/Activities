@@ -23,6 +23,38 @@
     "description": "Displayed when the user is viewing their ChatGPT settings",
     "message": "Configuring settings"
   },
+  "chatgpt.spaceImages": {
+    "description": "Displayed as the state when the user is viewing images in their space.",
+    "message": "Images"
+  },
+  "chatgpt.spacePages": {
+    "description": "Displayed as the state when the user is viewing pages in their space.",
+    "message": "Pages"
+  },
+  "chatgpt.spacePresentations": {
+    "description": "Displayed as the state when the user is viewing presentations in their space.",
+    "message": "Presentations"
+  },
+  "chatgpt.spaceSharedWithMe": {
+    "description": "Displayed as the state when the user is viewing items shared with them in their space.",
+    "message": "Shared with me"
+  },
+  "chatgpt.spaceSites": {
+    "description": "Displayed as the state when the user is viewing sites in their space.",
+    "message": "Sites"
+  },
+  "chatgpt.spaceSpreadsheets": {
+    "description": "Displayed as the state when the user is viewing spreadsheets in their space.",
+    "message": "Spreadsheets"
+  },
+  "chatgpt.spaceTrash": {
+    "description": "Displayed as the state when the user is viewing the trash in their space.",
+    "message": "Trash"
+  },
+  "chatgpt.spaceYourItems": {
+    "description": "Displayed as the state when the user is viewing their own items in their space.",
+    "message": "Your items"
+  },
   "chatgpt.startNewConversation": {
     "description": "Displayed when the user is starting a new conversation.",
     "message": "Start new conversation"
@@ -59,8 +91,48 @@
     "description": "Displayed when the user is viewing an image. {0} will be replaced with the image name.",
     "message": "Viewing the image: {0}"
   },
+  "chatgpt.viewingImages": {
+    "description": "Displayed when the user is viewing the images page.",
+    "message": "Viewing images"
+  },
   "chatgpt.viewingLibrary": {
     "description": "Displayed when the user is viewing the library.",
     "message": "Viewing the library"
+  },
+  "chatgpt.viewingMaps": {
+    "description": "Displayed when the user is viewing maps.",
+    "message": "Viewing maps"
+  },
+  "chatgpt.viewingMyGPTs": {
+    "description": "Displayed when the user is viewing their own GPTs.",
+    "message": "Viewing my GPTs"
+  },
+  "chatgpt.viewingPlugin": {
+    "description": "Displayed when the user is viewing a specific plugin. The plugin name will be displayed as the state.",
+    "message": "Viewing plugin:"
+  },
+  "chatgpt.viewingPlugins": {
+    "description": "Displayed when the user is viewing the plugins directory.",
+    "message": "Viewing plugins"
+  },
+  "chatgpt.viewingProfile": {
+    "description": "Displayed when the user is viewing a profile. The profile name will be displayed as the state.",
+    "message": "Viewing a profile"
+  },
+  "chatgpt.viewingProjects": {
+    "description": "Displayed when the user is viewing projects.",
+    "message": "Viewing projects"
+  },
+  "chatgpt.viewingScheduledTasks": {
+    "description": "Displayed when the user is viewing scheduled tasks.",
+    "message": "Viewing scheduled tasks"
+  },
+  "chatgpt.viewingSkills": {
+    "description": "Displayed when the user is viewing skills.",
+    "message": "Viewing skills"
+  },
+  "chatgpt.viewingSpace": {
+    "description": "Displayed when the user is viewing their space.",
+    "message": "Viewing space"
   }
 }
