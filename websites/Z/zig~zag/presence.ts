@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/RVoWxox.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/Z/zig~zag/assets/logo.png',
 }
 
 interface PlayerData {
