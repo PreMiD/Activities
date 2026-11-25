@@ -40,13 +40,17 @@ async function getEpisodeInfo(text: string) {
   let nameAnime = rawTitle?.replace(/\s+\d+(?:st|nd|rd|th)\s+Season$/i, '').trim() || ''
   nameAnime = nameAnime.replace(/\s*\([^)]*\)/g, '').trim()
   const seasonMatch = rawTitle?.match(/(\d+)(?:st|nd|rd|th)\s+Season$/i)
-  const seasonAnime = seasonMatch ? `Season ${seasonMatch[1]}` : 'Season 1'
+  const seasonAnime = seasonMatch
+    ? `Season ${seasonMatch[1]}`
+    : 'Season 1'
   const rawUrl = document.location.href
   const urlMatch = rawUrl.match(/\/episode\/([^/]+?)(?:-الحلقة-|-%d8%|$)/)
   const nameAnimeUrl = urlMatch?.[1] || ''
   const episodeTitle = document.querySelector('body > div.main-section > div > h3')?.textContent
   const episodeMatch = episodeTitle?.match(/الحلقة\s+(\d+)/)
-  const numberEpisode = episodeMatch?.[1] ? Number.parseInt(episodeMatch[1]) : 1
+  const numberEpisode = episodeMatch?.[1]
+    ? Number.parseInt(episodeMatch[1])
+    : 1
   const urlMatchBanner = document.location.href
 
   let bannerImg: string = ActivityAssets.Logo
@@ -228,7 +232,9 @@ presence.on('UpdateData', async () => {
     const searchQuery = urlParams.get('s')
 
     presenceData.details = 'Browsing'
-    presenceData.state = searchQuery ? `Searching for: ${searchQuery}` : 'Searching animes'
+    presenceData.state = searchQuery
+      ? `Searching for: ${searchQuery}`
+      : 'Searching animes'
     presenceData.largeImageText = 'Browsing'
     presenceData.smallImageKey = Assets.Search
   }

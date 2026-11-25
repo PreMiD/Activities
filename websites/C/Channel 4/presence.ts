@@ -40,16 +40,66 @@ presence.on('UpdateData', async () => {
   }
 
   const sitePages: Record<string, { details: string, state: string, key: string, button: string }> = { // list of all page RPCs that don't require extra code
-    'tv-guide': { details: 'TV Guide', state: 'Looking at TV schedule', key: Assets.Reading, button: 'y' },
-    'categories': { details: 'Browsing', state: 'Looking at all TV shows', key: Assets.Search, button: 'n' },
-    'my4': { details: 'My4', state: 'Looking at saved shows', key: Assets.Downloading, button: 'n' },
-    'settings': { details: 'Settings', state: 'Managing account', key: Assets.Downloading, button: 'n' },
-    'plus': { details: 'Channel 4+', state: 'Managing subscription', key: Assets.Downloading, button: 'n' },
-    '4viewers': { details: 'FAQ', state: 'Reading about Channel 4', key: Assets.Reading, button: 'y' },
-    'channel': { details: 'Channels', state: 'Looking at programming', key: Assets.Search, button: 'n' },
-    'collection': { details: 'Collections', state: 'Looking at programming', key: Assets.Search, button: 'n' },
-    'press': { details: 'Press', state: 'Viewing the press site', key: Assets.Search, button: 'y' },
-    'corporate': { details: 'Corporate', state: 'Reading Channel 4 Corporate', key: Assets.Reading, button: 'y' },
+    'tv-guide': {
+      details: 'TV Guide',
+      state: 'Looking at TV schedule',
+      key: Assets.Reading,
+      button: 'y',
+    },
+    'categories': {
+      details: 'Browsing',
+      state: 'Looking at all TV shows',
+      key: Assets.Search,
+      button: 'n',
+    },
+    'my4': {
+      details: 'My4',
+      state: 'Looking at saved shows',
+      key: Assets.Downloading,
+      button: 'n',
+    },
+    'settings': {
+      details: 'Settings',
+      state: 'Managing account',
+      key: Assets.Downloading,
+      button: 'n',
+    },
+    'plus': {
+      details: 'Channel 4+',
+      state: 'Managing subscription',
+      key: Assets.Downloading,
+      button: 'n',
+    },
+    '4viewers': {
+      details: 'FAQ',
+      state: 'Reading about Channel 4',
+      key: Assets.Reading,
+      button: 'y',
+    },
+    'channel': {
+      details: 'Channels',
+      state: 'Looking at programming',
+      key: Assets.Search,
+      button: 'n',
+    },
+    'collection': {
+      details: 'Collections',
+      state: 'Looking at programming',
+      key: Assets.Search,
+      button: 'n',
+    },
+    'press': {
+      details: 'Press',
+      state: 'Viewing the press site',
+      key: Assets.Search,
+      button: 'y',
+    },
+    'corporate': {
+      details: 'Corporate',
+      state: 'Reading Channel 4 Corporate',
+      key: Assets.Reading,
+      button: 'y',
+    },
   }
 
   if (setting.privacy) {

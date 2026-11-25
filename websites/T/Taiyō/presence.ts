@@ -65,7 +65,10 @@ presence.on('UpdateData', async () => {
         document.querySelector('.chapter-currentPage')?.textContent
       }`
       presenceData.buttons = [
-        { label: 'Ler capítulo', url: href.replace(/\/[^/]*$/, '') },
+        {
+          label: 'Ler capítulo',
+          url: href.replace(/\/[^/]*$/, ''),
+        },
         { label: 'Ler mangá', url: mediaLink },
       ]
       break
@@ -74,7 +77,9 @@ presence.on('UpdateData', async () => {
     case 'media': {
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.cover-url')?.src
       presenceData.details = document.querySelector('.media-title')?.textContent
-      presenceData.buttons = [{ label: 'Ler mangá', url: href }]
+      presenceData.buttons = [
+        { label: 'Ler mangá', url: href },
+      ]
       break
     }
 

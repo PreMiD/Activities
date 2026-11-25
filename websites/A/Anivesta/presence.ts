@@ -59,7 +59,9 @@ presence.on('UpdateData', async () => {
         || ActivityAssets.Logo
     const currentUrl = metaData?.url || document.location.href
     const animeSlug = playbackEl?.dataset?.animeSlug
-    const animeUrl = metaData?.animeUrl || (animeSlug ? `https://anivesta.com/anime/${animeSlug}` : null)
+    const animeUrl = metaData?.animeUrl || (animeSlug
+      ? `https://anivesta.com/anime/${animeSlug}`
+      : null)
 
     const isPaused = mediaState?.dataset?.status === 'paused'
     const currentTime = Number.parseFloat(

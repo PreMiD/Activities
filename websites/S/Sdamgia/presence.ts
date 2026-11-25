@@ -135,7 +135,9 @@ function formatSeconds(totalSeconds: number): string {
   const s = totalSeconds % 60
   const mm = String(m).padStart(2, '0')
   const ss = String(s).padStart(2, '0')
-  return h > 0 ? `${h}:${mm}:${ss}` : `${m}:${ss}`
+  return h > 0
+    ? `${h}:${mm}:${ss}`
+    : `${m}:${ss}`
 }
 
 presence.on('UpdateData', async () => {
@@ -155,8 +157,12 @@ presence.on('UpdateData', async () => {
     subdomain = 'math-oge'
 
   const lastDash = subdomain.lastIndexOf('-')
-  const subject = lastDash !== -1 ? subdomain.slice(0, lastDash) : subdomain
-  const examType = lastDash !== -1 ? subdomain.slice(lastDash + 1) : ''
+  const subject = lastDash !== -1
+    ? subdomain.slice(0, lastDash)
+    : subdomain
+  const examType = lastDash !== -1
+    ? subdomain.slice(lastDash + 1)
+    : ''
 
   const subjectName = subjectNames[subject]
   const examTypeName = examTypeNames[examType]

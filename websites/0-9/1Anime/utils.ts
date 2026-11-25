@@ -1,7 +1,12 @@
 export function getImage(): string | undefined {
   for (const img of document.images) {
     if (
-      ['poster anime', 'Poster Anime', 'Anime Cover', 'poster'].includes(
+      [
+        'poster anime',
+        'Poster Anime',
+        'Anime Cover',
+        'poster',
+      ].includes(
         String(img.attributes.getNamedItem('alt')?.value),
       )
     ) {

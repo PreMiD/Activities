@@ -49,7 +49,9 @@ function getStatus(): string {
     const cleanedTitle = rawTitle.replace(/\s*–\s*MappleTV$/i, '')
     const titleMatch = cleanedTitle.match(/"([^"]+)"/)
     const byIndex = cleanedTitle.toLowerCase().indexOf(' by ')
-    const author = byIndex !== -1 ? cleanedTitle.slice(byIndex + 4).trim() : 'Unknown Author'
+    const author = byIndex !== -1
+      ? cleanedTitle.slice(byIndex + 4).trim()
+      : 'Unknown Author'
     const book = titleMatch?.[1]?.trim() || 'Unknown Title'
     return `${book} by ${author}`
   }
@@ -119,7 +121,13 @@ async function updatePresence() {
   }
 
   // Show 'Browsing' only if it's allowed
-  if (!['movie', 'tv', 'sports', 'live', 'audiobooks'].includes(action)) {
+  if (![
+    'movie',
+    'tv',
+    'sports',
+    'live',
+    'audiobooks',
+  ].includes(action)) {
     if (showBrowsing) {
       presenceData.details = 'Home'
       presenceData.startTimestamp = Math.floor(Date.now() / 1000)
@@ -152,7 +160,9 @@ async function updatePresence() {
   if (allowDetail) {
     const subtitle
       = getText('.player-title-bar') || getText('[class*=player-title-bar]')
-    presenceData.state = `${getStatus()}${subtitle ? ` | ${subtitle}` : ''}`
+    presenceData.state = `${getStatus()}${subtitle
+      ? ` | ${subtitle}`
+      : ''}`
   }
 
   presence.setActivity(presenceData)

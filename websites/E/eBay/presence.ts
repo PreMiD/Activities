@@ -80,7 +80,9 @@ presence.on('UpdateData', async () => {
               document.querySelector('.mbg-id > span')?.textContent ?? '',
               '',
             )
-          presenceData.buttons = [{ label: 'View User', url: location.href }]
+          presenceData.buttons = [
+            { label: 'View User', url: location.href },
+          ]
 
           break
         }
@@ -116,7 +118,9 @@ presence.on('UpdateData', async () => {
 
             if (showLiveDetails) {
               presenceData.details = 'Watching a livestream:'
-              presenceData.state = host ? `${title} — by ${host}` : title
+              presenceData.state = host
+                ? `${title} — by ${host}`
+                : title
               if (thumbnail)
                 presenceData.largeImageKey = thumbnail
               presenceData.smallImageKey = Assets.Live
@@ -195,7 +199,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = document.querySelector(
       '.str-billboard__title',
     )?.textContent
-    presenceData.buttons = [{ label: 'View Store', url: location.href }]
+    presenceData.buttons = [
+      { label: 'View Store', url: location.href },
+    ]
   }
   else if (location.hostname.startsWith('mesg.')) {
     if (location.pathname.includes('/ViewMessageDetail/')) {
@@ -262,7 +268,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector(
         '.lia-user-name-link',
       )?.textContent
-      presenceData.buttons = [{ label: 'View Author', url: location.href }]
+      presenceData.buttons = [
+        { label: 'View Author', url: location.href },
+      ]
     }
     else if (location.pathname.includes('/searchpage/')) {
       presenceData.details = 'eBay Forum Search:'

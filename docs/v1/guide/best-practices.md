@@ -170,7 +170,9 @@ function getVideoInfo() {
   return {
     title: document.querySelector('.video-title')?.textContent || 'Unknown video',
     author: document.querySelector('.video-author')?.textContent || 'Unknown author',
-    isPlaying: video ? !video.paused : false
+    isPlaying: video
+      ? !video.paused
+      : false
   }
 }
 
@@ -179,7 +181,13 @@ const presence = new Presence({ clientId: 'your_client_id' })
 const slideshow_timeout = 5000
 function get_video_info() {
   const video = document.querySelector('video')
-  return { title: document.querySelector('.video-title')?.textContent || 'Unknown video', author: document.querySelector('.video-author')?.textContent || 'Unknown author', isPlaying: video ? !video.paused : false }
+  return {
+    title: document.querySelector('.video-title')?.textContent || 'Unknown video',
+    author: document.querySelector('.video-author')?.textContent || 'Unknown author',
+    isPlaying: video
+      ? !video.paused
+      : false
+  }
 }
 ```
 
@@ -538,7 +546,13 @@ function getPageInfo() {
     pageType = 'contact'
   }
 
-  return { pathname, hostname, href, title, pageType }
+  return {
+    pathname,
+    hostname,
+    href,
+    title,
+    pageType
+  }
 }
 
 // Helper function to get video information

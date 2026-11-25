@@ -2,7 +2,12 @@ import type { TestResult } from '../ActivityTester.js'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { DevTestLoop } from './DevTestLoop.js'
 
-const PASSED: TestResult = { file: 'a.test.ts', name: 'works', status: 'passed', durationMs: 1 }
+const PASSED: TestResult = {
+  file: 'a.test.ts',
+  name: 'works',
+  status: 'passed',
+  durationMs: 1,
+}
 
 interface RunOptions { signal: AbortSignal, interactive: boolean }
 
@@ -21,7 +26,13 @@ function setup(
     hasTests,
     log,
   })
-  return { loop, send, run: runSpy, log, isSupported }
+  return {
+    loop,
+    send,
+    run: runSpy,
+    log,
+    isSupported,
+  }
 }
 
 describe('devTestLoop', () => {
@@ -53,7 +64,9 @@ describe('devTestLoop', () => {
     const { loop, send, run, log } = setup(({ signal }) => {
       calls++
       if (calls === 1) {
-        return new Promise(resolve => signal.addEventListener('abort', () => resolve([{ ...PASSED, status: 'cancelled' }]), { once: true }))
+        return new Promise(resolve => signal.addEventListener('abort', () => resolve([
+          { ...PASSED, status: 'cancelled' },
+        ]), { once: true }))
       }
       return Promise.resolve([PASSED])
     })
@@ -92,7 +105,9 @@ describe('devTestLoop', () => {
 
   it('pausing aborts the running test run and queued builds do nothing', async () => {
     const { loop, send, run } = setup(({ signal }) => new Promise(resolve =>
-      signal.addEventListener('abort', () => resolve([{ ...PASSED, status: 'cancelled' }]), { once: true }),
+      signal.addEventListener('abort', () => resolve([
+        { ...PASSED, status: 'cancelled' },
+      ]), { once: true }),
     ))
 
     loop.onBuild()
@@ -117,7 +132,9 @@ describe('devTestLoop', () => {
     let hasTestsCalls = 0
     const { loop, run } = setup(undefined, async () => {
       hasTestsCalls++
-      return hasTestsCalls === 1 ? gate : true
+      return hasTestsCalls === 1
+        ? gate
+        : true
     })
 
     loop.onBuild()

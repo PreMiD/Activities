@@ -45,7 +45,15 @@ export class TypescriptCompiler {
 
     const testFiles = await findTestFiles(this.cwd)
     const program = ts.createProgram({
-      rootNames: [resolve(this.cwd, 'presence.ts'), ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : []), ...testFiles],
+      rootNames: [
+        resolve(this.cwd, 'presence.ts'),
+        ...(hasIframe
+          ? [
+              resolve(this.cwd, 'iframe.ts'),
+            ]
+          : []),
+        ...testFiles,
+      ],
       options: { ...parsedConfig.options, noEmit: true },
     })
 
@@ -109,7 +117,14 @@ export class TypescriptCompiler {
     }
 
     const host = ts.createWatchCompilerHost(
-      [resolve(this.cwd, 'presence.ts'), ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : [])],
+      [
+        resolve(this.cwd, 'presence.ts'),
+        ...(hasIframe
+          ? [
+              resolve(this.cwd, 'iframe.ts'),
+            ]
+          : []),
+      ],
       {
         ...parsedConfig.options,
         noEmit: true,

@@ -60,7 +60,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.viewingFile
     if (!privacy) {
       presenceData.state = `${
-        main.length === 2 ? main[0] : main.slice(0, -1).join('').toString()
+        main.length === 2
+          ? main[0]
+          : main.slice(0, -1).join('').toString()
       }.${main
         .slice(-1)
         .toString()

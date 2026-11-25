@@ -67,7 +67,9 @@ async function fetchInfo<T>(
 
   let promise = inFlight.get(key)
   if (!promise) {
-    promise = fetch(url, { headers: { Accept: 'application/json' } })
+    promise = fetch(url, {
+      headers: { Accept: 'application/json' },
+    })
       .then(res => res.json())
       .then((json) => {
         const data = json?.content ?? null
@@ -150,7 +152,9 @@ presence.on('UpdateData', async () => {
           : ActivityAssets.Logo
       presenceData.smallImageKey = ChzzkAssets.Live
       presenceData.smallImageText = strings.live
-      presenceData.buttons = [{ url: href, label: strings.watchStream }]
+      presenceData.buttons = [
+        { url: href, label: strings.watchStream },
+      ]
 
       if (showElapsedTime && info.openDate)
         presenceData.startTimestamp = kstToUnix(info.openDate)
@@ -188,7 +192,9 @@ presence.on('UpdateData', async () => {
           : ActivityAssets.Logo
       presenceData.smallImageKey = ChzzkAssets.Play
       presenceData.smallImageText = strings.play
-      presenceData.buttons = [{ url: href, label: strings.watchVideo }]
+      presenceData.buttons = [
+        { url: href, label: strings.watchVideo },
+      ]
 
       if (video) {
         [presenceData.startTimestamp, presenceData.endTimestamp]

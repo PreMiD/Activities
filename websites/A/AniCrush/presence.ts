@@ -186,8 +186,12 @@ presence.on('UpdateData', async () => {
           details: 'Browsing most popular anime',
         },
         '/az-list': {
-          details: `Browsing ${!letter ? 'all ' : ''}anime${
-            letter ? ` starting with ${letter}` : ''
+          details: `Browsing ${!letter
+            ? 'all '
+            : ''}anime${
+            letter
+              ? ` starting with ${letter}`
+              : ''
           }`,
         },
         '/estimated-schedule': {
@@ -199,7 +203,10 @@ presence.on('UpdateData', async () => {
       }
       for (const [path, data] of Object.entries(pages)) {
         if (pathname.startsWith(path)) {
-          presenceData = { ...presenceData, ...data } as PresenceData
+          presenceData = {
+            ...presenceData,
+            ...data,
+          } as PresenceData
           if (!presenceData.buttons && showButtons) {
             presenceData.buttons = [
               {

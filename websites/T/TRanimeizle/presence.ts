@@ -55,7 +55,9 @@ presence.on('UpdateData', async () => {
     )?.textContent
 
     presenceData.details = 'Bir harfe göz atıyor:'
-    presenceData.state = letter ? `Harf: ${letter}` : 'Bilinmeyen Harf'
+    presenceData.state = letter
+      ? `Harf: ${letter}`
+      : 'Bilinmeyen Harf'
   }
   else if (page.includes('/tur/')) {
     presenceData.details = 'Bir kategoriye göz atıyor:'

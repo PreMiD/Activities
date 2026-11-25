@@ -76,7 +76,9 @@ function getPopSaucePlayerData(): typeof currentPlayer {
 
   const playerPointsElement = playerRow?.querySelector('.score')
 
-  currentPlayer.points = playerPointsElement ? Number.parseInt(playerPointsElement.textContent || '0', 10) : 0
+  currentPlayer.points = playerPointsElement
+    ? Number.parseInt(playerPointsElement.textContent || '0', 10)
+    : 0
   // The player is guaranteed to be in the round if they have a scoreboard
   currentPlayer.isInRound = true
 

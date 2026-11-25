@@ -20,7 +20,9 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 function langPair(pair: string, position: number, type: string) {
   const langSelection = document.querySelector(`button[aria-selected="true"][data-testid^=${type}translator-lang-option]`)?.textContent
   const langList = document.querySelector(`div[data-testid^="translator-${pair}-lang-list"]`)
-  return langList ? langSelection : document.querySelectorAll(`[data-testid="translator-${pair}-lang"]`)[position]?.textContent
+  return langList
+    ? langSelection
+    : document.querySelectorAll(`[data-testid="translator-${pair}-lang"]`)[position]?.textContent
 }
 
 enum ActivityAssets {
@@ -34,7 +36,9 @@ presence.on('UpdateData', async () => {
   }
   const path = document.location.pathname?.split('/')
   const strings = await getStrings()
-  const writeLang = document.querySelector('[data-testid="write-language-selector_options"]') ? document.querySelector('div[aria-checked="true"][data-testid^="write-language-selector_option"]')?.textContent : document.querySelector('button[data-testid="write-language-selector"]')?.textContent
+  const writeLang = document.querySelector('[data-testid="write-language-selector_options"]')
+    ? document.querySelector('div[aria-checked="true"][data-testid^="write-language-selector_option"]')?.textContent
+    : document.querySelector('button[data-testid="write-language-selector"]')?.textContent
 
   if (path[2] === 'translator') {
     if (path[3] === 'files') {

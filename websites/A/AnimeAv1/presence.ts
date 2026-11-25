@@ -126,7 +126,9 @@ function getSlug(): any {
 
 function getEpisode(): string | null {
   const m = document.location.pathname.match(/\/media\/[^/]+\/(\d+)/)
-  return m ? `Episodio ${m[1]}` : null
+  return m
+    ? `Episodio ${m[1]}`
+    : null
 }
 
 function getAnimeUrl(slug: string): string {
@@ -146,8 +148,12 @@ function isCatalogPage(): boolean {
 function getCatalogPageNumber(): number {
   const params = new URLSearchParams(document.location.search)
   const raw = params.get('page')
-  const n = raw ? Number(raw) : 1
-  return Number.isFinite(n) && n > 0 ? Math.floor(n) : 1
+  const n = raw
+    ? Number(raw)
+    : 1
+  return Number.isFinite(n) && n > 0
+    ? Math.floor(n)
+    : 1
 }
 
 function isMainAnimePage(): boolean {
@@ -171,7 +177,9 @@ function formatTime(totalSeconds: number): string {
   const minutes = Math.floor((totalSeconds / 60) % 60)
   const hours = Math.floor(totalSeconds / 3600)
   const paddedSeconds = seconds.toString().padStart(2, '0')
-  const paddedMinutes = hours > 0 ? minutes.toString().padStart(2, '0') : minutes.toString()
+  const paddedMinutes = hours > 0
+    ? minutes.toString().padStart(2, '0')
+    : minutes.toString()
   return hours > 0
     ? `${hours}:${paddedMinutes}:${paddedSeconds}`
     : `${minutes}:${paddedSeconds}`
@@ -196,7 +204,9 @@ function getMediaFromIframeOrPage(): { currentTime: number, duration?: number, p
       return {
         currentTime,
         duration,
-        paused: typeof iframeData.paused === 'boolean' ? iframeData.paused : false,
+        paused: typeof iframeData.paused === 'boolean'
+          ? iframeData.paused
+          : false,
       }
     }
   }
@@ -212,7 +222,9 @@ function getMediaFromIframeOrPage(): { currentTime: number, duration?: number, p
   const duration = Number(video.duration)
   return {
     currentTime,
-    duration: Number.isFinite(duration) && duration > 0 ? duration : undefined,
+    duration: Number.isFinite(duration) && duration > 0
+      ? duration
+      : undefined,
     paused: video.paused,
   }
 }

@@ -114,7 +114,9 @@ export function activateIntersectionObservers(pathList: string[]): void {
       break
     }
     case 'topics': {
-      const articles = [...document.querySelectorAll('.article')]
+      const articles = [
+        ...document.querySelectorAll('.article'),
+      ]
       for (const article of articles) observer.observe(article)
       break
     }

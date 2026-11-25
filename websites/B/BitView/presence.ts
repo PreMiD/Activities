@@ -113,7 +113,9 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = getChannelAvatar()
     presenceData.smallImageKey = ActivityAssets.Logo
     presenceData.smallImageText = `${getChannelSuscribers()} Suscribers`
-    presenceData.buttons = [{ label: 'View Channel', url: href }]
+    presenceData.buttons = [
+      { label: 'View Channel', url: href },
+    ]
     presenceData.startTimestamp = browsingTimestamp
   }
   else if (pathname.includes('results')) {

@@ -41,7 +41,9 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = ActivityAssets.Logo
       }
 
-      const user = privacyMode ? 'someone' : `${pathnameArray[2]}`
+      const user = privacyMode
+        ? 'someone'
+        : `${pathnameArray[2]}`
       presenceData.state = `In ${user}'s profile`
       switch (pathnameArray[3]) {
         case 'mangalist':
@@ -80,7 +82,9 @@ presence.on('UpdateData', async () => {
       break
     case 'anime':
     case 'manga':
-      presenceData.details = `Viewing ${page === 'anime' ? 'an' : 'a'} ${page}`
+      presenceData.details = `Viewing ${page === 'anime'
+        ? 'an'
+        : 'a'} ${page}`
       if (privacyMode)
         break
       presenceData.state = document
@@ -94,7 +98,9 @@ presence.on('UpdateData', async () => {
       }
       presenceData.buttons = [
         {
-          label: page === 'anime' ? 'View anime' : 'View manga',
+          label: page === 'anime'
+            ? 'View anime'
+            : 'View manga',
           url: document.location.href,
         },
       ]
@@ -112,7 +118,9 @@ presence.on('UpdateData', async () => {
       }
       presenceData.buttons = [
         {
-          label: page === 'character' ? 'View character' : 'View staff',
+          label: page === 'character'
+            ? 'View character'
+            : 'View staff',
           url: document.location.href,
         },
       ]

@@ -114,5 +114,7 @@ function createProgressBar(
 
   return `${barFill.repeat(numChars)}${barTrack.repeat(
     barLength - numChars,
-  )}  ${showLabel ? `${progress}%` : ''}`.trimEnd()
+  )}  ${showLabel
+    ? `${progress}%`
+    : ''}`.trimEnd()
 }

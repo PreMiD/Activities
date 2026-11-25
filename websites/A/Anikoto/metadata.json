@@ -18,7 +18,7 @@
     "anikototv.se"
   ],
   "regExp": "^https?[:][/][/](www[.])?(anikototv[.]to|anikoto[.]cz|anikoto[.]me|anikoto[.]net|anikototv[.]se)[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anikoto/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anikoto/assets/thumbnail.png",
   "color": "#26A3D6",

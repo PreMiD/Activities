@@ -44,7 +44,9 @@ function parseTrackTitle(title: string | undefined, uploader?: string): {
     previousTitle = normalizedTitle
     normalizedTitle = normalizedTitle?.replace(/\([^()]*\)/gu, (credit) => {
       const text = credit.slice(1, -1).trim()
-      return versionLabel.test(text) || featureLabel.test(text) || /^w\/o\b/iu.test(text) ? credit : ''
+      return versionLabel.test(text) || featureLabel.test(text) || /^w\/o\b/iu.test(text)
+        ? credit
+        : ''
     }).replace(/\s{2,}/gu, ' ').trim()
   } while (normalizedTitle !== previousTitle)
   const separatorIndex = normalizedTitle?.search(/\s[-\u2010-\u2015\u2212]\s/u) ?? -1
@@ -52,8 +54,12 @@ function parseTrackTitle(title: string | undefined, uploader?: string): {
   if (!normalizedTitle)
     return { title }
 
-  let artist = separatorIndex > 0 ? normalizedTitle.slice(0, separatorIndex).trim() : undefined
-  let song = separatorIndex > 0 ? normalizedTitle.slice(separatorIndex + 3).trim() : normalizedTitle
+  let artist = separatorIndex > 0
+    ? normalizedTitle.slice(0, separatorIndex).trim()
+    : undefined
+  let song = separatorIndex > 0
+    ? normalizedTitle.slice(separatorIndex + 3).trim()
+    : normalizedTitle
   if (!song)
     return { title }
 
@@ -71,12 +77,19 @@ function parseTrackTitle(title: string | undefined, uploader?: string): {
   if (producer) {
     const tail = song.slice(producer.index + producer[0].length)
     const nextFeature = /\s[([]?(?:(?:ft|feat|featuring)\.?\s+|(?:w\/(?!o\b)|with\/)\s*|with\.\s+)/iu.exec(tail)
-    const credit = nextFeature ? tail.slice(0, nextFeature.index) : tail
+    const credit = nextFeature
+      ? tail.slice(0, nextFeature.index)
+      : tail
     const versions = (credit.match(/\([^()]*\)|\[[^[\]]*\]/gu) ?? [])
       .filter(label => versionLabel.test(label))
     if (credit.trim()) {
-      song = [song.slice(0, producer.index).trim(), ...versions].join(' ')
-        + (nextFeature ? tail.slice(nextFeature.index) : '')
+      song = [
+        song.slice(0, producer.index).trim(),
+        ...versions,
+      ].join(' ')
+      + (nextFeature
+        ? tail.slice(nextFeature.index)
+        : '')
     }
   }
 
@@ -84,7 +97,11 @@ function parseTrackTitle(title: string | undefined, uploader?: string): {
   if (feature) {
     const credit = song.slice(feature.index + feature[0].length).trim()
     const opener = feature[0].trimStart()[0]
-    const closer = opener === '(' ? ')' : opener === '[' ? ']' : ''
+    const closer = opener === '('
+      ? ')'
+      : opener === '['
+        ? ']'
+        : ''
     let featureText = credit
     let suffix = ''
     if (closer) {
@@ -117,15 +134,21 @@ function parseTrackTitle(title: string | undefined, uploader?: string): {
     const brackets: string[] = []
     let balanced = true
     for (const character of featuredArtist) {
-      if (character === '(' || character === '[')
-        brackets.push(character === '(' ? ')' : ']')
-      else if ((character === ')' || character === ']') && brackets.pop() !== character)
+      if (character === '(' || character === '[') {
+        brackets.push(character === '('
+          ? ')'
+          : ']')
+      }
+      else if ((character === ')' || character === ']') && brackets.pop() !== character) {
         balanced = false
+      }
     }
     if (baseTitle && featuredArtist && mainArtist
       && balanced && brackets.length === 0) {
       song = [baseTitle, ...versions, suffix].filter(Boolean).join(' ')
-      artist = `${mainArtist}${mainArtist.includes(' feat. ') ? ', ' : ' feat. '}${featuredArtist}`
+      artist = `${mainArtist}${mainArtist.includes(' feat. ')
+        ? ', '
+        : ' feat. '}${featuredArtist}`
     }
   }
 
@@ -434,8 +457,12 @@ async function updateActivity() {
   }
   else if ((!playing || !showSong) && showBrowsing) {
     for (const [k, v] of Object.entries(statics)) {
-      if (path.match(k))
-        presenceData = { ...presenceData, ...v }
+      if (path.match(k)) {
+        presenceData = {
+          ...presenceData,
+          ...v,
+        }
+      }
     }
 
     if (path === '/') {

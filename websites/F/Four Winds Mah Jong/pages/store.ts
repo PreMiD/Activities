@@ -19,7 +19,9 @@ export default function handler(
     case 'product': {
       presenceData.details = 'Viewing a product'
       presenceData.state = title
-      presenceData.buttons = [{ label: 'View Product', url: href }]
+      presenceData.buttons = [
+        { label: 'View Product', url: href },
+      ]
       break
     }
     case 'product-category': {
@@ -54,7 +56,9 @@ export default function handler(
       else if (document.querySelector<HTMLSpanElement>('.posted-on')) {
         presenceData.details = 'Reading a post'
         presenceData.state = title
-        presenceData.buttons = [{ label: 'Read Post', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Post', url: href },
+        ]
       }
   }
 }

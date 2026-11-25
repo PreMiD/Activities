@@ -115,7 +115,11 @@ function getTimes(time: number): {
   }
 }
 
-const lessTen = (d: number) => (d < 10 ? '0' : '')
+function lessTen(d: number) {
+  return d < 10
+    ? '0'
+    : ''
+}
 
 function getTimestamp(time: number): string {
   const { sec, min, hrs } = getTimes(time)

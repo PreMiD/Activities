@@ -40,7 +40,9 @@ function secondsToHHMM(seconds: number): string {
 // this wrapper adds safety for raw DOM text and produces a fallback for invalid input.
 function formatDuration(raw: string): string {
   const seconds = timestampFromFormat(raw)
-  return Number.isNaN(seconds) || seconds <= 0 ? raw.trim() : secondsToHHMM(seconds)
+  return Number.isNaN(seconds) || seconds <= 0
+    ? raw.trim()
+    : secondsToHHMM(seconds)
 }
 
 // Custom function needed: PreMiD's Activity class provides no built-in mechanism
@@ -64,7 +66,9 @@ function sumProjectTimeToday(projectName: string, elapsedSeconds: number): strin
       totalSeconds += timestampFromFormat(value)
   }
 
-  return totalSeconds > 0 ? secondsToHHMM(totalSeconds) : null
+  return totalSeconds > 0
+    ? secondsToHHMM(totalSeconds)
+    : null
 }
 
 presence.on('UpdateData', async () => {
@@ -79,10 +83,14 @@ presence.on('UpdateData', async () => {
     ])
 
     const weeklyRaw = document.querySelector('approval-header .cl-h2')?.textContent?.trim()
-    const weeklyFormatted = weeklyRaw ? formatDuration(weeklyRaw) : null
+    const weeklyFormatted = weeklyRaw
+      ? formatDuration(weeklyRaw)
+      : null
 
     const dailyRaw = document.querySelector('[data-cy=\'entry-header-total-duration\']')?.textContent?.trim()
-    const dailyFormatted = dailyRaw ? formatDuration(dailyRaw) : null
+    const dailyFormatted = dailyRaw
+      ? formatDuration(dailyRaw)
+      : null
 
     const elapsed = document.querySelector('[stopwatch-seconds]')?.textContent?.trim()
 
@@ -91,12 +99,16 @@ presence.on('UpdateData', async () => {
       const projectName = document.querySelector('.cl-project-name span')?.textContent?.trim()
 
       const seconds = timestampFromFormat(elapsed)
-      const projectTimeToday = projectName ? sumProjectTimeToday(projectName, seconds) : null
+      const projectTimeToday = projectName
+        ? sumProjectTimeToday(projectName, seconds)
+        : null
 
       const startKey = `${taskDescription}|${projectName}`
       if (cachedStartKey !== startKey) {
         cachedStartKey = startKey
-        cachedStartTimestamp = seconds > 0 ? Math.floor(Date.now() / 1000) - seconds : undefined
+        cachedStartTimestamp = seconds > 0
+          ? Math.floor(Date.now() / 1000) - seconds
+          : undefined
       }
 
       const sharedTracking: PresenceData = {
@@ -111,8 +123,12 @@ presence.on('UpdateData', async () => {
       }
 
       const slideAState = [
-        showProject && projectName ? `📁 | ${projectName}` : null,
-        showProjectTime && projectTimeToday ? projectTimeToday : null,
+        showProject && projectName
+          ? `📁 | ${projectName}`
+          : null,
+        showProjectTime && projectTimeToday
+          ? projectTimeToday
+          : null,
       ].filter(Boolean).join('  •  ')
 
       const slideA: PresenceData = {
@@ -127,7 +143,9 @@ presence.on('UpdateData', async () => {
       if (hasTotals) {
         const slideBDetails = showDaily && dailyFormatted
           ? `📅 | ${dailyFormatted} tracked today`
-          : (showWeekly && weeklyFormatted ? `📊 | ${weeklyFormatted} tracked this week` : '📊 | Time Summary')
+          : (showWeekly && weeklyFormatted
+              ? `📊 | ${weeklyFormatted} tracked this week`
+              : '📊 | Time Summary')
         const slideBState = showDaily && showWeekly && weeklyFormatted
           ? `📊 | ${weeklyFormatted} tracked this week`
           : undefined
@@ -171,7 +189,9 @@ presence.on('UpdateData', async () => {
     }
     else if (path.startsWith('/reports')) {
       presenceData.details = '📊 | Reports'
-      presenceData.state = showDaily && dailyFormatted ? `⏱️ | ${dailyFormatted} tracked today` : '🔍 | Reviewing reports'
+      presenceData.state = showDaily && dailyFormatted
+        ? `⏱️ | ${dailyFormatted} tracked today`
+        : '🔍 | Reviewing reports'
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Reviewing reports'
     }
@@ -219,7 +239,9 @@ presence.on('UpdateData', async () => {
       if (hasIdleTotals) {
         const totalsSlideDetails = showDaily && dailyFormatted
           ? `📅 | ${dailyFormatted} today`
-          : (showWeekly && weeklyFormatted ? `📊 | ${weeklyFormatted} this week` : '📊 | Time Summary')
+          : (showWeekly && weeklyFormatted
+              ? `📊 | ${weeklyFormatted} this week`
+              : '📊 | Time Summary')
         const totalsSlideState = showWeekly && weeklyFormatted
           ? `📈 | ${weeklyFormatted} this week`
           : undefined

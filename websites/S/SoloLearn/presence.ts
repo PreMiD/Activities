@@ -71,8 +71,12 @@ presence.on('UpdateData', async () => {
 
   if (showBrowsing && host === 'www.sololearn.com') {
     for (const [k, v] of Object.entries(statics)) {
-      if (path.match(k))
-        presenceData = { ...presenceData, ...v }
+      if (path.match(k)) {
+        presenceData = {
+          ...presenceData,
+          ...v,
+        }
+      }
     }
 
     if (path === '/') {
@@ -119,7 +123,9 @@ presence.on('UpdateData', async () => {
 
       const course = getElement('.course .name')
       presenceData.state = getElement('.user .name')
-      presenceData.state += course ? ` (${stripCourse(course)})` : ''
+      presenceData.state += course
+        ? ` (${stripCourse(course)})`
+        : ''
     }
   }
 

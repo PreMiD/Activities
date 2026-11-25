@@ -67,7 +67,9 @@ presence.on('UpdateData', async () => {
           if (pathname.endsWith('.p')) {
             presenceData.details = 'Viewing a product'
             presenceData.state = document.querySelector('h1')
-            presenceData.buttons = [{ label: 'View Product', url: href }]
+            presenceData.buttons = [
+              { label: 'View Product', url: href },
+            ]
           }
           else if (pathList[2] === 'gift-ideas') {
             presenceData.details = 'Looking for gift ideas'

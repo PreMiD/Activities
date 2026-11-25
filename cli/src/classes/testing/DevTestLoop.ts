@@ -101,7 +101,9 @@ export class DevTestLoop {
       printSummary(results, this.deps.log)
     }
     catch (error) {
-      const message = error instanceof Error ? error.message : String(error)
+      const message = error instanceof Error
+        ? error.message
+        : String(error)
       this.deps.log(chalk.red(`✗ ${this.deps.service}: ${message}`))
     }
     finally {

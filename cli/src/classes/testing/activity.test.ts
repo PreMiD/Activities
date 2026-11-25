@@ -16,7 +16,11 @@ function createFakeRpc() {
     for (const listener of [...listeners])
       listener(event)
   }
-  return { rpc, emit, listenerCount: () => listeners.size }
+  return {
+    rpc,
+    emit,
+    listenerCount: () => listeners.size,
+  }
 }
 
 describe('createActivity', () => {
@@ -36,7 +40,11 @@ describe('createActivity', () => {
     const session = { tabId: 4 as number | undefined }
     const activity = createActivity(rpc, { session, signal: controller.signal })
 
-    emit({ tabId: 4, kind: 'setActivity', data: { details: 'Watching' } })
+    emit({
+      tabId: 4,
+      kind: 'setActivity',
+      data: { details: 'Watching' },
+    })
 
     await expect(activity.next()).resolves.toEqual({ details: 'Watching' })
     expect(activity.last()).toEqual({ details: 'Watching' })
@@ -49,7 +57,11 @@ describe('createActivity', () => {
     const activity = createActivity(rpc, { session, signal: controller.signal })
 
     emit({ tabId: 4, kind: 'waitingForUser', url: 'https://consent.example.com/' })
-    emit({ tabId: 4, kind: 'setActivity', data: { details: 'Watching' } })
+    emit({
+      tabId: 4,
+      kind: 'setActivity',
+      data: { details: 'Watching' },
+    })
 
     await expect(activity.next()).resolves.toEqual({ details: 'Watching' })
     activity.dispose()
@@ -95,7 +107,11 @@ describe('createActivity', () => {
     const session = { tabId: 4 as number | undefined }
     const activity = createActivity(rpc, { session, signal: controller.signal })
 
-    emit({ tabId: 99, kind: 'setActivity', data: { details: 'Other tab' } })
+    emit({
+      tabId: 99,
+      kind: 'setActivity',
+      data: { details: 'Other tab' },
+    })
 
     const pending = expect(activity.next({ timeout: 1000 })).rejects.toThrow('No activity update within 1000ms')
     await vi.advanceTimersByTimeAsync(1000)
@@ -108,9 +124,17 @@ describe('createActivity', () => {
     const session = { tabId: 4 as number | undefined }
     const activity = createActivity(rpc, { session, signal: controller.signal })
 
-    emit({ tabId: 4, kind: 'setActivity', data: { details: 'Old' } })
+    emit({
+      tabId: 4,
+      kind: 'setActivity',
+      data: { details: 'Old' },
+    })
     activity.clear()
-    emit({ tabId: 4, kind: 'setActivity', data: { details: 'New' } })
+    emit({
+      tabId: 4,
+      kind: 'setActivity',
+      data: { details: 'New' },
+    })
 
     await expect(activity.next()).resolves.toEqual({ details: 'New' })
     activity.dispose()
@@ -132,7 +156,11 @@ describe('createActivity', () => {
     const session = { tabId: 4 as number | undefined }
     const activity = createActivity(rpc, { session, signal: controller.signal })
 
-    emit({ tabId: 4, kind: 'setActivity', data: { details: 'Stale' } })
+    emit({
+      tabId: 4,
+      kind: 'setActivity',
+      data: { details: 'Stale' },
+    })
 
     await expect(activity.expectNone()).rejects.toThrow('Expected no activity update, but got setActivity')
     activity.dispose()
@@ -167,7 +195,11 @@ describe('createActivity', () => {
     const session = { tabId: undefined as number | undefined }
     const activity = createActivity(rpc, { session, signal: controller.signal })
 
-    emit({ tabId: 4, kind: 'setActivity', data: { details: 'Early' } })
+    emit({
+      tabId: 4,
+      kind: 'setActivity',
+      data: { details: 'Early' },
+    })
 
     const pending = expect(activity.next({ timeout: 500 })).rejects.toThrow('No activity update within 500ms')
     await vi.advanceTimersByTimeAsync(500)

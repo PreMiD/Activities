@@ -20,7 +20,7 @@
     "www.zen-study.jp"
   ],
   "regExp": "^https?[:][/][/](www[.])?(zen-study[.]jp|nnn[.]ed[.]nico)[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZEN%20Study/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZEN%20Study/assets/thumbnail.png",
   "color": "#5E49E0",

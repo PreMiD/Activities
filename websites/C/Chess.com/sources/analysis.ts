@@ -28,7 +28,9 @@ const analysisResolver: Resolver = {
     if (doc.location.pathname.includes('/review')) {
       const coachMsg = getText(['[data-cy="bot-speech-content-message"]', '.bot-speech-content-content-container'])
       if (coachMsg) {
-        return coachMsg.length > 128 ? `${coachMsg.substring(0, 125)}...` : coachMsg
+        return coachMsg.length > 128
+          ? `${coachMsg.substring(0, 125)}...`
+          : coachMsg
       }
     }
 
@@ -48,7 +50,9 @@ const analysisResolver: Resolver = {
     if (!href)
       return undefined
     const cleanUrl = href.split('?')[0] || href
-    return [{ label: t.button_view_game, url: cleanUrl }] as ButtonTuple
+    return [
+      { label: t.button_view_game, url: cleanUrl },
+    ] as ButtonTuple
   },
 
   getLargeImageKey: () => ActivityAssets.Logo,

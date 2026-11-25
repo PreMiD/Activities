@@ -58,7 +58,9 @@ presence.on('UpdateData', async () => {
     }
     presenceData.largeImageKey = await uploadImage(
       `https://${subdomain}.sosac.tv/images/75x109/${
-        subdomain === 'movies' ? 'movie' : 'serial'
+        subdomain === 'movies'
+          ? 'movie'
+          : 'serial'
       }-${
         document.querySelector('.track')?.getAttribute('onclick')?.match(/\d+/)?.[0]
       }.jpg`,

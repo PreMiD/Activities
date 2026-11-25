@@ -17,7 +17,7 @@
   },
   "url": "cloud.boosteroid.com",
   "regExp": "^https?[:][/][/]cloud[.]boosteroid[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Boosteroid/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Boosteroid/assets/thumbnail.png",
   "color": "#8c3dff",

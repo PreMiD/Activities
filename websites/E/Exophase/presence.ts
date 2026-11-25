@@ -60,16 +60,24 @@ presence.on('UpdateData', async () => {
     const usernameFromPage = document.querySelector('.column-username h2')?.textContent?.trim()
     const username = usernameFromPage || usernameFromUrl
     const platform = getProfilePlatform(pathname)
-    presenceData.details = platform ? `Viewing ${platform} Profile` : 'Viewing Profile'
-    presenceData.state = username ? decodeURIComponent(username) : 'User Profile'
-    presenceData.buttons = [{ label: strings.buttonViewProfile, url: document.location.href }]
+    presenceData.details = platform
+      ? `Viewing ${platform} Profile`
+      : 'Viewing Profile'
+    presenceData.state = username
+      ? decodeURIComponent(username)
+      : 'User Profile'
+    presenceData.buttons = [
+      { label: strings.buttonViewProfile, url: document.location.href },
+    ]
   }
   // Game page
   else if (pathname.includes('/game/')) {
     const gameTitle = document.querySelector('h2.me-2 a')?.textContent?.trim()
     presenceData.details = 'Viewing Game'
     presenceData.state = gameTitle || 'Game Page'
-    presenceData.buttons = [{ label: strings.buttonViewGame, url: document.location.href }]
+    presenceData.buttons = [
+      { label: strings.buttonViewGame, url: document.location.href },
+    ]
   }
   // Specific achievement/trophy
   else if (pathname.includes('/achievement/') || pathname.includes('/trophy/')) {
@@ -77,7 +85,12 @@ presence.on('UpdateData', async () => {
     const isTrophy = pathname.includes('/trophy/')
     presenceData.details = isTrophy ? 'Viewing Trophy' : 'Viewing Achievement'
     presenceData.state = achievementTitle || (isTrophy ? 'Trophy Details' : 'Achievement Details')
-    presenceData.buttons = [{ label: isTrophy ? 'View Trophy' : 'View Achievement', url: document.location.href }]
+    presenceData.buttons = [
+      {
+        label: isTrophy ? 'View Trophy' : 'View Achievement',
+        url: document.location.href,
+      },
+    ]
   }
   // Leaderboards
   else if (pathname.includes('/leaderboard')) {
@@ -94,7 +107,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/forums') || pathname.includes('/threads')) {
     const threadTitle = document.querySelector('h1, .thread-title')
     presenceData.details = 'In Forums'
-    presenceData.state = threadTitle ? threadTitle.textContent || 'Reading Forum' : 'Browsing Forums'
+    presenceData.state = threadTitle
+      ? threadTitle.textContent || 'Reading Forum'
+      : 'Browsing Forums'
   }
   // Account/Settings
   else if (pathname.includes('/account')) {

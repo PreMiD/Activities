@@ -7,7 +7,9 @@ const presence = new Presence({
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/J/JUKE/assets/logo.png',
-    buttons: [{ label: 'Radio luisteren', url: document.location.href }],
+    buttons: [
+      { label: 'Radio luisteren', url: document.location.href },
+    ],
   }
 
   if (document.querySelector('span[class*=eC-title]')) {

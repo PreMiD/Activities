@@ -84,7 +84,18 @@ presence.on('UpdateData', async () => {
     video = null
 
   const path = document.location.pathname
-  const adminPaths = ['/SeriEkle', '/Bolac', '/TopluBolac', '/BolumSil', '/FanEkle', '/FanSil', '/VideoEkle', '/Toplu', '/HyperVideo', '/yetkiliislemleri']
+  const adminPaths = [
+    '/SeriEkle',
+    '/Bolac',
+    '/TopluBolac',
+    '/BolumSil',
+    '/FanEkle',
+    '/FanSil',
+    '/VideoEkle',
+    '/Toplu',
+    '/HyperVideo',
+    '/yetkiliislemleri',
+  ]
 
   if (path && adminPaths.some(adminPath => path.includes(adminPath))) {
     tags = path.includes('/yetkiliislemleri')

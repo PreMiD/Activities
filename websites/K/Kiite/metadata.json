@@ -19,7 +19,7 @@
     "mobile.kiite.jp"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kiite[.]jp[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kiite/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kiite/assets/thumbnail.png",
   "color": "#FF33AA",

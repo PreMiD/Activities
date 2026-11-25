@@ -55,7 +55,9 @@ export async function newActivity(activity?: string) {
   v.addSchema({ definitions: schema.definitions })
 
   const discordUser = await getDiscordUser()
-  let author: { id: string, name: string } | undefined = discordUser ? { id: discordUser.id, name: discordUser.username! } : undefined
+  let author: { id: string, name: string } | undefined = discordUser
+    ? { id: discordUser.id, name: discordUser.username! }
+    : undefined
 
   await input({
     message: 'Discord ID of the author',
@@ -64,7 +66,9 @@ export async function newActivity(activity?: string) {
       if (!input)
         return 'Author cannot be empty!'
 
-      const user = discordUser?.id === input ? discordUser : await getDiscordUserById(input)
+      const user = discordUser?.id === input
+        ? discordUser
+        : await getDiscordUserById(input)
 
       if (!user)
         return 'User not found.'

@@ -57,7 +57,9 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Studying'
       if (showButton) {
-        presenceData.buttons = [{ label: 'View Batch', url: href }]
+        presenceData.buttons = [
+          { label: 'View Batch', url: href },
+        ]
       }
     }
     else if (href.includes('subject-topics')) {
@@ -118,7 +120,9 @@ presence.on('UpdateData', async () => {
 
       presenceData.state = `${deta.topic}`
       if (showButton) {
-        presenceData.buttons = [{ label: 'Watch Lecture', url: href }]
+        presenceData.buttons = [
+          { label: 'Watch Lecture', url: href },
+        ]
       }
     }
     else {

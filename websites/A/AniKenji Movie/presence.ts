@@ -114,7 +114,9 @@ function cleanDiscordString(text: string | null | undefined, fallback: string): 
   const trimmed = text.trim()
   if (trimmed.length < 2)
     return fallback
-  return trimmed.length > 128 ? `${trimmed.slice(0, 125)}...` : trimmed
+  return trimmed.length > 128
+    ? `${trimmed.slice(0, 125)}...`
+    : trimmed
 }
 
 function parseWatchTitle(rawTitle: string): { movie: string, episode: string } | null {
@@ -423,7 +425,9 @@ async function updatePresence(): Promise<void> {
     else if (isWatchPage) {
       const { movieName, episodeStr, originName } = extractWatchInfo()
       const displayMovie = cleanDiscordString(movieName, 'Đang xem phim')
-      const displayEpisode = episodeStr ? `Tập ${episodeStr}` : 'Đang phát'
+      const displayEpisode = episodeStr
+        ? `Tập ${episodeStr}`
+        : 'Đang phát'
 
       let stateText = displayEpisode
       if (originName && stateText.length + originName.length + 3 <= 128) {
@@ -452,7 +456,9 @@ async function updatePresence(): Promise<void> {
       }
       else if (iFrameVideo && !Number.isNaN(duration) && duration > 0) {
         presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-        presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
+        presenceData.smallImageText = paused
+          ? (await strings).pause
+          : (await strings).play
 
         if (showTimestamps && !paused && !Number.isNaN(currentTime)) {
           const [startTimestamp, endTimestamp] = getTimestamps(
@@ -505,7 +511,9 @@ async function updatePresence(): Promise<void> {
       }
       else if (iFrameVideo && !Number.isNaN(duration) && duration > 0) {
         presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-        presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
+        presenceData.smallImageText = paused
+          ? (await strings).pause
+          : (await strings).play
 
         if (showTimestamps && !paused && !Number.isNaN(currentTime)) {
           const [startTimestamp, endTimestamp] = getTimestamps(

@@ -96,17 +96,31 @@ function isNodeServer(name: string): boolean {
 }
 
 function truncate(text: string, max: number): string {
-  return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text
+  return text.length > max
+    ? `${text.slice(0, max - 1).trimEnd()}…`
+    : text
 }
 
 function isBotPath(subPath: string): boolean {
-  return ['/knowledge', '/blacklist', '/channels', '/profile', '/access', '/memory'].some(
+  return [
+    '/knowledge',
+    '/blacklist',
+    '/channels',
+    '/profile',
+    '/access',
+    '/memory',
+  ].some(
     p => subPath.startsWith(p),
   )
 }
 
 function isNodeManagerPath(subPath: string): boolean {
-  return ['/firewall', '/system-logs', '/node-users', '/api-control'].some(
+  return [
+    '/firewall',
+    '/system-logs',
+    '/node-users',
+    '/api-control',
+  ].some(
     p => subPath.startsWith(p),
   )
 }
@@ -179,7 +193,9 @@ function getServerAction(subPath: string, strings: any): string {
 function getNodeAction(subPath: string, strings: any): string {
   if (subPath === '/' || subPath === '') {
     const count = getNodeServerCount()
-    return count > 0 ? `${strings.managingServers} (${count})` : strings.managingNode
+    return count > 0
+      ? `${strings.managingServers} (${count})`
+      : strings.managingNode
   }
   if (subPath.startsWith('/firewall'))
     return strings.configuringFirewall
@@ -268,7 +284,9 @@ presence.on('UpdateData', async () => {
     const strings = await getStrings()
     const presenceData: PresenceData = {
       largeImageKey: ActivityAssets.Logo,
-      buttons: [{ label: strings.buttonOpenPanel, url: 'https://pv-q.de/auth/login' }],
+      buttons: [
+        { label: strings.buttonOpenPanel, url: 'https://pv-q.de/auth/login' },
+      ],
     }
 
     const [showServerName, showStatus, showElapsedTime, showAccountName, showResources] = await Promise.all([
@@ -303,8 +321,12 @@ presence.on('UpdateData', async () => {
         presenceData.startTimestamp = startTimestamp
       }
     }
-    const accountName = showAccountName ? getAccountName() : null
-    const usernamePrefix = accountName ? `[${accountName}] ` : ''
+    const accountName = showAccountName
+      ? getAccountName()
+      : null
+    const usernamePrefix = accountName
+      ? `[${accountName}] `
+      : ''
 
     const { pathname } = document.location
 
@@ -342,7 +364,9 @@ presence.on('UpdateData', async () => {
 
         presenceData.details = details
 
-        const resources = showResources ? getResources() : null
+        const resources = showResources
+          ? getResources()
+          : null
         if (resources) {
           presenceData.state = `${getServerAction(subPath, strings)} (${resources})`
         }

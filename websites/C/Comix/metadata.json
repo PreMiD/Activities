@@ -17,7 +17,7 @@
   },
   "url": "comix.to",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*comix[.]to[/]",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Comix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Comix/assets/logo.png",
   "color": "#000000",

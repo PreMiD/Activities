@@ -47,7 +47,9 @@ presence.on('UpdateData', async () => {
   const showSong = await presence.getSetting<boolean>('song')
   const showTimestamps = await presence.getSetting<boolean>('timestamp')
   const song = document.querySelector<HTMLVideoElement>('#audioctrl')
-  const songPlaying = song ? !song.paused : false
+  const songPlaying = song
+    ? !song.paused
+    : false
 
   let presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/Shazam/assets/logo.png',
@@ -60,8 +62,12 @@ presence.on('UpdateData', async () => {
   }
 
   for (const [k, v] of Object.entries(statics)) {
-    if (path.match(k))
-      presenceData = { ...presenceData, ...v }
+    if (path.match(k)) {
+      presenceData = {
+        ...presenceData,
+        ...v,
+      }
+    }
   }
 
   if (showSong && songPlaying && song) {

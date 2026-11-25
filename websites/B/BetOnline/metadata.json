@@ -11,7 +11,7 @@
   },
   "url": "betonline.ag",
   "regExp": "^https?[:][/][/](www[.])?betonline[.]ag[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BetOnline/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BetOnline/assets/thumbnail.png",
   "color": "#c0392b",

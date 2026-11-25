@@ -21,7 +21,9 @@ export async function renderMatchupIcon(container: HTMLElement) {
     return cache.get(container)
   }
   const [mainImage, targetImage] = (await Promise.all(
-    [...container.querySelectorAll('img')].map((node) => {
+    [
+      ...container.querySelectorAll('img'),
+    ].map((node) => {
       return new Promise((res) => {
         const image = new Image()
         image.onload = () => res(image)

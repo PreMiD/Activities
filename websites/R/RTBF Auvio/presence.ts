@@ -86,12 +86,16 @@ presence.on('UpdateData', async () => {
           NOTE: Direct radios are in the same place as podcasts, and play in the same audio player.
           The only difference is in the duration field, which is equal to “direct”, or the back to direct button if in deferred mode. */
 
-        const channelName = (firstLine.includes(' - ') ? firstLine.split(' - ')[0] : firstLine.match(/^\w+/)?.[0])!
+        const channelName = (firstLine.includes(' - ')
+          ? firstLine.split(' - ')[0]
+          : firstLine.match(/^\w+/)?.[0])!
         const coverArt = decodeURIComponent(
           document.querySelector('[class*=PlayerUIAudio_logoContainer]  > span > img')?.getAttribute('src')?.replace('/_next/image?url=', '').split('&w')[0] ?? '',
         )
 
-        presenceData.name = usePrivacyMode || !usePresenceName ? strings.toARadio : getChannel(channelName).channel
+        presenceData.name = usePrivacyMode || !usePresenceName
+          ? strings.toARadio
+          : getChannel(channelName).channel
         presenceData.type = ActivityType.Listening
 
         presenceData.smallImageKey = usePrivacyMode
@@ -114,7 +118,9 @@ presence.on('UpdateData', async () => {
           const showData = structuredClone(presenceData) // Deep copy
 
           showData.details = firstLine.replace(/\([^()]+\)(?!.*\([^()]+\))/, '').trim() || firstLine
-          showData.state = (firstLine.includes(' - ') ? firstLine.split(' - ')[1]!.match(/\(([^()]+)\)(?!.*\([^()]+\))/)?.pop() : '') || ''
+          showData.state = (firstLine.includes(' - ')
+            ? firstLine.split(' - ')[1]!.match(/\(([^()]+)\)(?!.*\([^()]+\))/)?.pop()
+            : '') || ''
 
           showData.largeImageKey = coverArt.includes(
             'https://ds.static.rtbf.be/default/',
@@ -145,11 +151,17 @@ presence.on('UpdateData', async () => {
           }
           else {
             // If it is not, it's probably an audio program
-            songData.details = secondLine.length > 30 ? secondLine.slice(0, secondLine.slice(0, 30).lastIndexOf(' ')) : secondLine
-            songData.state = secondLine.length > 30 ? secondLine.slice(songData.details.length).trim() : ''
+            songData.details = secondLine.length > 30
+              ? secondLine.slice(0, secondLine.slice(0, 30).lastIndexOf(' '))
+              : secondLine
+            songData.state = secondLine.length > 30
+              ? secondLine.slice(songData.details.length).trim()
+              : ''
           }
 
-          songData.largeImageKey = firstLine.includes(' - ') ? getChannel(channelName).logo : await getThumbnail(coverArt, cropPreset.squared, getChannel(channelName).color)
+          songData.largeImageKey = firstLine.includes(' - ')
+            ? getChannel(channelName).logo
+            : await getThumbnail(coverArt, cropPreset.squared, getChannel(channelName).color)
           songData.largeImageText += ' - Radio'
 
           slideshow.addSlide('SONG', songData, 5000)
@@ -160,14 +172,18 @@ presence.on('UpdateData', async () => {
           EXAMPLE: https://auvio.rtbf.be/media/la-semaine-des-5-heures-la-semaine-des-5-heures-3318620
           Podcasts can be original programs or past broadcasts. */
 
-        presenceData.name = usePresenceName && !usePrivacyMode ? firstLine : strings.toAPodcast
+        presenceData.name = usePresenceName && !usePrivacyMode
+          ? firstLine
+          : strings.toAPodcast
         presenceData.type = ActivityType.Listening
 
         presenceData.details = !usePrivacyMode
           ? firstLine
           : strings.listeningTo.replace('{0}', ' ').replace('{1}', strings.aPodcast)
 
-        presenceData.state = !usePrivacyMode ? secondLine : ''
+        presenceData.state = !usePrivacyMode
+          ? secondLine
+          : ''
 
         presenceData.smallImageKey = usePrivacyMode
           ? ActivityAssets.Privacy
@@ -229,7 +245,9 @@ presence.on('UpdateData', async () => {
       'langues_sous_titres',
       'parametres_lecture',
     ].includes(pathParts[1]!): {
-      presenceData.details = usePrivacyMode ? strings.browsing : document.querySelector('h1[class*=UserGateway_title]')!.textContent
+      presenceData.details = usePrivacyMode
+        ? strings.browsing
+        : document.querySelector('h1[class*=UserGateway_title]')!.textContent
       presenceData.state = usePrivacyMode ? strings.viewAPage : strings.viewAccount
 
       const name = document.querySelector('[class*=HeaderUser_text]')?.textContent ?? ''
@@ -350,15 +368,23 @@ presence.on('UpdateData', async () => {
             const data = JSON.parse(
               document.querySelectorAll('script[type=\'application/ld+json\']')[i]?.textContent ?? '{}',
             )
-            if (['Movie', 'Episode', 'BroadcastEvent', 'VideoObject'].includes(data['@type']))
+            if ([
+              'Movie',
+              'Episode',
+              'BroadcastEvent',
+              'VideoObject',
+            ].includes(data['@type'])) {
               mediaData = data
+            }
           }
 
           mediaType = pathParts[1]
 
           subtitle = document.querySelector('[class*=DetailsTitle_subtitle]')?.textContent || ''
           title = document.querySelector('div[class*=DetailsTitle_title] > h1')?.textContent?.replace(subtitle, '') ?? 'Auvio'
-          description = mediaData?.description && mediaData.description.length > 2 ? limitText(mediaData.description, 128) : 'Auvio'
+          description = mediaData?.description && mediaData.description.length > 2
+            ? limitText(mediaData.description, 128)
+            : 'Auvio'
           image = mediaData?.thumbnailUrl || ActivityAssets.Logo
           channel = document.querySelectorAll('div[class*=DetailsTitle_channelCategory] > div')[0]?.textContent ?? ''
           duration = formatDuration(mediaData?.duration ?? 0)
@@ -488,9 +514,13 @@ presence.on('UpdateData', async () => {
           if (usePresenceName)
             presenceData.name = title
 
-          presenceData.details = usePresenceName ? episodeName ?? subtitle : title
+          presenceData.details = usePresenceName
+            ? episodeName ?? subtitle
+            : title
 
-          presenceData.largeImageText = episodeNumber && seasonNumber ? `Season ${seasonNumber}, Episode ${episodeNumber}` : description
+          presenceData.largeImageText = episodeNumber && seasonNumber
+            ? `Season ${seasonNumber}, Episode ${episodeNumber}`
+            : description
           if (usePoster) {
             presenceData.largeImageKey = await getThumbnail(
               image,
@@ -503,7 +533,9 @@ presence.on('UpdateData', async () => {
           }
 
           // LIVE MEDIA PLAYER
-          const liveDelay = video ? (Math.abs(Math.floor(Date.now() / 1000 - video.currentTime))) : 0
+          const liveDelay = video
+            ? (Math.abs(Math.floor(Date.now() / 1000 - video.currentTime)))
+            : 0
           if (mediaType === 'LIVE'
             || (liveDelay < 3600) // Sometimes lives don't follow established codes
           ) {
@@ -606,7 +638,9 @@ presence.on('UpdateData', async () => {
           // SLIDE: Subtitle
           if (subtitle) {
             const subtitleData = structuredClone(presenceData)
-            subtitleData.state = usePresenceName ? description : episodeName ?? subtitle
+            subtitleData.state = usePresenceName
+              ? description
+              : episodeName ?? subtitle
             slideshow.addSlide('01', subtitleData, 5000)
           }
 
@@ -658,7 +692,9 @@ presence.on('UpdateData', async () => {
           ? document.querySelector('h1')!.textContent!
           : document.querySelector('nav[aria-label="Fil d\'ariane"] > ul > li:nth-last-child(1) > span')!.textContent! // Last of breadcrumb list
 
-        presenceData.details = pathParts[1] === 'podcasts' ? `${categoryTitle} & Radios` : categoryTitle
+        presenceData.details = pathParts[1] === 'podcasts'
+          ? `${categoryTitle} & Radios`
+          : categoryTitle
 
         presenceData.state = strings.viewCategory.replace(':', '')
 
@@ -714,7 +750,9 @@ presence.on('UpdateData', async () => {
                 getColor(categoryTitle),
               )
               if (mediaTitle !== index.toString()) {
-                const sample = strings.on.replace('{1}', pathParts[1]!.includes('chaine') ? categoryTitle : 'Auvio')
+                const sample = strings.on.replace('{1}', pathParts[1]!.includes('chaine')
+                  ? categoryTitle
+                  : 'Auvio')
                 sampleData.largeImageText = sampleData.state = sample.replace('{0}', limitText(mediaTitle, 128 - sample.length))
               }
               slideshow.addSlide(mediaTitle, sampleData, 2500)
