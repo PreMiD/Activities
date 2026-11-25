@@ -209,14 +209,7 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = now
 
     if (showSongArt) {
-      switch (Number(songDisplayFormat)) {
-        case 0:
-          presenceData.largeImageKey = gameBoxArt
-          break
-        case 1:
-          presenceData.largeImageKey = playlistArt
-          break
-      }
+      presenceData.largeImageKey = playlistArt
     }
   }
   else if (pathname.includes('/user-playlist')) {
