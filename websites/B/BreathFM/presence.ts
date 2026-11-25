@@ -219,11 +219,17 @@ presence.on('UpdateData', async () => {
   const playback = await getPlayback()
 
   if (!playback) {
-    presence.setActivity(getPageData(privacy))
+    const pageData = getPageData(privacy)
+    if (!showTimestamps)
+      delete pageData.startTimestamp
+    presence.setActivity(pageData)
     return
   }
 
-  const { station, times, trackId } = playback
+  const { station, times } = playback
+  const trackId = privacy
+    ? undefined
+    : playback.trackId
   const listeners = showListeners
     ? playback.listeners
     : undefined
@@ -231,10 +237,18 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
     name: station,
-    statusDisplayType: StatusDisplayType.Details,
-    details: playback.title,
-    state: playback.artist || strings.listeningMusic,
-    largeImageKey: playback.cover ?? ActivityAssets.Logo,
+    statusDisplayType: privacy
+      ? StatusDisplayType.Name
+      : StatusDisplayType.Details,
+    details: privacy
+      ? strings.listeningMusic
+      : playback.title,
+    state: privacy
+      ? undefined
+      : playback.artist || strings.listeningMusic,
+    largeImageKey: privacy
+      ? ActivityAssets.Logo
+      : playback.cover ?? ActivityAssets.Logo,
     largeImageText: listeners !== undefined
       ? `${station} • ${listeners} 🎧`
       : station,
@@ -249,14 +263,7 @@ presence.on('UpdateData', async () => {
   const stationUrl = playback.stationId
     ? `${location.origin}/?station=${encodeURIComponent(playback.stationId)}`
     : `${location.origin}/`
-  presenceData.stateUrl = stationUrl
-  presenceData.smallImageUrl = stationUrl
-
-  if (trackId) {
-    const trackUrl = `${location.origin}/track/${trackId}`
-    presenceData.largeImageUrl = trackUrl
-    presenceData.detailsUrl = trackUrl
-  }
+  presenceData.largeImageUrl = stationUrl
 
   if (showTimestamps) {
     if (times)
