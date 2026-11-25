@@ -21,7 +21,7 @@
     "docs.modrinth.com"
   ],
   "regExp": "^https?[:][/][/](docs[.])?modrinth[.]com[/]",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Modrinth/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Modrinth/assets/thumbnail.png",
   "color": "#1bd96a",
