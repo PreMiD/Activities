@@ -12,7 +12,7 @@
   },
   "url": "animesfhd.net",
   "regExp": "^https?[:][/][/](www[.])?animesfhd[.]net[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimesFHD/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimesFHD/assets/thumbnail.png",
   "color": "#a855f7",
@@ -42,6 +42,12 @@
       "id": "showSearch",
       "title": "Show Search Terms",
       "icon": "fad fa-search",
+      "value": true
+    },
+    {
+      "id": "showAnimeName",
+      "title": "Show Anime Name as Activity Name",
+      "icon": "fad fa-tag",
       "value": true
     },
     {
