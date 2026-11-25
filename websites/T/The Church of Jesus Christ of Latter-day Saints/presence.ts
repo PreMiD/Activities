@@ -90,8 +90,9 @@ function rememberLibraryCollection(pathname: string, collection: LibraryCollecti
 function getCachedLibraryCollection(pathname: string) {
   const collection = libraryCollections.get(pathname)
   if (collection || !(pathname.startsWith('/media/music/')
-    || pathname.startsWith('/media/collection/') || pathname.startsWith('/media/video/')))
+    || pathname.startsWith('/media/collection/') || pathname.startsWith('/media/video/'))) {
     return collection
+  }
 
   try {
     const stored = sessionStorage.getItem(`premid:church:${pathname.startsWith('/media/music/') ? 'music' : 'broadcasts'}:${pathname}`)
@@ -147,10 +148,8 @@ function cacheLibraryCollections(root = '/study') {
 
     const srcset = image.getAttribute('srcset') || image.srcset || ''
     const src = image.getAttribute('src') || image.src
-    const imageUrl = srcset.match(
-      /(?:^|,\s*)(\S+)\s+640w(?:,|$)/,
-    )?.[1]
-      // Music tiles advertise 0w descriptors; use their actual URL width.
+    // Music tiles advertise 0w descriptors; use their actual URL width.
+    const imageUrl = srcset.match(/(?:^|,\s*)(\S+)\s+640w(?:,|$)/)?.[1]
       || srcset.match(/(?:^|,\s*)(\S+\/400,\/0\/default)\s+\d+w(?:,|$)/)?.[1]
       || (root === '/media/music' ? src || image.currentSrc : image.currentSrc || src)
 
@@ -315,8 +314,9 @@ function cacheBroadcastCollections() {
 
     const url = new URL(href, document.location.href)
     if (url.origin !== document.location.origin
-      || !/^\/media\/(?:collection|video)\//.test(url.pathname))
+      || !/^\/media\/(?:collection|video)\//.test(url.pathname)) {
       continue
+    }
 
     const title = link.textContent?.trim().replace(/^\d+\s+Items?\s*/i, '')
     const image = link.querySelector('img')
@@ -353,8 +353,9 @@ function applyBroadcastActivity(presenceData: PresenceData, pathname: string) {
 
   const title = document.querySelector('[data-testid="CollectionPage-title"]')?.textContent?.trim()
     || collection?.title
-  presenceData.details = isLibrary ? 'Browsing the broadcast library...'
-    : title ? `Browsing ${title}...` : 'Browsing the broadcast library...'
+  presenceData.details = !isLibrary && title
+    ? `Browsing ${title}...`
+    : 'Browsing the broadcast library...'
   presenceData.largeImageKey = collection
     ? formatMusicBrowsingArtwork(collection.image)
     : getPageArtwork() || ActivityAssets.Logo
@@ -489,7 +490,10 @@ function applyVideoActivity(presenceData: PresenceData) {
     '.bmpui-ui-playbacktogglebutton[title]',
   )?.title
 
-  const title = playbackButtonTitle?.match(/^Play\/Pause\s+(.+)$/)?.[1]?.trim()
+  const playerTitle = playbackButtonTitle && /^Play\/Pause\s/.test(playbackButtonTitle)
+    ? playbackButtonTitle.slice('Play/Pause'.length).trim()
+    : undefined
+  const title = playerTitle
     || document.title.trim()
     || 'Video'
 
@@ -559,7 +563,9 @@ function applyMusicActivity(
     return false
 
   const recording = card?.querySelector<HTMLSelectElement>('select[aria-label="Select Recording Type"]')
-    ?.selectedOptions[0]?.textContent?.trim()
+    ?.selectedOptions[0]
+    ?.textContent
+    ?.trim()
   const album = document.querySelector('main h1')?.textContent?.trim()
   const imageUrl = getMusicArtwork(card)
 
@@ -749,10 +755,12 @@ presence.on('UpdateData', () => {
           && title
         ) {
           const author = article.querySelector('.author-name')
-            ?.textContent?.trim()
+            ?.textContent
+            ?.trim()
 
           const role = article.querySelector('.author-role')
-            ?.textContent?.trim()
+            ?.textContent
+            ?.trim()
 
           const image = document.querySelector<HTMLMetaElement>(
             'meta[property="og:image"]',
