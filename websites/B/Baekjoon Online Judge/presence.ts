@@ -43,7 +43,14 @@ const tierImage: Record<number, string> = {
 
 function getTierName(tierNumber: number): string {
   return `${
-    ['루비', '다이아몬드', '플래티넘', '골드', '실버', '브론즈'][
+    [
+      '루비',
+      '다이아몬드',
+      '플래티넘',
+      '골드',
+      '실버',
+      '브론즈',
+    ][
       6 - Math.ceil(tierNumber / 5)
     ]
   } ${5 - ((tierNumber - 1) % 5)}`
@@ -158,7 +165,9 @@ presence.on('UpdateData', async () => {
           const tier = Number(isTier.src.split('/').pop()!.replace('.svg', ''))
           presenceData.smallImageKey = tierImage[tier]
           presenceData.smallImageText
-            = tier !== 0 ? getTierName(tier) : 'Unrated'
+            = tier !== 0
+              ? getTierName(tier)
+              : 'Unrated'
         }
         else {
           presenceData.smallImageKey = Assets.Reading

@@ -47,7 +47,9 @@ async function getAnimeInformation(text: string) {
   const episodeNumber = document.querySelector('#number')?.textContent || ''
 
   const urlTitulo = document.querySelector('.anime_navigation')?.querySelector('nav')?.querySelector('a:nth-child(3)')?.getAttribute('href')
-  const bannerAnime = (urlTitulo ? await getBannerAnimer(urlTitulo) : null) || ActivityAssets.Logo
+  const bannerAnime = (urlTitulo
+    ? await getBannerAnimer(urlTitulo)
+    : null) || ActivityAssets.Logo
 
   animePageCache = {
     text,

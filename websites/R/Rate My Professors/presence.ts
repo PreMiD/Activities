@@ -106,7 +106,9 @@ presence.on('UpdateData', async () => {
     }
     case 'search': {
       presenceData.details = `Searching for a ${
-        pathList[1] === 'teachers' ? 'professor' : 'school'
+        pathList[1] === 'teachers'
+          ? 'professor'
+          : 'school'
       }`
       presenceData.state = document
         .querySelector('h1 > span > b')

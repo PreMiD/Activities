@@ -37,7 +37,9 @@ presence.on('UpdateData', async () => {
         case /^\d{0,4}$/.test(pathList[0] ?? '') && !!pathList[3]: {
           presenceData.details = 'Reading an article'
           presenceData.state = document.querySelector('h1')
-          presenceData.buttons = [{ label: 'Read Article', url: href }]
+          presenceData.buttons = [
+            { label: 'Read Article', url: href },
+          ]
           break
         }
         default: {
@@ -92,7 +94,9 @@ presence.on('UpdateData', async () => {
         case 'artists': {
           presenceData.details = 'Browing articles featuring artist'
           presenceData.state = document.querySelector('h1')
-          presenceData.buttons = [{ label: 'View Artist', url: href }]
+          presenceData.buttons = [
+            { label: 'View Artist', url: href },
+          ]
           break
         }
         case 'music': {
@@ -102,13 +106,17 @@ presence.on('UpdateData', async () => {
         case 'people': {
           presenceData.details = 'Browsing articles by author'
           presenceData.state = document.querySelector('h1')
-          presenceData.buttons = [{ label: 'View Author', url: href }]
+          presenceData.buttons = [
+            { label: 'View Author', url: href },
+          ]
           break
         }
         case 'programs': {
           presenceData.details = 'Viewing a program'
           presenceData.state = document.querySelector('h1')
-          presenceData.buttons = [{ label: 'View Program', url: href }]
+          presenceData.buttons = [
+            { label: 'View Program', url: href },
+          ]
           break
         }
         case 'podcasts-and-shows': {
@@ -123,7 +131,9 @@ presence.on('UpdateData', async () => {
           if (Number(pathList[2]) > 0) {
             presenceData.details = 'Reading an article'
             presenceData.state = document.querySelector('h1')
-            presenceData.buttons = [{ label: 'Read Article', url: href }]
+            presenceData.buttons = [
+              { label: 'Read Article', url: href },
+            ]
           }
           else {
             presenceData.details = 'Browsing articles by section'
@@ -150,7 +160,9 @@ presence.on('UpdateData', async () => {
           if (Number(pathList[0]) > 0) {
             presenceData.details = 'Reading an article'
             presenceData.state = document.querySelector('h1')
-            presenceData.buttons = [{ label: 'Read Article', url: href }]
+            presenceData.buttons = [
+              { label: 'Read Article', url: href },
+            ]
           }
           else {
             presenceData.details = 'Browsing...'

@@ -170,7 +170,9 @@ export class ActivityTester {
       )
     }
     catch (err) {
-      const message = err instanceof Error ? err.message : String(err)
+      const message = err instanceof Error
+        ? err.message
+        : String(err)
       if (err instanceof SkipError) {
         status = 'skipped'
       }

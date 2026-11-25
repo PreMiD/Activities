@@ -15,7 +15,7 @@
     "sakuramangas.org"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sakuramangas[.]org[/]",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sakura%20Mangas/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sakura%20Mangas/assets/thumbnail.png",
   "color": "#ea6db5",

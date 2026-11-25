@@ -80,7 +80,9 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('img.c-content-image')?.src
         ?? ActivityAssets.Logo
 
-      presenceData.buttons = [{ label: strings.buttonViewEpisode, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewEpisode, url: href },
+      ]
 
       const seriesName = document.querySelector('span.series')?.textContent
       const episode = document.querySelector('h2.title')?.textContent
@@ -98,7 +100,9 @@ presence.on('UpdateData', async () => {
         presenceData.details = season
           ? `${seriesName} - S${season.textContent?.split(' ')[1]} ${episode}`
           : seriesName
-        presenceData.state = season ? episode?.split(' - ')[1] : episode
+        presenceData.state = season
+          ? episode?.split(' - ')[1]
+          : episode
 
         if (paused) {
           delete presenceData.startTimestamp
@@ -112,7 +116,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector('div.series-title')?.textContent
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('img.c-content-image')?.src
         ?? ActivityAssets.Logo
-      presenceData.buttons = [{ label: strings.buttonViewSeries, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewSeries, url: href },
+      ]
       break
     case 'watchlist':
       presenceData.details = 'Viewing their watchlist'

@@ -40,13 +40,17 @@ export function applyTierList(
     for (const character of items) {
       const link = character.querySelector('a')
       const name = character.querySelector(
-        options.nameSource === 'emp-name' ? '.emp-name' : options.nameSource,
+        options.nameSource === 'emp-name'
+          ? '.emp-name'
+          : options.nameSource,
       )
       const image = character.querySelector<HTMLImageElement>('[data-main-image]')
       const data: PresenceData = {
         ...presenceData,
         smallImageKey: image,
-        smallImageText: `${character.closest('.custom-tier, .tier')?.querySelector('.tier-rating')?.textContent} - ${options.nameSource === 'image' ? image?.alt : name?.textContent}`,
+        smallImageText: `${character.closest('.custom-tier, .tier')?.querySelector('.tier-rating')?.textContent} - ${options.nameSource === 'image'
+          ? image?.alt
+          : name?.textContent}`,
       }
       if (options.hasLink) {
         addButton(data, {

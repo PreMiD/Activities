@@ -6,13 +6,17 @@ const merchantResolver: Resolver = {
 
   getState: (t: Translation) => {
     const parts = document.location.pathname.split('/codes-promo/')
-    const merchantSlug = parts[1] ? parts[1].split('/')[0] : t.unknown
+    const merchantSlug = parts[1]
+      ? parts[1].split('/')[0]
+      : t.unknown
     return formatSlug(merchantSlug)
   },
 
   getDetails: (t: Translation) => t.searchCode,
 
-  getButtons: (t: Translation) => [{ label: t.viewCodes, url: document.location.href }] as ButtonArray,
+  getButtons: (t: Translation) => [
+    { label: t.viewCodes, url: document.location.href },
+  ] as ButtonArray,
 }
 
 export default merchantResolver

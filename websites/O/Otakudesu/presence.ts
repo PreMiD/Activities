@@ -65,7 +65,9 @@ presence.on('UpdateData', async () => {
           { label: 'Watch Anime', url: document.location.href },
           {
             label: 'View Anime',
-            url: [...document.querySelectorAll('a')].find(x =>
+            url: [
+              ...document.querySelectorAll('a'),
+            ].find(x =>
               /See All Episodes/i.exec(x?.textContent ?? ''),
             )?.href ?? '',
           },

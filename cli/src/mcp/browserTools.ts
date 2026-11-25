@@ -23,7 +23,9 @@ const eventWaiters = new Map<number, Set<(event: TestEvent) => void>>()
 let loadedService: string | undefined
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error)
+  return error instanceof Error
+    ? error.message
+    : String(error)
 }
 
 // Maps low-level failures to the copy the agent should see.
@@ -36,7 +38,9 @@ function toToolError(error: unknown): ToolError {
 
 function handleTestEvent(event: TestEvent) {
   latestEvents.set(event.tabId, event)
-  for (const notify of [...(eventWaiters.get(event.tabId) ?? [])])
+  for (const notify of [
+    ...(eventWaiters.get(event.tabId) ?? []),
+  ])
     notify(event)
 }
 

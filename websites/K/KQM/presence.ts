@@ -114,7 +114,9 @@ presence.on('UpdateData', async () => {
 
   if (matchedCharacter) {
     presenceData.details = `Reading a ${
-      pathname.includes('-quickguide') ? 'Quick Guide' : 'Guide'
+      pathname.includes('-quickguide')
+        ? 'Quick Guide'
+        : 'Guide'
     }`
     presenceData.state = document.title
       .replace(' - KQM', '')

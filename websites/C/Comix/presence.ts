@@ -30,10 +30,16 @@ presence.on('UpdateData', async () => {
   const normalizedPathname = pathname.replace(/\/+$/, '') || '/'
 
   const dataEl = document.getElementById('initial-data')
-  const data = dataEl ? JSON.parse(dataEl.textContent) : null
+  const data = dataEl
+    ? JSON.parse(dataEl.textContent)
+    : null
 
-  const mangaKey = data ? Object.keys(data.queries).find(k => k.includes('manga') && k.includes('detail')) : null
-  const manga = mangaKey && data ? data.queries[mangaKey] : null
+  const mangaKey = data
+    ? Object.keys(data.queries).find(k => k.includes('manga') && k.includes('detail'))
+    : null
+  const manga = mangaKey && data
+    ? data.queries[mangaKey]
+    : null
 
   const mangaName = manga?.title || 'Manga'
   const mangaPoster = manga?.poster?.large || manga?.poster?.medium
@@ -69,8 +75,12 @@ presence.on('UpdateData', async () => {
     presenceData.details = `Viewing "${gpName || 'Unknown'}" group`
 
     const stateParts = [
-      gpReleases !== undefined ? `${gpReleases} releases` : null,
-      gpTitles !== undefined ? `${gpTitles} titles` : null,
+      gpReleases !== undefined
+        ? `${gpReleases} releases`
+        : null,
+      gpTitles !== undefined
+        ? `${gpTitles} titles`
+        : null,
     ].filter(Boolean)
 
     if (stateParts.length > 0)
@@ -188,7 +198,9 @@ presence.on('UpdateData', async () => {
       : 'Viewing a collection...'
 
     if (ownerName) {
-      presenceData.state = `By ${ownerName}${totalTitles ? ` · ${totalTitles}` : ''}`
+      presenceData.state = `By ${ownerName}${totalTitles
+        ? ` · ${totalTitles}`
+        : ''}`
     }
 
     presenceData.smallImageKey = Assets.Viewing

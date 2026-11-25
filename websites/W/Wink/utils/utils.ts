@@ -15,7 +15,9 @@ export function getVideoContent(selector: string): VideoData | null {
       duration: mediaElement.duration,
       currentTime: mediaElement.currentTime,
       poster: mediaElement?.poster,
-      title: title ? capitalizeFirstLetter(title) : null,
+      title: title
+        ? capitalizeFirstLetter(title)
+        : null,
     }
   }
   else {

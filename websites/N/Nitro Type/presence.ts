@@ -88,13 +88,17 @@ presence.on('UpdateData', async () => {
           ? pageVariables['NTGLOBALS.CAR_PAINTED_URL']
           : pageVariables['NTGLOBALS.CAR_URL']
       }${largeSrc?.[0]}${
-        userInfo.carHueAngle ? `_${userInfo.carHueAngle}` : ''
+        userInfo.carHueAngle
+          ? `_${userInfo.carHueAngle}`
+          : ''
       }.${largeSrc?.[1]}`,
     )
   }
   const showCar = await presence.getSetting<boolean>('showCar')
   const presenceData: PresenceData = {
-    largeImageKey: (loggedIn && showCar ? carImage : ActivityAssets.Logo) ?? ActivityAssets.Logo,
+    largeImageKey: (loggedIn && showCar
+      ? carImage
+      : ActivityAssets.Logo) ?? ActivityAssets.Logo,
     smallImageKey: loggedIn ? ActivityAssets.User : ActivityAssets.Guest,
     smallImageText: loggedIn
       ? document.querySelector('.dropdown--account span')?.textContent

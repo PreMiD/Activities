@@ -64,7 +64,9 @@ presence.on('UpdateData', async () => {
 
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
-    presenceData.buttons = [{ label: 'Watch Episode', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'Watch Episode', url: document.URL },
+    ]
   }
   else if (directVideo) {
     presenceData.smallImageKey = directVideo.paused
@@ -80,7 +82,9 @@ presence.on('UpdateData', async () => {
       ?? document.querySelector('.video-title')?.textContent
       ?? document.querySelector('.entry-title')?.textContent
 
-    presenceData.buttons = [{ label: 'Watch Episode', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'Watch Episode', url: document.URL },
+    ]
 
     if (!directVideo.paused) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(directVideo)

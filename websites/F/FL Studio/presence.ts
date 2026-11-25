@@ -50,7 +50,9 @@ presence.on('UpdateData', async () => {
   else if (search.includes('q=')) {
     const searchQuery = new URLSearchParams(search).get('q')
     presenceData.details = privacyMode ? strings.search : strings.searchFor
-    presenceData.state = showSearchQuery && !privacyMode ? searchQuery : '(Hidden)'
+    presenceData.state = showSearchQuery && !privacyMode
+      ? searchQuery
+      : '(Hidden)'
     matched = true
   }
   // Plugins page - exact match or starting with /plugins/

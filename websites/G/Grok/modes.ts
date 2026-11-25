@@ -25,7 +25,14 @@ export const MODE_ASSETS: Record<GrokMode['id'], string> = {
 
 function matchMode(text: string): GrokMode | null {
   const value = text.toLowerCase()
-  const ids: GrokMode['id'][] = ['expert', 'heavy', 'build', 'voice', 'fast', 'auto']
+  const ids: GrokMode['id'][] = [
+    'expert',
+    'heavy',
+    'build',
+    'voice',
+    'fast',
+    'auto',
+  ]
   for (const id of ids) {
     if (new RegExp(`\\b${id}\\b`, 'i').test(value))
       return { id, title: MODE_TITLES[id] }

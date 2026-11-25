@@ -152,7 +152,9 @@ presence.on('UpdateData', async () => {
     'reviews.php': {
       details: strings.viewPage,
       state: `${content.title} • ${
-        location.search.endsWith('anime') ? 'Anime' : 'Manga'
+        location.search.endsWith('anime')
+          ? 'Anime'
+          : 'Manga'
       }`,
     },
     '/users/': {
@@ -206,7 +208,10 @@ presence.on('UpdateData', async () => {
 
   for (const [key, value] of Object.entries(animePlanetPages)) {
     if (path.match(key)) {
-      presenceData = { ...presenceData, ...value }
+      presenceData = {
+        ...presenceData,
+        ...value,
+      }
       break
     }
   }

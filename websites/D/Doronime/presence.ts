@@ -56,13 +56,17 @@ presence.on('UpdateData', async () => {
             '.Content__description-caption > .form-row > div',
           ),
         ]
-          .map((x, i) => (i % 2 === 1 ? x : null))
+          .map((x, i) => (i % 2 === 1
+            ? x
+            : null))
           .filter(Boolean)
           .splice(0, 2)
           .map(x =>
             x?.textContent?.replace(/ /g, '').split('\n').join(' ').trim(),
           )
-        presenceData.details = title && title.split(' ').length > 1 ? title.split(' ')[1] : title
+        presenceData.details = title && title.split(' ').length > 1
+          ? title.split(' ')[1]
+          : title
         presenceData.state = artist
       }
       else {

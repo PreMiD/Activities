@@ -41,7 +41,9 @@ presence.on('UpdateData', async () => {
       {
         const to = getDropDownSelected('to')
         presenceData.details = `Sending feedback${
-          to ? ` to ${to.split(' - ')[0]}` : ''
+          to
+            ? ` to ${to.split(' - ')[0]}`
+            : ''
         }`
       }
       break
@@ -55,7 +57,9 @@ presence.on('UpdateData', async () => {
       {
         const to = getDropDownSelected('rid')
         presenceData.details = `Embdedding${
-          to ? ` ${to.split(' - ')[0]}` : ''
+          to
+            ? ` ${to.split(' - ')[0]}`
+            : ''
         }`
 
         if (to) {
@@ -74,7 +78,9 @@ presence.on('UpdateData', async () => {
         const channel = getDropDownSelected('rid')
 
         presenceData.details = `Searching playlists ${
-          title ? `for ${title}` : ''
+          title
+            ? `for ${title}`
+            : ''
         }`
         if (from && to)
           presenceData.largeImageText = `From ${toDate(from)} to ${toDate(to)}`
@@ -92,7 +98,9 @@ presence.on('UpdateData', async () => {
         const to = getInp('to')
 
         presenceData.details = `Browsing news from ${
-          title ? `for ${title}` : ''
+          title
+            ? `for ${title}`
+            : ''
         }`
         if (from && to)
           presenceData.state = `From ${toDate(from)} to ${toDate(to)}`

@@ -103,9 +103,13 @@ interface PresenceSettings {
 
 function pushMusicPresence(presenceData: PresenceData, settings: PresenceSettings): void {
   presenceData.details = currentTitle
-  presenceData.state = settings.showDj ? `${currentArtist} • ${currentDj}` : currentArtist
+  presenceData.state = settings.showDj
+    ? `${currentArtist} • ${currentDj}`
+    : currentArtist
   presenceData.smallImageKey = Assets.Play
-  presenceData.smallImageText = settings.showDj ? `Listening to ${currentDj}` : 'Listening live'
+  presenceData.smallImageText = settings.showDj
+    ? `Listening to ${currentDj}`
+    : 'Listening live'
 
   if (settings.useCoverArt && currentArt)
     presenceData.largeImageKey = currentArt
@@ -157,7 +161,9 @@ presence.on('UpdateData', async () => {
       currentShow = getCurrentShow()
 
       presenceData.details = 'Viewing the Schedule'
-      presenceData.state = currentShow ? `Now: ${currentShow}` : undefined
+      presenceData.state = currentShow
+        ? `Now: ${currentShow}`
+        : undefined
     }
     else if (pathname.startsWith('/blog/')) {
       presenceData.details = 'Reading the Blog'

@@ -39,7 +39,11 @@ const ActivityAssets = {
 
 //* HELPERS
 
-const truncate = (str: string, max = 128) => (str.length > max ? `${str.substring(0, max - 3)}...` : str)
+function truncate(str: string, max = 128) {
+  return str.length > max
+    ? `${str.substring(0, max - 3)}...`
+    : str
+}
 
 function getMeta(property: string): string | null {
   return document.querySelector(`meta[property="${property}"]`)?.getAttribute('content') || null
@@ -61,7 +65,9 @@ function setSmallIcon(data: PresenceData, key: string, text: string) {
 }
 
 function pluralize(count: number, singular: string) {
-  return `${count.toLocaleString()} ${count === 1 ? singular : `${singular}s`}`
+  return `${count.toLocaleString()} ${count === 1
+    ? singular
+    : `${singular}s`}`
 }
 
 function getProfileAvatar(): string | null {
@@ -116,7 +122,9 @@ function parseItemCount(el: Element | null): number | null {
     return null
   const text = el.getAttribute('title') || el.textContent || ''
   const match = text.match(/(\d+(?:,\d+)*)/)
-  return match && match[1] ? Number.parseInt(match[1].replace(/,/g, ''), 10) : null
+  return match && match[1]
+    ? Number.parseInt(match[1].replace(/,/g, ''), 10)
+    : null
 }
 
 function extractTitleFromUrl(url: string): string {
@@ -151,7 +159,9 @@ function getCardTitle(card: Element | null, preferUrl = false): string {
     return altText.replace(/^(?:Poster for\s+)?["']?|["']?\s*(?:poster)?$/gi, '').trim()
   }
 
-  return !preferUrl ? extractTitleFromUrl(linkHref) : ''
+  return !preferUrl
+    ? extractTitleFromUrl(linkHref)
+    : ''
 }
 
 function getCalendarDisplayWeekCount(root: Document | Element = document): number {
@@ -160,7 +170,9 @@ function getCalendarDisplayWeekCount(root: Document | Element = document): numbe
   const text = root.querySelector('.week-count.secondary')?.textContent?.trim() ?? ''
   const match = text.match(/(\d+)/)
   const value = match?.[1]
-  return value ? Number.parseInt(value, 10) : 0
+  return value
+    ? Number.parseInt(value, 10)
+    : 0
 }
 
 function applyHistoryState(data: PresenceData, displayUsername = 'their') {
@@ -168,7 +180,9 @@ function applyHistoryState(data: PresenceData, displayUsername = 'their') {
   setSmallIcon(data, ActivityAssets.userClock, 'History')
 
   const lastPlayed = getCardTitle(document.querySelector('.trakt-card'), true)
-  data.state = lastPlayed ? `Last played: ${lastPlayed}` : 'Checking their watch history'
+  data.state = lastPlayed
+    ? `Last played: ${lastPlayed}`
+    : 'Checking their watch history'
 }
 
 //* MAIN
@@ -237,10 +251,16 @@ try {
         }
 
         if (linkEl?.href) {
-          presenceData.buttons = [{ label: 'View on Trakt', url: linkEl.href }]
+          presenceData.buttons = [
+            { label: 'View on Trakt', url: linkEl.href },
+          ]
         }
 
-        setSmallIcon(presenceData, (imageUrl !== ActivityAssets.traktLogomark) ? ActivityAssets.traktCirclemark : (season && episode ? ActivityAssets.tv : ActivityAssets.film), 'Now Playing')
+        setSmallIcon(presenceData, (imageUrl !== ActivityAssets.traktLogomark)
+          ? ActivityAssets.traktCirclemark
+          : (season && episode
+              ? ActivityAssets.tv
+              : ActivityAssets.film), 'Now Playing')
 
         if (timeRemainingEl?.textContent) {
           let remainingSeconds = 0
@@ -419,7 +439,9 @@ try {
             popRating = popTags.find(t => /^\d+%$/.test(t))
           }
 
-          presenceData.state = popRating ? `#1: ${popTitle} (${popRating})` : `#1: ${popTitle}`
+          presenceData.state = popRating
+            ? `#1: ${popTitle} (${popRating})`
+            : `#1: ${popTitle}`
         }
         else {
           presenceData.state = 'Looking for popular titles'
@@ -454,7 +476,9 @@ try {
         const displayUsername = getDisplayUsername(pathname)
         const profileAvatar = getProfileAvatar()
 
-        presenceData.buttons = [{ label: 'View profile', url: href }]
+        presenceData.buttons = [
+          { label: 'View profile', url: href },
+        ]
 
         if (pathname.includes('/history')) {
           applyHistoryState(presenceData, displayUsername)
@@ -482,17 +506,23 @@ try {
           setSmallIcon(presenceData, profileAvatar || ActivityAssets.listCheck, 'Start Watching')
 
           const startTitle = getCardTitle(document.querySelector('.trakt-card'))
-          presenceData.state = startTitle ? `Up next: ${startTitle}` : 'Choosing what to watch next'
+          presenceData.state = startTitle
+            ? `Up next: ${startTitle}`
+            : 'Choosing what to watch next'
         }
         else if (pathname.includes('/lists')) {
           const isLiked = pathname.includes('/liked')
-          presenceData.details = isLiked ? `Checking ${displayUsername} liked lists` : `Checking ${displayUsername} lists`
+          presenceData.details = isLiked
+            ? `Checking ${displayUsername} liked lists`
+            : `Checking ${displayUsername} lists`
           if (profileAvatar)
             setSmallIcon(presenceData, profileAvatar, 'Lists')
 
           if (pathname.endsWith('/lists')) {
             const watchTitle = getCardTitle(document.querySelector('.section-list-container .trakt-card'))
-            presenceData.state = watchTitle ? `Watchlist up next: ${watchTitle}` : 'Organizing their watchlist'
+            presenceData.state = watchTitle
+              ? `Watchlist up next: ${watchTitle}`
+              : 'Organizing their watchlist'
           }
           else {
             let totalItems = 0
@@ -508,7 +538,9 @@ try {
             })
 
             if (listCount > 0) {
-              const listWord = listCount === 1 ? 'list' : 'lists'
+              const listWord = listCount === 1
+                ? 'list'
+                : 'lists'
               presenceData.state = isLiked
                 ? `${pluralize(totalItems, 'item')} over ${listCount} followed ${listWord}`
                 : `${pluralize(totalItems, 'item')} over ${listCount} ${listWord}`
@@ -576,7 +608,9 @@ try {
           presenceData.largeImageText = truncate(personTitle)
         }
 
-        presenceData.buttons = [{ label: 'View on Trakt', url: href }]
+        presenceData.buttons = [
+          { label: 'View on Trakt', url: href },
+        ]
       }
       else if (isSearch) {
         const queryParams = new URLSearchParams(search)
@@ -591,7 +625,9 @@ try {
         }
         else {
           const topTitle = getCardTitle(document.querySelector('.trakt-card'))
-          presenceData.state = topTitle ? `Top Search: ${topTitle}` : 'Exploring the catalog'
+          presenceData.state = topTitle
+            ? `Top Search: ${topTitle}`
+            : 'Exploring the catalog'
         }
       }
       else if (isMedia) {
@@ -621,7 +657,9 @@ try {
             presenceData.largeImageText = `Season ${episodeLabel.match(/S(\d+)/i)?.[1] || '?'}, Episode ${episodeLabel.match(/E(\d+)/i)?.[1] || '?'}`
           }
 
-          setSmallIcon(presenceData, primaryImage !== ActivityAssets.traktLogomark ? ActivityAssets.traktCirclemark : ActivityAssets.tv, 'Episode')
+          setSmallIcon(presenceData, primaryImage !== ActivityAssets.traktLogomark
+            ? ActivityAssets.traktCirclemark
+            : ActivityAssets.tv, 'Episode')
         }
         else {
           presenceData.details = isShow ? 'Checking TV show details' : 'Checking movie details'
@@ -638,7 +676,9 @@ try {
           }
         }
 
-        presenceData.buttons = [{ label: 'View on Trakt', url: href }]
+        presenceData.buttons = [
+          { label: 'View on Trakt', url: href },
+        ]
       }
       else {
         const staticPages: Record<string, PresenceData> = {

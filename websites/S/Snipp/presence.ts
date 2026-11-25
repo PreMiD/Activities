@@ -29,7 +29,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/discover')) {
     presenceData.state = 'Browsing discover'
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.buttons = [{ label: 'View discover', url: 'https://snipp.gg/discover' }]
+    presenceData.buttons = [
+      { label: 'View discover', url: 'https://snipp.gg/discover' },
+    ]
     presenceData.detailsUrl = 'https://snipp.gg/discover'
   }
   else if (pathname.startsWith('/p/')) {
@@ -50,7 +52,9 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = ActivityAssets.Logo
     }
 
-    presenceData.state = author?.textContent ? `by ${author.textContent}` : 'Unknown author'
+    presenceData.state = author?.textContent
+      ? `by ${author.textContent}`
+      : 'Unknown author'
     presenceData.smallImageKey = avatar?.src ?? Assets.Viewing
     presenceData.buttons = [
       {

@@ -20,7 +20,7 @@
     "www.taiyo.moe"
   ],
   "regExp": "^https?[:][/][/](www[.])?taiyo[.]moe[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Taiy%C5%8D/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Taiy%C5%8D/assets/thumbnail.png",
   "color": "#FF4F4F",

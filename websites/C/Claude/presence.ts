@@ -68,7 +68,9 @@ presence.on('UpdateData', async () => {
       )?.textContent
     }
     else {
-      presenceData.details = showTitle ? document.title.replace(' - Claude', '')?.trim() : strings.talkingWithAI
+      presenceData.details = showTitle
+        ? document.title.replace(' - Claude', '')?.trim()
+        : strings.talkingWithAI
     }
     presenceData.state = isTalking
       ? strings.aiResponding

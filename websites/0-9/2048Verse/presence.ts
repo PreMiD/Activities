@@ -47,7 +47,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.split('/')[1] === 'user') {
     presenceData.details = 'Viewing profile'
     presenceData.state = pathname.split('/')[2]
-    presenceData.buttons = [{ label: 'View Profile', url: href }]
+    presenceData.buttons = [
+      { label: 'View Profile', url: href },
+    ]
   }
   else if (pathname.split('/')[1] === 'replay') {
     presenceData.details = `Watching replay ${gridSize}`

@@ -40,7 +40,9 @@ presence.on('UpdateData', async () => {
     else if (isEndScreen) {
       const pathLength = document.querySelectorAll('[class*=PlasmicEndScreen_pathContainer] [class*=PlasmicPathElement_root]')?.length
       presenceData.details = 'Finishing a game'
-      presenceData.state = pathLength > 0 ? `Destination found in ${pathLength} steps` : 'Nobody found the destination'
+      presenceData.state = pathLength > 0
+        ? `Destination found in ${pathLength} steps`
+        : 'Nobody found the destination'
     }
     else {
       const currentPage = document.querySelector('.wiki-wrapper h1')?.textContent

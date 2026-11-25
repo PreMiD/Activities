@@ -14,7 +14,9 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
     }
     case 'teams-database': {
       presenceData.details = 'Browsing Teams'
-      presenceData.state = [...document.querySelectorAll('.custom-dropdown')]
+      presenceData.state = [
+        ...document.querySelectorAll('.custom-dropdown'),
+      ]
         .map(selection => selection.textContent)
         .join(' - ')
       break

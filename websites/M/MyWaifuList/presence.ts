@@ -89,7 +89,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = name
 
     if (!privacy) {
-      const seriesImage = [...document.querySelectorAll<HTMLImageElement>('img')]
+      const seriesImage = [
+        ...document.querySelectorAll<HTMLImageElement>('img'),
+      ]
         .find(img => img.alt === name)
         ?.src
 
@@ -165,14 +167,18 @@ presence.on('UpdateData', async () => {
       presenceData.state = name
 
     if (!privacy) {
-      const seiyuuImage = [...document.querySelectorAll<HTMLImageElement>('img')]
+      const seiyuuImage = [
+        ...document.querySelectorAll<HTMLImageElement>('img'),
+      ]
         .find(img => img.alt === name)
         ?.src
 
       if (seiyuuImage)
         presenceData.largeImageKey = seiyuuImage
 
-      const favoriteText = [...document.querySelectorAll('*')]
+      const favoriteText = [
+        ...document.querySelectorAll('*'),
+      ]
         .map(element => element.textContent?.trim())
         .find(text => text && /^\d[\d,.]*\s+favorites$/i.test(text))
 
@@ -200,7 +206,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = name
 
     if (!privacy) {
-      const studioImage = [...document.querySelectorAll<HTMLImageElement>('img')]
+      const studioImage = [
+        ...document.querySelectorAll<HTMLImageElement>('img'),
+      ]
         .find(img => img.alt === name)
         ?.src
 

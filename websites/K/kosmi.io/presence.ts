@@ -63,7 +63,9 @@ presence.on('UpdateData', async () => {
     details = 'Choosing an activity'
     smallImageKey = Assets.Reading
     /* Show the usercount in the lower text */
-    state = userCount === 0 ? 'Alone' : `With ${userCount} others`
+    state = userCount === 0
+      ? 'Alone'
+      : `With ${userCount} others`
 
     /* This is executed if the user plays a game that is not in the "Special Activities" Array */
     if (activityName && !noGames.includes(activityName.textContent ?? '')) {

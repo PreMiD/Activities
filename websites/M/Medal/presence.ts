@@ -39,7 +39,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = `Watching ${username}`
       const game = document.querySelector('.cueMjT')?.textContent?.trim() || 'Unknown Game'
       const videoName = document.querySelector('.bTwQIe')?.textContent?.trim() || null
-      presenceData.state = `${game}${videoName ? `: ${videoName}` : ''}`
+      presenceData.state = `${game}${videoName
+        ? `: ${videoName}`
+        : ''}`
       break
     }
   }

@@ -190,7 +190,10 @@ function updatePresence(skipUnchanged = false): Promise<void> {
   const key = reader.getReadKey()
   if (runningUpdate?.key === key)
     return runningUpdate.promise
-  const pending = { key, promise: Promise.resolve() }
+  const pending = {
+    key,
+    promise: Promise.resolve(),
+  }
   runningUpdate = pending
   pending.promise = performUpdate(skipUnchanged).finally(() => {
     if (runningUpdate === pending)

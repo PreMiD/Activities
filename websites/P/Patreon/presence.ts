@@ -64,7 +64,9 @@ function getPostCreatorName() {
   if (ogTitle?.includes(' | '))
     return ogTitle.split(' | ').slice(1).join(' | ').trim()
 
-  return [...document.querySelectorAll<HTMLAnchorElement>('a[href]')]
+  return [
+    ...document.querySelectorAll<HTMLAnchorElement>('a[href]'),
+  ]
     .find(anchor =>
       /^https:\/\/www\.patreon\.com\/[\w.-]+\/?$/.test(anchor.href)
       && anchor.textContent?.trim(),
@@ -94,7 +96,9 @@ presence.on('UpdateData', async () => {
   const { pathname, href, hostname } = document.location
   const searchParams = new URLSearchParams(document.location.search)
   const pathArr = pathname.split('/')
-  const creatorSlugIndex = pathArr[1] === 'cw' ? 2 : 1
+  const creatorSlugIndex = pathArr[1] === 'cw'
+    ? 2
+    : 1
   const creatorSlug = pathArr[creatorSlugIndex]
   const creatorSection = pathArr[creatorSlugIndex + 1]
 
@@ -197,7 +201,9 @@ presence.on('UpdateData', async () => {
             presenceData.state = document.querySelector(
               '.Text_variantDisplayTextLg__NwCo5',
             )?.textContent
-            presenceData.buttons = [{ label: 'View app', url: href }]
+            presenceData.buttons = [
+              { label: 'View app', url: href },
+            ]
           }
         }
         break
@@ -264,8 +270,11 @@ presence.on('UpdateData', async () => {
             slideshow.addSlide('slideCreatorName', presenceDataSlide, 5000)
           }
 
-          if (showButtons)
-            presenceData.buttons = presenceDataSlide.buttons = [{ label: 'View Post', url: href }]
+          if (showButtons) {
+            presenceData.buttons = presenceDataSlide.buttons = [
+              { label: 'View Post', url: href },
+            ]
+          }
         }
         break
       case 'collection':
@@ -281,8 +290,11 @@ presence.on('UpdateData', async () => {
             : 'Viewing a creator'
         if (!privacy && creatorSlug !== 'patreon')
           presenceData.state = getCreatorName()
-        if (!privacy && showButtons && !creatorSection)
-          presenceData.buttons = [{ label: 'View Creator', url: href }]
+        if (!privacy && showButtons && !creatorSection) {
+          presenceData.buttons = [
+            { label: 'View Creator', url: href },
+          ]
+        }
         break
       default:
         if (Object.keys(statics).includes(pathArr[1]!)) {
@@ -299,8 +311,11 @@ presence.on('UpdateData', async () => {
             presenceData.state = creatorSlug === 'patreon' && !creatorSection
               ? undefined
               : getCreatorName()
-            if (!creatorSection)
-              presenceData.buttons = [{ label: 'View Creator', url: href }]
+            if (!creatorSection) {
+              presenceData.buttons = [
+                { label: 'View Creator', url: href },
+              ]
+            }
           }
         }
     }

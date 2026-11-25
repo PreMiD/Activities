@@ -5,7 +5,17 @@ const presence = new Presence({
 })
 
 const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/logo.png'
-const LANGS = ['ja', 'en', 'fr', 'ko', 'pt', 'ru', 'zh-hans', 'zh-hant']
+const LANGS = [
+  'ja',
+  'en',
+  'es',
+  'fr',
+  'ko',
+  'pt',
+  'ru',
+  'zh-hans',
+  'zh-hant',
+]
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 type Mode = 'training' | 'private' | 'duel'
@@ -17,6 +27,33 @@ interface Texts {
   private: { startGame: string, shuffleTeams: string, chatLog: string, userCount: string }
   duel: { ranking: string, rating: string }
   game: { abandon: string, resetGame: string, opening: string, endingWin: string, endingDraw: string, usedMiracles: string }
+  reference: {
+    reference: string
+    elements: string
+    curses: string
+    trade: string
+    weapons: string
+    armor: string
+    sundries: string
+    miracles: string
+    devils: string
+    guardians: string
+    phenomena: string
+    elementsNote: string
+    diseasesNote: string
+    diseaseUpgradeNote: string
+    fogNote: string
+    discardNote: string
+    sacrificeNote: string
+    bounceNote: string
+    miraclesNote: string
+    usedMiraclesNote: string
+    devilsNote: string
+    earthNote: string
+    moonNote: string
+    guardianAttackNote: string
+    guardiansNote: string
+  }
 }
 
 // ゲームの言語ファイル (/i18n/*.json) から、画面ごとの目印になる文言を集める。
@@ -41,7 +78,9 @@ function loadTexts(): Promise<void> {
   loading = Promise.all(LANGS.map(async (lang) => {
     try {
       const res = await fetch(`${location.origin}/i18n/${lang}.json`)
-      return res.ok ? ((await res.json()) as { texts: Texts }).texts : null
+      return res.ok
+        ? ((await res.json()) as { texts: Texts }).texts
+        : null
     }
     catch {
       return null
@@ -75,6 +114,50 @@ function readCount(body: string, pick: (t: Texts) => string): number | null {
   return null
 }
 
+// 教典 (本家の reference) を開いているかの判定。
+// 見出しの「教典」は開くボタンとして対戦画面に常駐しているため、それだけでは判定できない。
+// 開いている間は左列のタブ名10個が常に見える (閉じた対戦画面では「起こした奇跡」の
+// 「奇跡」しか出ないことを実機で確認済み) ため、タブ名の同時出現数で判定する。
+// あわせて、選択中のタブの注記文が見えている場合も開いているとみなす。
+// 注記はプレースホルダを含まないものだけを使う ({{light}} 等を含む文は
+// ゲーム側で別の文字列に置換されて表示されるため、原文のままでは一致しない)
+const REF_TABS: ((t: Texts) => string)[] = [
+  t => t.reference.elements,
+  t => t.reference.curses,
+  t => t.reference.trade,
+  t => t.reference.weapons,
+  t => t.reference.armor,
+  t => t.reference.sundries,
+  t => t.reference.miracles,
+  t => t.reference.devils,
+  t => t.reference.guardians,
+  t => t.reference.phenomena,
+]
+const REF_NOTES: ((t: Texts) => string)[] = [
+  t => t.reference.elementsNote,
+  t => t.reference.diseasesNote,
+  t => t.reference.diseaseUpgradeNote,
+  t => t.reference.fogNote,
+  t => t.reference.discardNote,
+  t => t.reference.sacrificeNote,
+  t => t.reference.bounceNote,
+  t => t.reference.miraclesNote,
+  t => t.reference.usedMiraclesNote,
+  t => t.reference.devilsNote,
+  t => t.reference.earthNote,
+  t => t.reference.moonNote,
+  t => t.reference.guardianAttackNote,
+  t => t.reference.guardiansNote,
+]
+function isReferenceOpen(body: string) {
+  if (!has(body, t => t.reference.reference))
+    return false
+  if (REF_NOTES.some(pick => has(body, pick)))
+    return true
+  // タブ名は言語ごとに1組なので、一致した言語での出現数を数える
+  return texts.some(t => REF_TABS.filter(pick => body.includes(strip(pick(t)))).length >= 8)
+}
+
 let lastMode: Mode | null = null
 let battleSince = 0
 
@@ -94,7 +177,9 @@ presence.on('UpdateData', async () => {
   // 画面に表示されている文字だけを見たい (隠れている要素の文字は含めたくない) ので innerText を使う
   // eslint-disable-next-line unicorn/prefer-dom-node-text-content
   const body = document.body.innerText
-  const modeName = (t: Texts | undefined) => (lastMode && t ? t.modeNames[lastMode] : null)
+  const modeName = (t: Texts | undefined) => (lastMode && t
+    ? t.modeNames[lastMode]
+    : null)
 
   // ***** 対戦中・決着 *****
   // 対戦画面: 「戦いをあきらめる」などのボタンは常に見えているとは限らないので、
@@ -105,17 +190,28 @@ presence.on('UpdateData', async () => {
     ?? has(body, t => t.game.endingWin)
     ?? has(body, t => t.game.endingDraw)
     ?? has(body, t => t.game.usedMiracles)
-    ?? (/HP\s*\d+/.test(body) && /MP\s*\d+/.test(body) ? texts[0] : undefined)
+    ?? (/HP\s*\d+/.test(body) && /MP\s*\d+/.test(body)
+      ? texts[0]
+      : undefined)
   if (inGame) {
     battleSince ||= Math.floor(Date.now() / 1000)
     const ended = has(body, t => t.game.endingWin) ?? has(body, t => t.game.endingDraw)
-    presenceData.details = ended ? '決着がついた' : '対戦中'
-    const name = showMode ? modeName(inGame) : null
+    // 決着表示より教典を優先しない (決着後も教典は開けるが、状態としては決着が上)
+    const reading = !ended && isReferenceOpen(body)
+    presenceData.details = ended
+      ? '決着がついた'
+      : reading ? '教典を読んでいます' : '対戦中'
+    const name = showMode
+      ? modeName(inGame)
+      : null
     // 「HP77 MP27」のような表示の数 = 対戦しているプレイヤーの数
     const alive = (body.match(/HP\s*\d+/g) ?? []).length
-    if (name)
-      presenceData.state = showCount && alive > 0 && !ended ? `${name}（${alive}人）` : name
-    presenceData.smallImageKey = Assets.Play
+    if (name) {
+      presenceData.state = showCount && alive > 0 && !ended
+        ? `${name}（${alive}人）`
+        : name
+    }
+    presenceData.smallImageKey = reading ? Assets.Reading : Assets.Play
     presenceData.startTimestamp = battleSince
     presence.setActivity(presenceData)
     return
@@ -139,7 +235,9 @@ presence.on('UpdateData', async () => {
         const [before, after] = menu.menu.userCount.split('{{count}}')
         const escape = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
         const re = new RegExp(`${escape((before ?? '').trim())}\\s*(\\d+)\\s*${escape((after ?? '').trim())}`, 'g')
-        const total = [...body.matchAll(re)].reduce((sum, m) => sum + Number(m[1]), 0)
+        const total = [
+          ...body.matchAll(re),
+        ].reduce((sum, m) => sum + Number(m[1]), 0)
         if (total > 0)
           presenceData.state = `オンライン ${total}人`
       }
@@ -149,17 +247,26 @@ presence.on('UpdateData', async () => {
   }
 
   // ***** 真剣タイマン (待機画面・ランキング) *****
-  const duel = has(body, t => t.duel.ranking)
-  if (duel && body.includes(duel.modeNames.duel)) {
+  const duel = texts.find(t => body.includes(strip(t.duel.ranking)) && body.includes(t.modeNames.duel))
+  if (duel) {
     lastMode = 'duel'
     const name = showMode ? duel.modeNames.duel : null
-    if (has(body, t => t.duel.rating)) {
-      presenceData.details = '対戦相手を待っています'
+    // ランキング一覧はロビーの上に重なって開くため、ロビーの「レーティング」が
+    // 残り続けて文言では待機中と区別できない。一覧を開くと行ごとのレーティング
+    // 数値 (1000以上の数だけの行) が大量に増えるので、その数で判定する
+    // (2026-11-12 実機の innerText で検証: ロビー=1件、一覧表示中=61件)
+    const ratingRows = body.split('\n').filter((line) => {
+      const text = line.trim()
+      return /^\d+$/.test(text) && Number(text) >= 1000
+    }).length
+    if (ratingRows >= 5 || !has(body, t => t.duel.rating)) {
+      presenceData.details = 'ランキングを見ています'
+      presenceData.smallImageKey = Assets.Viewing
       if (name)
         presenceData.state = name
     }
     else {
-      presenceData.details = 'ランキングを見ています'
+      presenceData.details = '対戦相手を待っています'
       if (name)
         presenceData.state = name
     }
@@ -170,15 +277,21 @@ presence.on('UpdateData', async () => {
   // ***** 修行・隠れ乱闘の待機画面 *****
   // 修行の画面にも「戦いを始める」ボタンがあるので、修行 (「修行者 N 人」) を先に判定する
   const training = has(body, t => t.training.players)
-  const priv = training ? undefined : (has(body, t => t.private.shuffleTeams) ?? has(body, t => t.private.chatLog) ?? has(body, t => t.private.startGame))
+  const priv = training
+    ? undefined
+    : (has(body, t => t.private.shuffleTeams) ?? has(body, t => t.private.chatLog) ?? has(body, t => t.private.startGame))
   if (training || priv) {
     lastMode = training ? 'training' : 'private'
     presenceData.details = '対戦相手を待っています'
-    const name = showMode ? modeName(training || priv) : null
+    const name = showMode
+      ? modeName(training || priv)
+      : null
     if (name)
       presenceData.state = name
     const count = showCount
-      ? lastMode === 'private' ? readCount(body, t => t.private.userCount) : readCount(body, t => t.training.playerCount)
+      ? lastMode === 'private'
+        ? readCount(body, t => t.private.userCount)
+        : readCount(body, t => t.training.playerCount)
       : null
     if (count !== null && name)
       presenceData.state = `${name}（${count}人）`

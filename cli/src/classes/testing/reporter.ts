@@ -20,7 +20,9 @@ function resultLines(result: TestResult): string[] {
       return [
         `${chalk.red('✗')} ${chalk.red(result.name)} ${chalk.dim(formatSeconds(result.durationMs))}`,
         ...(result.error ?? '').split('\n').filter(Boolean).map(line => `  ${chalk.red(line)}`),
-        ...(result.lastActivity !== undefined ? [`  ${chalk.dim(`Last activity: ${JSON.stringify(result.lastActivity)}`)}`] : []),
+        ...(result.lastActivity !== undefined
+          ? [`  ${chalk.dim(`Last activity: ${JSON.stringify(result.lastActivity)}`)}`]
+          : []),
       ]
     case 'cancelled':
       return []
@@ -50,7 +52,9 @@ export function createReporter(service: string, log: (line: string) => void = co
     switch (event.type) {
       case 'run':
         log('')
-        log(`${chalk.bold(service)} ${chalk.dim(`${event.count} ${event.count === 1 ? 'test' : 'tests'}`)}`)
+        log(`${chalk.bold(service)} ${chalk.dim(`${event.count} ${event.count === 1
+          ? 'test'
+          : 'tests'}`)}`)
         break
       case 'start':
         current = event.name
@@ -79,6 +83,8 @@ export function printSummary(results: TestResult[], log: (line: string) => void 
   const total = results.reduce((sum, result) => sum + result.durationMs, 0)
 
   log('')
-  log(`${chalk.dim(' Tests')}  ${parts.length > 0 ? parts.join(chalk.dim(' · ')) : chalk.dim('none ran')} ${chalk.dim(`(${results.length})`)}`)
+  log(`${chalk.dim(' Tests')}  ${parts.length > 0
+    ? parts.join(chalk.dim(' · '))
+    : chalk.dim('none ran')} ${chalk.dim(`(${results.length})`)}`)
   log(`${chalk.dim('  Time')}  ${formatSeconds(total)}`)
 }

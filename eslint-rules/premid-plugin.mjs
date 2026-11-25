@@ -116,7 +116,9 @@ const requireSupportCheck = {
         else
           break
       }
-      return expr === node ? statement : null
+      return expr === node
+        ? statement
+        : null
     }
 
     /** Fix that ensures `supports` is imported from 'premid', or null if already. */

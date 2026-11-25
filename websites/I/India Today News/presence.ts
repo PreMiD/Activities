@@ -115,8 +115,12 @@ presence.on('UpdateData', async () => {
     .trim()
 
   for (const [path, data] of Object.entries(pages)) {
-    if (pathname.includes(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (pathname.includes(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   if (pathname === '/') {
@@ -332,5 +336,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

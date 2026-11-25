@@ -23,7 +23,9 @@ function getResultStatValue(label: string): string | undefined {
 
   return (
     Array.from(valueElement.childNodes)
-      .map(node => (node.nodeName === 'BR' ? ' ' : node.textContent ?? ''))
+      .map(node => (node.nodeName === 'BR'
+        ? ' '
+        : node.textContent ?? ''))
       .join('')
       .replace(/\s+/g, ' ')
       .trim() || undefined
@@ -50,7 +52,9 @@ function getLiveStats(): { speed?: string, acc?: string } {
   const speed = speedElement?.textContent?.trim()
 
   return {
-    speed: speed && /^\d+$/.test(speed) ? speed : undefined,
+    speed: speed && /^\d+$/.test(speed)
+      ? speed
+      : undefined,
     acc: accElement?.textContent?.trim(),
   }
 }

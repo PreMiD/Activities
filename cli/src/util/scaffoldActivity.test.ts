@@ -91,7 +91,11 @@ describe('scaffoldActivity', () => {
   })
 
   it('scaffoldActivity rejects metadata that fails the schema', async () => {
-    mocks.getSchema.mockResolvedValue({ definitions: {}, type: 'object', required: ['missingField'] })
+    mocks.getSchema.mockResolvedValue({
+      definitions: {},
+      type: 'object',
+      required: ['missingField'],
+    })
 
     await expect(scaffoldActivity(input, cwd)).rejects.toThrow(/missingField/)
   })

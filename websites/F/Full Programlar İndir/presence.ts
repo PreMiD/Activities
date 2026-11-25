@@ -50,7 +50,9 @@ presence.on('UpdateData', async () => {
     presence.setActivity({
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/F/Full%20Programlar%20%C4%B0ndir/assets/logo.png',
       details: 'Sayfalar arasında geziniyor:',
-      state: pgnum ? `Ana Sayfa: ${pgnum}` : 'Belirsiz',
+      state: pgnum
+        ? `Ana Sayfa: ${pgnum}`
+        : 'Belirsiz',
       startTimestamp: Math.floor(Date.now() / 1000),
     })
   }

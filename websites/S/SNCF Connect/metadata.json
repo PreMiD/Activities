@@ -12,7 +12,7 @@
   },
   "url": "www.sncf-connect.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sncf-connect[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SNCF%20Connect/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SNCF%20Connect/assets/thumbnail.png",
   "color": "#000000",

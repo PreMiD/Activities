@@ -103,7 +103,9 @@ function getAnimeInfoText() {
     .filter((info): info is string => Boolean(info))
 
   const parts = [
-    episodes ? `${episodes} episodes` : undefined,
+    episodes
+      ? `${episodes} episodes`
+      : undefined,
     year,
   ].filter((part): part is string => Boolean(part))
 
@@ -137,13 +139,17 @@ presence.on('UpdateData', async () => {
     const episodeText = cleanText(document.querySelector('.linetitle3')?.textContent)
     const episodeNumber = episodeText?.match(/Episode\s+([A-Z0-9.-]+)/i)?.[1]
     const animeUrl = document.querySelector<HTMLAnchorElement>('.linetitle3 a')?.href
-    const coverArt = animeUrl ? await getAnimeCover(animeUrl) : undefined
+    const coverArt = animeUrl
+      ? await getAnimeCover(animeUrl)
+      : undefined
 
     updateBrowsingTimestamp(`watch:${animeTitle ?? href}:${episodeNumber ?? ''}`)
 
     presenceData.name = animeTitle ?? 'AnimeHeaven'
     presenceData.type = ActivityType.Watching
-    presenceData.details = episodeNumber ? `Episode ${episodeNumber}` : 'Watching episode'
+    presenceData.details = episodeNumber
+      ? `Episode ${episodeNumber}`
+      : 'Watching episode'
     presenceData.state = video?.paused ? paused : playing
     presenceData.largeImageKey = coverArt ?? ActivityAssets.Logo
     presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
@@ -189,7 +195,9 @@ presence.on('UpdateData', async () => {
     updateBrowsingTimestamp(`search:${searchQuery ?? ''}`)
 
     presenceData.details = 'Searching anime'
-    presenceData.state = searchQuery ? `Query: ${searchQuery}` : 'Search results'
+    presenceData.state = searchQuery
+      ? `Query: ${searchQuery}`
+      : 'Search results'
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Searching'
   }
@@ -199,7 +207,9 @@ presence.on('UpdateData', async () => {
     updateBrowsingTimestamp(`bookmarks:${bookmarkCount}`)
 
     presenceData.details = 'Managing bookmarks'
-    presenceData.state = bookmarkCount > 0 ? `${bookmarkCount} saved anime` : 'My Bookmarks'
+    presenceData.state = bookmarkCount > 0
+      ? `${bookmarkCount} saved anime`
+      : 'My Bookmarks'
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = browsing
   }

@@ -22,7 +22,13 @@ class PresenceState {
 
 const state = new PresenceState()
 
-const timestampEvents = ['seeked', 'play', 'loadedmetadata', 'durationchange', 'ratechange'] as const
+const timestampEvents = [
+  'seeked',
+  'play',
+  'loadedmetadata',
+  'durationchange',
+  'ratechange',
+] as const
 
 function updateTimestamps() {
   state.mediaTimestamps = updateSongTimestamps(state.dataGetter)
@@ -79,8 +85,13 @@ presence.on('UpdateData', async () => {
       })
     }
 
+    // Unknown player markup so set the generic activity instead of leaving it stale
     if (!mediaData.title) {
-      return
+      return presence.setActivity({
+        type: ActivityType.Listening,
+        largeImageKey: ActivityAssets.Logo,
+        details: strings.listeningToSong,
+      })
     }
 
     if (state.dataGetter.isAdPlaying()) {

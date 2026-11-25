@@ -119,7 +119,10 @@ function parseTitleAndEpisode(raw: string): { title: string, episode: number | n
     }
   }
 
-  return { title: dedupeShowName(raw), episode: null }
+  return {
+    title: dedupeShowName(raw),
+    episode: null,
+  }
 }
 
 // Youku's document.title repeats the show name (e.g. "The Double The Double").
@@ -143,20 +146,26 @@ function dedupeShowName(text: string): string {
 }
 
 function truncate(text: string, max: number): string {
-  return text.length > max ? `${text.slice(0, max - 1)}…` : text
+  return text.length > max
+    ? `${text.slice(0, max - 1)}…`
+    : text
 }
 
 function getVideoQuality(): string | null {
   const sel = document.querySelector('.quality-selector .active, [data-quality].active, .video-quality .selected')
   const text = sel?.textContent?.trim()
-  return text && /\d{3,4}p|HD|4K/i.test(text) ? text : null
+  return text && /\d{3,4}p|HD|4K/i.test(text)
+    ? text
+    : null
 }
 
 function getPlaybackSpeed(video: HTMLVideoElement | null): string | null {
   if (!video)
     return null
   const rate = video.playbackRate
-  return rate && rate !== 1 ? `${rate}x` : null
+  return rate && rate !== 1
+    ? `${rate}x`
+    : null
 }
 
 presence.on('UpdateData', async () => {
@@ -181,7 +190,9 @@ presence.on('UpdateData', async () => {
   // homepage hero / autoplay previews. Youku.tv watch URLs look like
   // /v/v_show/id_XXX.html — /v/ is the common prefix.
   const isWatchPath = /^\/v\//i.test(pathname)
-  const video = isWatchPath ? findVideo() : null
+  const video = isWatchPath
+    ? findVideo()
+    : null
 
   const isPlayingVideo = !!video
     && (video.src !== '' || video.currentSrc !== '')
@@ -205,7 +216,9 @@ presence.on('UpdateData', async () => {
       || ''
     const { title, episode } = parseTitleAndEpisode(cleanTitle(rawTitle))
 
-    const poster = showCover ? await getPosterImage() : null
+    const poster = showCover
+      ? await getPosterImage()
+      : null
     if (poster)
       presenceData.largeImageKey = poster
     // Discord renders an "S{x}E{y}" badge when largeImageText matches the
@@ -218,7 +231,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.watchingContent
     }
     else {
-      presenceData.details = compactMode ? truncate(title, 35) : truncate(title, 128)
+      presenceData.details = compactMode
+        ? truncate(title, 35)
+        : truncate(title, 128)
       const stateParts: string[] = []
       if (episode !== null)
         stateParts.push(`${strings.episode} ${episode}`)
@@ -294,7 +309,9 @@ presence.on('UpdateData', async () => {
       : isWatchPath
         ? strings.watchSeries
         : strings.viewPage
-    presenceData.buttons = [{ label: buttonLabel, url: href }]
+    presenceData.buttons = [
+      { label: buttonLabel, url: href },
+    ]
   }
 
   presence.setActivity(presenceData)

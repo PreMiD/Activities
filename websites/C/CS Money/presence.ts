@@ -72,12 +72,16 @@ presence.on('UpdateData', () => {
       0,
       document.title.lastIndexOf('|') - 1,
     )
-    presenceData.buttons = [{ label: 'Inspect 3D', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'Inspect 3D', url: document.URL },
+    ]
   }
   else if (document.location.hostname === 'wiki.cs.money') {
     presenceData.details = 'Reading the wiki';
     [presenceData.state] = document.title.split(/—/)
-    presenceData.buttons = [{ label: 'Read wiki', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'Read wiki', url: document.URL },
+    ]
   }
   else {
     presenceData.details = 'Browsing'

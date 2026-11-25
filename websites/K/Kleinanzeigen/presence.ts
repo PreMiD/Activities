@@ -126,7 +126,9 @@ presence.on('UpdateData', async () => {
     }
 
     presenceData.details = title || strings.viewingAd
-    presenceData.state = price ? `${price} | ${strings.seller}: ${sellerName || strings.unknown}` : `${strings.seller}: ${sellerName || strings.unknown}`
+    presenceData.state = price
+      ? `${price} | ${strings.seller}: ${sellerName || strings.unknown}`
+      : `${strings.seller}: ${sellerName || strings.unknown}`
 
     if (badges.length > 0) {
       presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/K/Kleinanzeigen/assets/0.png'

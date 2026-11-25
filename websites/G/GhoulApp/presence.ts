@@ -55,8 +55,21 @@ interface BridgeActivity {
 
 type BridgeResult = BridgeActivity | { kind: 'clear' } | { kind: 'missing' }
 
-const editions = new Set<Edition>(['V5', 'V20', 'CUSTOM', 'DAV20', 'DA', 'V6'])
-const roles = new Set<Role>(['storyteller', 'co_storyteller', 'moderator', 'player', 'observer'])
+const editions = new Set<Edition>([
+  'V5',
+  'V20',
+  'CUSTOM',
+  'DAV20',
+  'DA',
+  'V6',
+])
+const roles = new Set<Role>([
+  'storyteller',
+  'co_storyteller',
+  'moderator',
+  'player',
+  'observer',
+])
 const activities = new Set<ActivityKey>(Object.keys(activityLabels) as ActivityKey[])
 const unsafeLabelCharacters = /[\p{Cc}\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/gu
 
@@ -74,7 +87,9 @@ function sanitizeLabel(value: unknown): string | undefined {
       .replace(unsafeLabelCharacters, '')
       .replace(/\s+/gu, ' ')
       .trim()
-    return sanitized ? clamp(sanitized, LABEL_MAX_LENGTH) : undefined
+    return sanitized
+      ? clamp(sanitized, LABEL_MAX_LENGTH)
+      : undefined
   }
   catch {
     return undefined
@@ -118,9 +133,15 @@ function readBridge(): BridgeResult {
     return {
       kind: 'activity',
       activity: value.activity as ActivityKey,
-      ...(chronicleName ? { chronicleName } : {}),
-      ...(edition ? { edition } : {}),
-      ...(role ? { role } : {}),
+      ...(chronicleName
+        ? { chronicleName }
+        : {}),
+      ...(edition
+        ? { edition }
+        : {}),
+      ...(role
+        ? { role }
+        : {}),
     }
   }
   catch {
@@ -197,7 +218,9 @@ function fallbackFromPath(pathname: string): BridgeActivity | { kind: 'clear' } 
 async function getBooleanSetting(id: string, fallback: boolean): Promise<boolean> {
   try {
     const value = await presence.getSetting<boolean>(id)
-    return typeof value === 'boolean' ? value : fallback
+    return typeof value === 'boolean'
+      ? value
+      : fallback
   }
   catch {
     return fallback

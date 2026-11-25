@@ -50,7 +50,9 @@ presence.on('UpdateData', () => {
         / (document.querySelector('#chapter-outer')!.scrollHeight
           - window.innerHeight))
         * 100
-      progress = Math.ceil(progress) > 100 ? 100 : Math.ceil(progress)
+      progress = Math.ceil(progress) > 100
+        ? 100
+        : Math.ceil(progress)
 
       presenceData.details = document.querySelector('.caption a h4')?.textContent
       presenceData.state = `📖 ${

@@ -13,7 +13,7 @@
   },
   "url": "www.omgubuntu.co.uk",
   "regExp": "^https?[:][/][/](www[.])?omgubuntu[.]co[.]uk[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OMG%20Ubuntu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OMG%20Ubuntu/assets/thumbnail.png",
   "color": "#FF9900",

@@ -70,7 +70,9 @@ presence.on('UpdateData', async () => {
     case pathname.startsWith('/leaderboard/'): {
       presenceData.details = 'Viewing'
       presenceData.state = pageTitle
-      presenceData.buttons = [{ label: 'View Page', url: href }]
+      presenceData.buttons = [
+        { label: 'View Page', url: href },
+      ]
       break
     }
     default: {

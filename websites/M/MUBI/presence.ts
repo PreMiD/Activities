@@ -59,7 +59,9 @@ presence.on('UpdateData', async () => {
   }
   if (search?.value || pathname.includes('/search/')) {
     presenceData.details = `${strings.search} ${
-      search.value !== '' ? search.value : href.split('=')[1]
+      search.value !== ''
+        ? search.value
+        : href.split('=')[1]
     }`
     presenceData.state = `In ${
       document
