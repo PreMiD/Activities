@@ -133,6 +133,7 @@ export function listenForKeys(loop: Pick<DevTestLoop, 'togglePause' | 'runNow'>)
 
   readline.emitKeypressEvents(process.stdin)
   process.stdin.setRawMode(true)
+  process.stdin.resume()
   process.stdin.on('keypress', (_input, key) => {
     if (key?.ctrl && key.name === 'c')
       process.exit(0)
