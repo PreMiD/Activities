@@ -9,7 +9,7 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/B/BreathFM/assets/0.jpg',
 }
 
-async function getStrings(lang: string) {
+async function getStrings() {
   return presence.getStrings({
     browsing: 'general.browsing',
     viewHome: 'general.viewHome',
@@ -23,11 +23,10 @@ async function getStrings(lang: string) {
     buttonViewPage: 'general.buttonViewPage',
     terms: 'general.terms',
     privacy: 'general.privacy',
-  }, lang)
+  })
 }
 
 let strings: Awaited<ReturnType<typeof getStrings>>
-let currentLang: string | undefined
 
 function text(selector: string): string {
   return document.querySelector(selector)?.textContent?.trim() ?? ''
@@ -45,7 +44,9 @@ function getPlayerTimes(audio: HTMLAudioElement): [number, number] | null {
     return null
   const elapsed = timestampFromFormat(match[1]!)
   const duration = timestampFromFormat(match[2]!)
-  return duration > 0 ? [elapsed, duration] : null
+  return duration > 0
+    ? [elapsed, duration]
+    : null
 }
 
 function getStationId(): string | undefined {
@@ -55,8 +56,12 @@ function getStationId(): string | undefined {
 
 function getListeners(audio: HTMLAudioElement): number | undefined {
   const label = audio.parentElement?.querySelector('[aria-label$="Hörer"]')?.getAttribute('aria-label')
-  const value = label ? Number.parseInt(label) : Number.NaN
-  return Number.isNaN(value) ? undefined : value
+  const value = label
+    ? Number.parseInt(label)
+    : Number.NaN
+  return Number.isNaN(value)
+    ? undefined
+    : value
 }
 
 function absoluteUrl(src?: string): string | undefined {
@@ -103,21 +108,31 @@ async function getPlayback(): Promise<Playback | null> {
     if (bridge?.version === 1) {
       if (!bridge.playing || !bridge.title)
         return null
+
+      const stationId = bridge.stationId != null
+        ? String(bridge.stationId)
+        : undefined
+      const times: [number, number] | null = !bridge.isLive && bridge.duration > 0
+        ? [bridge.elapsed, bridge.duration]
+        : null
+
       return {
         station: bridge.stationName || 'BreathFM',
-        stationId: bridge.shortcode || (bridge.stationId != null ? String(bridge.stationId) : undefined),
+        stationId: bridge.shortcode || stationId,
         title: bridge.title,
         artist: bridge.artist ?? undefined,
         cover: bridge.cover ?? undefined,
         trackId: bridge.spotifyId ?? undefined,
-        times: !bridge.isLive && bridge.duration > 0 ? [bridge.elapsed, bridge.duration] : null,
+        times,
         listeners: bridge.listeners ?? undefined,
       }
     }
   }
 
   const audio = document.querySelector<HTMLAudioElement>('audio')
-  const meta = 'mediaSession' in navigator ? navigator.mediaSession.metadata : null
+  const meta = 'mediaSession' in navigator
+    ? navigator.mediaSession.metadata
+    : null
   if (!audio || audio.paused || !meta?.title)
     return null
   return {
@@ -152,7 +167,9 @@ function getPageData(privacy: boolean): PresenceData {
       const title = text('h1')
       const artist = document.querySelector('h1')?.nextElementSibling?.textContent?.trim()
       if (title && !privacy) {
-        data.state = artist ? `${title} – ${artist}` : title
+        data.state = artist
+          ? `${title} – ${artist}`
+          : title
         const cover = document.querySelector<HTMLImageElement>('img[alt^="Cover von"]')
         if (cover?.src) {
           Object.assign(data, {
@@ -190,18 +207,14 @@ function getPageData(privacy: boolean): PresenceData {
 }
 
 presence.on('UpdateData', async () => {
-  const [privacy, showButtons, showTimestamps, showListeners, lang] = await Promise.all([
+  const [privacy, showButtons, showTimestamps, showListeners] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('timestamps'),
     presence.getSetting<boolean>('listeners'),
-    presence.getSetting<string>('lang').catch(() => 'en'),
   ])
 
-  if (!strings || currentLang !== lang) {
-    currentLang = lang
-    strings = await getStrings(lang)
-  }
+  strings ??= await getStrings()
 
   const playback = await getPlayback()
 
@@ -211,7 +224,9 @@ presence.on('UpdateData', async () => {
   }
 
   const { station, times, trackId } = playback
-  const listeners = showListeners ? playback.listeners : undefined
+  const listeners = showListeners
+    ? playback.listeners
+    : undefined
 
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
@@ -220,9 +235,15 @@ presence.on('UpdateData', async () => {
     details: playback.title,
     state: playback.artist || strings.listeningMusic,
     largeImageKey: playback.cover ?? ActivityAssets.Logo,
-    largeImageText: listeners !== undefined ? `${station} • ${listeners} 🎧` : station,
-    smallImageKey: times ? Assets.Play : Assets.Live,
-    smallImageText: times ? strings.playing : strings.live,
+    largeImageText: listeners !== undefined
+      ? `${station} • ${listeners} 🎧`
+      : station,
+    smallImageKey: times
+      ? Assets.Play
+      : Assets.Live,
+    smallImageText: times
+      ? strings.playing
+      : strings.live,
   }
 
   const stationUrl = playback.stationId
@@ -245,7 +266,9 @@ presence.on('UpdateData', async () => {
   }
 
   if (showButtons) {
-    presenceData.buttons = [{ label: strings.buttonListenAlong, url: stationUrl }]
+    presenceData.buttons = [
+      { label: strings.buttonListenAlong, url: stationUrl },
+    ]
     if (trackId)
       presenceData.buttons.push({ label: strings.buttonViewPage, url: `${location.origin}/track/${trackId}` })
   }
