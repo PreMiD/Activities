@@ -1,11 +1,11 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1570559752864268389', // the Discord application named "zig~zag"
+  clientId: 'YOUR_DISCORD_APPLICATION_ID', // the Discord application named "zig~zag"
 })
 
 enum ActivityAssets {
-  Logo = 'https://imgur.com/RVoWxox',
+  Logo = 'https://i.imgur.com/REPLACE_LOGO.png',
 }
 
 interface PlayerData {
@@ -82,10 +82,14 @@ function readBoatParty(): BoatParty | null {
     .map(f => (f.getAttribute('alt') || f.getAttribute('title') || f.closest('[title]')?.getAttribute('title') || '').trim())
     .filter(Boolean)
 
-  return { name: readPartyName(label, labelRect), sailors: faces.length, names }
+  return {
+    name: readPartyName(label, labelRect),
+    sailors: faces.length,
+    names,
+  }
 }
 
-/** The party's name: the first item in the header row that holds the party timer (e.g. "S.S. EARTH"). */
+/** The party's name: the first item in the header row that holds the party timer (e.g. "S.S. LOCKED DOORS"). */
 function readPartyName(label: HTMLElement, labelRect: DOMRect): string {
   let box: HTMLElement = label
   for (let i = 0; i < 10 && box.parentElement; i++) {
@@ -129,14 +133,19 @@ function readPartyName(label: HTMLElement, labelRect: DOMRect): string {
       return
     if (node.tagName === 'BUTTON' || node.tagName.toLowerCase() === 'svg' || node.getAttribute('role') === 'button')
       return
-    if (/\bsr-only\b|visually-hidden/.test(typeof node.className === 'string' ? node.className : ''))
+    const cls = typeof node.className === 'string'
+      ? node.className
+      : ''
+    if (/\bsr-only\b|visually-hidden/.test(cls))
       return
     for (const child of node.childNodes)
       visit(child)
   }
   visit(nameEl)
   text = text.replace(/\s+/g, ' ').replace(/\s*edit info\s*$/i, '').trim()
-  return isTimer(text) ? '' : text.slice(0, 40)
+  return isTimer(text)
+    ? ''
+    : text.slice(0, 40)
 }
 
 presence.on('UpdateData', async () => {
@@ -170,17 +179,27 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
     details: song.slice(0, 128),
-    state: artist ? `by ${artist}` : 'on zig~zag',
-    largeImageKey: player.videoId ? `https://i.ytimg.com/vi/${player.videoId}/hqdefault.jpg` : ActivityAssets.Logo,
+    state: artist
+      ? `by ${artist}`
+      : 'on zig~zag',
+    largeImageKey: player.videoId
+      ? `https://i.ytimg.com/vi/${player.videoId}/hqdefault.jpg`
+      : ActivityAssets.Logo,
     largeImageText: 'zig~zag',
   }
 
   if (showParty) {
     const party = readBoatParty()
     if (party) {
-      presenceData.state = `${presenceData.state} · ⛵ ${party.name ? `“${party.name}”` : 'boat party'} (${party.sailors} aboard)`.slice(0, 128)
+      const boatName = party.name
+        ? `“${party.name}”`
+        : 'boat party'
+      presenceData.state = `${presenceData.state} · ⛵ ${boatName} (${party.sailors} aboard)`.slice(0, 128)
       presenceData.smallImageKey = ActivityAssets.Logo
-      presenceData.smallImageText = (showSailors && party.names.length ? `sailing with ${party.names.join(', ')}` : 'in a boat party').slice(0, 128)
+      const crew = showSailors && party.names.length
+        ? `sailing with ${party.names.join(', ')}`
+        : 'in a boat party'
+      presenceData.smallImageText = crew.slice(0, 128)
     }
   }
 
