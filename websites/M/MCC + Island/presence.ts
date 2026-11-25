@@ -2,7 +2,7 @@ import { ActivityType } from 'premid'
 import { AccountIcons } from './account-icons.js'
 import { communityAvatarFallback, communityHost, communitySelection, fitCommunityImage, getCommunityData, waitForCommunityProfile } from './community-sites.js'
 import { ActivityAssets, StaticImageUrls } from './image-assets.js'
-import { getMccLiveData, mccLiveSelection } from './mcc-live.js'
+import { getMccLiveData, isLiveMccView, mccLiveSelection } from './mcc-live.js'
 import { applyWikiImageFallback, getWikiData, wikiCanPublish, wikiSelection } from './mcc-wiki.js'
 import { getReafyData, reafySelection } from './reafy-stats.js'
 
@@ -518,6 +518,8 @@ presence.on('UpdateData', async () => {
     }
     case mccLive: {
       Object.assign(presenceData, getMccLiveData(privacy))
+      if (isLiveMccView())
+        delete presenceData.startTimestamp
       presenceData.largeImageKey = ActivityAssets.MccRed
       presenceData.largeImageText = 'Minecraft Championship'
       break
