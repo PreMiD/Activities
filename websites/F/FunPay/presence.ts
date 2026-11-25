@@ -23,7 +23,9 @@ presence.on('UpdateData', async () => {
       if (path.includes('/offer')) {
         presenceData.details = 'Viewing offer'
         presenceData.state = document.querySelector('h1')?.textContent?.trim()
-        presenceData.buttons = [{ label: 'View Offer', url: location.href }]
+        presenceData.buttons = [
+          { label: 'View Offer', url: location.href },
+        ]
       }
       else if (path.includes('/trade')) {
         presenceData.details = 'Creating offer'
@@ -32,18 +34,24 @@ presence.on('UpdateData', async () => {
       else if (id) {
         presenceData.details = 'Browsing offers'
         presenceData.state = document.querySelector('h1')?.textContent?.trim()
-        presenceData.buttons = [{ label: 'View Offers', url: location.href }]
+        presenceData.buttons = [
+          { label: 'View Offers', url: location.href },
+        ]
       }
       break
     case 'chips':
       presenceData.details = 'Browsing game currency'
       presenceData.state = document.querySelector('h1')?.textContent?.trim()
-      presenceData.buttons = [{ label: 'View Currency', url: location.href }]
+      presenceData.buttons = [
+        { label: 'View Currency', url: location.href },
+      ]
       break
     case 'users':
       presenceData.details = 'Viewing profile'
       presenceData.state = document.querySelector('h1')?.textContent?.trim()
-      presenceData.buttons = [{ label: 'View Profile', url: location.href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: location.href },
+      ]
       break
     case 'orders':
       presenceData.details = 'Viewing orders'

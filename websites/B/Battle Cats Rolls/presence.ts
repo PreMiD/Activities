@@ -54,7 +54,10 @@ function generateSeedTrackerSlides(presenceData: PresenceData) {
       })
       slideshow.addSlide(currentRowNumber, data, MIN_SLIDE_TIME)
       if (extraPick.childElementCount) {
-        const extraData: PresenceData = { ...data, buttons: structuredClone(presenceData.buttons) }
+        const extraData: PresenceData = {
+          ...data,
+          buttons: structuredClone(presenceData.buttons),
+        }
         extraData.buttons?.push({
           label: 'View Guaranteed Cat',
           url: extraPick.querySelector<HTMLAnchorElement>('a:last-child'),
@@ -116,7 +119,9 @@ presence.on('UpdateData', async () => {
         '#event_select',
       )?.selectedOptions[0]?.textContent
       if (Number(params.get('seed'))) {
-        presenceData.buttons = [{ label: 'View Rolls', url: href }]
+        presenceData.buttons = [
+          { label: 'View Rolls', url: href },
+        ]
         generateSlideshow(() => generateSeedTrackerSlides(presenceData))
         useSlideshow = true
       }
@@ -128,7 +133,9 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.details = 'Viewing a Cat'
-        presenceData.buttons = [{ label: 'View Cat', url: href }]
+        presenceData.buttons = [
+          { label: 'View Cat', url: href },
+        ]
         generateSlideshow(() => generateCatDetailSlides(presenceData))
         useSlideshow = true
       }
@@ -148,7 +155,9 @@ presence.on('UpdateData', async () => {
         const seed = document.querySelector<HTMLAnchorElement>('li:nth-of-type(2) a')
         if (seed) {
           presenceData.state = 'Viewing result'
-          presenceData.buttons = [{ label: 'View Seed', url: seed }]
+          presenceData.buttons = [
+            { label: 'View Seed', url: seed },
+          ]
         }
         else {
           presenceData.state = 'Pending results'

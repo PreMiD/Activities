@@ -45,7 +45,9 @@ function parseArtist(artistField: unknown): string {
     return artistField
   if (Array.isArray(artistField)) {
     return artistField
-      .map(a => (typeof a === 'string' ? a : a?.name || ''))
+      .map(a => (typeof a === 'string'
+        ? a
+        : a?.name || ''))
       .filter(Boolean)
       .join(', ')
   }
@@ -343,10 +345,16 @@ presence.on('UpdateData', async () => {
   const isPlaying = checkIsPlaying(audio, player)
   const isPaused = !isPlaying
   const hasValidDuration = Boolean(audio) && Number.isFinite(audio!.duration) && audio!.duration > 0
-  const currentTime = audio ? formatTime(audio.currentTime) : '0:00'
-  const duration = hasValidDuration ? formatTime(audio!.duration) : '0:00'
+  const currentTime = audio
+    ? formatTime(audio.currentTime)
+    : '0:00'
+  const duration = hasValidDuration
+    ? formatTime(audio!.duration)
+    : '0:00'
 
-  const songImage = showCover ? await getSongImage(player, songName, artists) : NCT_LOGO
+  const songImage = showCover
+    ? await getSongImage(player, songName, artists)
+    : NCT_LOGO
 
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
@@ -359,7 +367,9 @@ presence.on('UpdateData', async () => {
         : artists || 'Unknown artist',
     largeImageKey: songImage,
     smallImageKey: isPaused ? Assets.Pause : Assets.Play,
-    smallImageText: isPaused ? `Paused at ${currentTime}` : 'Listening',
+    smallImageText: isPaused
+      ? `Paused at ${currentTime}`
+      : 'Listening',
   }
 
   if (album && album.toLowerCase() !== songName.toLowerCase())
@@ -369,7 +379,9 @@ presence.on('UpdateData', async () => {
   if (!privacy && songUrl) {
     presenceData.largeImageUrl = songUrl
     if (showButtons) {
-      presenceData.buttons = [{ label: 'Listen on NhacCuaTui', url: songUrl }]
+      presenceData.buttons = [
+        { label: 'Listen on NhacCuaTui', url: songUrl },
+      ]
     }
   }
 

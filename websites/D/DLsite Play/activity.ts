@@ -53,13 +53,17 @@ const categories: Record<string, ContentCategory> = {
 }
 
 export function resolveContentCategory(value: unknown): ContentCategory {
-  return typeof value === 'string' && Object.hasOwn(categories, value) ? categories[value]! : 'unknown'
+  return typeof value === 'string' && Object.hasOwn(categories, value)
+    ? categories[value]!
+    : 'unknown'
 }
 
 export function resolveContentRating(value: unknown): ContentRating {
   if (value === 'all')
     return 'general'
-  return value === 'r15' || value === 'r18' ? value : 'unknown'
+  return value === 'r15' || value === 'r18'
+    ? value
+    : 'unknown'
 }
 
 export function getViewerWorkId(pathname: string): string | null {
@@ -76,7 +80,9 @@ export function resolveCanonicalWorkUrl(id: string, siteId: unknown, inservice: 
   if (siteId === 'comic')
     return `https://www.comipo.app/product/${id}`
   const site = siteId.replace(/-?touch$/, '')
-  return /^[a-z]+$/.test(site) ? `https://www.dlsite.com/${site}/work/=/product_id/${id}.html` : null
+  return /^[a-z]+$/.test(site)
+    ? `https://www.dlsite.com/${site}/work/=/product_id/${id}.html`
+    : null
 }
 
 export function resolveArtworkUrl(value: unknown): string | null {
@@ -104,7 +110,9 @@ export function shouldApplyPrivacy(work: WorkInfo, privacyMode: boolean): boolea
 export function getActivityType(category: ContentCategory): ActivityType.Playing | ActivityType.Listening | ActivityType.Watching {
   if (category === 'audio' || category === 'music')
     return ActivityType.Listening
-  return category === 'unknown' ? ActivityType.Playing : ActivityType.Watching
+  return category === 'unknown'
+    ? ActivityType.Playing
+    : ActivityType.Watching
 }
 
 export class WorkSession {
@@ -114,7 +122,9 @@ export class WorkSession {
   update(id: string | null, now = Date.now()): number {
     if (id !== this.id) {
       this.id = id
-      this.startedAt = id === null ? 0 : Math.floor(now / 1000)
+      this.startedAt = id === null
+        ? 0
+        : Math.floor(now / 1000)
     }
     return this.startedAt
   }
@@ -139,7 +149,10 @@ export function resolveDisplayType(value: unknown): StatusDisplayType {
 export function applyDisplayType(data: PresenceData, displayType: StatusDisplayType): PresenceData {
   const available = (displayType === StatusDisplayType.State && data.state)
     || (displayType === StatusDisplayType.Details && data.details)
-  return { ...data, statusDisplayType: available ? displayType : StatusDisplayType.Name }
+  return {
+    ...data,
+    statusDisplayType: available ? displayType : StatusDisplayType.Name,
+  }
 }
 
 export function buildContentPresence(
@@ -155,8 +168,12 @@ export function buildContentPresence(
   if (work.rating === 'unknown')
     return null
   // Restricted works expose only the service and a separate session clock.
-  if (work.rating === 'r18')
-    return { ...buildBrowsingPresence(), startTimestamp: sessionTimestamp }
+  if (work.rating === 'r18') {
+    return {
+      ...buildBrowsingPresence(),
+      startTimestamp: sessionTimestamp,
+    }
+  }
   const base = {
     name: 'DLsite Play',
     type: getActivityType(work.category),
@@ -197,7 +214,9 @@ export function buildContentPresence(
     if (linkedId === work.id) {
       data.largeImageUrl = link
       if (viewWork.trim() && viewWork.length <= 32) {
-        data.buttons = [{ label: viewWork, url: link }]
+        data.buttons = [
+          { label: viewWork, url: link },
+        ]
         // This is an unsigned library entry point for owners, never a media URL.
         if (openWork.trim() && openWork.length <= 32)
           data.buttons.push({ label: openWork, url: `https://play.dlsite.com/work/${work.id}` })
@@ -216,7 +235,9 @@ export function buildContentPresence(
     && Number.isFinite(playback.currentTime) && playback.currentTime >= 0
     && Number.isFinite(playback.duration) && playback.duration > playback.currentTime
     && Number.isFinite(playback.playbackRate) && playback.playbackRate > 0) {
-    const sampleAge = playback.sampledAt === undefined ? 0 : (Date.now() - playback.sampledAt) / 1000
+    const sampleAge = playback.sampledAt === undefined
+      ? 0
+      : (Date.now() - playback.sampledAt) / 1000
     // Keep the measured media sample's time origin when the UI repeats a value.
     // Recomputing from "now" would move the bar backwards on every update.
     const position = playback.currentTime / playback.playbackRate + sampleAge

@@ -37,7 +37,10 @@ presence.on('UpdateData', async () => {
   let pathArr = pathname.split('/')
 
   if (SITE_LANGS.includes(pathname.split('/')[1] ?? '')) {
-    pathArr = ['', ...pathArr.slice(2)]
+    pathArr = [
+      '',
+      ...pathArr.slice(2),
+    ]
     if (pathArr.length === 1)
       pathArr = ['', '']
   }

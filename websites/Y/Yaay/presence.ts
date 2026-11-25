@@ -63,7 +63,9 @@ presence.on('UpdateData', () => {
     const username = userPage.getAttribute('data-user')
 
     presenceData.details = 'Bir profile göz atıyor:'
-    presenceData.state = username ? `@${username}` : 'Bilinmeyen Kullanıcı'
+    presenceData.state = username
+      ? `@${username}`
+      : 'Bilinmeyen Kullanıcı'
 
     presence.setActivity(presenceData)
   }

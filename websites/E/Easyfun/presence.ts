@@ -36,7 +36,9 @@ presence.on('UpdateData', async () => {
     gameName = rawName
       .split('-')
       .map(word =>
-        /^\d+$/.test(word) ? word : word.charAt(0).toUpperCase() + word.slice(1),
+        /^\d+$/.test(word)
+          ? word
+          : word.charAt(0).toUpperCase() + word.slice(1),
       )
       .join(' ')
 
@@ -45,13 +47,17 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: gameIcon || ActivityAssets.Logo,
-    details: isGamePage && gameName ? `Playing ${gameName}` : 'Exploring EasyFun',
+    details: isGamePage && gameName
+      ? `Playing ${gameName}`
+      : 'Exploring EasyFun',
     state: isGamePage ? 'Cloud Gaming' : 'Browsing on site',
     startTimestamp,
   }
 
   if (isGamePage) {
-    presenceData.buttons = [{ label: 'Play Now', url: href }]
+    presenceData.buttons = [
+      { label: 'Play Now', url: href },
+    ]
     presenceData.smallImageKey = ActivityAssets.Logo
   }
 

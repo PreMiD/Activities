@@ -42,7 +42,9 @@ function extractAnimeTitle(title: string): string {
 
 function getEpisodeNumbers(): { current: string | null, total: string | null } {
   const episodeParam = new URLSearchParams(location.search).get('ep')
-  const currentFromUrl = episodeParam && /^\d+$/.test(episodeParam) ? episodeParam : null
+  const currentFromUrl = episodeParam && /^\d+$/.test(episodeParam)
+    ? episodeParam
+    : null
 
   const epCounter
     = Array.from(document.querySelectorAll('button, a, span, div'))

@@ -126,8 +126,12 @@ presence.on('UpdateData', async () => {
     const creatorUrl = document.querySelector<HTMLAnchorElement>(`a[aria-label*='Playbar: Artist']`)?.href
     presenceData.details = navigator.mediaSession.metadata.title
     presenceData.state = document.querySelector(`a[aria-label*='Playbar: Artist'] span`)?.textContent
-    presenceData.largeImageKey = artwork ? `${artwork}?width=256` : ActivityAssets.Logo
-    presenceData.largeImageText = `${navigator.mediaSession.metadata.artist.replace('Suno - ', '').slice(0, 125)}${navigator.mediaSession.metadata.artist.length > 125 ? '...' : ''}`
+    presenceData.largeImageKey = artwork
+      ? `${artwork}?width=256`
+      : ActivityAssets.Logo
+    presenceData.largeImageText = `${navigator.mediaSession.metadata.artist.replace('Suno - ', '').slice(0, 125)}${navigator.mediaSession.metadata.artist.length > 125
+      ? '...'
+      : ''}`
     presenceData.smallImageKey = song.duration === Infinity
       ? ActivityAssets.Loading
       : playState.repeat

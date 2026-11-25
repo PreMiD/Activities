@@ -49,7 +49,9 @@ presence.on('UpdateData', async () => {
   if (productName && productName.textContent !== '') {
     presenceData.details = 'Bir ürüne göz atıyor:'
     presenceData.state = `${productName.textContent?.trim()}${
-      price ? ` - ${price} TL` : ''
+      price
+        ? ` - ${price} TL`
+        : ''
     }`
   }
   else if (pages[page] || pages[page.slice(0, -1)]) {

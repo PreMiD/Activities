@@ -97,7 +97,9 @@ presence.on('UpdateData', async () => {
       presence.setActivity({
         largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/D/DiziBOX/assets/logo.png',
         details: 'Bir üyenin profiline bakıyor:',
-        state: user && user.textContent ? user.textContent : 'Belirsiz',
+        state: user && user.textContent
+          ? user.textContent
+          : 'Belirsiz',
         startTimestamp: Math.floor(Date.now() / 1000),
       })
     }
@@ -123,8 +125,12 @@ presence.on('UpdateData', async () => {
     )
     const presenceData: PresenceData = {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/D/DiziBOX/assets/logo.png',
-      details: title && title.textContent ? title.textContent : 'Belirsiz',
-      state: episode && episode.textContent ? episode.textContent : 'Belirsiz',
+      details: title && title.textContent
+        ? title.textContent
+        : 'Belirsiz',
+      state: episode && episode.textContent
+        ? episode.textContent
+        : 'Belirsiz',
       smallImageKey: _video.paused ? Assets.Pause : Assets.Play,
       smallImageText: _video.paused
         ? (await strings).pause
@@ -154,8 +160,12 @@ presence.on('UpdateData', async () => {
     )
     const presenceData: PresenceData = {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/D/DiziBOX/assets/logo.png',
-      details: title && title.textContent ? title.textContent : 'Belirsiz',
-      state: episode && episode.textContent ? episode.textContent : 'Belirsiz',
+      details: title && title.textContent
+        ? title.textContent
+        : 'Belirsiz',
+      state: episode && episode.textContent
+        ? episode.textContent
+        : 'Belirsiz',
       smallImageKey: video.paused ? Assets.Pause : Assets.Play,
       smallImageText: video.paused
         ? (await strings).pause

@@ -29,7 +29,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = videoInfo.title
     presenceData.state = videoInfo.lecture
     presenceData.smallImageKey = videoInfo.isPlaying ? Assets.Play : Assets.Pause
-    presenceData.smallImageText = videoInfo.isPlaying ? (await strings).play : (await strings).pause
+    presenceData.smallImageText = videoInfo.isPlaying
+      ? (await strings).play
+      : (await strings).pause
 
     if (videoInfo.isPlaying) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(videoInfo.video)

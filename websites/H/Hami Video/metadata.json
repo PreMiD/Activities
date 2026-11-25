@@ -16,7 +16,7 @@
   },
   "url": "hamivideo.hinet.net",
   "regExp": "^https[:][/][/](?:www[.])?hamivideo[.]hinet[.]net[/].*$",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hami%20Video/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hami%20Video/assets/thumbnail.jpeg",
   "color": "#EE1B58",

@@ -235,13 +235,21 @@ export function formatDuration(time: string | number) {
   const seconds = totalSeconds % 60
 
   if (weeks > 0) {
-    return days > 0 ? `${weeks}s & ${days}j` : `${weeks}s`
+    return days > 0
+      ? `${weeks}s & ${days}j`
+      : `${weeks}s`
   }
   else if (days > 0) {
-    return hours > 0 ? `${days}j & ${hours}h` : `${days}d`
+    return hours > 0
+      ? `${days}j & ${hours}h`
+      : `${days}d`
   }
   else if (hours > 0) {
-    return minutes > 0 ? `${hours}h${minutes < 10 ? `0${minutes}` : minutes}` : `${hours}h`
+    return minutes > 0
+      ? `${hours}h${minutes < 10
+        ? `0${minutes}`
+        : minutes}`
+      : `${hours}h`
   }
   else if (minutes > 0) {
     return `${minutes} min`
@@ -738,7 +746,10 @@ export async function getThumbnail(
     // When completed, cache the result and remove in-flight entry
     generationPromise.then((data) => {
       thumbnailInFlight.delete(cacheKey)
-      thumbnailCache.set(cacheKey, { data, timestamp: Date.now() })
+      thumbnailCache.set(cacheKey, {
+        data,
+        timestamp: Date.now(),
+      })
     }).catch(() => {
       thumbnailInFlight.delete(cacheKey)
     })

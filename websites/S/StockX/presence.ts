@@ -51,7 +51,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Reading an Article:'
       presenceData.state = document.title.replace('- StockX News', '').trim()
       presenceData.smallImageKey = Assets.Reading
-      presenceData.buttons = [{ label: 'Read Article', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'Read Article', url: document.URL },
+      ]
     }
   }
   else if (pathname.startsWith('/about')) {
@@ -78,7 +80,9 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = document.querySelector<HTMLImageElement>('div > div > div > img')?.src
       ?? 'logo'
     presenceData.smallImageKey = Assets.Search
-    presenceData.buttons = [{ label: 'View Product', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Product', url: document.URL },
+    ]
   }
   else if (
     document.querySelector<HTMLHeadingElement>('#browse-wrapper > div > h1')

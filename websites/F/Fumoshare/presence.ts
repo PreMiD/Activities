@@ -78,9 +78,13 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Browsing photo'
     }
     else {
-      presenceData.details = authorName ? `Viewing post by @${authorName}` : 'Viewing a Post'
+      presenceData.details = authorName
+        ? `Viewing post by @${authorName}`
+        : 'Viewing a Post'
       const title = cleanTitle(document.title)
-      presenceData.state = title && title !== 'Fumoshare' ? title.slice(0, 128) : 'Admiring a Fumo'
+      presenceData.state = title && title !== 'Fumoshare'
+        ? title.slice(0, 128)
+        : 'Admiring a Fumo'
     }
 
     if (showButtons) {
@@ -93,10 +97,14 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/fumodex') {
     const searchParam = searchParams.get('q') || searchParams.get('search')
     const searchInput = document.querySelector<HTMLInputElement>('input[type="search"], input[name="q"]')
-    const query = privacy ? undefined : (searchParam || searchInput?.value)
+    const query = privacy
+      ? undefined
+      : (searchParam || searchInput?.value)
 
     presenceData.details = 'Browsing FumoDex'
-    presenceData.state = query ? `Searching: "${query}"` : 'Plushie Catalog'
+    presenceData.state = query
+      ? `Searching: "${query}"`
+      : 'Plushie Catalog'
 
     if (showButtons) {
       presenceData.buttons = [
@@ -110,7 +118,9 @@ presence.on('UpdateData', async () => {
     const fumoName = heading || pageTitle
 
     presenceData.details = 'Viewing FumoDex'
-    presenceData.state = fumoName && fumoName !== 'FumoDex' ? fumoName.slice(0, 128) : 'Plushie Details'
+    presenceData.state = fumoName && fumoName !== 'FumoDex'
+      ? fumoName.slice(0, 128)
+      : 'Plushie Details'
 
     if (showButtons) {
       presenceData.buttons = [
@@ -155,7 +165,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/articles/')) {
     const articleTitle = document.querySelector('h1')?.textContent?.trim() || cleanTitle(document.title)
     presenceData.details = 'Reading an Article'
-    presenceData.state = articleTitle ? articleTitle.slice(0, 128) : 'Community Article'
+    presenceData.state = articleTitle
+      ? articleTitle.slice(0, 128)
+      : 'Community Article'
 
     if (showButtons) {
       presenceData.buttons = [
@@ -168,10 +180,16 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/profile/') || pathname.startsWith('/user/')) {
     const userSlug = pathname.split('/')[2]
     const displayName = document.querySelector('h1')?.textContent?.trim()
-    const username = displayName || (userSlug ? `@${userSlug}` : undefined)
+    const username = displayName || (userSlug
+      ? `@${userSlug}`
+      : undefined)
 
     presenceData.details = 'Viewing Profile'
-    presenceData.state = privacy ? 'Collector Profile' : (username ? `${username}'s Collection` : 'Collector Profile')
+    presenceData.state = privacy
+      ? 'Collector Profile'
+      : (username
+          ? `${username}'s Collection`
+          : 'Collector Profile')
 
     if (showButtons) {
       presenceData.buttons = [
@@ -238,7 +256,9 @@ presence.on('UpdateData', async () => {
   else {
     const pageTitle = cleanTitle(document.title)
     presenceData.details = 'Browsing Fumoshare'
-    presenceData.state = pageTitle && pageTitle !== 'Fumoshare' ? pageTitle.slice(0, 128) : 'Fumo Plushie Community'
+    presenceData.state = pageTitle && pageTitle !== 'Fumoshare'
+      ? pageTitle.slice(0, 128)
+      : 'Fumo Plushie Community'
   }
 
   presence.setActivity(presenceData)

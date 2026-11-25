@@ -26,7 +26,9 @@ presence.on('UpdateData', async () => {
     case 'profile': {
       presenceData.details = 'Browsing a User\'s Projects'
       presenceData.state = document.querySelector('h1 > span')
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
       break
     }
     case 'project': {
@@ -72,7 +74,9 @@ presence.on('UpdateData', async () => {
           presenceData.details = 'Viewing a Project'
           presenceData.state = document.querySelector('[data-id="project-name"]')
           if (document.querySelector('[data-public="true"]')) {
-            presenceData.buttons = [{ label: 'View Project', url: href }]
+            presenceData.buttons = [
+              { label: 'View Project', url: href },
+            ]
           }
         }
       }

@@ -87,7 +87,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector('h1')?.textContent
         ?? document.querySelector('div:nth-child(2) > div > a:nth-child(3)')
           ?.textContent
-      presenceData.buttons = [{ label: 'View User', url: href }]
+      presenceData.buttons = [
+        { label: 'View User', url: href },
+      ]
       break
     case 'tags':
       if (privacyMode || arrPath.length === 1) {
@@ -97,7 +99,9 @@ presence.on('UpdateData', async () => {
       if (arrPath[1]) {
         presenceData.details = 'Viewing tags:'
         presenceData.state = decodeURIComponent(arrPath[1])
-        presenceData.buttons = [{ label: 'View Tag', url: href }]
+        presenceData.buttons = [
+          { label: 'View Tag', url: href },
+        ]
       }
       break
     case 'search':
@@ -112,7 +116,9 @@ presence.on('UpdateData', async () => {
     case 'dashboard':
       if (arrPath[1] === 'works') {
         presenceData.details = `Managing ${
-          arrPath[2] === 'series' ? 'Series' : 'Artworks'
+          arrPath[2] === 'series'
+            ? 'Series'
+            : 'Artworks'
         }`
       }
       else if (pathname.includes('/report/artworks')) {
@@ -150,7 +156,9 @@ presence.on('UpdateData', async () => {
       break
     case 'discovery':
       presenceData.details = `Viewing Recommended ${
-        arrPath[1] === 'users' ? 'Users' : 'Works'
+        arrPath[1] === 'users'
+          ? 'Users'
+          : 'Works'
       }`
       break
     case 'sociallogin':
@@ -160,12 +168,16 @@ presence.on('UpdateData', async () => {
       break
     case 'settingmute.php':
       presenceData.details = `Mute setting | ${
-        typeResult === 'user' ? 'User' : 'Tags'
+        typeResult === 'user'
+          ? 'User'
+          : 'Tags'
       }`
       break
     case 'upload.php':
       presenceData.details = `Submiting New ${
-        typeResult === 'manga' ? 'Manga' : 'Illustrations'
+        typeResult === 'manga'
+          ? 'Manga'
+          : 'Illustrations'
       }`
       break
     case 'artworks':
@@ -202,7 +214,10 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Browsing for novels...'
       const title = document.querySelector('h1')
       if (Object.keys(staticPages).includes(arrPath[1]!)) {
-        presenceData = { ...presenceData, ...staticPages[arrPath[1]!] }
+        presenceData = {
+          ...presenceData,
+          ...staticPages[arrPath[1]!],
+        }
       }
       else if (title) {
         presenceData.smallImageKey = Assets.Reading
@@ -212,7 +227,9 @@ presence.on('UpdateData', async () => {
           presenceData.state = `${title.textContent} (${
             document.querySelector('h2')?.textContent
           })`
-          presenceData.buttons = [{ label: 'Read Novel', url: href }]
+          presenceData.buttons = [
+            { label: 'Read Novel', url: href },
+          ]
         }
       }
       break
@@ -236,8 +253,12 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
-      if (Object.keys(staticPages).includes(arrPath[0]!))
-        presenceData = { ...presenceData, ...staticPages[arrPath[0]!] }
+      if (Object.keys(staticPages).includes(arrPath[0]!)) {
+        presenceData = {
+          ...presenceData,
+          ...staticPages[arrPath[0]!],
+        }
+      }
   }
 
   if (hostname === 'sketch.pixiv.net')
@@ -255,7 +276,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = `by user: ${
         document.querySelector<HTMLElement>('div.name')?.textContent
       }`
-      presenceData.buttons = [{ label: 'Watch Live', url: href }]
+      presenceData.buttons = [
+        { label: 'Watch Live', url: href },
+      ]
     }
   }
   else if (pathname.includes('/@')) {
@@ -263,7 +286,9 @@ presence.on('UpdateData', async () => {
     if (!privacyMode) {
       presenceData.details += ':'
       presenceData.state = document.querySelector('div.name')?.textContent
-      presenceData.buttons = [{ label: 'View User', url: href }]
+      presenceData.buttons = [
+        { label: 'View User', url: href },
+      ]
     }
   }
 

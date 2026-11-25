@@ -179,7 +179,10 @@ presence.on('UpdateData', async () => {
         }
       }
 
-      presenceData = { ...presenceData, ...slideshow.currentSlide }
+      presenceData = {
+        ...presenceData,
+        ...slideshow.currentSlide,
+      }
 
       if (color === 'beige') {
         //* Spectating

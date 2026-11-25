@@ -115,7 +115,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.viewCard
       presenceData.smallImageKey
         = document.querySelector<HTMLImageElement>('.card_image img')
-      presenceData.buttons = [{ label: strings.viewCard, url: href }]
+      presenceData.buttons = [
+        { label: strings.viewCard, url: href },
+      ]
       switch (pathList[2] ?? '/') {
         case '/': {
           presenceData.state = cardName
@@ -288,13 +290,16 @@ presence.on('UpdateData', async () => {
           if (pathList[2]) {
             presenceData.details = strings.viewDeck
             presenceData.state = document.querySelector('h1')
-            presenceData.buttons = [{
-              label: strings.buttonViewDeck,
-              url: href,
-            }, {
-              label: strings.buttonUseDeck,
-              url: document.querySelector<HTMLAnchorElement>('.button_menu a:nth-child(2)'),
-            }]
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewDeck,
+                url: href,
+              },
+              {
+                label: strings.buttonUseDeck,
+                url: document.querySelector<HTMLAnchorElement>('.button_menu a:nth-child(2)'),
+              },
+            ]
           }
           else {
             presenceData.details = strings.buildingDeck
@@ -324,7 +329,9 @@ presence.on('UpdateData', async () => {
                 ...presenceData,
                 smallImageKey: team.querySelector('img'),
                 smallImageText: teamName,
-                buttons: [{ label: strings.buttonViewTeam, url: teamName }],
+                buttons: [
+                  { label: strings.buttonViewTeam, url: teamName },
+                ],
               }
               slideshow.addSlide(
                 teamName?.textContent ?? '',
@@ -343,7 +350,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector(
         '#page_content div.header.item',
       )
-      presenceData.buttons = [{ label: strings.buttonViewEvent, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewEvent, url: href },
+      ]
       break
     }
     case 'game-mode': {
@@ -396,14 +405,20 @@ presence.on('UpdateData', async () => {
     }
     case 'replay': {
       presenceData.details = strings.viewReplay
-      presenceData.buttons = [{ label: strings.buttonViewReplay, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewReplay, url: href },
+      ]
       const [playerA, playerB] = document.querySelectorAll(
-        searchParams.get('overlay') ? '.player_name' : '.stats h5',
+        searchParams.get('overlay')
+          ? '.player_name'
+          : '.stats h5',
       )
       presenceData.state = `${playerA?.textContent} / ${playerB?.textContent}`
       if (searchParams.get('overlay')) {
         presenceData.smallImageKey = Assets.Question
-        presenceData.smallImageText = [...document.querySelectorAll('.score')]
+        presenceData.smallImageText = [
+          ...document.querySelectorAll('.score'),
+        ]
           .map(score => score.textContent)
           .join(' - ')
       }
@@ -419,7 +434,9 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
         '#page_content > .segment .floated.right.image',
       )
-      presenceData.buttons = [{ label: strings.viewTeam, url: href }]
+      presenceData.buttons = [
+        { label: strings.viewTeam, url: href },
+      ]
       break
     }
     case 'tournament': {

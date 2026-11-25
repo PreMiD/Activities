@@ -68,7 +68,9 @@ function seconds(value: unknown): number | null {
   if ((typeof value !== 'number' && typeof value !== 'string') || String(value).trim() === '')
     return null
   const parsed = Number(value)
-  return Number.isFinite(parsed) && parsed >= 0 && parsed <= MAX_DURATION_SECONDS ? parsed : null
+  return Number.isFinite(parsed) && parsed >= 0 && parsed <= MAX_DURATION_SECONDS
+    ? parsed
+    : null
 }
 
 function objectValue(value: unknown): Record<string, unknown> | null {
@@ -92,15 +94,23 @@ function parsePlaybackMessage(value: unknown): ParsedPlaybackMessage | null {
   if (!root)
     return null
 
-  const rootType = typeof root.type === 'string' ? root.type : ''
+  const rootType = typeof root.type === 'string'
+    ? root.type
+    : ''
   const nested = objectValue(root.detail) || objectValue(root.payload) || objectValue(root.data) || objectValue(root.event)
   const event = objectValue(root.event)
-  const eventName = typeof event?.name === 'string' ? event.name.toLowerCase() : ''
+  const eventName = typeof event?.name === 'string'
+    ? event.name.toLowerCase()
+    : ''
   const statusValue = nested?.player_status ?? root.player_status
-  const status = typeof statusValue === 'string' ? statusValue.toLowerCase() : ''
+  const status = typeof statusValue === 'string'
+    ? statusValue.toLowerCase()
+    : ''
   const typeNames = [
     root.type,
-    typeof root.event === 'string' ? root.event : '',
+    typeof root.event === 'string'
+      ? root.event
+      : '',
     root.action,
     nested?.type,
     nested?.event,
@@ -160,7 +170,9 @@ function parsePlaybackMessage(value: unknown): ParsedPlaybackMessage | null {
 
   return {
     position,
-    duration: rawDurationSeconds !== null && rawDurationSeconds > 0 ? rawDurationSeconds : null,
+    duration: rawDurationSeconds !== null && rawDurationSeconds > 0
+      ? rawDurationSeconds
+      : null,
     state,
     kind,
   }
@@ -232,7 +244,9 @@ export class PlaybackTracker {
 
     const now = Date.now()
     const previous = this.record
-    const oldPosition = previous ? estimatedPosition(previous, now) : null
+    const oldPosition = previous
+      ? estimatedPosition(previous, now)
+      : null
     const position = update.position ?? oldPosition
     const duration = update.duration ?? previous?.duration ?? null
     if (position === null || duration === null || duration <= 0 || position > duration + 2) {
@@ -264,7 +278,9 @@ export class PlaybackTracker {
       state,
       updatedAt: now,
       lastReportedPosition: update.position ?? previous?.lastReportedPosition ?? null,
-      lastReportedAt: update.position !== null ? now : previous?.lastReportedAt ?? now,
+      lastReportedAt: update.position !== null
+        ? now
+        : previous?.lastReportedAt ?? now,
       lastAdvancedAt,
     }
   }

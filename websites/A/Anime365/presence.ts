@@ -216,10 +216,12 @@ presence.on('UpdateData', async () => {
 
       presenceData.startTimestamp = browsingTimestamp
 
-      presenceData.buttons = [{
-        label: 'Watch episodes',
-        url: document.location.href,
-      }]
+      presenceData.buttons = [
+        {
+          label: 'Watch episodes',
+          url: document.location.href,
+        },
+      ]
       break
 
     case 'watching':
@@ -260,10 +262,12 @@ presence.on('UpdateData', async () => {
         delete presenceData.endTimestamp
       }
 
-      presenceData.buttons = [{
-        label: 'Watch',
-        url: document.location.href,
-      }]
+      presenceData.buttons = [
+        {
+          label: 'Watch',
+          url: document.location.href,
+        },
+      ]
       break
 
     case 'search':

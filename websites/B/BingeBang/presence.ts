@@ -20,7 +20,9 @@ function getCover(): string | undefined {
 
 function getVideo(): HTMLVideoElement | null {
   const video = document.querySelector<HTMLVideoElement>('video')
-  return video && !Number.isNaN(video.duration) ? video : null
+  return video && !Number.isNaN(video.duration)
+    ? video
+    : null
 }
 
 presence.on('UpdateData', async () => {
@@ -42,7 +44,9 @@ presence.on('UpdateData', async () => {
   const { href, pathname } = document.location
   const path = pathname.split('/').filter(Boolean)
   const rawTitle = getRawTitle()
-  const cover = showCover ? getCover() : undefined
+  const cover = showCover
+    ? getCover()
+    : undefined
 
   // Home
   if (path.length === 0) {
@@ -71,8 +75,11 @@ presence.on('UpdateData', async () => {
 
     applyVideoState(presenceData, strings)
 
-    if (showButtons)
-      presenceData.buttons = [{ label: 'Watch Movie', url: href }]
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'Watch Movie', url: href },
+      ]
+    }
   }
   // Series player: /tv/play/<slug>/<season>/<episode>
   else if (path[0] === 'tv' && path[1] === 'play') {
@@ -92,8 +99,11 @@ presence.on('UpdateData', async () => {
 
     applyVideoState(presenceData, strings)
 
-    if (showButtons)
-      presenceData.buttons = [{ label: 'Watch Series', url: href }]
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'Watch Series', url: href },
+      ]
+    }
   }
   // Any other page (calendar, explore, my-space, etc.): show nothing
   else {

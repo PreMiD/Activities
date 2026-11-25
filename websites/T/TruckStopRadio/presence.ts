@@ -167,7 +167,10 @@ presence.on('UpdateData', async () => {
       ) {
         presenceData.smallImageKey = Assets.Reading
         presenceData.smallImageText = strings.browse
-        presenceData = { ...presenceData, ...v } as PresenceData
+        presenceData = {
+          ...presenceData,
+          ...v,
+        } as PresenceData
       }
     }
   }

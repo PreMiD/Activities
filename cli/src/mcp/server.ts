@@ -13,10 +13,22 @@ export function toToolResult(result: unknown) {
   const isHandlerError = typeof result === 'object' && result !== null
     && Object.keys(result).length === 1 && 'error' in result && typeof result.error === 'string'
   if (isHandlerError) {
-    return { isError: true, content: [{ type: 'text' as const, text: (result as ToolError).error }] }
+    return {
+      isError: true,
+      content: [
+        { type: 'text' as const, text: (result as ToolError).error },
+      ],
+    }
   }
 
-  return { content: [{ type: 'text' as const, text: JSON.stringify(result, null, 2) }] }
+  return {
+    content: [
+      {
+        type: 'text' as const,
+        text: JSON.stringify(result, null, 2),
+      },
+    ],
+  }
 }
 
 export function createServer(): McpServer {
@@ -90,7 +102,11 @@ export function createServer(): McpServer {
       inputSchema: {
         service: z.string().describe('Name of the loaded service'),
         url: z.string().describe('URL to open, e.g. "https://www.youtube.com/watch?v=abc"'),
-        settings: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional().describe('Activity settings to apply for this tab'),
+        settings: z.record(z.string(), z.union([
+          z.string(),
+          z.number(),
+          z.boolean(),
+        ])).optional().describe('Activity settings to apply for this tab'),
       },
     },
     async args => toToolResult(await openPage(args)),

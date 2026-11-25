@@ -68,7 +68,9 @@ export async function release() {
   if (deleted.length) {
     for (const activity of deleted) {
       const folderName = sanitazeFolderName(activity.metadata.service)
-      const apiVersion = activity.versionized ? `/v${activity.metadata.apiVersion}` : ''
+      const apiVersion = activity.versionized
+        ? `/v${activity.metadata.apiVersion}`
+        : ''
 
       try {
         const response = await fetch(`${apiUrl}/activities${apiVersion}/${encodeURIComponent(folderName)}`, {
@@ -107,7 +109,9 @@ export async function release() {
     const folderLetter = encodeURIComponent(getFolderLetter(activity.metadata.service))
     const folderName = sanitazeFolderName(activity.metadata.service)
     const folderNameEncoded = encodeURIComponent(folderName)
-    const apiVersion = activity.versionized ? `/v${activity.metadata.apiVersion}` : ''
+    const apiVersion = activity.versionized
+      ? `/v${activity.metadata.apiVersion}`
+      : ''
 
     const activityData: ActivityData = {
       service: activity.metadata.service,

@@ -128,7 +128,9 @@ presence.on('UpdateData', async () => {
         )?.textContent
         presenceData.smallImageKey = image?.src
         presenceData.smallImageText = image?.nextElementSibling?.textContent
-        presenceData.buttons = [{ label: 'Read Post', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Post', url: href },
+        ]
       }
       else {
         presenceData.details = 'Viewing the blog'

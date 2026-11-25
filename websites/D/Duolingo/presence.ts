@@ -111,7 +111,9 @@ function handleLesson(_path: string | string[]) {
     || document.querySelector('[data-test="daily-quest-progress-slide"]')
     || document.querySelector('[data-test="session-complete-slide"]')
   ) {
-    const path = user.lesson.finished ? [user.lesson.finished] : _path
+    const path = user.lesson.finished
+      ? [user.lesson.finished]
+      : _path
 
     switch (true) {
       case path.includes('legendary'):
@@ -373,7 +375,9 @@ presence.on('UpdateData', async () => {
       if (path[3])
         presenceData.state = `Viewing ${path[3]}`
       presenceData.smallImageKey = users[i]?.img ?? img ?? IMAGE.profileDuo
-      presenceData.smallImageText = path[1] === 'u' ? displayName : username
+      presenceData.smallImageText = path[1] === 'u'
+        ? displayName
+        : username
       break
     }
     case 'settings':

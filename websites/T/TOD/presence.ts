@@ -123,7 +123,9 @@ presence.on('UpdateData', async () => {
             presenceData.buttons = [
               {
                 label: `Watch ${
-                  presence.getVideoType() === 'show' ? 'Show' : 'Movie'
+                  presence.getVideoType() === 'show'
+                    ? 'Show'
+                    : 'Movie'
                 }`,
                 url: href,
               },
@@ -137,14 +139,18 @@ presence.on('UpdateData', async () => {
         }
         else {
           presenceData.details = `Viewing ${
-            presence.getVideoType() === 'show' ? 'Show' : 'Movie'
+            presence.getVideoType() === 'show'
+              ? 'Show'
+              : 'Movie'
           }:`
           presenceData.state = presence.getVideoTitle()?.replace(/.+/, '')
 
           presenceData.buttons = [
             {
               label: `View ${
-                presence.getVideoType() === 'show' ? 'Show' : 'Movie'
+                presence.getVideoType() === 'show'
+                  ? 'Show'
+                  : 'Movie'
               }:`,
               url: href,
             },

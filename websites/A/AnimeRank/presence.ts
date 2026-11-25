@@ -54,12 +54,16 @@ async function pickCover(images?: AnimeImages): Promise<string | undefined> {
   ]
   const tried = new Set<string>()
   for (const raw of candidates) {
-    const url = raw ? toProxyUrl(raw) : ''
+    const url = raw
+      ? toProxyUrl(raw)
+      : ''
     if (!url || tried.has(url))
       continue
     tried.add(url)
     try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(8000) })
+      const res = await fetch(url, {
+        signal: AbortSignal.timeout(8000),
+      })
       const type = res.headers.get('content-type') ?? ''
       if (res.ok && !res.redirected && /^image\/(?:jpeg|png|webp|gif)/.test(type))
         return url
@@ -72,7 +76,9 @@ async function pickCover(images?: AnimeImages): Promise<string | undefined> {
 }
 
 async function loadAnime(id: string): Promise<AnimeInfo> {
-  const res = await fetch(`/api/anime/${id}`, { signal: AbortSignal.timeout(8000) })
+  const res = await fetch(`/api/anime/${id}`, {
+    signal: AbortSignal.timeout(8000),
+  })
   if (!res.ok)
     throw new Error(`HTTP ${res.status}`)
   const body = await res.json()
@@ -166,7 +172,9 @@ presence.on('UpdateData', async () => {
     const title = anime?.title || titleFromDocument()
     // The watch page also has preview/background <video> elements; read the main player only.
     const video = document.querySelector<HTMLVideoElement>('#ar-main-video')
-      ?? [...document.querySelectorAll<HTMLVideoElement>('video')]
+      ?? [
+        ...document.querySelectorAll<HTMLVideoElement>('video'),
+      ]
         .filter(v => Number.isFinite(v.duration))
         .sort((a, b) => b.duration - a.duration)[0]
         ?? null
@@ -214,8 +222,11 @@ presence.on('UpdateData', async () => {
       presenceData.state = title
       if (showCover && anime?.cover)
         presenceData.largeImageKey = anime.cover
-      if (showButtons)
-        presenceData.buttons = [{ label: 'Animeye Göz At', url: href }]
+      if (showButtons) {
+        presenceData.buttons = [
+          { label: 'Animeye Göz At', url: href },
+        ]
+      }
     }
     presenceData.smallImageKey = Assets.Viewing
   }

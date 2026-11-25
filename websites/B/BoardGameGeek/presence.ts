@@ -42,7 +42,9 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.details = 'Viewing a blog'
         presenceData.state = document.querySelector<HTMLAnchorElement>('.post_title > a')
-        presenceData.buttons = [{ label: 'View Blog', url: href }]
+        presenceData.buttons = [
+          { label: 'View Blog', url: href },
+        ]
       }
       break
     }
@@ -59,7 +61,9 @@ presence.on('UpdateData', async () => {
       )?.content
       presenceData.details = 'Reading a blog post'
       presenceData.state = postHeader
-      presenceData.buttons = [{ label: 'Read Post', url: postHeader }]
+      presenceData.buttons = [
+        { label: 'Read Post', url: postHeader },
+      ]
       break
     }
     case 'boardgame': {
@@ -68,7 +72,9 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
         '.game-header-image img',
       )
-      presenceData.buttons = [{ label: 'View Game', url: gameHeader }]
+      presenceData.buttons = [
+        { label: 'View Game', url: gameHeader },
+      ]
       switch (pathList[3]) {
         case 'credits': {
           presenceData.details = `Viewing credits for '${gameHeaderText}'`
@@ -119,7 +125,9 @@ presence.on('UpdateData', async () => {
         case 'geeklist': {
           presenceData.details = 'Viewing a GeekList'
           presenceData.state = document.querySelector('header h2')
-          presenceData.buttons = [{ label: 'View GeekList', url: href }]
+          presenceData.buttons = [
+            { label: 'View GeekList', url: href },
+          ]
           slideshow.addSlide(href, presenceData, 5000)
 
           const items = document.querySelectorAll<HTMLDivElement>(
@@ -351,7 +359,9 @@ presence.on('UpdateData', async () => {
     }
     case 'collection': {
       presenceData.details = 'Viewing a game collection'
-      presenceData.buttons = [{ label: 'View Collection', url: href }]
+      presenceData.buttons = [
+        { label: 'View Collection', url: href },
+      ]
       break
     }
     case 'fan': {
@@ -376,7 +386,9 @@ presence.on('UpdateData', async () => {
       else if (pathList[1]) {
         presenceData.details = 'Browsing a forum section'
         presenceData.state = document.querySelector<HTMLHeadingElement>('header h2')
-        presenceData.buttons = [{ label: 'View Forum', url: href }]
+        presenceData.buttons = [
+          { label: 'View Forum', url: href },
+        ]
       }
       else {
         presenceData.details = 'Browsing forums'
@@ -406,7 +418,9 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.details = 'Viewing a GeekList'
         presenceData.state = document.querySelector('header h2')
-        presenceData.buttons = [{ label: 'View GeekList', url: href }]
+        presenceData.buttons = [
+          { label: 'View GeekList', url: href },
+        ]
 
         const items = document.querySelectorAll<HTMLDivElement>(
           'gg-geeklist-items-by-geeklist gg-geeklist-item .geeklist-item',
@@ -456,7 +470,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing a GeekPreview'
       presenceData.state = title
       presenceData.largeImageKey = previewImage
-      presenceData.buttons = [{ label: 'View GeekPreview', url: href }]
+      presenceData.buttons = [
+        { label: 'View GeekPreview', url: href },
+      ]
 
       slideshow.addSlide(href, presenceData, 5000)
 
@@ -500,7 +516,9 @@ presence.on('UpdateData', async () => {
     case 'image': {
       presenceData.details = 'Viewing an image'
       presenceData.smallImageKey = document.querySelector<HTMLImageElement>('gg-image-nav img')
-      presenceData.buttons = [{ label: 'View Image', url: href }]
+      presenceData.buttons = [
+        { label: 'View Image', url: href },
+      ]
       break
     }
     case 'images': {
@@ -531,7 +549,9 @@ presence.on('UpdateData', async () => {
       const useGuildDetails = () => {
         presenceData.details = 'Viewing a guild'
         presenceData.state = document.querySelector('#name')
-        presenceData.buttons = [{ label: 'View Guild', url: href }]
+        presenceData.buttons = [
+          { label: 'View Guild', url: href },
+        ]
       }
 
       if (Number.isNaN(+pathList[1]!)) {
@@ -635,7 +655,9 @@ presence.on('UpdateData', async () => {
     case 'plays': {
       presenceData.details = 'Viewing a user\'s plays'
       presenceData.state = document.querySelector<HTMLAnchorElement>('.username a')
-      presenceData.buttons = [{ label: 'View Plays', url: href }]
+      presenceData.buttons = [
+        { label: 'View Plays', url: href },
+      ]
       break
     }
     case 'previews': {
@@ -657,7 +679,9 @@ presence.on('UpdateData', async () => {
     case 'tag': {
       presenceData.details = 'Viewing a tag'
       presenceData.state = document.querySelector<HTMLAnchorElement>('.tagtitle a')
-      presenceData.buttons = [{ label: 'View Tag', url: href }]
+      presenceData.buttons = [
+        { label: 'View Tag', url: href },
+      ]
       break
     }
     case 'tags': {
@@ -667,7 +691,9 @@ presence.on('UpdateData', async () => {
     case 'thread': {
       presenceData.details = 'Viewing a thread'
       presenceData.state = document.querySelector<HTMLAnchorElement>('.forum-header a')
-      presenceData.buttons = [{ label: 'View Thread', url: href }]
+      presenceData.buttons = [
+        { label: 'View Thread', url: href },
+      ]
       break
     }
     case 'threads': {
@@ -704,7 +730,9 @@ presence.on('UpdateData', async () => {
         ?.textContent
         ?.trim()}`
       presenceData.state = document.querySelector<HTMLAnchorElement>('.username a')
-      presenceData.buttons = [{ label: 'View User', url: href }]
+      presenceData.buttons = [
+        { label: 'View User', url: href },
+      ]
       if (avatar)
         presenceData.smallImageKey = avatar
       break

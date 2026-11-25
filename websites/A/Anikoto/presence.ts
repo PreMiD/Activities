@@ -140,7 +140,9 @@ window.addEventListener('message', (event) => {
         currentTime: Number.isFinite(currentTime) && currentTime >= 0
           ? currentTime
           : messageVideoData?.currentTime,
-        duration: Number.isFinite(duration) && duration > 0 ? duration : messageVideoData?.duration,
+        duration: Number.isFinite(duration) && duration > 0
+          ? duration
+          : messageVideoData?.duration,
         paused: postedPlaybackState,
         readyState: 4,
         sampledAt: Date.now(),
@@ -157,8 +159,12 @@ window.addEventListener('message', (event) => {
 
       messageVideoData = {
         currentTime,
-        duration: Number.isFinite(duration) && duration > 0 ? duration : undefined,
-        paused: hasAdvanced && !hasRecentExplicitPause() ? false : undefined,
+        duration: Number.isFinite(duration) && duration > 0
+          ? duration
+          : undefined,
+        paused: hasAdvanced && !hasRecentExplicitPause()
+          ? false
+          : undefined,
         readyState: 4,
         sampledAt: Date.now(),
         src: 'postMessage',
@@ -173,8 +179,12 @@ window.addEventListener('message', (event) => {
       || (payload.channel === 'megacloud' && payload.event === 'complete')
     ) {
       messageVideoData = {
-        currentTime: Number.isFinite(duration) ? duration : messageVideoData?.currentTime,
-        duration: Number.isFinite(duration) && duration > 0 ? duration : messageVideoData?.duration,
+        currentTime: Number.isFinite(duration)
+          ? duration
+          : messageVideoData?.currentTime,
+        duration: Number.isFinite(duration) && duration > 0
+          ? duration
+          : messageVideoData?.duration,
         paused: true,
         readyState: 4,
         sampledAt: Date.now(),
@@ -200,7 +210,9 @@ function truncate(text: Nullable<string>, maxLength = 128): string | undefined {
   if (!clean)
     return undefined
 
-  return clean.length > maxLength ? `${clean.slice(0, maxLength - 1)}...` : clean
+  return clean.length > maxLength
+    ? `${clean.slice(0, maxLength - 1)}...`
+    : clean
 }
 
 function safeDecode(value: string | undefined): string | undefined {
@@ -329,7 +341,9 @@ function getWatchInfo(): WatchInfo {
   const pathEpisode = document.location.pathname.match(/\/ep-([^/?#]+)/i)?.[1]
   const title = getAnimeTitle()
   const animeUrl = getAnimeUrl(watchMain, pathEpisode)
-  const episodeUrl = absoluteUrl(pathEpisode ? document.location.href : activeEpisode?.href || document.location.href)
+  const episodeUrl = absoluteUrl(pathEpisode
+    ? document.location.href
+    : activeEpisode?.href || document.location.href)
   const episodeLabel = truncate(
     pathEpisode
       ? `Episode ${safeDecode(pathEpisode)}`
@@ -385,7 +399,9 @@ function getPageContext(): { details?: string, state?: string, smallImageKey?: s
   if (pathname === '/' || pathname === '/home') {
     return {
       details: 'Browsing Anikoto',
-      state: pathname === '/' ? 'Landing page' : 'Home page',
+      state: pathname === '/'
+        ? 'Landing page'
+        : 'Home page',
       smallImageKey: Assets.Reading,
       smallImageText: 'Browsing',
     }
@@ -414,7 +430,9 @@ function getPageContext(): { details?: string, state?: string, smallImageKey?: s
 
     return {
       details: searchTerm ? 'Searching anime' : 'Browsing filters',
-      state: searchTerm ? truncate(searchTerm) : 'Filter page',
+      state: searchTerm
+        ? truncate(searchTerm)
+        : 'Filter page',
       smallImageKey: Assets.Search,
       smallImageText: 'Searching',
     }
@@ -432,7 +450,9 @@ function getPageContext(): { details?: string, state?: string, smallImageKey?: s
 
   const section = pathname.match(/^\/(latest-updated|new-release|most-viewed|status|type|watch2gether|random)(?:\/([^/?#]+))?/i)
   if (section) {
-    const label = getReadableSlug(section[2] ? `${section[1]} ${section[2]}` : section[1])
+    const label = getReadableSlug(section[2]
+      ? `${section[1]} ${section[2]}`
+      : section[1])
 
     return {
       details: 'Browsing Anikoto',
@@ -479,14 +499,20 @@ async function getSettings(): Promise<Settings> {
 
 function getVideoData(): IFrameVideoData | undefined {
   const candidates = [
-    { data: getPageVideoData(), priority: 3 },
+    {
+      data: getPageVideoData(),
+      priority: 3,
+    },
     {
       data: iframeData.pageUrl === document.location.href
         ? getFreshVideoData(iframeData.video ?? undefined, VIDEO_DATA_TTL_MS)
         : undefined,
       priority: 2,
     },
-    { data: getFreshVideoData(messageVideoData, MESSAGE_VIDEO_DATA_TTL_MS), priority: 1 },
+    {
+      data: getFreshVideoData(messageVideoData, MESSAGE_VIDEO_DATA_TTL_MS),
+      priority: 1,
+    },
   ].filter((candidate): candidate is VideoCandidate => !!candidate.data)
 
   const recentExplicitPause = candidates.find((candidate) => {
@@ -512,13 +538,20 @@ function getVideoData(): IFrameVideoData | undefined {
 
     const sampledDiff = (candidate.data.sampledAt ?? 0) - (best.data.sampledAt ?? 0)
 
-    if (Math.abs(sampledDiff) <= VIDEO_CANDIDATE_TIE_MS)
-      return candidate.priority > best.priority ? candidate : best
+    if (Math.abs(sampledDiff) <= VIDEO_CANDIDATE_TIE_MS) {
+      return candidate.priority > best.priority
+        ? candidate
+        : best
+    }
 
-    return sampledDiff > 0 ? candidate : best
+    return sampledDiff > 0
+      ? candidate
+      : best
   }, undefined)?.data
 
-  return latest ? inferPlaybackState(latest) : undefined
+  return latest
+    ? inferPlaybackState(latest)
+    : undefined
 }
 
 function getPageVideoData(): IFrameVideoData | undefined {
@@ -551,13 +584,25 @@ function normalizeFrameVideoData(
   const readyState = Number(videoData.readyState)
 
   return {
-    currentTime: Number.isFinite(currentTime) && currentTime >= 0 ? currentTime : undefined,
-    duration: Number.isFinite(duration) && duration > 0 ? duration : undefined,
-    paused: typeof videoData.paused === 'boolean' ? videoData.paused : undefined,
-    readyState: Number.isFinite(readyState) ? readyState : undefined,
+    currentTime: Number.isFinite(currentTime) && currentTime >= 0
+      ? currentTime
+      : undefined,
+    duration: Number.isFinite(duration) && duration > 0
+      ? duration
+      : undefined,
+    paused: typeof videoData.paused === 'boolean'
+      ? videoData.paused
+      : undefined,
+    readyState: Number.isFinite(readyState)
+      ? readyState
+      : undefined,
     sampledAt: Date.now(),
-    src: typeof videoData.src === 'string' ? videoData.src : undefined,
-    title: typeof videoData.title === 'string' ? truncate(videoData.title) : undefined,
+    src: typeof videoData.src === 'string'
+      ? videoData.src
+      : undefined,
+    title: typeof videoData.title === 'string'
+      ? truncate(videoData.title)
+      : undefined,
     url: absoluteUrl(frameUrl) ?? absoluteUrl(videoData.url) ?? document.location.href,
   }
 }
@@ -612,18 +657,39 @@ function getPostedPlaybackState(payload: {
       return false
   }
 
-  const states = [payload.event, payload.type, payload.state, payload.status]
+  const states = [
+    payload.event,
+    payload.type,
+    payload.state,
+    payload.status,
+  ]
     .map(value => value?.toLowerCase().replace(/[^a-z]/g, ''))
     .filter((value): value is string => !!value)
 
   if (!states.length)
     return undefined
 
-  if (states.some(state => ['pause', 'paused', 'playerpause', 'videopause', 'playbackpaused'].includes(state)))
+  if (states.some(state => [
+    'pause',
+    'paused',
+    'playerpause',
+    'videopause',
+    'playbackpaused',
+  ].includes(state))) {
     return true
+  }
 
-  if (states.some(state => ['play', 'playing', 'resume', 'resumed', 'playerplay', 'videoplay', 'playbackplaying'].includes(state)))
+  if (states.some(state => [
+    'play',
+    'playing',
+    'resume',
+    'resumed',
+    'playerplay',
+    'videoplay',
+    'playbackplaying',
+  ].includes(state))) {
     return false
+  }
 
   return undefined
 }
@@ -794,7 +860,9 @@ function buildWatchPresence(settings: Settings): PresenceData | undefined {
 
   const videoData = getVideoData()
   const paused = videoData?.paused
-  const playbackState = paused === undefined ? undefined : paused ? 'Paused' : 'Playing'
+  const playbackState = paused === undefined
+    ? undefined
+    : paused ? 'Paused' : 'Playing'
   const hasEpisodePath = /\/watch\/[^/]+\/ep-[^/?#]+/i.test(document.location.pathname)
   const hasEpisodeDataset = !!document.querySelector<HTMLElement>('#watch-main')?.dataset.epName
   const hasLoadedEpisodePlayer = !!document.querySelector('#player iframe, #w-servers .servers, #w-servers .tip b')
@@ -805,9 +873,13 @@ function buildWatchPresence(settings: Settings): PresenceData | undefined {
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: settings.privacy ? ActivityAssets.Logo : info.poster || ActivityAssets.Logo,
+    largeImageKey: settings.privacy
+      ? ActivityAssets.Logo
+      : info.poster || ActivityAssets.Logo,
     largeImageText: settings.privacy ? 'Anikoto' : info.title,
-    smallImageKey: paused === undefined ? Assets.Reading : paused ? Assets.Pause : Assets.Play,
+    smallImageKey: paused === undefined
+      ? Assets.Reading
+      : paused ? Assets.Pause : Assets.Play,
     smallImageText: playbackState ?? 'Episode page',
   }
 

@@ -68,13 +68,16 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageText = data?.app_name
 
       if (buttons) {
-        presenceData.buttons = [{
-          label: strings.buttonWatchStream,
-          url: document.location.href.split('?')[0] || document.location.href,
-        }, {
-          label: strings.buttonViewPage,
-          url: data.buy_ticket_url,
-        }]
+        presenceData.buttons = [
+          {
+            label: strings.buttonWatchStream,
+            url: document.location.href.split('?')[0] || document.location.href,
+          },
+          {
+            label: strings.buttonViewPage,
+            url: data.buy_ticket_url,
+          },
+        ]
       }
 
       if (data.thumbnail)

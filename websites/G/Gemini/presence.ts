@@ -110,7 +110,9 @@ presence.on('UpdateData', async () => {
     case /\/search$/.test(pathname): {
       const searchInput = document.querySelector<HTMLInputElement>('input[data-test-id="search-input"]')
       presenceData.details = strings.searchChat
-      presenceData.state = !privacy ? searchInput?.value : ''
+      presenceData.state = !privacy
+        ? searchInput?.value
+        : ''
       break
     }
     case /\/saved-info$/.test(pathname):

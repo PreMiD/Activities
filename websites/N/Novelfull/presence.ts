@@ -27,7 +27,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('genre')) {
     presenceData.details = 'Viewing Novels with Genre'
     presenceData.state = pathname.replace('/genre/', '')
-    presenceData.buttons = [{ label: 'Browse Genre', url: href }]
+    presenceData.buttons = [
+      { label: 'Browse Genre', url: href },
+    ]
   }
   else if (pathname.includes('chapter')) {
     const split = document
@@ -61,7 +63,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = `Viewing ${
       document.querySelector('[class="title"]')?.textContent
     }`
-    presenceData.buttons = [{ label: 'View Novel', url: href }]
+    presenceData.buttons = [
+      { label: 'View Novel', url: href },
+    ]
     presenceData.smallImageKey = Assets.Reading
   }
   if (!buttons)

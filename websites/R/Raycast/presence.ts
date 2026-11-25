@@ -35,14 +35,18 @@ presence.on('UpdateData', async () => {
     }
     else if (args[1] === 'changlog') {
       presenceData.details = 'Viewing Raycast Changelog'
-      presenceData.buttons = [{ label: 'View Raycast Changlog', url: href }]
+      presenceData.buttons = [
+        { label: 'View Raycast Changlog', url: href },
+      ]
     }
     else if (args[1] === 'blog') {
       presenceData.details = 'Exploring Raycast Blog'
       if (args[2]) {
         presenceData.details = 'Reading Blog Post'
         presenceData.state = document.title
-        presenceData.buttons = [{ label: 'View Blog Post', url: href }]
+        presenceData.buttons = [
+          { label: 'View Blog Post', url: href },
+        ]
       }
     }
     else if (args[1] === 'pricing') {
@@ -54,7 +58,9 @@ presence.on('UpdateData', async () => {
     else if (args[1] && args[2] && document.querySelector('[class^="ExtensionPage_extensionInstallButton__"]')) {
       presenceData.details = 'Viewing Extension'
       presenceData.state = document.querySelector('[class^="ExtensionPage_title__"]')?.textContent ?? 'Unknown Extension'
-      presenceData.buttons = [{ label: 'View Extension', url: href }]
+      presenceData.buttons = [
+        { label: 'View Extension', url: href },
+      ]
     }
     else if (args[1] && document.querySelector('[class^="UserProfile_mainInfo__"]')) {
       presenceData.details = 'Viewing User Profile'
@@ -62,15 +68,21 @@ presence.on('UpdateData', async () => {
       const handle = document.querySelector('[class^="OwnerDetails_nameAndHandle__"] h2')?.textContent ?? ''
       presenceData.state = [
         username,
-        handle ? `(${handle})` : '',
+        handle
+          ? `(${handle})`
+          : '',
       ].filter(Boolean).join(' ')
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
     }
   }
   else if (document.location.hostname === 'developers.raycast.com') {
     presenceData.details = 'Reading Raycast Developer Docs'
     presenceData.state = document.title
-    presenceData.buttons = [{ label: 'View Documentation', url: href }]
+    presenceData.buttons = [
+      { label: 'View Documentation', url: href },
+    ]
   }
   presence.setActivity(presenceData)
 })

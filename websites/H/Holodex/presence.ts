@@ -305,7 +305,9 @@ const dataUpdater = {
           image: path.length < 3
             ? ActivityAssets.Mdiaccountboxmultiple
             : ActivityAssets.Mdiaccountbox,
-          hover: path.length < 3 ? 'Channels' : `${getInfo.channel().title}`,
+          hover: path.length < 3
+            ? 'Channels'
+            : `${getInfo.channel().title}`,
         }
       case 'library':
         return {

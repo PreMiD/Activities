@@ -340,7 +340,12 @@ export async function getWaitingRoomInfo(): Promise<{
     'uiscript.UI_WaitingRoom.Inst.max_player_count': 0,
     'uiscript.UI_WaitingRoom.Inst.players.length': 0,
   })
-  return { roomId, mode, maxPlayers, currentPlayers }
+  return {
+    roomId,
+    mode,
+    maxPlayers,
+    currentPlayers,
+  }
 }
 
 export async function getVariable<T extends Record<string, unknown>>(

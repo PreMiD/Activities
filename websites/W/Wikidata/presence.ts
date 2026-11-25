@@ -106,7 +106,9 @@ function getURLParam(urlParam: string): string {
     }
     return (
       details[
-        [...document.querySelector('body')?.classList ?? []]
+        [
+          ...document.querySelector('body')?.classList ?? [],
+        ]
           .find(v => /ns--?\d/.test(v))
           ?.slice(3) ?? ''
       ] || 'Viewing a page'

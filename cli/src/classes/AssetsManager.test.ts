@@ -563,11 +563,13 @@ const presence = new Presence({ clientId: '123456789012345678' })`)
         },
       ]
 
-      const mockCdnAssets: CdnAsset[] = [{
-        type: AssetType.Logo as const,
-        url: `${assetsManager.baseUrl}/logo.png`,
-        mimeType: MimeType.PNG,
-      }]
+      const mockCdnAssets: CdnAsset[] = [
+        {
+          type: AssetType.Logo as const,
+          url: `${assetsManager.baseUrl}/logo.png`,
+          mimeType: MimeType.PNG,
+        },
+      ]
 
       vi.spyOn(assetsManager, 'getAssets').mockResolvedValue(mockAssets)
       vi.spyOn(assetsManager, 'getCdnAssets').mockResolvedValue(mockCdnAssets)

@@ -32,7 +32,9 @@ function getText(selector: string): string | undefined {
     return undefined
 
   const text = element.textContent?.trim()
-  return text && text !== '-' ? text : undefined
+  return text && text !== '-'
+    ? text
+    : undefined
 }
 
 function getProgress(): string | undefined {
@@ -43,7 +45,10 @@ function getProgress(): string | undefined {
     question && `Question ${question}`,
   ].filter(Boolean).join(', ')
 
-  return [getText('#set-name-info'), position].filter(Boolean).join(' - ') || undefined
+  return [
+    getText('#set-name-info'),
+    position,
+  ].filter(Boolean).join(' - ') || undefined
 }
 
 function isPaused(): boolean {
@@ -118,7 +123,9 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? 'Paused' : 'Playing'
 
-    const progress = showProgress ? getProgress() : undefined
+    const progress = showProgress
+      ? getProgress()
+      : undefined
     if (progress)
       presenceData.state = progress
   }

@@ -42,7 +42,9 @@
   }
 
   function cleanText(value: unknown): string {
-    return typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : ''
+    return typeof value === 'string'
+      ? value.replace(/\s+/g, ' ').trim()
+      : ''
   }
 
   function episodeFromText(value: unknown): string {
@@ -62,7 +64,9 @@
     const episode = text.match(/(?:серия|эпизод|episode|ep)\s*(\d+)/i)
       || text.match(/(\d+)\s*(?:серия|эпизод|episode|ep)/i)
 
-    return episode ? `Серия ${episode[1]}` : ''
+    return episode
+      ? `Серия ${episode[1]}`
+      : ''
   }
 
   function selectedOption(selector: string): string {
@@ -94,8 +98,11 @@
         dataElement.dataset.episode || dataElement.dataset.series || '',
       )
 
-      if (episode)
-        return season ? `Сезон ${season} • серия ${episode}` : `Серия ${episode}`
+      if (episode) {
+        return season
+          ? `Сезон ${season} • серия ${episode}`
+          : `Серия ${episode}`
+      }
     }
 
     const selectors = [
@@ -129,7 +136,9 @@
       /\bcurrent\s*:\s*\{\s*season\s*:\s*(\d+)\s*,\s*episode\s*:\s*(["'])([^"']+)\2\s*\}/,
     )
 
-    return initial ? `Сезон ${initial[1]} • серия ${initial[3]}` : ''
+    return initial
+      ? `Сезон ${initial[1]} • серия ${initial[3]}`
+      : ''
   }
 
   async function send(force = false): Promise<void> {
@@ -144,7 +153,9 @@
 
     iframe.send({
       url,
-      duration: video ? knownDuration(video) : 0,
+      duration: video
+        ? knownDuration(video)
+        : 0,
       currentTime: video?.currentTime ?? 0,
       paused: video?.paused !== false,
       episode: findEpisode(),

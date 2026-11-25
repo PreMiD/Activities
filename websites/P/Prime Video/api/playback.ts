@@ -44,7 +44,12 @@ function trackPlaybackRequest(entry: PerformanceEntry): void {
     if (previous && entry.startTime < previous.startTime)
       return
 
-    const request = { gti, origin: url.origin, params: url.searchParams, startTime: entry.startTime }
+    const request = {
+      gti,
+      origin: url.origin,
+      params: url.searchParams,
+      startTime: entry.startTime,
+    }
     playbackRequests.set(gti, request)
     if (playbackRequests.size > MAX_TRACKED_TITLES)
       playbackRequests.delete(playbackRequests.keys().next().value!)

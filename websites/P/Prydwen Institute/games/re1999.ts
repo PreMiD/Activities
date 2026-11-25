@@ -36,7 +36,9 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
             ...presenceData,
             state: name,
             smallImageKey: Assets.Question,
-            smallImageText: [...team.querySelectorAll('.team-details .avatar')].map(char => char.querySelector<HTMLImageElement>('[data-main-image]')?.alt).join(', '),
+            smallImageText: [
+              ...team.querySelectorAll('.team-details .avatar'),
+            ].map(char => char.querySelector<HTMLImageElement>('[data-main-image]')?.alt).join(', '),
           }
           slideshow.addSlide(name?.textContent ?? '', data, 5000)
         }

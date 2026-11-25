@@ -52,5 +52,8 @@ presence.on('UpdateData', async () => {
   if (presenceData === null)
     return
 
-  presence.setActivity({ ...BASE, ...presenceData })
+  presence.setActivity({
+    ...BASE,
+    ...presenceData,
+  })
 })

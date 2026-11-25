@@ -41,7 +41,9 @@ function getCourseInfo(): string {
 
 function joinStateParts(parts: Array<string | false | null | undefined>): string | undefined {
   const filtered = parts.filter(Boolean) as string[]
-  return filtered.length > 0 ? filtered.join(' • ') : undefined
+  return filtered.length > 0
+    ? filtered.join(' • ')
+    : undefined
 }
 
 function cleanCourseTitle(text: string): string {
@@ -182,7 +184,9 @@ async function updatePresence(): Promise<void> {
         : withEmoji('Vitamine', '💜')
 
       presenceData.state = joinStateParts([
-        showSessionType && (isExam ? 'Épreuve' : isAnchoring ? 'Ancrage' : 'Session'),
+        showSessionType && (isExam
+          ? 'Épreuve'
+          : isAnchoring ? 'Ancrage' : 'Session'),
         showQuestionNumber && questionNumber,
         showQcmCountdown && cleanCountdown,
       ])

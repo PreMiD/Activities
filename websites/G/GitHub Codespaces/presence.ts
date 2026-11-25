@@ -629,7 +629,9 @@ presence.on('UpdateData', async () => {
           return false
         return new RegExp(match[1]!, match[2]).test(filename ?? '')
       }) ?? ''
-    ] ?? (syntaxMode in langMap ? langMap[syntaxMode] : null)
+    ] ?? (syntaxMode in langMap
+      ? langMap[syntaxMode]
+      : null)
 
     if (lastFile !== filepath) {
       lastFile = filepath!

@@ -114,7 +114,9 @@ presence.on('UpdateData', async () => {
 
   if (data) {
     presenceData.details = data.name
-    presenceData.state = displayType === 3 && data.album ? data.album : data.artist
+    presenceData.state = displayType === 3 && data.album
+      ? data.album
+      : data.artist
 
     if (data.paused && hidePaused) {
       clearActivity()

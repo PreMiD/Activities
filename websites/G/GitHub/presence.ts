@@ -60,8 +60,12 @@ presence.on('UpdateData', async () => {
   ])
 
   for (const [path, data] of Object.entries(pages)) {
-    if (pathname.includes(`/${path}`))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (pathname.includes(`/${path}`)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
   if (hostname === 'github.com') {
     switch (true) {
@@ -77,7 +81,9 @@ presence.on('UpdateData', async () => {
           ?.textContent
           ?.split('·')[0]
           ?.trim()
-        presenceData.buttons = [{ label: 'View Profile', url: href }]
+        presenceData.buttons = [
+          { label: 'View Profile', url: href },
+        ]
         if (cover) {
           presenceData.largeImageKey = `${
             document.querySelector<HTMLImageElement>('img.avatar-user')?.src
@@ -97,7 +103,9 @@ presence.on('UpdateData', async () => {
           target: pathname.split('/')[4],
           id: pathname.split('/')[4],
         }
-        presenceData.buttons = [{ label: 'View Repository', url: href }]
+        presenceData.buttons = [
+          { label: 'View Repository', url: href },
+        ]
         if (cover && !privacy) {
           presenceData.largeImageKey = `https://avatars.githubusercontent.com/u/${
             document.querySelector<HTMLMetaElement>(
@@ -170,7 +178,9 @@ presence.on('UpdateData', async () => {
                 document.querySelector('bdi[data-testid="issue-title"]')
                   ?.textContent
               }`
-              presenceData.buttons = [{ label: 'View Issue', url: href }]
+              presenceData.buttons = [
+                { label: 'View Issue', url: href },
+              ]
             }
           }
           else {
@@ -209,7 +219,9 @@ presence.on('UpdateData', async () => {
           } - ${
             document.querySelector('[href="#top"]')?.textContent?.trim()
           }`
-          presenceData.buttons = [{ label: 'View Pull Request', url: href }]
+          presenceData.buttons = [
+            { label: 'View Pull Request', url: href },
+          ]
         }
         else if (pathname.endsWith('/discussions')) {
           if (privacy) {
@@ -236,7 +248,9 @@ presence.on('UpdateData', async () => {
             document.querySelector<HTMLHeadingElement>('h1.gh-header-title')
               ?.textContent
           }`
-          presenceData.buttons = [{ label: 'View Discussion', url: href }]
+          presenceData.buttons = [
+            { label: 'View Discussion', url: href },
+          ]
         }
         else if (
           pathname.includes('/pulse')
@@ -345,7 +359,9 @@ presence.on('UpdateData', async () => {
           .querySelector('span.p-nickname')
           ?.textContent
           ?.trim()
-        presenceData.buttons = [{ label: 'View Profile', url: href }]
+        presenceData.buttons = [
+          { label: 'View Profile', url: href },
+        ]
         if (cover) {
           presenceData.largeImageKey = `${
             document.querySelector<HTMLImageElement>(
@@ -368,8 +384,14 @@ presence.on('UpdateData', async () => {
           name: document.querySelector('[itemprop = \'name\'] > a')?.innerHTML,
         }
         const isPrivateGist = !!document.querySelector('.Label')
-        presenceData.buttons = isPrivateGist && !privategist ? undefined : [{ label: 'View Gist', url: href }]
-        presenceData.details = isPrivateGist && !privategist ? 'Viewing a private gist' : `Browsing gist ${gist.name} by ${gist.owner}`
+        presenceData.buttons = isPrivateGist && !privategist
+          ? undefined
+          : [
+              { label: 'View Gist', url: href },
+            ]
+        presenceData.details = isPrivateGist && !privategist
+          ? 'Viewing a private gist'
+          : `Browsing gist ${gist.name} by ${gist.owner}`
     }
   }
   if (!buttons)

@@ -87,7 +87,11 @@ function parseCssColorToRgb(color: string): RGB | null {
 
   const rgbMatch = normalized.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/)
   if (rgbMatch) {
-    return [Number(rgbMatch[1]), Number(rgbMatch[2]), Number(rgbMatch[3])]
+    return [
+      Number(rgbMatch[1]),
+      Number(rgbMatch[2]),
+      Number(rgbMatch[3]),
+    ]
   }
 
   const hexMatch = normalized.match(/^#([0-9a-f]{6})$/)
@@ -119,11 +123,15 @@ function rgbToHsl([r, g, b]: RGB): HSL {
 
   if (max !== min) {
     const d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    s = l > 0.5
+      ? d / (2 - max - min)
+      : d / (max + min)
 
     switch (max) {
       case r:
-        h = (g - b) / d + (g < b ? 6 : 0)
+        h = (g - b) / d + (g < b
+          ? 6
+          : 0)
         break
       case g:
         h = (b - r) / d + 2
@@ -275,7 +283,9 @@ function getLogoByColor(
         : 0
 
   const maxIndex = palette.length - 1
-  const index = rawIndex < 0 || rawIndex > maxIndex ? 0 : rawIndex
+  const index = rawIndex < 0 || rawIndex > maxIndex
+    ? 0
+    : rawIndex
 
   const color = palette[index] ?? palette[0]!
   return isPlaying ? color.playing : color.paused
@@ -324,7 +334,9 @@ presence.on('UpdateData', async () => {
 
   const buttonStyle
     = buttonType === 0
-      ? (showRepeatIcon ? Assets.Repeat : (isPlaying ? Assets.Play : Assets.Pause))
+      ? (showRepeatIcon
+          ? Assets.Repeat
+          : (isPlaying ? Assets.Play : Assets.Pause))
       : showRepeatIcon
         ? Assets.Repeat
         : buttonType === 1

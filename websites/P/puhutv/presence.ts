@@ -22,7 +22,9 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/puhutv/assets/logo.png',
       startTimestamp: Math.floor(Date.now() / 1000),
       details: 'Geziniyor...',
-      state: category && category.textContent ? category.textContent : 'Ana Sayfa',
+      state: category && category.textContent
+        ? category.textContent
+        : 'Ana Sayfa',
     })
   }
   else {

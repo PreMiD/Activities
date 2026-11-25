@@ -26,7 +26,9 @@ presence.on('UpdateData', async () => {
   const pathSplit = pathname.split('/').filter(x => x)
   let attributes
   if (hostname.includes('hangar')) {
-    attributes = [...document.querySelector('main')?.attributes ?? []].map(
+    attributes = [
+      ...document.querySelector('main')?.attributes ?? [],
+    ].map(
       x => x.value,
     )
   }
@@ -64,7 +66,9 @@ presence.on('UpdateData', async () => {
       }
       else if (pageType === PageType.User) {
         const memberSince = new Date(
-          [...document.querySelectorAll('span')]
+          [
+            ...document.querySelectorAll('span'),
+          ]
             .find(span => span.textContent?.includes('Member'))
             ?.textContent
             ?.replace(/Member since /i, '')
@@ -72,13 +76,17 @@ presence.on('UpdateData', async () => {
         )
         // I expect HangarMC's devs to eventually fix the capitalization on this span
         const projectCount = Number(
-          [...document.querySelectorAll('span')]
+          [
+            ...document.querySelectorAll('span'),
+          ]
             .find(x => x.textContent?.toLowerCase().includes('projects'))
             ?.textContent
             ?.replace(/\D/g, '')
             .trim(),
         )
-        const downloads = [...document.querySelectorAll('span')]
+        const downloads = [
+          ...document.querySelectorAll('span'),
+        ]
           .filter(span => span.textContent?.includes('Downloads'))
           .map(x => x.textContent?.replace(/\D/g, '').trim())
           .map(x => Number(x))
@@ -164,7 +172,9 @@ presence.on('UpdateData', async () => {
           break
         }
         default: {
-          presenceData.details = location.pathname === '/' ? 'Viewing homepage' : 'Browsing website'
+          presenceData.details = location.pathname === '/'
+            ? 'Viewing homepage'
+            : 'Browsing website'
           presenceData.state = document.querySelector('h1')?.textContent
           break
         }

@@ -78,8 +78,12 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/TVING/assets/logo.png',
       details: document.querySelector('.live-title__channel')?.textContent,
       state: '라이브',
-      smallImageKey: video && video.paused ? Assets.Pause : Assets.Play,
-      smallImageText: video && video.paused ? '일시 정지' : '재생 중',
+      smallImageKey: video && video.paused
+        ? Assets.Pause
+        : Assets.Play,
+      smallImageText: video && video.paused
+        ? '일시 정지'
+        : '재생 중',
       endTimestamp: (() => {
         if (video && !video.paused)
           return getTimestampsFromMedia(video).pop()
@@ -107,12 +111,21 @@ presence.on('UpdateData', async () => {
       if (typeof data === 'function') {
         const output = await data(document.querySelector('video') ?? undefined)
 
-        if (output?.largeImageKey)
+        if (output?.largeImageKey) {
           presenceData = output
-        else presenceData = { ...presenceData, ...output } as PresenceData
+        }
+        else {
+          presenceData = {
+            ...presenceData,
+            ...output,
+          } as PresenceData
+        }
       }
       else {
-        presenceData = { ...presenceData, ...data } as PresenceData
+        presenceData = {
+          ...presenceData,
+          ...data,
+        } as PresenceData
       }
     }
   }

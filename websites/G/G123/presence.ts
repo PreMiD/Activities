@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1564985155863580781',
@@ -57,15 +57,23 @@ presence.on('UpdateData', async () => {
     if (showGame && game) {
       presenceData.name = game
       presenceData.details = 'G123 でプレイ中'
-      const image = showImage ? getOgImage() : null
+      const image = showImage
+        ? getOgImage()
+        : null
       if (image) {
         presenceData.largeImageKey = image
         presenceData.smallImageKey = LOGO
         presenceData.smallImageText = 'G123'
       }
+      else {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = 'プレイ中'
+      }
     }
     else {
       presenceData.details = 'ゲームをプレイ中'
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'プレイ中'
     }
     presenceData.startTimestamp = playingSince
     presence.setActivity(presenceData)
@@ -77,13 +85,22 @@ presence.on('UpdateData', async () => {
   // ***** ゲーム詳細 (g123.jp/game/:slug) *****
   if (slug) {
     presenceData.details = 'ゲーム詳細を閲覧中'
-    const game = showGame ? getGameName() : null
+    const game = showGame
+      ? getGameName()
+      : null
     if (game)
       presenceData.state = game
   }
   // ***** 一覧・ランキング *****
   else if (pathname.startsWith('/games')) {
-    presenceData.details = pathname.includes('ranking') ? 'ランキングを閲覧中' : 'ゲームを探しています'
+    if (pathname.includes('ranking')) {
+      presenceData.details = 'ランキングを閲覧中'
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = 'ランキングを閲覧中'
+    }
+    else {
+      presenceData.details = 'ゲームを探しています'
+    }
   }
   else {
     presenceData.details = 'トップページを閲覧中'

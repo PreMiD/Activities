@@ -115,7 +115,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Viewing an item'
     const itemTitle = document.querySelector<HTMLSpanElement>('span.web_ui__Text__title')?.textContent
     const summaryElement = document.querySelectorAll<HTMLDivElement>('div.summary-max-lines-4')[1]
-    const summary = summaryElement ? Array.from(summaryElement.querySelectorAll<HTMLSpanElement>('span')).map(span => span.textContent?.trim()).filter(Boolean).join(' ') : ''
+    const summary = summaryElement
+      ? Array.from(summaryElement.querySelectorAll<HTMLSpanElement>('span')).map(span => span.textContent?.trim()).filter(Boolean).join(' ')
+      : ''
     const itemPrice = document.querySelector<HTMLDivElement>('div.web_ui__Text__title')?.textContent // Price of the item all taxes included
     const editButton = document.querySelector<HTMLButtonElement>('[data-testid*="item-edit-button"]')
     const isMyItem = editButton ? 'my ' : ''
@@ -125,7 +127,9 @@ presence.on('UpdateData', async () => {
         presenceData.state += ` (${itemPrice})`
       }
       if (summary) {
-        presenceData.details = `Viewing ${isMyItem}item: ${itemTitle}${itemPrice ? ` (${itemPrice})` : ''}`
+        presenceData.details = `Viewing ${isMyItem}item: ${itemTitle}${itemPrice
+          ? ` (${itemPrice})`
+          : ''}`
         presenceData.state = summary
       }
     }

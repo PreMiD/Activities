@@ -15,14 +15,38 @@ interface PageInfo {
 }
 
 const sites: SiteConfig[] = [
-  { name: 'OlympusStaff', hosts: ['olympustaff.com', 'www.olympustaff.com'] },
-  { name: 'Azora Manga', hosts: ['azorafly.com', 'www.azorafly.com'] },
-  { name: 'MangaLek', hosts: ['mangalik.net', 'www.mangalik.net'] },
-  { name: 'MangaTime', hosts: ['mangatime.org', 'www.mangatime.org'] },
-  { name: 'MangaSwan', hosts: ['mangaswan.com', 'www.mangaswan.com'] },
-  { name: 'MangaClub', hosts: ['mangaclub.net', 'www.mangaclub.net'] },
-  { name: 'Abmics', hosts: ['abmics.com', 'www.abmics.com'] },
-  { name: 'ToonArab', hosts: ['toonarab.com', 'www.toonarab.com'] },
+  {
+    name: 'OlympusStaff',
+    hosts: ['olympustaff.com', 'www.olympustaff.com'],
+  },
+  {
+    name: 'Azora Manga',
+    hosts: ['azorafly.com', 'www.azorafly.com'],
+  },
+  {
+    name: 'MangaLek',
+    hosts: ['mangalik.net', 'www.mangalik.net'],
+  },
+  {
+    name: 'MangaTime',
+    hosts: ['mangatime.org', 'www.mangatime.org'],
+  },
+  {
+    name: 'MangaSwan',
+    hosts: ['mangaswan.com', 'www.mangaswan.com'],
+  },
+  {
+    name: 'MangaClub',
+    hosts: ['mangaclub.net', 'www.mangaclub.net'],
+  },
+  {
+    name: 'Abmics',
+    hosts: ['abmics.com', 'www.abmics.com'],
+  },
+  {
+    name: 'ToonArab',
+    hosts: ['toonarab.com', 'www.toonarab.com'],
+  },
 ]
 
 const sensitiveTerms = [
@@ -206,7 +230,9 @@ function cleanSeriesTitle(value: string, site: SiteConfig, chapter?: string): st
 }
 
 function seriesLinkFromPage(): HTMLAnchorElement | undefined {
-  const candidates = [...document.querySelectorAll<HTMLAnchorElement>('a[href]')]
+  const candidates = [
+    ...document.querySelectorAll<HTMLAnchorElement>('a[href]'),
+  ]
     .filter((link) => {
       const href = absoluteUrl(link.getAttribute('href'))
       if (!href || href === location.href)
@@ -302,7 +328,14 @@ function detectPageInfo(site: SiteConfig): PageInfo {
     }
   }
 
-  const mangaIndex = lower.findIndex(part => ['manga', 'manhwa', 'manhua', 'webtoon', 'comic', 'series'].includes(part))
+  const mangaIndex = lower.findIndex(part => [
+    'manga',
+    'manhwa',
+    'manhua',
+    'webtoon',
+    'comic',
+    'series',
+  ].includes(part))
   const chapterIndex = lower.findIndex(part => /^(?:chapter|ch)(?:-|$)/i.test(part))
   if (chapterIndex >= 0) {
     chapter ??= parts[chapterIndex]!.match(/(?:chapter|ch)-?(\d+(?:\.\d+)?)/i)?.[1]
@@ -461,7 +494,9 @@ async function isSensitive(info: PageInfo, seriesDoc?: Document): Promise<boolea
   if (classificationCache.has(cacheKey))
     return classificationCache.get(cacheKey) ?? false
 
-  const result = hasSensitiveTags(document) || (seriesDoc ? hasSensitiveTags(seriesDoc) : false)
+  const result = hasSensitiveTags(document) || (seriesDoc
+    ? hasSensitiveTags(seriesDoc)
+    : false)
   classificationCache.set(cacheKey, result)
   return result
 }
@@ -520,7 +555,9 @@ function getSeriesTitle(site: SiteConfig, info: PageInfo, seriesDoc?: Document):
   if (linkedTitle)
     return linkedTitle
 
-  return info.seriesSlug ? slugToTitle(info.seriesSlug.replace(/-s$/i, '')) : 'مانجا / مانهوا'
+  return info.seriesSlug
+    ? slugToTitle(info.seriesSlug.replace(/-s$/i, ''))
+    : 'مانجا / مانهوا'
 }
 
 presence.on('UpdateData', async () => {
@@ -572,8 +609,11 @@ presence.on('UpdateData', async () => {
 
     if (showTimestamp)
       presenceData.startTimestamp = sessionTimestamp
-    if (showButtons)
-      presenceData.buttons = [{ label: 'فتح الفصل', url: location.href }]
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'فتح الفصل', url: location.href },
+      ]
+    }
   }
   else if (info.kind === 'series') {
     presenceData.details = `يتصفح ${seriesTitle}`
@@ -581,8 +621,11 @@ presence.on('UpdateData', async () => {
 
     if (showTimestamp)
       presenceData.startTimestamp = sessionTimestamp
-    if (showButtons)
-      presenceData.buttons = [{ label: 'فتح العمل', url: location.href }]
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'فتح العمل', url: location.href },
+      ]
+    }
   }
   else {
     presenceData.details = `يتصفح ${site.name}`

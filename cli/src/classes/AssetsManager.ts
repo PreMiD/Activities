@@ -91,7 +91,9 @@ export class AssetsManager {
   get baseUrl() {
     const service = this.encodeURIComponentAndQuotes(sanitazeFolderName(this.activity.service))
     const folderLetter = encodeURIComponent(getFolderLetter(this.activity.service))
-    const version = this.versionized ? `/v${this.activity.apiVersion}` : ''
+    const version = this.versionized
+      ? `/v${this.activity.apiVersion}`
+      : ''
     return `${CDN_BASE_URL}/PreMiD/websites/${folderLetter}/${service}${version}/assets`
   }
 
@@ -154,7 +156,9 @@ export class AssetsManager {
         this.imageCache.set(asset.url, dimensionAndType)
       }
       catch (err: unknown) {
-        const message = `Failed to validate image URL (${asset.url}): ${err instanceof Error ? err.message : String(err)}`
+        const message = `Failed to validate image URL (${asset.url}): ${err instanceof Error
+          ? err.message
+          : String(err)}`
         return this.handleValidationError(message, asset, kill, SarifRuleId.imageSizeCheck)
       }
     }
@@ -416,7 +420,9 @@ export class AssetsManager {
         })
       }
       else if (asset.url !== cdnAsset.url) {
-        const method = mimeType === cdnAsset.mimeType ? 'PUT' : 'POST'
+        const method = mimeType === cdnAsset.mimeType
+          ? 'PUT'
+          : 'POST'
         if (method !== 'PUT') {
           toBeDeleted.add(cdnAsset.url)
         }
@@ -522,7 +528,9 @@ export class AssetsManager {
     let replacedAny = false
     if (toBeMoved.size) {
       await this.uploadAssets(toBeMoved)
-      await this.deleteAssets([...toBeMoved.keys()])
+      await this.deleteAssets([
+        ...toBeMoved.keys(),
+      ])
 
       replacedAny = await this.replaceInFiles(toBeMoved)
     }
