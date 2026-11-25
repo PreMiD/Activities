@@ -1,0 +1,95 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "741505960895315979",
+    "name": "yodev"
+  },
+  "service": "PortSwigger Web Security Academy",
+  "description": {
+    "en": "PortSwigger Web Security Academy is a free online learning platform for web security, with interactive labs and guided learning paths."
+  },
+  "url": "portswigger.net",
+  "regExp": "^https?[:][/][/](?:www[.])?portswigger[.]net[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/jQH4vOH.png",
+  "thumbnail": "https://i.imgur.com/CH6GEWw.png",
+  "color": "#FF6633",
+  "category": "other",
+  "tags": [
+    "web-security",
+    "cybersecurity",
+    "learning"
+  ],
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy mode",
+      "icon": "fa-solid fa-user-lock",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fa-solid fa-clock",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show view page button",
+      "icon": "fa-solid fa-link",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showRank",
+      "title": "Show Hall of Fame rank",
+      "icon": "fa-solid fa-ranking-star",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showProgress",
+      "title": "Show solved labs and progress",
+      "icon": "fa-solid fa-chart-simple",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showLevel",
+      "title": "Show current level",
+      "icon": "fa-solid fa-award",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showUsername",
+      "title": "Show username",
+      "icon": "fa-solid fa-user",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showDifficulty",
+      "title": "Show lab difficulty",
+      "icon": "fa-solid fa-signal",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
+    }
+  ]
+}
