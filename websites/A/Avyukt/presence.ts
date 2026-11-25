@@ -11,6 +11,17 @@ enum ActivityAssets {
   Logo = 'https://i.postimg.cc/zGHptPYD/image.png',
 }
 
+// Each surface gets its own icon instead of sharing the music app's logo.
+const siteLogos: Record<string, string> = {
+  'vishaljadhav.me': 'https://vishy.dino.icu/images/avatar-256.png',
+  'vishy.dino.icu': 'https://vishy.dino.icu/images/avatar-256.png',
+  'toolbox.vishaljadhav.me': 'https://toolbox.vishaljadhav.me/icon.png',
+}
+
+function logoFor(host: string): string {
+  return siteLogos[host] ?? ActivityAssets.Logo
+}
+
 const musicSections: Record<string, string> = {
   '/library': 'Library',
   '/search': 'Search',
@@ -55,10 +66,14 @@ presence.on('UpdateData', () => {
       = metaSpans?.[0]?.textContent?.trim()
         || metadata?.artist
         || null
+    // Prefer the 500x500 Media Session artwork. The mini player uses a 150x150
+    // thumbnail, which Discord may refuse to render as presence artwork.
     const artwork
-      = trackButton?.querySelector('img')?.getAttribute('src')
-        || metadata?.artwork?.[0]?.src
-        || ActivityAssets.Logo
+      = metadata?.artwork?.[0]?.src
+        || trackButton?.querySelector('img')
+          ?.getAttribute('src')
+          ?.replace(/-\d+x\d+(?=\.[a-z]+$)/i, '-500x500')
+          || logoFor(hostname)
     const audio = document.querySelector<HTMLAudioElement>(
       'audio[data-sonora-audio]',
     )
@@ -79,7 +94,9 @@ presence.on('UpdateData', () => {
             ? `by ${artist}`.slice(0, 128)
             : null)
         : musicSection(pathname),
-      largeImageKey: title ? artwork : ActivityAssets.Logo,
+      largeImageKey: title
+        ? artwork
+        : logoFor(hostname),
       largeImageText: title
         ? (metadata?.album ?? 'Dapple Music')
         : 'Dapple Music',
@@ -104,7 +121,7 @@ presence.on('UpdateData', () => {
   const data: PresenceData = {
     name: hostname,
     type: ActivityType.Watching,
-    largeImageKey: ActivityAssets.Logo,
+    largeImageKey: logoFor(hostname),
     largeImageText: hostname,
     startTimestamp: browsingTimestamp,
   }
