@@ -5,13 +5,14 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://files.catbox.moe/ghuz3s.png',
+  Logo = 'https://files.catbox.moe/p5rvgo.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const defaultAdoLogo = `https://wsrv.nl/?url=${encodeURIComponent('https://bunbongonvl.online/images/ado-chibi.png')}&w=512&h=512&fit=cover&output=png`
+const coverCache = new Map<string, Blob>()
+const coverPending = new Set<string>()
 
-function formatImageUrl(rawUrl: string | null | undefined): string | null {
+function resolveCleanImageUrl(rawUrl: string | null | undefined): string | null {
   if (!rawUrl || typeof rawUrl !== 'string')
     return null
   const trimmed = rawUrl.trim()
@@ -25,28 +26,44 @@ function formatImageUrl(rawUrl: string | null | undefined): string | null {
     if (url.origin === document.location.origin && url.pathname === document.location.pathname)
       return null
 
-    // Các domain bị wsrv.nl chặn theo chính sách ("Domain or TLD blocked by policy") như phimimg.com
-    // sẽ được chuyển thẳng URL gốc cho Discord tải trực tiếp
-    if (url.hostname.includes('phimimg.com') || url.hostname.includes('ophim') || url.hostname.includes('kkphim')) {
-      return url.href
-    }
-
-    // fit=cover lấp đầy hoàn hảo khung vuông 512x512 của Discord, không bị co dẹp
-    return `https://wsrv.nl/?url=${encodeURIComponent(url.href)}&w=512&h=512&fit=cover&output=png`
+    return url.href
   }
   catch {
     return null
   }
 }
 
-function getMovieThumbImage(): string | null {
+function getMovieCover(url: string | null): Blob | string {
+  if (!url)
+    return ActivityAssets.Logo
+
+  const cached = coverCache.get(url)
+  if (cached)
+    return cached
+
+  if (!coverPending.has(url)) {
+    coverPending.add(url)
+    fetch(url)
+      .then(res => (res.ok ? res.blob() : null))
+      .then((blob) => {
+        if (blob)
+          coverCache.set(url, blob)
+      })
+      .catch(() => {})
+      .finally(() => coverPending.delete(url))
+  }
+
+  return url
+}
+
+function getMovieThumbUrl(): string | null {
   // 1. Thẻ video poster
   const video = document.querySelector<HTMLVideoElement>('video')
   const videoPoster = video?.getAttribute('poster') || video?.poster
   if (videoPoster) {
-    const formatted = formatImageUrl(videoPoster)
-    if (formatted)
-      return formatted
+    const resolved = resolveCleanImageUrl(videoPoster)
+    if (resolved)
+      return resolved
   }
 
   // 2. Thẻ meta og:image, twitter:image
@@ -58,9 +75,9 @@ function getMovieThumbImage(): string | null {
   for (const selector of selectors) {
     const meta = document.querySelector<HTMLMetaElement>(selector)
     if (meta?.content) {
-      const formatted = formatImageUrl(meta.content)
-      if (formatted)
-        return formatted
+      const resolved = resolveCleanImageUrl(meta.content)
+      if (resolved)
+        return resolved
     }
   }
 
@@ -74,9 +91,28 @@ function getMovieThumbImage(): string | null {
       && !src.includes('ado-chibi')
       && !src.includes('premid')
     ) {
-      const formatted = formatImageUrl(src)
-      if (formatted)
-        return formatted
+      const resolved = resolveCleanImageUrl(src)
+      if (resolved) {
+        if (img.complete && img.naturalWidth > 0 && !coverCache.has(resolved) && !coverPending.has(resolved)) {
+          try {
+            const canvas = document.createElement('canvas')
+            canvas.width = 512
+            canvas.height = 512
+            const ctx = canvas.getContext('2d')
+            if (ctx) {
+              ctx.drawImage(img, 0, 0, 512, 512)
+              canvas.toBlob((blob) => {
+                if (blob)
+                  coverCache.set(resolved, blob)
+              }, 'image/png')
+            }
+          }
+          catch {
+            // Ignored if canvas is tainted
+          }
+        }
+        return resolved
+      }
     }
   }
 
@@ -122,12 +158,12 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('timestamps'),
   ])
 
-  const dynamicThumb = getMovieThumbImage()
-  const currentLogo = defaultAdoLogo || ActivityAssets.Logo
+  const thumbUrl = getMovieThumbUrl()
+  const currentCover = getMovieCover(thumbUrl)
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: currentLogo,
+    largeImageKey: ActivityAssets.Logo,
     largeImageText: 'AnimeVault - bunbongonvl.online',
   }
 
@@ -142,7 +178,7 @@ presence.on('UpdateData', async () => {
       const heading = document.querySelector('h1')?.textContent?.trim() || ''
       const { movieName, episodeStr } = parseMovieHeading(heading, pageFirstTitle)
 
-      presenceData.largeImageKey = dynamicThumb || currentLogo
+      presenceData.largeImageKey = currentCover
       presenceData.largeImageText = cleanDiscordString(movieName, 'AnimeVault')
       presenceData.details = cleanDiscordString(movieName, 'Đang xem phim')
       if (episodeStr) {
@@ -185,7 +221,7 @@ presence.on('UpdateData', async () => {
 
     case pathname.startsWith('/xem-chung/'): {
       const roomTitle = document.querySelector('.wp-room-header h1')?.textContent?.trim() || 'Phòng chiếu VIP'
-      presenceData.largeImageKey = dynamicThumb || currentLogo
+      presenceData.largeImageKey = currentCover
       presenceData.details = 'Phòng Xem Chung'
       presenceData.state = cleanDiscordString(roomTitle, 'Phòng chiếu')
 
@@ -240,7 +276,7 @@ presence.on('UpdateData', async () => {
 
     case pathname.startsWith('/phim/'): {
       const movieTitle = document.querySelector('h1')?.textContent?.trim() || pageFirstTitle
-      presenceData.largeImageKey = dynamicThumb || currentLogo
+      presenceData.largeImageKey = currentCover
       presenceData.largeImageText = cleanDiscordString(movieTitle, 'AnimeVault')
       presenceData.details = 'Thông tin phim'
       presenceData.state = cleanDiscordString(movieTitle, 'Chi tiết tác phẩm')
