@@ -12,6 +12,7 @@ async function getStrings() {
     aiTalking: 'deepSeek.aiTalking',
     readingResponse: 'deepSeek.readingResponse',
     askingQuestion: 'deepSeek.askingQuestion',
+    conversationStats: 'deepSeek.conversationStats',
   })
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -19,6 +20,11 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/logo.png',
   Talking = 'https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/0.png',
+}
+
+function countWords(text: string | null | undefined): number {
+  const trimmed = text?.trim()
+  return trimmed ? trimmed.split(/\s+/).length : 0
 }
 
 // The DeepThink and search toggles share DeepSeek's toggle button
@@ -55,6 +61,32 @@ presence.on('UpdateData', async () => {
     presenceDetail = strings?.talkingWithAi ?? ''
   }
 
+  // Count the conversation the same way the ChatGPT and Claude
+  // presences do. Every message is a .ds-message element: a user
+  // message holds the question text directly, while an AI message
+  // holds its answer in .ds-markdown elements.
+  let conversationStats: string | undefined
+  if (pathname.includes('/a/chat/s')) {
+    let askedCount = 0
+    let wordCount = 0
+    for (const el of document.querySelectorAll('.ds-message')) {
+      const answers = el.querySelectorAll('.ds-markdown')
+      if (answers.length) {
+        for (const answer of answers)
+          wordCount += countWords(answer.textContent)
+      }
+      else {
+        askedCount++
+        wordCount += countWords(el.textContent)
+      }
+    }
+    if (askedCount > 0) {
+      conversationStats = strings?.conversationStats
+        ?.replace('{0}', `${askedCount}`)
+        .replace('{1}', `${wordCount}`)
+    }
+  }
+
   // Checking if the user is currently typing a question
   if (document.querySelector('#chat-input')?.textContent !== '') {
     presenceState = strings?.askingQuestion ?? ''
@@ -68,7 +100,7 @@ presence.on('UpdateData', async () => {
     smallImageText = strings?.aiTalking ?? ''
   }
   else if (document.querySelector('div.f9bf7997.d7dc56a8.c05b5566')) {
-    presenceState = strings?.readingResponse ?? ''
+    presenceState = conversationStats ?? strings?.readingResponse ?? ''
     smallImageKey = Assets.Reading
     smallImageText = strings?.readingResponse ?? ''
   }
@@ -78,7 +110,7 @@ presence.on('UpdateData', async () => {
     smallImageText = strings?.search ?? ''
   }
   else {
-    presenceState = ''
+    presenceState = conversationStats ?? ''
     smallImageKey = Assets.Viewing
     smallImageText = strings?.browsing ?? ''
   }
