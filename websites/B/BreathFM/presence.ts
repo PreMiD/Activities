@@ -147,15 +147,17 @@ async function getPlayback(): Promise<Playback | null> {
   }
 }
 
-function getPageData(privacy: boolean): PresenceData {
+function getPageData(privacy: boolean, showTimestamps: boolean): PresenceData {
   const segments = location.pathname.split('/').filter(Boolean)
   const page = segments[0] ?? ''
   const data: PresenceData = {
     name: 'BreathFM',
     largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp,
     smallImageKey: Assets.Reading,
   }
+
+  if (showTimestamps)
+    data.startTimestamp = browsingTimestamp
 
   switch (page) {
     case '':
@@ -219,10 +221,7 @@ presence.on('UpdateData', async () => {
   const playback = await getPlayback()
 
   if (!playback) {
-    const pageData = getPageData(privacy)
-    if (!showTimestamps)
-      delete pageData.startTimestamp
-    presence.setActivity(pageData)
+    presence.setActivity(getPageData(privacy, showTimestamps))
     return
   }
 
