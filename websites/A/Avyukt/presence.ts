@@ -1,15 +1,14 @@
 import { Assets, getTimestampsFromMedia } from 'premid'
 
-// TODO: replace with the client ID of the Discord application for this activity.
-// The author ID in metadata.json is a user snowflake, not an application ID.
+// Discord application ID (distinct from the author's user snowflake).
 const presence = new Presence({
-  clientId: '000000000000000000',
+  clientId: '1575173375473614958',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/REPLACE_WITH_LOGO.png',
+  Logo = 'https://i.postimg.cc/zGHptPYD/image.png',
 }
 
 const musicSections: Record<string, string> = {
@@ -44,10 +43,14 @@ presence.on('UpdateData', () => {
       ':scope > span > span',
     )
     const metadata = navigator.mediaSession?.metadata
+    // The h1 fallback is only valid on the full-screen /player/:id page; on the
+    // home screen the h1 is a section heading like "Trending in English".
     const title
       = metaSpans?.[1]?.textContent?.trim()
         || metadata?.title
-        || document.querySelector('h1')?.textContent?.trim()
+        || (pathname.startsWith('/player/')
+          ? document.querySelector('h1')?.textContent?.trim()
+          : null)
     const artist
       = metaSpans?.[0]?.textContent?.trim()
         || metadata?.artist
