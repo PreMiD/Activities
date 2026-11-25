@@ -71,12 +71,18 @@ presence.on('UpdateData', () => {
     const data: PresenceData = {
       name: 'Dapple Music',
       type: ActivityType.Listening,
-      details: title ? title.slice(0, 128) : 'Browsing Dapple Music',
+      details: title
+        ? title.slice(0, 128)
+        : 'Browsing Dapple Music',
       state: title
-        ? (artist ? `by ${artist}`.slice(0, 128) : null)
+        ? (artist
+            ? `by ${artist}`.slice(0, 128)
+            : null)
         : musicSection(pathname),
       largeImageKey: title ? artwork : ActivityAssets.Logo,
-      largeImageText: title ? (metadata?.album ?? 'Dapple Music') : 'Dapple Music',
+      largeImageText: title
+        ? (metadata?.album ?? 'Dapple Music')
+        : 'Dapple Music',
       startTimestamp: browsingTimestamp,
     }
 
