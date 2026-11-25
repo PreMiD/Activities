@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "duplon",
+    "id": "365959095762550785"
+  },
+  "service": "samp.directory",
+  "altnames": [
+    "play.samp.directory"
+  ],
+  "description": {
+    "en": "samp.directory lists SA-MP and open.mp servers with live player counts and tools for server makers, and play.samp.directory is a San Andreas multiplayer world you play in the browser: jobs, cars, races and more."
+  },
+  "url": [
+    "samp.directory",
+    "play.samp.directory"
+  ],
+  "regExp": "^https?[:][/][/](play[.])?samp[.]directory[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/Ssr5kv7.png",
+  "thumbnail": "https://i.imgur.com/doDEU7q.png",
+  "color": "#A78BFA",
+  "category": "games",
+  "tags": [
+    "samp",
+    "sa-mp",
+    "gta",
+    "san-andreas",
+    "multiplayer",
+    "browser-game"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fa-solid fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "job",
+      "title": "Show Job",
+      "icon": "fa-solid fa-briefcase",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "area",
+      "title": "Show Area",
+      "icon": "fa-solid fa-location-dot",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "vehicle",
+      "title": "Show Vehicle",
+      "icon": "fa-solid fa-car",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "wanted",
+      "title": "Show Wanted Level",
+      "icon": "fa-solid fa-star",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamp",
+      "icon": "fa-solid fa-clock",
+      "value": true
+    }
+  ]
+}
