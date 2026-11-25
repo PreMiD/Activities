@@ -212,7 +212,12 @@ presence.on('UpdateData', async () => {
   }
 
   if (showButtons && /\/track~\d+/.test(document.location.pathname)) {
-    presenceData.buttons = [{ label: 'Listen on zig~zag', url: document.location.href }]
+    presenceData.buttons = [
+      {
+        label: 'Listen on zig~zag',
+        url: document.location.href,
+      },
+    ]
   }
 
   presence.setActivity(presenceData)
