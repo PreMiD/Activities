@@ -33,14 +33,12 @@ function text(selector: string): string {
   return document.querySelector(selector)?.textContent?.trim() ?? ''
 }
 
-/** Findet den Link des Players (Song-Infos), um die Spotify-ID des laufenden Songs zu bekommen. */
 function getPlayerTrackId(audio: HTMLAudioElement): string | undefined {
   const links = audio.parentElement?.querySelectorAll<HTMLAnchorElement>('a[href^="/track/"]')
   const href = links?.[0]?.getAttribute('href')
   return href?.split('/track/')[1]?.split(/[?#]/)[0]
 }
 
-/** Liest "elapsed - duration" aus der Player-Leiste. Ohne Dauer handelt es sich um einen Livestream. */
 function getPlayerTimes(audio: HTMLAudioElement): [number, number] | null {
   const match = audio.parentElement?.textContent?.match(/(\d+:\d{2}(?::\d{2})?)\s*-\s*(\d+:\d{2}(?::\d{2})?)/)
   if (!match)
@@ -50,13 +48,11 @@ function getPlayerTimes(audio: HTMLAudioElement): [number, number] | null {
   return duration > 0 ? [elapsed, duration] : null
 }
 
-/** Die Webseite speichert den aktuell gewählten Sender im Cookie `lastStation` (Sender-ID). */
 function getStationId(): string | undefined {
   const match = document.cookie.match(/(?:^|;\s*)lastStation=(\d+)/)
   return match?.[1]
 }
 
-/** Aktuelle Hörer der Station (Anzeige im Player). */
 function getListeners(audio: HTMLAudioElement): number | undefined {
   const label = audio.parentElement?.querySelector('[aria-label$="Hörer"]')?.getAttribute('aria-label')
   const value = label ? Number.parseInt(label) : Number.NaN
@@ -85,7 +81,6 @@ interface Playback {
   listeners?: number
 }
 
-/** Zustand, den die Webseite unter `window.__breathfm` bereitstellt (ab Extension 2.14). */
 interface BreathFmBridge {
   version: number
   playing: boolean
@@ -121,7 +116,6 @@ async function getPlayback(): Promise<Playback | null> {
     }
   }
 
-  // Fallback für ältere Extensions oder Webseiten ohne Schnittstelle: Werte aus dem DOM lesen.
   const audio = document.querySelector<HTMLAudioElement>('audio')
   const meta = 'mediaSession' in navigator ? navigator.mediaSession.metadata : null
   if (!audio || audio.paused || !meta?.title)
@@ -161,9 +155,11 @@ function getPageData(privacy: boolean): PresenceData {
         data.state = artist ? `${title} – ${artist}` : title
         const cover = document.querySelector<HTMLImageElement>('img[alt^="Cover von"]')
         if (cover?.src) {
-          data.largeImageKey = absoluteUrl(cover.src)
-          data.largeImageText = cover.alt
-          data.smallImageKey = ActivityAssets.Logo
+          Object.assign(data, {
+            largeImageKey: absoluteUrl(cover.src),
+            largeImageText: cover.alt,
+            smallImageKey: ActivityAssets.Logo,
+          })
         }
       }
       break
