@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Avyukt",
+    "id": "1269984634771607616"
+  },
+  "service": "Avyukt",
+  "description": {
+    "en": "Avyukt's corner of the web: Dapple Music, a 38-tool Toolbox, and a personal site with writing and projects."
+  },
+  "url": [
+    "vishaljadhav.me",
+    "music.vishaljadhav.me",
+    "toolbox.vishaljadhav.me",
+    "vishy.dino.icu"
+  ],
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*vishaljadhav[.]me|vishy[.]dino[.]icu)[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/REPLACE_WITH_LOGO.png",
+  "thumbnail": "https://i.imgur.com/REPLACE_WITH_THUMBNAIL.png",
+  "color": "#0d0069",
+  "category": "other",
+  "tags": [
+    "music",
+    "tools",
+    "portfolio",
+    "dapple",
+    "toolbox"
+  ]
+}
