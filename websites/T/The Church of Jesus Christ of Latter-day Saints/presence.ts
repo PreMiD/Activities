@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1383261402197917828',
@@ -13,714 +13,941 @@ enum ActivityAssets {
   PearlOfGreatPrice = 'https://cdn.rcd.gg/PreMiD/websites/T/The%20Church%20of%20Jesus%20Christ%20of%20Latter-day%20Saints/assets/4.jpeg',
 }
 
-enum CommonStrings {
-  OldTestament = 'Old Testament',
-  NewTestament = 'New Testament',
-  BookOfMormon = 'Book of Mormon',
-  DoctrineAndCovenants = 'Doctrine and Covenants',
-  PearlOfGreatPrice = 'Pearl of Great Price',
+interface LibraryCollection {
+  title: string
+  image: string
 }
 
-// Global state variables
-let currentTimestamp: number = Math.floor(Date.now() / 1000)
-let currentState: string = 'initializing'
-let presenceData: PresenceData = { }
-let attemptCount: number = 0
-const cachedCnfrenceImgs: Map<string, string> = new Map()
+const libraryCollections = new Map<string, LibraryCollection>()
 
-// Browsing state variables
-let browseLocation: string | undefined
-
-// Reading state variables
-let readingLocation: string | undefined
-let readingState: string | undefined
-
-// Listening state variables
-let listeningLocation: string | undefined
-let listeningTitle: string | undefined
-let listeningAlbum: string | undefined
-let listeningStyle: string | undefined
-
-// Always triple-update our presence to ensure that Discord
-// synchronizes correctly and it gets properly displayed
-function tripleUpdate() {
-  if (attemptCount < 3) {
-    attemptCount++
-    currentState = 'triple-update'
-  }
-  else {
-    attemptCount = 0
-  }
+const scriptureCollections: Record<string, LibraryCollection> = {
+  '/study/scriptures/ot': {
+    title: 'Old Testament',
+    image: ActivityAssets.OldTestament,
+  },
+  '/study/scriptures/nt': {
+    title: 'New Testament',
+    image: ActivityAssets.NewTestament,
+  },
+  '/study/scriptures/bofm': {
+    title: 'Book of Mormon',
+    image: ActivityAssets.BookOfMormon,
+  },
+  '/study/scriptures/dc-testament': {
+    title: 'Doctrine and Covenants',
+    image: ActivityAssets.DoctrineAndCovenants,
+  },
+  '/study/scriptures/pgp': {
+    title: 'Pearl of Great Price',
+    image: ActivityAssets.PearlOfGreatPrice,
+  },
 }
 
-function setBrowsing(location: string, _additional?: string) {
-  // If we are already browsing this location, do nothing
-  if (currentState === 'browsing' && browseLocation === location)
+// Covers from the Music Library's own collection tiles. These are only
+// fallbacks for direct navigation or when browser storage is unavailable.
+const musicCollectionFallbacks: Record<string, LibraryCollection> = {
+  '/media/music/collections/hymns-for-home-and-church': {
+    title: 'Hymns for Home and Church',
+    image: 'https://www.churchofjesuschrist.org/imgs/37108f66ca8411eeba3aeeeeac1ea51f5750182f/full/400,/0/default',
+  },
+  '/media/music/collections/hymns': {
+    title: 'Hymns of The Church of Jesus Christ of Latter-day Saints',
+    image: 'https://www.churchofjesuschrist.org/imgs/5023629405813dccd787ddcc8056bcf16a1d791f/full/400,/0/default',
+  },
+  '/media/music/collections/childrens-songbook': {
+    title: 'Children’s Songbook of The Church of Jesus Christ of Latter-day Saints',
+    image: 'https://www.churchofjesuschrist.org/imgs/cec7d26a5f55ec87aeec196e50f71a4d91eb9698/full/400,/0/default',
+  },
+}
+
+const libraryDetails: Record<string, string> = {
+  '/study/scriptures': 'Browsing the scriptures...',
+  '/study/general-conference': 'Browsing conference talks...',
+}
+
+let previousPath = ''
+let browsingTimestamp = Math.floor(Date.now() / 1000)
+
+function rememberLibraryCollection(pathname: string, collection: LibraryCollection) {
+  const previous = libraryCollections.get(pathname)
+  if (previous?.title === collection.title && previous.image === collection.image)
     return
-  const previousState: string = currentState
-  const previousLocation: string | undefined = browseLocation
-  currentState = 'browsing'
-  browseLocation = location
 
-  // Conditions for updating the timestamp
-  if (previousState !== 'browsing' || location !== previousLocation) {
-    currentTimestamp = Math.floor(Date.now() / 1000)
-  }
+  libraryCollections.set(pathname, collection)
 
-  // Determine detailed name
-  let browsingTitle: string | undefined
-  let browsingImage: string | undefined
-  if (location === 'my-home') {
-    browsingTitle = 'their home page'
-  }
-  else if (location === 'library') {
-    browsingTitle = 'the library'
-  }
-  else if (location === 'scriptures') {
-    browsingTitle = 'the scriptures'
-  }
-  else if (location === 'old-testament') {
-    browsingTitle = `the ${CommonStrings.OldTestament}`
-  }
-  else if (location === 'new-testament') {
-    browsingTitle = `the ${CommonStrings.NewTestament}`
-  }
-  else if (location === 'book-of-mormon') {
-    browsingTitle = `the ${CommonStrings.BookOfMormon}`
-  }
-  else if (location === 'doctrine-and-covenants') {
-    browsingTitle = `the ${CommonStrings.DoctrineAndCovenants}`
-  }
-  else if (location === 'pearl-of-great-price') {
-    browsingTitle = `the ${CommonStrings.PearlOfGreatPrice}`
-  }
-  else if (location.startsWith('general-conference')) {
-    if (_additional !== undefined) {
-      const year: string | undefined = location.split('-')[2]
-      const month: string | undefined = location.split('-')[3]
-      if (year !== undefined && month !== undefined && cachedCnfrenceImgs.has(`${year}-${month}`)) {
-        browsingImage = cachedCnfrenceImgs.get(`${year}-${month}`)
-      }
-      browsingTitle = `${_additional} conference talks`
+  // Media Library navigation may reload the document and recreate this script.
+  if (pathname.startsWith('/media/music/') || pathname.startsWith('/media/collection/')
+    || pathname.startsWith('/media/video/')) {
+    try {
+      sessionStorage.setItem(`premid:church:${pathname.startsWith('/media/music/') ? 'music' : 'broadcasts'}:${pathname}`, JSON.stringify(collection))
     }
-    else {
-      browsingTitle = 'conference talks'
+    catch {
+      // The in-memory cache remains usable if browser storage is unavailable.
     }
   }
-  else if (location === 'media') {
-    browsingTitle = 'the media library'
-  }
-  else if (location === 'music') {
-    browsingTitle = 'the music library'
-  }
-  else if (location === 'callings') {
-    browsingTitle = 'callings'
-  }
-  else if (location === 'serve') {
-    browsingTitle = 'service opportunities'
-  }
-  else if (location === 'temples') {
-    browsingTitle = 'temples'
-  }
-  else if (location === 'family-history') {
-    browsingTitle = 'family history'
-  }
-
-  // Set presence data
-  let browsingDetails: string
-  if (browsingTitle === undefined) {
-    browsingDetails = 'Browsing...'
-  }
-  else {
-    browsingDetails = `Browsing ${browsingTitle}...`
-  }
-  presenceData = {
-    type: ActivityType.Playing,
-    largeImageKey: browsingImage || ActivityAssets.Logo,
-    smallImageKey: Assets.Search,
-    smallImageText: 'Browsing...',
-    startTimestamp: currentTimestamp,
-    details: browsingDetails,
-  }
-
-  // Perform triple-update
-  tripleUpdate()
 }
 
-function setReading(location: string, _additional?: string) {
-// Parse the scripture reference
-  const previousReadingState: string | undefined = readingState
-  const ref = parseScriptureReference()
-  if (ref !== undefined) {
-    readingState = ref
-  }
-  else {
-    // if we failed, try again, since the page may not have finished loading yet
-    attemptCount++
-    if (attemptCount < 15) { // 15 attempts due to poll rate of PreMiD
-      currentState = 'unknown'
-      readingLocation = undefined
-      return
-    }
-    else {
-      attemptCount = 0
-      readingState = 'Reading a scripture passage...'
-    }
-  }
+function getCachedLibraryCollection(pathname: string) {
+  const collection = libraryCollections.get(pathname)
+  if (collection || !(pathname.startsWith('/media/music/')
+    || pathname.startsWith('/media/collection/') || pathname.startsWith('/media/video/')))
+    return collection
 
-  // If we are already reading, do nothing
-  if (currentState === 'reading' && location === readingLocation && readingState === previousReadingState)
-    return
-  const previousState: string = currentState
-  const previousLocation: string | undefined = readingLocation
-  currentState = 'reading'
-  readingLocation = location
-
-  // Update the timestamp
-  if (previousState !== 'reading' || location !== previousLocation) {
-    currentTimestamp = Math.floor(Date.now() / 1000)
-  }
-
-  // Determine detailed name
-  let shortRef: string | undefined
-  if (ref !== undefined) {
-    if (ref.length > 20) {
-      shortRef = `${ref.substring(0, 20)}...`
-    }
-    else {
-      shortRef = ref
-    }
-  }
-  let readingTitle: string | undefined
-  let button1Title: string | undefined
-  let button2Title: string | undefined
-  let button2Url: string
-  if (location === 'old-testament') {
-    readingTitle = CommonStrings.OldTestament
-    button1Title = `View ${shortRef || 'Scripture'}`
-    button2Title = 'Read the Old Testament'
-    button2Url = 'https://www.churchofjesuschrist.org/study/scriptures/ot'
-  }
-  else if (location === 'new-testament') {
-    readingTitle = CommonStrings.NewTestament
-    button1Title = `View ${shortRef || 'Scripture'}`
-    button2Title = 'Read the New Testament'
-    button2Url = 'https://www.churchofjesuschrist.org/study/scriptures/nt'
-  }
-  else if (location === 'book-of-mormon') {
-    readingTitle = CommonStrings.BookOfMormon
-    button1Title = `View ${shortRef || 'Scripture'}`
-    button2Title = 'Read the Book of Mormon'
-    button2Url = 'https://www.churchofjesuschrist.org/study/scriptures/bofm'
-  }
-  else if (location === 'doctrine-and-covenants') {
-    readingTitle = CommonStrings.DoctrineAndCovenants
-    button1Title = `View ${shortRef || 'Scripture'}`
-    button2Title = 'Read the Doctrine and Covenants'
-    button2Url = 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament'
-  }
-  else if (location === 'pearl-of-great-price') {
-    readingTitle = CommonStrings.PearlOfGreatPrice
-    button1Title = `View ${shortRef || 'Scripture'}`
-    button2Title = 'Read the Pearl of Great Price'
-    button2Url = 'https://www.churchofjesuschrist.org/study/scriptures/pgp'
-  }
-  else if (location.startsWith('general-conference')) {
-    readingTitle = readingState // Use the scripture reference as the title
-    readingState = parseTalkAuthor() || undefined
-    button1Title = 'View Conference Talk'
-    if (_additional !== undefined) {
-      const year: string | undefined = location.split('-')[2]
-      const month: string | undefined = location.split('-')[3]
-      if (year !== undefined && month !== undefined) {
-        button2Title = `Read Conference ${_additional}`
-        button2Url = `https://www.churchofjesuschrist.org/study/general-conference/${year}/${month}`
-      }
-      else {
-        button2Title = undefined
-        button2Url = ''
+  try {
+    const stored = sessionStorage.getItem(`premid:church:${pathname.startsWith('/media/music/') ? 'music' : 'broadcasts'}:${pathname}`)
+    if (stored) {
+      const data = JSON.parse(stored) as LibraryCollection
+      if (typeof data?.title === 'string' && typeof data.image === 'string'
+        && data.image.startsWith('https://')) {
+        // Ignore any legacy collage fields in stored entries.
+        const collection = { title: data.title, image: data.image }
+        libraryCollections.set(pathname, collection)
+        return collection
       }
     }
-    else {
-      button2Title = undefined
-      button2Url = ''
+  }
+  catch {
+    // Fall back to the page's own artwork.
+  }
+
+  return undefined
+}
+
+function cacheLibraryCollections(root = '/study') {
+  const links = document.querySelectorAll<HTMLAnchorElement>(
+    root === '/study' ? '#app main a[href]' : 'main#root a[href]',
+  )
+
+  for (const link of links) {
+    // Resolve the raw href instead of depending on live anchor properties.
+    const href = link.getAttribute('href') || link.href
+    if (!href)
+      continue
+
+    let url: URL
+    try {
+      url = new URL(href, document.location.href)
     }
-  }
-  else {
-    readingTitle = 'scriptures'
-    button1Title = 'View Scripture'
-    button2Title = undefined // No second button for general scripture reading
-    button2Url = ''
-  }
+    catch {
+      continue
+    }
 
-  // Determine reading image
-  let readingImage: string | undefined
-  if (location === 'old-testament') {
-    readingImage = ActivityAssets.OldTestament
-  }
-  else if (location === 'new-testament') {
-    readingImage = ActivityAssets.NewTestament
-  }
-  else if (location === 'book-of-mormon') {
-    readingImage = ActivityAssets.BookOfMormon
-  }
-  else if (location === 'doctrine-and-covenants') {
-    readingImage = ActivityAssets.DoctrineAndCovenants
-  }
-  else if (location === 'pearl-of-great-price') {
-    readingImage = ActivityAssets.PearlOfGreatPrice
-  }
-  else if (location.startsWith('general-conference')) {
-    readingImage = parseTalkPreview() || ActivityAssets.Logo // Use the talk preview image or fallback to the logo
-  }
-  else {
-    readingImage = ActivityAssets.Logo
-  }
+    if (url.origin !== new URL(document.location.href).origin)
+      continue
 
-  // Set presence data
-  presenceData = {
-    type: ActivityType.Playing,
-    largeImageKey: readingImage,
-    smallImageKey: Assets.Reading,
-    smallImageText: `The ${readingTitle}`,
-    startTimestamp: currentTimestamp,
-    details: `Reading the ${readingTitle}`,
-    state: readingState,
-    buttons: [
-      {
-        label: button1Title,
-        url: document.location.href,
-      },
-    ],
-  }
-  if (button2Title !== undefined) {
-    presenceData.buttons?.push({
-      label: button2Title,
-      url: button2Url,
+    if (!url.pathname.startsWith(`${root}/`))
+      continue
+
+    const image = link.querySelector('img')
+    const title = link.querySelector('h4')?.textContent?.trim()
+      || link.textContent?.trim()
+
+    if (!image || !title)
+      continue
+
+    const srcset = image.getAttribute('srcset') || image.srcset || ''
+    const src = image.getAttribute('src') || image.src
+    const imageUrl = srcset.match(
+      /(?:^|,\s*)(\S+)\s+640w(?:,|$)/,
+    )?.[1]
+      // Music tiles advertise 0w descriptors; use their actual URL width.
+      || srcset.match(/(?:^|,\s*)(\S+\/400,\/0\/default)\s+\d+w(?:,|$)/)?.[1]
+      || (root === '/media/music' ? src || image.currentSrc : image.currentSrc || src)
+
+    if (!imageUrl)
+      continue
+
+    rememberLibraryCollection(url.pathname.replace(/\/+$/, ''), {
+      title,
+      image: imageUrl,
     })
   }
-
-  // Perform triple-update
-  tripleUpdate()
 }
 
-function setListening(location: string, _additional?: string) {
-  // Fetch the song title
-  const title = parsePlayerTitle()
-  if (title === undefined) {
-    return // we can't set listening state without a title
-  }
-  const previousTitle: string | undefined = listeningTitle
-  listeningTitle = title
+function findLibraryCollection(pathname: string) {
+  let path = pathname
 
-  // Fetch the song album
-  const album = parsePlayerAlbum()
-  const previousAlbum: string | undefined = listeningAlbum
-  listeningAlbum = album
+  // Prioritize custom scripture artwork.
+  while (path.startsWith('/study/')) {
+    const scripture = scriptureCollections[path]
 
-  // Fetch the song style
-  const style = parsePlayerStyle()
-  const previousStyle: string | undefined = listeningStyle
-  listeningStyle = style
+    if (scripture) {
+      return {
+        ...scripture,
+        pathname: path,
+      }
+    }
 
-  // Attempt to parse the start and end timestamps
-  const startTimestamp: number | undefined = parsePlayerTimestamp1()
-  const endTimestamp: number | undefined = parsePlayerTimestamp2()
-  if (startTimestamp !== undefined && endTimestamp !== undefined) {
-    const timestamps = getTimestamps(startTimestamp, endTimestamp)
-    presenceData.startTimestamp = timestamps[0]
-    presenceData.endTimestamp = timestamps[1]
-  }
-  else {
-    presenceData.startTimestamp = currentTimestamp
-    delete presenceData.endTimestamp
+    path = path.substring(0, path.lastIndexOf('/'))
   }
 
-  // Attempt to parse if the player is playing
-  const isPlaying: boolean = parsePlayerIsPlaying()
-  if (isPlaying) {
-    presenceData.smallImageKey = Assets.Play
-    presenceData.smallImageText = 'Playing'
-  }
-  else {
-    presenceData.smallImageKey = Assets.Pause
-    presenceData.smallImageText = 'Paused'
+  // Find the nearest dynamically discovered collection.
+  path = pathname
+
+  while (path.startsWith('/study/') || path.startsWith('/media/music/')) {
+    const collection = getCachedLibraryCollection(path) ?? musicCollectionFallbacks[path]
+
+    if (collection) {
+      return {
+        ...collection,
+        pathname: path,
+      }
+    }
+
+    path = path.substring(0, path.lastIndexOf('/'))
   }
 
-  // If we are already listening, update the timestamps and return
-  if (currentState === 'listening' && listeningLocation === location
-    && listeningTitle === previousTitle && listeningStyle === previousStyle
-    && listeningAlbum === previousAlbum) {
+  return undefined
+}
+
+function isMusicPath(pathname: string) {
+  return pathname === '/media/music' || pathname.startsWith('/media/music/')
+}
+
+function formatMusicBrowsingArtwork(image: string) {
+  // The original presence explicitly requested JPEGs from this image service.
+  // Preserve that convention for collection covers sent to Discord.
+  return /^https:\/\/www\.churchofjesuschrist\.org\/imgs\/[^?#]+\/default$/.test(image)
+    ? `${image}.jpeg`
+    : image
+}
+
+function getMusicPageTitle() {
+  // The current page supplies its own title, even on a cold navigation.
+  const titles = [
+    document.querySelector('main h1')?.textContent?.trim(),
+    document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content?.trim(),
+    document.title.trim(),
+  ]
+
+  return titles.find(title => title && title !== 'Music Library' && title !== 'Media Library')
+}
+
+function findMusicBreadcrumb() {
+  if (!document.location.pathname.startsWith('/media/music/songs/'))
+    return undefined
+
+  const link = document.querySelector<HTMLAnchorElement>(
+    'main .eden-breadcrumbs__ol a[href*="/media/music/collections/"]',
+  )
+
+  if (link?.origin === document.location.origin) {
+    const title = link.textContent?.trim()
+    if (title)
+      return { title, pathname: link.pathname.replace(/\/+$/, '') }
+  }
+
+  return undefined
+}
+
+function findMusicCollection(pathname: string, search: string) {
+  const collection = findLibraryCollection(pathname)
+
+  // Song pages are siblings of collections, not descendants. The Church
+  // includes the originating collection's slug in its crumbs parameter.
+  if (pathname.startsWith('/media/music/songs/')) {
+    const slug = new URLSearchParams(search).get('crumbs')
+    const parentPath = slug && /^[a-z0-9-]+$/i.test(slug)
+      ? `/media/music/collections/${slug}`
+      : pathname === document.location.pathname.replace(/\/+$/, '')
+        ? findMusicBreadcrumb()?.pathname
+        : undefined
+
+    if (parentPath) {
+      const parent = findLibraryCollection(parentPath)
+      if (parent)
+        return parent
+    }
+  }
+
+  return collection
+}
+
+function getPageArtwork() {
+  const image = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content?.trim()
+  if (!image)
+    return undefined
+
+  try {
+    const url = new URL(image, document.location.href)
+    if (url.protocol === 'https:' || url.protocol === 'http:')
+      return formatMusicBrowsingArtwork(url.href)
+  }
+  catch {
+    // Ignore invalid page metadata.
+  }
+  return undefined
+}
+
+function applyNewsroomActivity(presenceData: PresenceData, pathname: string) {
+  const isEvents = pathname === '/events' || pathname.startsWith('/events/')
+    || pathname === '/event' || pathname.startsWith('/event/')
+  presenceData.details = isEvents ? 'Browsing church events...' : 'Browsing the newsroom...'
+
+  const isArticle = pathname.startsWith('/article/')
+  const isEvent = pathname.startsWith('/event/')
+  if (!isArticle && !isEvent)
     return
-  }
-  currentState = 'listening'
-  listeningLocation = location
 
-  // Attempt to parse the image thumbnail
-  let thumbnail: string | undefined = parsePlayerThumbnail()
-  if (thumbnail === undefined) {
-    thumbnail = ActivityAssets.Logo // Fallback to the logo if no thumbnail is found
+  const title = document.querySelector('#article-title')?.textContent?.trim()
+    || document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content?.trim()
+    || document.title.trim()
+  if (!title)
+    return
+
+  presenceData.details = isArticle ? 'Reading a news article...' : 'Viewing a church event...'
+  presenceData.state = title
+  presenceData.smallImageKey = Assets.Reading
+  presenceData.smallImageText = isArticle ? 'Reading the newsroom' : 'Viewing an event'
+  presenceData.largeImageKey = getPageArtwork() || ActivityAssets.Logo
+  presenceData.buttons = [{
+    label: isArticle ? 'Read Article' : 'View Event',
+    url: document.location.href,
+  }]
+}
+
+function cacheBroadcastCollections() {
+  // Recording collections have flat URLs; remember their tiles before navigating.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('a[data-testid^="CollectionGridView-tile-"]')) {
+    const href = link.getAttribute('href')
+    if (!href)
+      continue
+
+    const url = new URL(href, document.location.href)
+    if (url.origin !== document.location.origin
+      || !/^\/media\/(?:collection|video)\//.test(url.pathname))
+      continue
+
+    const title = link.textContent?.trim().replace(/^\d+\s+Items?\s*/i, '')
+    const image = link.querySelector('img')
+    const imageUrl = image?.srcset.match(/(?:^|,\s*)(\S+)\s+640w(?:,|$)/)?.[1]
+      || image?.currentSrc || image?.src
+    if (title && imageUrl)
+      rememberLibraryCollection(url.pathname.replace(/\/+$/, ''), { title, image: imageUrl })
+  }
+}
+
+function applyBroadcastActivity(presenceData: PresenceData, pathname: string) {
+  if (pathname === '/media/broadcasts') {
+    presenceData.details = 'Browsing broadcasts...'
+    return true
   }
 
-  // Create a short title if the title is too long
-  let shortTitle: string | undefined
-  if (listeningTitle.length > 15) {
-    shortTitle = `${listeningTitle.substring(0, 15)}...`
+  if (pathname.startsWith('/media/broadcasts/')) {
+    presenceData.details = 'Viewing a broadcast...'
+    const title = document.querySelector('[data-testid="EventInfo-wrapper"] h1')?.textContent?.trim()
+      || document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content?.trim()
+      || document.title.trim()
+    if (title && title !== 'Broadcasts') {
+      presenceData.state = title
+      presenceData.largeImageKey = getPageArtwork() || ActivityAssets.Logo
+      presenceData.buttons = [{ label: 'View Broadcast', url: document.location.href }]
+    }
+    return true
+  }
+
+  const isLibrary = pathname === '/media/collection/broadcasts'
+  const collection = getCachedLibraryCollection(pathname)
+  if (!isLibrary && !collection)
+    return false
+
+  const title = document.querySelector('[data-testid="CollectionPage-title"]')?.textContent?.trim()
+    || collection?.title
+  presenceData.details = isLibrary ? 'Browsing the broadcast library...'
+    : title ? `Browsing ${title}...` : 'Browsing the broadcast library...'
+  presenceData.largeImageKey = collection
+    ? formatMusicBrowsingArtwork(collection.image)
+    : getPageArtwork() || ActivityAssets.Logo
+  cacheBroadcastCollections()
+  return true
+}
+
+function findActiveMedia<T extends HTMLMediaElement>(elements: T[]) {
+  const available = elements.filter(media => !media.ended
+    && !media.error && media.readyState >= 1)
+
+  // Prefer playing media, then media that has already started.
+  return available.find(media => !media.paused)
+    ?? available.find(media => media.currentTime > 0)
+}
+
+function setPlaybackTimestamps(
+  presenceData: PresenceData,
+  currentTime: number,
+  duration: number,
+  playbackRate: number,
+  advancing: boolean,
+) {
+  // Remove browsing timestamps, including when paused or buffering.
+  delete presenceData.startTimestamp
+  delete presenceData.endTimestamp
+
+  if (advancing && Number.isFinite(duration) && duration > 0
+    && Number.isFinite(currentTime) && currentTime >= 0
+    && currentTime < duration && Number.isFinite(playbackRate) && playbackRate > 0) {
+    const now = Date.now() / 1000
+    presenceData.startTimestamp = Math.floor(now - currentTime / playbackRate)
+    presenceData.endTimestamp = Math.floor(now + (duration - currentTime) / playbackRate)
+  }
+}
+
+function applyPlaybackTimestamps(presenceData: PresenceData, media: HTMLMediaElement) {
+  setPlaybackTimestamps(
+    presenceData,
+    media.currentTime,
+    media.duration,
+    media.playbackRate,
+    !media.paused && !media.seeking && media.readyState >= 3,
+  )
+}
+
+function parsePlaybackTime(text: string | null | undefined) {
+  const value = text?.trim()
+
+  if (!value || !/^\d+(?::[0-5]\d){1,2}$/.test(value))
+    return Number.NaN
+
+  return value.split(':').reduce((seconds, part) => seconds * 60 + Number(part), 0)
+}
+
+function readAudioPlayback(audio: HTMLAudioElement) {
+  // Both library players expose their playback state through accessible controls.
+  // These also work when live media properties are unavailable to PreMiD.
+  const player = audio.closest('[data-testid="wrapper"], [data-test-id="wrapper"]')
+  const pauseButton = player?.querySelector('button[aria-label="Pause"], button[aria-label="Pause Song"]')
+  const playButton = player?.querySelector('button[aria-label="Play"], button[aria-label="Play Song"]')
+  const range = player?.querySelector('input[data-test-id="range"]')
+  let elapsed = Number.NaN
+  let duration = Number.NaN
+
+  // The range has an additional wrapper in the Music Library.
+  let slider = range?.parentElement
+  while (slider && slider !== player) {
+    elapsed = parsePlaybackTime(slider.previousElementSibling?.textContent)
+    duration = parsePlaybackTime(slider.nextElementSibling?.textContent)
+    if (Number.isFinite(elapsed) && Number.isFinite(duration))
+      break
+
+    slider = slider.parentElement
+  }
+  const hasControls = Boolean(pauseButton || playButton)
+  const hasNativeTiming = audio.readyState >= 1
+    && Number.isFinite(audio.currentTime)
+    && Number.isFinite(audio.duration) && audio.duration > 0
+
+  if (audio.error || audio.ended)
+    return undefined
+
+  if (!hasControls && !hasNativeTiming && audio.paused !== false)
+    return undefined
+
+  const paused = hasControls ? !pauseButton : audio.paused
+  // Prefer native timing when it agrees with the rendered player.
+  const nativeAgrees = hasNativeTiming && audio.paused === paused
+    && (!Number.isFinite(elapsed) || Math.abs(audio.currentTime - elapsed) < 3)
+    && (!Number.isFinite(duration) || Math.abs(audio.duration - duration) < 3)
+
+  const currentTime = nativeAgrees || (!Number.isFinite(elapsed) && hasNativeTiming)
+    ? audio.currentTime
+    : elapsed
+  const totalTime = nativeAgrees || (!Number.isFinite(duration) && hasNativeTiming)
+    ? audio.duration
+    : duration
+  const playbackRate = Number.isFinite(audio.playbackRate) && audio.playbackRate > 0
+    ? audio.playbackRate
+    : 1
+
+  if (paused && !(currentTime > 0))
+    return undefined
+
+  if (paused && Number.isFinite(totalTime) && currentTime >= totalTime)
+    return undefined
+
+  return {
+    paused,
+    currentTime,
+    duration: totalTime,
+    playbackRate,
+    advancing: !paused && (!nativeAgrees || (!audio.seeking && audio.readyState >= 3)),
+  }
+}
+
+function applyVideoActivity(presenceData: PresenceData) {
+  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('main video'))
+    .filter(video => video.getClientRects().length > 0
+      || document.pictureInPictureElement === video)
+
+  // Prefer a playing video over a previously paused one.
+  const video = findActiveMedia(videos)
+
+  // Opening a page with an untouched video should still count as reading.
+  if (!video)
+    return false
+
+  const player = video.closest('.bitmovinplayer-container')
+  const playbackButtonTitle = player?.querySelector<HTMLButtonElement>(
+    '.bmpui-ui-playbacktogglebutton[title]',
+  )?.title
+
+  const title = playbackButtonTitle?.match(/^Play\/Pause\s+(.+)$/)?.[1]?.trim()
+    || document.title.trim()
+    || 'Video'
+
+  const poster = player?.querySelector<HTMLElement>('.bitmovinplayer-poster')
+  const posterUrl = poster?.style.backgroundImage.match(
+    /^url\(["']?(.*?)["']?\)$/,
+  )?.[1]
+
+  const pageImage = document.querySelector<HTMLMetaElement>(
+    'meta[property="og:image"]',
+  )?.content
+
+  const article = video.closest<HTMLElement>('article#main[data-content-type]')
+  const isConferenceVideo = article?.dataset.contentType?.startsWith('general-conference-')
+    && title === document.title.trim()
+
+  presenceData.type = ActivityType.Watching
+  presenceData.details = `Watching ${title}`
+  presenceData.largeImageKey = video.poster || posterUrl || (pageImage ? getPageArtwork() : undefined)
+    || presenceData.largeImageKey || ActivityAssets.Logo
+  presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
+  presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
+
+  // Keep the conference speaker and calling for the talk's own video.
+  if (!isConferenceVideo)
+    delete presenceData.state
+
+  const conferenceButton = isConferenceVideo ? presenceData.buttons?.[1] : undefined
+
+  presenceData.buttons = [{
+    label: isConferenceVideo ? 'Watch Conference Talk' : 'Watch Video',
+    url: document.location.href,
+  }]
+
+  if (conferenceButton)
+    presenceData.buttons.push(conferenceButton)
+
+  applyPlaybackTimestamps(presenceData, video)
+  return true
+}
+
+function getMusicCard(audio: HTMLAudioElement) {
+  return audio.closest('[data-test-id="wrapper"], [data-testid="wrapper"]')?.parentElement
+}
+
+function getMusicArtwork(card: Element | null | undefined) {
+  const image = card?.querySelector('img')
+  return image?.srcset.match(/(?:^|,\s*)(\S+)\s+500w(?:,|$)/)?.[1]
+    || image?.src || image?.currentSrc
+}
+
+function findMusicSongLink(title: string) {
+  return Array.from(document.querySelectorAll<HTMLAnchorElement>('main a[href*="/media/music/songs/"]'))
+    .find(link => link.origin === document.location.origin
+      && link.textContent?.trim().replace(/^\d+\.\s*/, '') === title)
+}
+
+function applyMusicActivity(
+  presenceData: PresenceData,
+  audio: HTMLAudioElement,
+  playback: NonNullable<ReturnType<typeof readAudioPlayback>>,
+) {
+  const card = getMusicCard(audio)
+  const title = card?.querySelector('h5')?.textContent?.trim()
+
+  if (!title)
+    return false
+
+  const recording = card?.querySelector<HTMLSelectElement>('select[aria-label="Select Recording Type"]')
+    ?.selectedOptions[0]?.textContent?.trim()
+  const album = document.querySelector('main h1')?.textContent?.trim()
+  const imageUrl = getMusicArtwork(card)
+
+  // Match the player's title to the song's actual link, ignoring its hymn number.
+  const songLink = findMusicSongLink(title)
+  const songUrl = new URL(songLink?.href || document.location.href)
+  // The song-list filters are unnecessary for opening an individual recording.
+  songUrl.searchParams.delete('songListFilters')
+
+  const shortTitle = title.length > 15 ? `${title.substring(0, 15)}...` : title
+  presenceData.type = ActivityType.Listening
+  presenceData.details = title
+  presenceData.smallImageKey = playback.paused ? Assets.Pause : Assets.Play
+  presenceData.smallImageText = playback.paused ? 'Paused' : 'Playing'
+
+  const cachedCollection = findMusicCollection(songUrl.pathname, songUrl.search)
+    ?? findMusicCollection(document.location.pathname.replace(/\/+$/, ''), document.location.search)
+  presenceData.largeImageKey = imageUrl || cachedCollection?.image
+    || presenceData.largeImageKey || ActivityAssets.Logo
+  const breadcrumb = album === title ? findMusicBreadcrumb() : undefined
+  const collection = breadcrumb?.title || (album && album !== title && album !== 'Music Library'
+    ? album
+    : cachedCollection?.title)
+  const state = [collection, recording].filter(Boolean).join(' - ')
+  if (state)
+    presenceData.state = state
+  else
+    delete presenceData.state
+
+  presenceData.buttons = [{
+    label: `Listen to ${shortTitle}`,
+    url: songUrl.href,
+  }]
+
+  setPlaybackTimestamps(
+    presenceData,
+    playback.currentTime,
+    playback.duration,
+    playback.playbackRate,
+    playback.advancing,
+  )
+  return true
+}
+
+function applyAudioActivity(presenceData: PresenceData) {
+  const audios = Array.from(document.querySelectorAll<HTMLAudioElement>('main audio'))
+  const playbackStates = audios.map(audio => ({ audio, playback: readAudioPlayback(audio) }))
+  const active = playbackStates.find(state => state.playback && !state.playback.paused)
+    ?? playbackStates.find(state => state.playback !== undefined)
+
+  if (!active?.playback)
+    return false
+
+  const { audio, playback } = active
+  const { pathname, href } = document.location
+
+  if (isMusicPath(pathname))
+    return applyMusicActivity(presenceData, audio, playback)
+
+  const article = document.querySelector<HTMLElement>('article#main[data-content-type][data-uri]')
+
+  // The Gospel Library player reads the current article.
+  const articleUri = article?.dataset.uri
+  if (!articleUri || `/study${articleUri}` !== pathname.replace(/\/+$/, ''))
+    return false
+
+  const title = document.title.trim()
+  if (!title)
+    return false
+
+  const isConference = article?.dataset.contentType?.startsWith('general-conference-')
+  const collectionButton = presenceData.buttons?.[1]
+
+  presenceData.type = ActivityType.Listening
+  presenceData.details = `Listening to ${title}`
+  presenceData.smallImageKey = playback.paused ? Assets.Pause : Assets.Play
+  presenceData.smallImageText = playback.paused ? 'Paused' : 'Playing'
+
+  if (isConference) {
+    const author = article?.querySelector('.author-name')?.textContent?.trim()
+    const role = article?.querySelector('.author-role')?.textContent?.trim()
+
+    if (author)
+      presenceData.state = role ? `${author}, ${role}` : author
+    else
+      delete presenceData.state
   }
   else {
-    shortTitle = listeningTitle
+    const collection = findLibraryCollection(pathname.replace(/\/+$/, ''))
+
+    if (collection)
+      presenceData.state = collection.title
+    else
+      delete presenceData.state
   }
 
-  // Construct the state
-  let stateText: string | undefined
-  if (listeningAlbum !== undefined && listeningStyle !== undefined) {
-    stateText = `${listeningAlbum} - ${listeningStyle}`
-  }
-  else if (listeningAlbum !== undefined) {
-    stateText = listeningAlbum
-  }
-  else if (listeningStyle !== undefined) {
-    stateText = listeningStyle
-  }
-  else {
-    stateText = undefined // No state text if no album or style is available
-  }
+  presenceData.buttons = [{
+    label: isConference ? 'Listen to Conference Talk' : 'Listen to Audio',
+    url: href,
+  }]
 
-  presenceData = {
-    type: ActivityType.Listening,
-    largeImageKey: thumbnail,
-    smallImageKey: Assets.Pause,
-    smallImageText: 'Paused',
-    startTimestamp: currentTimestamp,
-    details: listeningTitle,
-    state: stateText,
-    buttons: [
-      {
-        label: `Listen to ${shortTitle}`,
-        url: document.location.href,
-      },
-    ],
-  }
+  if (collectionButton)
+    presenceData.buttons.push(collectionButton)
 
-  // Perform triple-update
-  tripleUpdate()
+  setPlaybackTimestamps(
+    presenceData,
+    playback.currentTime,
+    playback.duration,
+    playback.playbackRate,
+    playback.advancing,
+  )
+  return true
 }
 
-function parseScriptureReference(): string | undefined {
-  // Attempt to parse via content title
-  const contentTitle = document.querySelector('[class*=contentTitle]')
-  if (contentTitle !== null) {
-    if (contentTitle.children.length > 0) {
-      return contentTitle.children[0]?.textContent?.trim()
-    }
-    else {
-      return contentTitle.textContent?.trim()
-    }
+presence.on('UpdateData', () => {
+  const { pathname, href, origin, search } = document.location
+  const path = pathname.split('/').filter(Boolean)
+  const currentPath = `/${path.join('/')}`
+
+  if (currentPath !== previousPath) {
+    previousPath = currentPath
+    browsingTimestamp = Math.floor(Date.now() / 1000)
   }
 
-  // Attempt to parse via the title id
-  const title = document.querySelector('#title1')
-  return title?.textContent?.trim()
-}
-
-function parseTalkAuthor(): string | undefined {
-  // Attempt to parse via the talk author name
-  let author: string | undefined
-  const authorName = document.querySelector('.author-name')
-  if (authorName !== null) {
-    author = authorName.textContent?.trim()
-
-    // Attempt to parse the author's calling, too
-    const authorCalling = document.querySelector('.author-role')
-    if (authorCalling !== null) {
-      const calling = authorCalling.textContent?.trim()
-      if (calling !== undefined && calling.length > 0) {
-        author += `, ${calling}`
-      }
-    }
-
-    return author
+  const presenceData: PresenceData = {
+    type: ActivityType.Playing,
+    largeImageKey: ActivityAssets.Logo,
+    smallImageKey: Assets.Search,
+    smallImageText: 'Browsing...',
+    startTimestamp: browsingTimestamp,
+    details: 'Browsing...',
   }
-  return undefined
-}
 
-function parseTalkPreview(): string | undefined {
-  // Attempt to parse the talk preview image
-  const preview = document.querySelector('[class*="posterFallback"]')
-  if (preview !== null && preview instanceof HTMLImageElement) {
-    return `${preview.src}.jpeg` // Append .jpeg to ensure correct format
-  }
-  return undefined
-}
+  const isNewsroom = document.location.hostname === 'newsroom.churchofjesuschrist.org'
+  const section = isNewsroom ? 'newsroom' : isMusicPath(currentPath) ? 'music' : path[0]
 
-function parsePlayerTitle(): string | undefined {
-  // Fetch the player card
-  const playerCard = document.querySelector('[class*="AudioPlayerCard__TitleAndOptions"]')
-  if (playerCard !== null) {
-    // If it has children, we assume it's a dual title (e.g., "Book of Mormon" and "1 Nephi 1:1")
-    if (playerCard.children.length > 0) {
-      return playerCard.children[0]?.textContent?.trim()
-    }
-    else {
-      return playerCard.textContent?.trim()
-    }
-  }
-  return undefined
-}
+  switch (section) {
+    case 'my-home':
+      presenceData.details = 'Browsing their home page...'
+      break
 
-function parsePlayerTimestamp1(): number | undefined {
-  const elapsedTime = document.querySelector('[class*="TimeBar__Elapsed"]')
-  if (elapsedTime !== null) {
-    const timeText = elapsedTime.textContent?.trim()
-    if (timeText !== undefined) {
-      return timestampFromFormat(timeText)
-    }
-  }
-  return undefined
-}
+    case 'study': {
+      const article = document.querySelector<HTMLElement>(
+        'article#main[data-content-type][data-uri]',
+      )
 
-function parsePlayerTimestamp2(): number | undefined {
-  const elapsedTime = document.querySelector('[class*="TimeBar__Duration"]')
-  if (elapsedTime !== null) {
-    const timeText = elapsedTime.textContent?.trim()
-    if (timeText !== undefined) {
-      return timestampFromFormat(timeText)
-    }
-  }
-  return undefined
-}
+      const articleUri = article?.dataset.uri
 
-function parsePlayerIsPlaying(): boolean {
-  // Check if the player is playing
-  const controls = document.querySelector('[class*="Controls__PlaybackWrapper"]')
-  if (controls !== null && controls.children.length > 1) {
-    const playControl = controls.children[1]
-    return playControl?.ariaPressed === 'true'
-  }
-  return false
-}
+      // Distinguish reading content from collection navigation.
+      const isReading = articleUri
+        && `/study${articleUri}` === currentPath
+        && !article?.querySelector('nav.manifest')
+        && !/\/_(?:manifest|contents)$/.test(articleUri)
 
-function parsePlayerThumbnail(): string | undefined {
-  // Attempt to parse the thumbnail image
-  const thumbnail = document.querySelector('[class*="AudioPlayerCard__Thumbnail"] img')
-  if (thumbnail !== undefined && thumbnail instanceof HTMLImageElement) {
-    return `${thumbnail.src}.jpeg` // Append .jpeg to ensure correct format
-  }
-  return undefined
-}
+      if (!isReading)
+        cacheLibraryCollections()
 
-function parsePlayerAlbum(): string | undefined {
-  // Attempt to parse the album name
-  return document.querySelector('h1')?.textContent?.trim()
-}
+      const collection = findLibraryCollection(currentPath)
+      const scripture = collection
+        ? scriptureCollections[collection.pathname]
+        : undefined
 
-function parsePlayerStyle(): string | undefined {
-  // Attempt to parse the player style
-  const select = document.querySelector('[class*="AudioPlayerCard__StyledSelect"]')
-  if (select !== undefined && select instanceof HTMLSelectElement) {
-    // Find the selected option
-    const selectedOption = select.options[select.selectedIndex]
-    if (selectedOption !== undefined) {
-      return selectedOption.textContent?.trim()
-    }
-  }
-  return undefined
-}
+      const collectionTitle = scripture
+        ? `the ${scripture.title}`
+        : collection?.title
 
-function cacheConferenceImages() {
-  if (cachedCnfrenceImgs.size > 0)
-    return // Images are already cached
+      if (collection)
+        presenceData.largeImageKey = collection.image
 
-  const references = document.querySelectorAll('[class*="portrait-"]')
-  for (const reference of references) {
-    const link = reference.getAttribute('href')
-    if (link === null)
-      continue // Skip if no link is found
-    const year = link.split('/')[3] // Extract the year from the link
-    const month = link.split('/')[4]?.split('?')[0] // Extract the month from the link
-    if (year === undefined || month === undefined)
-      continue // Skip if year or month is not found
+      const conference = currentPath.match(
+        /^\/study\/general-conference\/(\d{4})\/(04|10)(?:\/|$)/,
+      )
 
-    const image = reference.querySelector('img')
-    if (image === null || !(image instanceof HTMLImageElement))
-      continue // Skip if no image is found
-    const imageUrl = `${image.src}.jpeg` // Append .jpeg to ensure correct format
+      const conferenceDate = conference
+        ? `${conference[2] === '04' ? 'April' : 'October'} ${conference[1]}`
+        : undefined
 
-    cachedCnfrenceImgs.set(`${year}-${month}`, imageUrl) // Cache the image URL
-  }
-}
+      // Preserve the selected language in collection links.
+      const language = new URLSearchParams(search).get('lang')
 
-presence.on('UpdateData', async () => {
-  // Determine our current state
-  const path = document.location.pathname.split('/')
-  if (path.length > 1) {
-    // Home
-    if (path[1] === 'my-home') {
-      setBrowsing('my-home')
+      if (isReading) {
+        const title = document.title.trim()
 
-    // Libraries
-    }
-    else if (path[1] === 'study') {
-      if (path.length > 2) {
-        // Scriptures
-        if (path[2] === 'scriptures') {
-          if (path.length > 3) {
-            if (path[3] === 'ot') {
-              if (path.length > 4) {
-                setReading('old-testament')
-              }
-              else {
-                setBrowsing('old-testament')
-              }
-            }
-            else if (path[3] === 'nt') {
-              if (path.length > 4) {
-                setReading('new-testament')
-              }
-              else {
-                setBrowsing('new-testament')
-              }
-            }
-            else if (path[3] === 'bofm') {
-              if (path.length > 4) {
-                setReading('book-of-mormon')
-              }
-              else {
-                setBrowsing('book-of-mormon')
-              }
-            }
-            else if (path[3] === 'dc-testament') {
-              if (path.length > 4) {
-                setReading('doctrine-and-covenants')
-              }
-              else {
-                setBrowsing('doctrine-and-covenants')
-              }
-            }
-            else if (path[3] === 'pgp') {
-              if (path.length > 4) {
-                setReading('pearl-of-great-price')
-              }
-              else {
-                setBrowsing('pearl-of-great-price')
-              }
-            }
-            else {
-              setBrowsing('scriptures')
-            }
+        // General Conference reading.
+        if (
+          article?.dataset.contentType?.startsWith('general-conference-')
+          && title
+        ) {
+          const author = article.querySelector('.author-name')
+            ?.textContent?.trim()
+
+          const role = article.querySelector('.author-role')
+            ?.textContent?.trim()
+
+          const image = document.querySelector<HTMLMetaElement>(
+            'meta[property="og:image"]',
+          )?.content
+
+          presenceData.details = `Reading the ${title}`
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = `The ${title}`
+          presenceData.largeImageKey = image || ActivityAssets.Logo
+
+          if (author)
+            presenceData.state = role ? `${author}, ${role}` : author
+
+          presenceData.buttons = [
+            {
+              label: 'View Conference Talk',
+              url: href,
+            },
+          ]
+
+          if (conference && conferenceDate) {
+            const conferenceUrl = new URL(
+              `/study/general-conference/${conference[1]}/${conference[2]}`,
+              origin,
+            )
+
+            if (language)
+              conferenceUrl.searchParams.set('lang', language)
+
+            presenceData.buttons.push({
+              label: `Read Conference ${conferenceDate}`,
+              url: conferenceUrl.href,
+            })
           }
-          else {
-            setBrowsing('scriptures')
-          }
+
+          break
         }
-        else if (path[2] === 'general-conference') {
-          if (path.length > 4) {
-            const year: number = Number.parseInt(path[3] || '')
-            const month: number = Number.parseInt(path[4] || '') - 1 // Months are 0-indexed in JavaScript
-            if (Number.isNaN(year) || Number.isNaN(month)) {
-              setBrowsing('general-conference')
-            }
-            else {
-              const date = new Date(year, month).toLocaleString('en-US', { month: 'long', year: 'numeric' })
-              // The parsed year and month are not passed here intentionally to retain URL structure
-              if (path.length > 5) {
-                setReading(`general-conference-${path[3]}-${path[4]}-${path[5]}`, date)
-              }
-              else {
-                setBrowsing(`general-conference-${path[3]}-${path[4]}`, date)
-              }
-            }
+
+        // Generic reading, including scriptures and study materials.
+        if (title) {
+          const shortTitle = title.length > 20
+            ? `${title.substring(0, 20)}...`
+            : title
+
+          presenceData.details = collectionTitle
+            ? `Reading ${collectionTitle}`
+            : 'Reading...'
+
+          presenceData.state = title
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = scripture
+            ? `The ${scripture.title}`
+            : collection?.title || 'Reading'
+
+          presenceData.buttons = [
+            {
+              label: `View ${shortTitle}`,
+              url: href,
+            },
+          ]
+
+          if (collection && collection.pathname !== currentPath) {
+            const collectionUrl = new URL(
+              collection.pathname,
+              origin,
+            )
+
+            if (language)
+              collectionUrl.searchParams.set('lang', language)
+
+            presenceData.buttons.push({
+              label: `Read ${collectionTitle}`.substring(0, 32),
+              url: collectionUrl.href,
+            })
           }
-          else {
-            cacheConferenceImages()
-            setBrowsing('general-conference')
-          }
 
-        // Other libraries
-        }
-        else {
-          setBrowsing('library')
-        }
-      }
-      else {
-        setBrowsing('library')
-      }
-
-    // Media
-    }
-    else if (path[1] === 'media') {
-      if (path.length > 2) {
-        if (path[2] === 'music') {
-          if (path.length > 3) {
-            if (path[3] === 'collections' || path[3] === 'songs') {
-              if (path.length > 4) {
-                setListening(`music-collection-${path[4]}`)
-              }
-              else {
-                setListening('music-generic')
-              }
-            }
-            else {
-              setBrowsing('music')
-            }
-          }
-          else {
-            setBrowsing('music')
-          }
-        }
-        else {
-          setBrowsing('media')
-        }
-      }
-      else {
-        setBrowsing('media')
-      }
-
-    // Callings
-    }
-    else if (path[1] === 'callings') {
-      setBrowsing('callings')
-
-    // Serve
-    }
-    else if (path[1] === 'serve') {
-      setBrowsing('serve')
-
-    // Temples
-    }
-    else if (path[1] === 'temples') {
-      setBrowsing('temples')
-
-    // Family History
-    }
-    else if (path[1] === 'family-history') {
-      setBrowsing('family-history')
-
-    // Any 'welcome' section
-    }
-    else if (path[1] === 'welcome') {
-      if (currentState !== 'welcome') {
-        currentState = 'welcome'
-        currentTimestamp = Math.floor(Date.now() / 1000)
-        presenceData = {
-          largeImageKey: ActivityAssets.Logo,
-          smallImageKey: Assets.Reading,
-          smallImageText: 'Welcome to the Church of Jesus Christ of Latter-day Saints',
-          startTimestamp: currentTimestamp,
-          details: 'Viewing a welcome section!',
+          break
         }
       }
 
-    // Other sections
+      // General Conference collection browsing.
+      if (conferenceDate) {
+        presenceData.details = `Browsing ${conferenceDate} conference talks...`
+        break
+      }
+
+      // Generic library browsing.
+      presenceData.details = libraryDetails[currentPath]
+        ?? (collectionTitle
+          ? `Browsing ${collectionTitle}...`
+          : 'Browsing the library...')
+
+      break
     }
-    else {
-      setBrowsing('')
+
+    case 'music': {
+      // Establish the Music Library activity before looking for page metadata.
+      presenceData.details = 'Browsing the music library...'
+
+      cacheLibraryCollections('/media/music')
+      const collection = findMusicCollection(currentPath, search)
+      const isSong = currentPath.startsWith('/media/music/songs/')
+      const pageTitle = getMusicPageTitle()
+      const title = isSong ? pageTitle : pageTitle || collection?.title
+
+      if (currentPath !== '/media/music' && title)
+        presenceData.details = `Browsing ${title}...`
+
+      if (collection)
+        presenceData.largeImageKey = formatMusicBrowsingArtwork(collection.image)
+
+      if (title && (isSong || currentPath.startsWith('/media/music/collections/'))) {
+        const audio = document.querySelector<HTMLAudioElement>('main audio')
+        const card = audio ? getMusicCard(audio) : undefined
+        const trackTitle = card?.querySelector('h5')?.textContent?.trim()
+        const breadcrumb = isSong ? findMusicBreadcrumb() : undefined
+        const songLink = !isSong && trackTitle ? findMusicSongLink(trackTitle) : undefined
+        const songCollection = songLink
+          ? new URL(songLink.href).searchParams.get('crumbs')
+          : undefined
+        const playerMatchesPage = isSong
+          ? trackTitle === title
+          : songCollection === currentPath.split('/').pop()
+
+        // The player exposes the cover even before playback starts.
+        // Do not use artwork from a track belonging to another collection.
+        if (playerMatchesPage && (!collection || collection.pathname !== currentPath)) {
+          const image = getMusicArtwork(card)
+          if (image) {
+            if (!collection || !isSong)
+              presenceData.largeImageKey = formatMusicBrowsingArtwork(image)
+
+            const parent = isSong ? breadcrumb : { pathname: currentPath, title }
+            if (parent && !getCachedLibraryCollection(parent.pathname))
+              rememberLibraryCollection(parent.pathname, { title: parent.title, image })
+          }
+        }
+
+        if (breadcrumb)
+          presenceData.state = breadcrumb.title
+      }
+
+      break
     }
-  }
-  else {
-    setBrowsing('')
+
+    case 'newsroom':
+      applyNewsroomActivity(presenceData, currentPath)
+      break
+
+    case 'media':
+      if (!applyBroadcastActivity(presenceData, currentPath))
+        presenceData.details = 'Browsing the media library...'
+      break
+
+    case 'life':
+      presenceData.details = 'Browsing life help resources...'
+      break
+
+    case 'callings':
+      presenceData.details = 'Browsing callings...'
+      break
+
+    case 'serve':
+      presenceData.details = 'Browsing service opportunities...'
+      break
+
+    case 'temples':
+      presenceData.details = 'Browsing temples...'
+      break
+
+    case 'learn':
+      presenceData.details = path[1] === 'family-history'
+        ? 'Browsing family history...'
+        : 'Browsing topics and questions...'
+      break
+
+    case 'family-history':
+      presenceData.details = 'Browsing family history...'
+      break
+
+    case 'welcome':
+      presenceData.details = 'Viewing a welcome section!'
+      presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = 'Welcome to the Church of Jesus Christ of Latter-day Saints'
+      break
+
+    default:
+      break
   }
 
-  // Set activity
+  // Video always takes priority over audio, including paused videos.
+  if (isNewsroom || path[0] === 'study' || path[0] === 'media') {
+    if (!applyVideoActivity(presenceData))
+      applyAudioActivity(presenceData)
+  }
+
   presence.setActivity(presenceData)
 })
