@@ -11,9 +11,9 @@
   },
   "url": "tentaclebbs.com",
   "regExp": "^https?[:][/][/]tentaclebbs[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/wXPgPuN.png",
-  "thumbnail": "https://i.imgur.com/xT6NndT.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tentacle%20BBS/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tentacle%20BBS/assets/thumbnail.png",
   "color": "#9B30FF",
   "category": "games",
   "tags": [

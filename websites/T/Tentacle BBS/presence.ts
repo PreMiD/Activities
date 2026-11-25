@@ -9,7 +9,7 @@ const presence = new Presence({ clientId: '1562569519359074364' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // The same 512x512 logo as metadata.json.
-const LOGO = 'https://i.imgur.com/wXPgPuN.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/T/Tentacle%20BBS/assets/logo.png'
 
 interface DoorInfo {
   door: string
@@ -30,7 +30,9 @@ function doorInfo(): DoorInfo | null {
     return null
   try {
     const info = JSON.parse(meta.content) as DoorInfo
-    return info.door && info.title ? info : null
+    return info.door && info.title
+      ? info
+      : null
   }
   catch {
     return null
@@ -47,7 +49,9 @@ presence.on('UpdateData', async () => {
   // The page may give its addresses relative to the site; Discord needs whole ones.
   const absolute = (path: string) => new URL(path, document.location.origin).href
   const { pathname } = document.location
-  const info = privacy ? null : doorInfo()
+  const info = privacy
+    ? null
+    : doorInfo()
 
   if (pathname === '/play') {
     const live = document.querySelector('#session-state')?.getAttribute('data-state') === 'live'
@@ -76,7 +80,9 @@ presence.on('UpdateData', async () => {
         statusDisplayType: StatusDisplayType.Details,
         details: info.title,
         state: info.kind ?? 'Multi-Relay Chat',
-        largeImageKey: info.card ? absolute(info.card) : LOGO,
+        largeImageKey: info.card
+          ? absolute(info.card)
+          : LOGO,
         startTimestamp,
       })
       return
@@ -91,11 +97,28 @@ presence.on('UpdateData', async () => {
       statusDisplayType: gameAsName ? StatusDisplayType.Name : StatusDisplayType.Details,
       ...(gameAsName
         ? { details: info.kind || 'Web door game', state: 'on Tentacle BBS' }
-        : { details: info.title, detailsUrl: absolute(info.page), ...(info.kind ? { state: info.kind } : {}) }),
+        : {
+            details: info.title,
+            detailsUrl: absolute(info.page),
+            ...(info.kind
+              ? { state: info.kind }
+              : {}),
+          }),
       largeImageKey: absolute(info.card),
-      ...(gameAsName ? { smallImageKey: LOGO, smallImageText: 'Tentacle BBS' } : {}),
+      ...(gameAsName
+        ? { smallImageKey: LOGO, smallImageText: 'Tentacle BBS' }
+        : {}),
       startTimestamp,
-      ...(showButtons ? { buttons: [{ label: 'Play Game', url: absolute(`/play?door=${encodeURIComponent(info.door)}`) }] } : {}),
+      ...(showButtons
+        ? {
+            buttons: [
+              {
+                label: 'Play Game',
+                url: absolute(`/play?door=${encodeURIComponent(info.door)}`),
+              },
+            ],
+          }
+        : {}),
     })
     return
   }
@@ -118,15 +141,30 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.startsWith('/doors/')) {
-    const named = info?.card && info.page ? info : null
+    const named = info?.card && info.page
+      ? info
+      : null
     presence.setActivity({
       name: 'Tentacle BBS',
       type: ActivityType.Playing,
       details: named ? strings.viewGame : strings.viewAGame,
-      ...(named ? { state: named.title } : {}),
-      largeImageKey: named?.card ? absolute(named.card) : LOGO,
+      ...(named
+        ? { state: named.title }
+        : {}),
+      largeImageKey: named?.card
+        ? absolute(named.card)
+        : LOGO,
       startTimestamp: browsingTimestamp,
-      ...(named?.page && showButtons ? { buttons: [{ label: strings.buttonViewGame, url: absolute(named.page) }] } : {}),
+      ...(named?.page && showButtons
+        ? {
+            buttons: [
+              {
+                label: strings.buttonViewGame,
+                url: absolute(named.page),
+              },
+            ],
+          }
+        : {}),
     })
     return
   }
@@ -135,7 +173,9 @@ presence.on('UpdateData', async () => {
     name: 'Tentacle BBS',
     type: ActivityType.Playing,
     details: strings.browsing,
-    ...(pathname === '/' ? { state: strings.viewHome } : {}),
+    ...(pathname === '/'
+      ? { state: strings.viewHome }
+      : {}),
     largeImageKey: LOGO,
     startTimestamp: browsingTimestamp,
   })
