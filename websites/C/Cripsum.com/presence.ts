@@ -133,7 +133,9 @@ presence.on('UpdateData', async () => {
 
   else if (path.includes('cripsumpedia') || path.includes('tiktokpedia')) {
     presenceData.smallImageKey = Assets.Reading
-    presenceData.details = path.includes('tiktokpedia') ? 'TikTokpedia' : 'Cripsumpedia'
+    presenceData.details = path.includes('tiktokpedia')
+      ? 'TikTokpedia'
+      : 'Cripsumpedia'
 
     const articleTitle = document.querySelector('h1')?.textContent || document.title
     presenceData.state = `${strings.readingArticle} ${articleTitle}`
@@ -176,8 +178,12 @@ presence.on('UpdateData', async () => {
       const editId = currentEditCard.getAttribute('data-edit-id')
       const rpcimg = currentEditCard.querySelector<HTMLImageElement>('.rpcimg')?.src
 
-      presenceData.details = title ? `${strings.watchingEdit} ${title}` : strings.watchingEdits
-      presenceData.state = music ? `🎵 ${music}` : strings.listeningToTrack
+      presenceData.details = title
+        ? `${strings.watchingEdit} ${title}`
+        : strings.watchingEdits
+      presenceData.state = music
+        ? `🎵 ${music}`
+        : strings.listeningToTrack
 
       if (editId) {
         presenceData.largeImageKey = rpcimg
@@ -218,7 +224,9 @@ presence.on('UpdateData', async () => {
     if (resultModal && !resultModal.hidden) {
       const title = document.querySelector('#resultTitle')?.textContent?.trim()
       const kicker = document.querySelector('#resultKicker')?.textContent?.trim()
-      presenceData.state = (kicker && title) ? `${kicker}: ${title}` : strings.matchEnded
+      presenceData.state = (kicker && title)
+        ? `${kicker}: ${title}`
+        : strings.matchEnded
     }
 
     else if (arenaPanel && !arenaPanel.hidden && spectatorMode && !spectatorMode.hidden) {
@@ -318,7 +326,9 @@ presence.on('UpdateData', async () => {
 
   else if (path.includes('accedi') || path.includes('registrati') || path.includes('login')) {
     presenceData.details = strings.authentication
-    presenceData.state = path.includes('registrati') ? strings.signingUp : strings.loggingIn
+    presenceData.state = path.includes('registrati')
+      ? strings.signingUp
+      : strings.loggingIn
   }
 
   else if (path.includes('donazioni')) {

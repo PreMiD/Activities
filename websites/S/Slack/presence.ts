@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
       }
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
   else if (
@@ -257,7 +257,7 @@ presence.on('UpdateData', async () => {
       presence.setActivity(presenceData)
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
   else if (
@@ -275,7 +275,7 @@ presence.on('UpdateData', async () => {
       presence.setActivity(presenceData)
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
   else if (
@@ -295,7 +295,7 @@ presence.on('UpdateData', async () => {
       presence.setActivity(presenceData)
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
   else if (
@@ -437,6 +437,6 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })

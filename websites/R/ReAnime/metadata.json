@@ -18,7 +18,7 @@
     "reanime.cz"
   ],
   "regExp": "^https?[:][/][/]reanime[.](to|cz)[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/thumbnail.png",
   "color": "#C7FF00",

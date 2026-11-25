@@ -38,21 +38,27 @@ presence.on('UpdateData', async () => {
     case !pathname.includes('/capitulo-') && pathname.includes('/manga/'): {
       presenceData.details = privacy ? 'Viewing a mange' : 'Viewing manga'
       presenceData.state = document.querySelector('h1')?.textContent
-      presenceData.buttons = [{
-        label: 'View Manga',
-        url: href,
-      }]
+      presenceData.buttons = [
+        {
+          label: 'View Manga',
+          url: href,
+        },
+      ]
       break
     }
     case pathname.includes('/capitulo-') && pathname.includes('/manga/'): {
       const title = document.querySelector('.chap-item')?.textContent?.trim()
-      presenceData.details = privacy ? 'Reading a manga' : `Reading managa: ${title ?? 'unknown title'}`
+      presenceData.details = privacy
+        ? 'Reading a manga'
+        : `Reading managa: ${title ?? 'unknown title'}`
       presenceData.smallImageKey = Assets.Reading
       presenceData.state = document.querySelector('h1')?.textContent
-      presenceData.buttons = [{
-        label: 'Read Manga',
-        url: href,
-      }]
+      presenceData.buttons = [
+        {
+          label: 'Read Manga',
+          url: href,
+        },
+      ]
       break
     }
   }

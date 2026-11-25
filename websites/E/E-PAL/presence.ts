@@ -84,7 +84,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = activeTab && !antTitle
         ? `${drawerTitle} - ${activeTab}`
         : `${drawerTitle}`
-      presenceData.state = antTitle && activeTab ? `${antTitle} - ${activeTab}` : ''
+      presenceData.state = antTitle && activeTab
+        ? `${antTitle} - ${activeTab}`
+        : ''
       break
     }
 
@@ -124,13 +126,17 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageText = 'Listening to audio'
         }
       }
-      presenceData.buttons = [{ label: 'View E-Pal', url: href }]
+      presenceData.buttons = [
+        { label: 'View E-Pal', url: href },
+      ]
       break
     }
     case pathname.includes('/topic/'): {
       presenceData.details = `Viewing ${epalName}'s post`
       presenceData.smallImageKey = epalAvatar ?? ActivityAssets.Logo
-      presenceData.buttons = [{ label: 'View Post', url: href }]
+      presenceData.buttons = [
+        { label: 'View Post', url: href },
+      ]
       break
     }
     case pathname.includes('/foryou'): {
@@ -155,7 +161,9 @@ presence.on('UpdateData', async () => {
         .querySelector('[class="w-24"]')
         ?.querySelector('img')
         ?.getAttribute('src') ?? ''
-      presenceData.buttons = [{ label: 'View E-Pal', url: href }]
+      presenceData.buttons = [
+        { label: 'View E-Pal', url: href },
+      ]
       break
     }
     case pathname.includes('/trade'): {
@@ -197,7 +205,9 @@ presence.on('UpdateData', async () => {
         '[class*="txt-title-l"]',
       )?.textContent
       presenceData.smallImageKey = Assets.Reading
-      presenceData.buttons = [{ label: 'Read FAQ', url: href }]
+      presenceData.buttons = [
+        { label: 'Read FAQ', url: href },
+      ]
       break
     }
     case pathname.includes('/coupon/'): {
@@ -213,9 +223,15 @@ presence.on('UpdateData', async () => {
     }
 
     default: {
-      if (Object.keys(staticPages).includes(pathname))
-        presenceData = { ...presenceData, ...staticPages[pathname] }
-      else presenceData.details = 'Unknown page.'
+      if (Object.keys(staticPages).includes(pathname)) {
+        presenceData = {
+          ...presenceData,
+          ...staticPages[pathname],
+        }
+      }
+      else {
+        presenceData.details = 'Unknown page.'
+      }
     }
   }
 

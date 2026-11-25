@@ -60,7 +60,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = title
     }
 
-    presenceData.largeImageKey = (showCover && coverImage) ? coverImage : 'https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png'
+    presenceData.largeImageKey = (showCover && coverImage)
+      ? coverImage
+      : 'https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png'
 
     const video = document.querySelector('video')
 
@@ -103,7 +105,9 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageText = `Voiceover: ${translator}`
     }
 
-    presenceData.buttons = [{ label: 'Watch on Rezka', url: document.location.href }]
+    presenceData.buttons = [
+      { label: 'Watch on Rezka', url: document.location.href },
+    ]
   }
   else {
     if (!showBrowsingStatus)

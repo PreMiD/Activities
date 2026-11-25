@@ -33,7 +33,9 @@ function slugToText(slug: string): string {
     .replace(/\s+/g, ' ')
     .trim()
     .split(' ')
-    .map(w => (w ? w.charAt(0).toUpperCase() + w.slice(1) : w))
+    .map(w => (w
+      ? w.charAt(0).toUpperCase() + w.slice(1)
+      : w))
     .join(' ')
 }
 
@@ -53,7 +55,9 @@ function getPoster(): string | null {
   const img = document.querySelector<HTMLMetaElement>('meta[property="og:image"], meta[name="og:image"], meta[name="twitter:image"]')?.content
   if (!img || /mbc-shahid|favicon|logo/i.test(img))
     return null
-  return img.startsWith('//') ? `https:${img}` : img
+  return img.startsWith('//')
+    ? `https:${img}`
+    : img
 }
 
 function getHeading(): string {
@@ -106,7 +110,9 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = poster
 
     if (isLive) {
-      presenceData.details = privacy ? 'Watching live TV' : (title || 'Live TV')
+      presenceData.details = privacy
+        ? 'Watching live TV'
+        : (title || 'Live TV')
       presenceData.state = 'Live'
       presenceData.smallImageKey = Assets.Live
       presenceData.smallImageText = 'Live'
@@ -128,8 +134,12 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.details = ep.show
         presenceData.state = [
-          ep.season ? `Season ${ep.season}` : '',
-          ep.episode ? `Episode ${ep.episode}` : '',
+          ep.season
+            ? `Season ${ep.season}`
+            : '',
+          ep.episode
+            ? `Episode ${ep.episode}`
+            : '',
         ].filter(Boolean).join(' • ') || 'Watching'
       }
     }
@@ -162,7 +172,12 @@ presence.on('UpdateData', async () => {
     }
 
     if (showButtons && !privacy) {
-      presenceData.buttons = [{ label: isLive ? 'Watch Live' : 'Watch on Shahid', url: href }]
+      presenceData.buttons = [
+        {
+          label: isLive ? 'Watch Live' : 'Watch on Shahid',
+          url: href,
+        },
+      ]
     }
   }
 
@@ -175,8 +190,11 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = getPoster() ?? ActivityAssets.Logo
     presenceData.state = privacy ? undefined : name
     presenceData.smallImageKey = Assets.Viewing
-    if (showButtons && !privacy)
-      presenceData.buttons = [{ label: 'View Series', url: href }]
+    if (showButtons && !privacy) {
+      presenceData.buttons = [
+        { label: 'View Series', url: href },
+      ]
+    }
   }
   else if (/^movies?$/.test(parts[0] || '') && parts[1]) {
     // /movie/{Title-Slug}/movie-{id}
@@ -186,8 +204,11 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = getPoster() ?? ActivityAssets.Logo
     presenceData.state = privacy ? undefined : name
     presenceData.smallImageKey = Assets.Viewing
-    if (showButtons && !privacy)
-      presenceData.buttons = [{ label: 'View Movie', url: href }]
+    if (showButtons && !privacy) {
+      presenceData.buttons = [
+        { label: 'View Movie', url: href },
+      ]
+    }
   }
   else if (parts[0] === 'series') {
     presenceData.state = 'TV Shows'
@@ -208,7 +229,9 @@ presence.on('UpdateData', async () => {
       || document.querySelector<HTMLInputElement>('input[type="search"], input[type="text"]')?.value
       || ''
     presenceData.details = 'Searching'
-    presenceData.state = privacy || !query ? undefined : query
+    presenceData.state = privacy || !query
+      ? undefined
+      : query
     presenceData.smallImageKey = Assets.Search
   }
   else if (/my-?list|favorites|watchlist/i.test(path)) {

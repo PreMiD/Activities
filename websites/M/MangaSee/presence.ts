@@ -18,7 +18,7 @@ presence.on('UpdateData', async () => {
   }
   else if (
     pathname === '/search/'
-    && window.location.search.slice(0, 1) === '?'
+    && window.location.search.startsWith('?')
   ) {
     presenceData.details = 'Searching: '
     presenceData.state = new URLSearchParams(search).get('name')
@@ -88,7 +88,9 @@ presence.on('UpdateData', async () => {
       ?.textContent
       ?.trim()
       .split(' ')
-      .pop()}${page ? ` 📄 ${page.textContent?.trim().split(' ').pop()}` : ''}`
+      .pop()}${page
+      ? ` 📄 ${page.textContent?.trim().split(' ').pop()}`
+      : ''}`
     presenceData.smallImageKey = Assets.Reading
     if (buttons) {
       presenceData.buttons = [

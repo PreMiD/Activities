@@ -109,8 +109,12 @@ presence.on('UpdateData', async () => {
       const isTopic = pathname.includes('/topic/')
       const isCategory = pathname.includes('/category/')
 
-      presenceData.details = isTopic ? t.readingTopic : (isCategory ? t.browsingCategory : t.community)
-      presenceData.state = (isTopic || isCategory) ? (document.title.split('@')[0]?.trim() || t.readingForum) : t.readingForum
+      presenceData.details = isTopic
+        ? t.readingTopic
+        : (isCategory ? t.browsingCategory : t.community)
+      presenceData.state = (isTopic || isCategory)
+        ? (document.title.split('@')[0]?.trim() || t.readingForum)
+        : t.readingForum
     }
     else if (pathname.includes('/settings')) {
       if (showSettings) {
@@ -157,8 +161,12 @@ presence.on('UpdateData', async () => {
       const activeLayerMatch = layerTokens.find(token => layerKeys.includes(token)) || ''
       const layerTranslated = activeLayerMatch ? (t as any)[activeLayerMatch] : undefined
 
-      presenceData.details = pathname === '/' ? t.globalMap : t.exploring
-      presenceData.state = (showLayer && layerTranslated) ? `${t.layer}: ${layerTranslated}` : undefined
+      presenceData.details = pathname === '/'
+        ? t.globalMap
+        : t.exploring
+      presenceData.state = (showLayer && layerTranslated)
+        ? `${t.layer}: ${layerTranslated}`
+        : undefined
     }
 
     presence.setActivity(presenceData)

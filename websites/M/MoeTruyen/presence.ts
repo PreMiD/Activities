@@ -84,7 +84,10 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = buildButtons([
         { label: localeStrings.buttonReadThisChapter, url: href },
-        { label: localeStrings.buttonViewManga, url: getReaderSeriesUrl(pathname) },
+        {
+          label: localeStrings.buttonViewManga,
+          url: getReaderSeriesUrl(pathname),
+        },
       ])
     }
   }
@@ -124,10 +127,14 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = localeStrings.browsing
   }
   else if (pathname.startsWith('/tin-tuc')) {
-    presenceData.details = pathname === '/tin-tuc' ? localeStrings.browsingNews : localeStrings.viewingNewsPost
+    presenceData.details = pathname === '/tin-tuc'
+      ? localeStrings.browsingNews
+      : localeStrings.viewingNewsPost
     presenceData.state = getDocumentTitle()
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = pathname === '/tin-tuc' ? localeStrings.browsing : localeStrings.readingNews
+    presenceData.smallImageText = pathname === '/tin-tuc'
+      ? localeStrings.browsing
+      : localeStrings.readingNews
   }
   else if (pathname.startsWith('/forum/post/')) {
     presenceData.details = localeStrings.viewingForumPost
@@ -211,7 +218,9 @@ function buildButtons(buttons: Array<{ label: string, url: string | null }>): [B
   if (!firstButton)
     return undefined
 
-  return secondButton ? [firstButton, secondButton] : [firstButton]
+  return secondButton
+    ? [firstButton, secondButton]
+    : [firstButton]
 }
 
 function cleanText(text: string | null | undefined): string | null {
@@ -250,7 +259,9 @@ function getFirstChapterUrl(pathname: string): string | null {
     .map(link => link.href)
     .filter(href => href.includes(`${mangaPath}/chapters/`))
 
-  return chapterLinks.length > 0 ? (chapterLinks[chapterLinks.length - 1] ?? null) : null
+  return chapterLinks.length > 0
+    ? (chapterLinks[chapterLinks.length - 1] ?? null)
+    : null
 }
 
 function getImageUrl(image: HTMLImageElement | null | undefined): string | null {
@@ -280,7 +291,9 @@ function getReaderSeriesUrl(pathname: string): string | null {
 
   return document.querySelector<HTMLAnchorElement>('.reader-dock__series-link')?.href
     ?? document.querySelector<HTMLAnchorElement>('.reader-chapter-bridge__actions a[href*="/manga/"]')?.href
-    ?? (fallbackSeriesUrl ? `${document.location.origin}${fallbackSeriesUrl}` : null)
+    ?? (fallbackSeriesUrl
+      ? `${document.location.origin}${fallbackSeriesUrl}`
+      : null)
 }
 
 function getText(selector: string): string | null {

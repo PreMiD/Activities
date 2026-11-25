@@ -96,8 +96,12 @@ presence.on('UpdateData', async () => {
       }
       break
     default:
-      if (Object.keys(staticPages).includes(arrPath[1]!))
-        presenceData = { ...presenceData, ...staticPages[arrPath[1]!] }
+      if (Object.keys(staticPages).includes(arrPath[1]!)) {
+        presenceData = {
+          ...presenceData,
+          ...staticPages[arrPath[1]!],
+        }
+      }
   }
 
   if (!image && presenceData.largeImageKey !== ActivityAssets.Logo)

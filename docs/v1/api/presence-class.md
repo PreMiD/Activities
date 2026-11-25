@@ -351,7 +351,9 @@ Returns an array of the past 100 logs, optionally filtered with a RegExp.
 #### Example
 
 ```typescript
-const logs = await presence.getLogs(/error/i, { types: ['error', 'warn'] })
+const logs = await presence.getLogs(/error/i, {
+  types: ['error', 'warn']
+})
 ```
 
 ### getExtensionVersion

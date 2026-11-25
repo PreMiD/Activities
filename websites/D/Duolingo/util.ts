@@ -1,9 +1,13 @@
 export function makePossessive(name: string): string {
-  return name.endsWith('s') ? `${name}'` : `${name}'s`
+  return name.endsWith('s')
+    ? `${name}'`
+    : `${name}'s`
 }
 
 export function deEsser(word: string): string {
-  return word.endsWith('s') ? word.slice(0, -1) : word
+  return word.endsWith('s')
+    ? word.slice(0, -1)
+    : word
 }
 
 export function giveArticle(word: string): string {

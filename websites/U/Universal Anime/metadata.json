@@ -12,7 +12,7 @@
   },
   "url": "universalanime.eu",
   "regExp": "^https?[:][/][/](www[.])?universalanime[.]eu[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Universal%20Anime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Universal%20Anime/assets/thumbnail.jpeg",
   "color": "#E53935",

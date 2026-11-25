@@ -49,7 +49,9 @@ presence.on('UpdateData', async () => {
     presence.setActivity({
       largeImageKey: ActivityAssets.Logo,
       details: 'Bir yazara göz atıyor:',
-      state: author && author.textContent !== '' ? author.textContent : 'Belirsiz',
+      state: author && author.textContent !== ''
+        ? author.textContent
+        : 'Belirsiz',
       startTimestamp: Math.floor(Date.now() / 1000),
     })
   }

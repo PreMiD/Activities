@@ -40,7 +40,12 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showTimestamp'),
     presence.getSetting<number>('logo'),
   ])
-  const logoArr = [ActivityAssets.Logo, ActivityAssets.WovWhite, ActivityAssets.WovNoBg, ActivityAssets.WovText]
+  const logoArr = [
+    ActivityAssets.Logo,
+    ActivityAssets.WovWhite,
+    ActivityAssets.WovNoBg,
+    ActivityAssets.WovText,
+  ]
   const presenceData: PresenceData = {
     largeImageKey: logoArr[logo] || ActivityAssets.Logo,
   }

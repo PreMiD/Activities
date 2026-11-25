@@ -117,7 +117,9 @@ presence.on('UpdateData', async () => {
     const parts = pathname.split('/ondemandplus/')
     const slug = parts[1]?.split('/')[0]
 
-    const categoryName = slug && slug in categoryMap ? categoryMap[slug as keyof typeof categoryMap] : 'Pagina Principal'
+    const categoryName = slug && slug in categoryMap
+      ? categoryMap[slug as keyof typeof categoryMap]
+      : 'Pagina Principal'
 
     presenceData.details = 'Navegando en Vix'
     presenceData.state = `Viendo: ${categoryName}`

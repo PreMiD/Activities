@@ -33,7 +33,10 @@ const URLMap: { [index: string]: ((() => string) | string | null)[] } = {
   'Friendship': ['Viewing friendship', null],
   'GamesList': ['Viewing games list', null],
   'Play': ['Finding a game...', null],
-  'Game': ['Playing a game', () => `vs${getText('#enemyUsername')}`],
+  'Game': [
+    'Playing a game',
+    () => `vs${getText('#enemyUsername')}`,
+  ],
   'Spectate': [
     'Spectating a game',
     () => `${getText('#yourUsername') || 'Loading...'} vs ${getText('#enemyUsername') || 'Loading...'}`,
@@ -57,8 +60,12 @@ presence.on('UpdateData', async () => {
     ) ?? []
     if (path && Object.hasOwn(URLMap, path)) {
       const [details, state] = URLMap[path]!
-      presenceData.details = typeof details === 'function' ? details() : details
-      presenceData.state = typeof state === 'function' ? state() : state
+      presenceData.details = typeof details === 'function'
+        ? details()
+        : details
+      presenceData.state = typeof state === 'function'
+        ? state()
+        : state
     }
     else if (path?.endsWith('.jsp')) {
       presenceData.details = 'Viewing page'

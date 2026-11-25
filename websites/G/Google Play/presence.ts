@@ -70,7 +70,9 @@ presence.on('UpdateData', async () => {
       }
       case 'search': {
         const q = query.get('q')
-        presenceData.details = `Searching${q ? ` for ${q}` : ''}`
+        presenceData.details = `Searching${q
+          ? ` for ${q}`
+          : ''}`
 
         break
       }

@@ -88,7 +88,9 @@ presence.on('UpdateData', async () => {
     if (useJoinButton) {
       const url = document.querySelector<HTMLInputElement>('#roomInfoLink')?.value
       if (url) {
-        presenceData.buttons = [{ label: 'Join Game', url: `https://${url}` }]
+        presenceData.buttons = [
+          { label: 'Join Game', url: `https://${url}` },
+        ]
       }
     }
   }

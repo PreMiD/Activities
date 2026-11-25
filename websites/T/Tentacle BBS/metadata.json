@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "848306153767305267",
+    "name": "Snwblnd"
+  },
+  "service": "Tentacle BBS",
+  "description": {
+    "en": "BBS door games played in the browser: LORD, Trade Wars, Barren Realms Elite and hundreds more."
+  },
+  "url": "tentaclebbs.com",
+  "regExp": "^https?[:][/][/]tentaclebbs[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tentacle%20BBS/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tentacle%20BBS/assets/thumbnail.png",
+  "color": "#9B30FF",
+  "category": "games",
+  "tags": [
+    "bbs",
+    "retro",
+    "door-games"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false,
+      "description": "Do not show which door you are playing or viewing."
+    },
+    {
+      "id": "gameAsName",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Game as Activity Name",
+      "icon": "fad fa-user-edit",
+      "value": false,
+      "description": "Show \"Playing <door>\" instead of \"Playing Tentacle BBS\"."
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}

@@ -19,7 +19,9 @@ presence.on('UpdateData', async () => {
     return presence.setActivity({
       details: topic.textContent,
       state: `by ${
-        author && author.textContent !== '' ? author.textContent : 'unknown'
+        author && author.textContent !== ''
+          ? author.textContent
+          : 'unknown'
       }${
         date && date.textContent !== ''
           ? ` (${date.textContent?.replace('Updated: ', '')})`

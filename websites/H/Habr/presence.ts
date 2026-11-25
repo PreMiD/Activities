@@ -126,13 +126,17 @@ presence.on('UpdateData', async () => {
 
       const categoryTitle = textContent('.tm-page__top > div > h1 > span') || textContent('.tm-page__top .tm-section-name__text')
       if (categoryTitle) {
-        presenceData.state = `${categoryTitle}${subTitle ? ` – ${subTitle}` : ''}`
+        presenceData.state = `${categoryTitle}${subTitle
+          ? ` – ${subTitle}`
+          : ''}`
       }
       else {
         switch (path[2]) {
           case 'companies':
             presenceData.details = privacy ? strings.viewAProfile : strings.viewProfile
-            presenceData.state = `${textContent('.tm-company-card__name > span')}${subTitle ? ` – ${subTitle}` : ''}`
+            presenceData.state = `${textContent('.tm-company-card__name > span')}${subTitle
+              ? ` – ${subTitle}`
+              : ''}`
             presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
               '.tm-company-profile-card .tm-entity-image__pic',
             )?.src ?? ActivityAssets.Logo
@@ -150,7 +154,9 @@ presence.on('UpdateData', async () => {
 
           case 'users':
             presenceData.details = privacy ? strings.viewAProfile : strings.viewProfile
-            presenceData.state = `${textContent('.tm-user-card__title a')}${subTitle ? ` – ${subTitle}` : ''}`
+            presenceData.state = `${textContent('.tm-user-card__title a')}${subTitle
+              ? ` – ${subTitle}`
+              : ''}`
             presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
               '.tm-user-card__header-data .tm-entity-image__pic',
             )?.src ?? ActivityAssets.Logo
@@ -194,7 +200,9 @@ presence.on('UpdateData', async () => {
 
     case 'sandbox':
       presenceData.details = privacy ? strings.viewACategory : strings.viewCategory
-      presenceData.state = `${textContent('.tm-section-name__text')}${subTitle ? ` – ${subTitle}` : ''}`
+      presenceData.state = `${textContent('.tm-section-name__text')}${subTitle
+        ? ` – ${subTitle}`
+        : ''}`
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = strings.view
       break

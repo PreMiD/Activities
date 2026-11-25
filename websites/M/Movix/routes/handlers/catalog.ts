@@ -42,7 +42,9 @@ export async function handleCatalogRoutes(
     const query = getSearchParam('q')
     const presenceData = createPagePresence(
       s().searching,
-      query ? `${s().searchQuery} ${query}` : s().searchGlobal,
+      query
+        ? `${s().searchQuery} ${query}`
+        : s().searchGlobal,
       pageImage,
     )
 
@@ -121,13 +123,17 @@ export async function handleCatalogRoutes(
     const title = firstNonEmpty(
       getText('h2'),
       pageTitle,
-      contentType === 'movie' ? s().movieToDownload : s().seriesToDownload,
+      contentType === 'movie'
+        ? s().movieToDownload
+        : s().seriesToDownload,
     )
 
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        contentType === 'movie' ? s().downloadMovie : s().downloadSeries,
+        contentType === 'movie'
+          ? s().downloadMovie
+          : s().downloadSeries,
         String(title),
         contentImage,
       ),
@@ -141,7 +147,9 @@ export async function handleCatalogRoutes(
       context,
       createPagePresence(
         s().useDebrid,
-        provider ? format(s().debridService, provider) : s().debrid,
+        provider
+          ? format(s().debridService, provider)
+          : s().debrid,
         pageImage,
       ),
     )
@@ -156,7 +164,9 @@ export async function handleCatalogRoutes(
       createPagePresence(
         s().browseGenre,
         pageTitle
-        || (mediaType === 'movie' ? s().moviesByGenre : s().seriesByGenre),
+        || (mediaType === 'movie'
+          ? s().moviesByGenre
+          : s().seriesByGenre),
         pageImage,
       ),
     )
@@ -178,7 +188,9 @@ export async function handleCatalogRoutes(
     const providerId = getMatchPart(providerCatalogMatch, 1)
     const mediaType = getMatchPart(providerCatalogMatch, 2)
     const providerName = getProviderName(providerId)
-    const mediaLabel = mediaType === 'movies' ? s().movies : s().series
+    const mediaLabel = mediaType === 'movies'
+      ? s().movies
+      : s().series
 
     return finalizeRoutePresence(
       context,
@@ -261,7 +273,9 @@ export async function handleCatalogRoutes(
     const presenceData = createPagePresence(
       s().watchLiveTv,
       liveTitle,
-      livePoster && isImageUrlAllowed(livePoster) ? livePoster : pageImage,
+      livePoster && isImageUrlAllowed(livePoster)
+        ? livePoster
+        : pageImage,
     )
 
     presenceData.smallImageKey = Assets.Live

@@ -88,7 +88,9 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
       '#site-content div > div > div > img',
     )?.src ?? ActivityAssets.Logo
-    presenceData.buttons = [{ label: 'View Profile', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Profile', url: document.URL },
+    ]
   }
   else if (pathname.startsWith('/search')) {
     const searchContent = document.querySelector<HTMLSpanElement>(

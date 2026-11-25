@@ -54,7 +54,9 @@ function applyTimestamps(presenceData: PresenceData, { video, display, viewerTim
   }
   // Live TV channel: program times, adjusted for the stream lag behind real time
   else if (display.airing) {
-    const lag = viewerTime !== undefined ? Date.now() - viewerTime : 0
+    const lag = viewerTime !== undefined
+      ? Date.now() - viewerTime
+      : 0
     presenceData.startTimestamp = Math.floor((display.airing.startTime + lag) / 1000)
     presenceData.endTimestamp = Math.floor((display.airing.endTime + lag) / 1000)
   }
@@ -71,7 +73,9 @@ export function applyPlayerPresence(presenceData: PresenceData, context: PlayerC
 
   // The overlay subtitle is only a fallback without metadata: it can still show the previous media
   // (e.g. a series episode before a movie)
-  const episodeLabel = display.title ? display.subtitle : findOverlaySubtitle()
+  const episodeLabel = display.title
+    ? display.subtitle
+    : findOverlaySubtitle()
   if (episodeLabel && episodeLabel.trim() !== contentTitle.trim())
     presenceData.state = episodeLabel
 
@@ -81,9 +85,13 @@ export function applyPlayerPresence(presenceData: PresenceData, context: PlayerC
     presenceData.largeImageText = largeImageText
 
   // Without a banner on the page (live TV), the program or channel image is used in any case
-  const [preferredImage, fallbackImage] = useMediaImage ? [display.image, bannerImg] : [bannerImg, display.image]
+  const [preferredImage, fallbackImage] = useMediaImage
+    ? [display.image, bannerImg]
+    : [bannerImg, display.image]
   const coverUrl = preferredImage ?? fallbackImage
-  const alignment = coverUrl === display.image ? CropAlignment.Center : CropAlignment.Right
+  const alignment = coverUrl === display.image
+    ? CropAlignment.Center
+    : CropAlignment.Right
   applyCover(presenceData, coverUrl, { showCover, imageType, alignment })
 
   if (video.paused) {

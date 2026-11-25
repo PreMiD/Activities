@@ -11,7 +11,7 @@
   },
   "url": "senkulibrary.app",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(senkulibrary[.]app)[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Senku%20Library/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Senku%20Library/assets/thumbnail.png",
   "color": "#3b82f6",

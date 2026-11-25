@@ -12,7 +12,9 @@ presence.on('UpdateData', async () => {
   const player = document.querySelector(
     '#audio-player_html5_api',
   ) as HTMLAudioElement
-  const playing = player ? (!player.paused) : false
+  const playing = player
+    ? (!player.paused)
+    : false
   const data: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/F/fizy/assets/logo.png',
   }

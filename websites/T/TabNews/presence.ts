@@ -75,7 +75,9 @@ presence.on('UpdateData', async () => {
         switch (thirdLevelPath) {
           case 'pagina': {
             presenceData.details = `Vendo perfil de ${
-              !privacyMode ? secondLevelPath : 'Anônimo'
+              !privacyMode
+                ? secondLevelPath
+                : 'Anônimo'
             }`
             presenceData.state = `Página ${fourLevelPath}`
             break

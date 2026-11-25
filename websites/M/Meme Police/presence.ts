@@ -6,7 +6,7 @@ let presenceData: PresenceData | null = null
 
 presence.on('UpdateData', async () => {
   if (!presenceData || !presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })
 

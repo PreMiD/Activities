@@ -63,7 +63,9 @@ presence.on('UpdateData', async () => {
             mainState = 'Species'
             if (chosenItemContainer) {
               subState = `${
-                /Female_thumb/.test(chosenItemImage?.src ?? '') ? 'Female' : 'Male'
+                /Female_thumb/.test(chosenItemImage?.src ?? '')
+                  ? 'Female'
+                  : 'Male'
               } ${
                 chosenItemContainer?.parentElement?.nextElementSibling?.textContent
               }`

@@ -93,7 +93,9 @@ async function updateSeasonCache(seasonId: string) {
     const bannerAnime = doc.querySelector('meta[property=\'og:image\']')?.getAttribute('content')?.trim() || ''
 
     const matched = seasonRaw.match(/Season\s+(\d+)/)
-    const seasonNumber = matched && matched[1] ? matched[1] : '1'
+    const seasonNumber = matched && matched[1]
+      ? matched[1]
+      : '1'
 
     cachedSeason = {
       seasonId,
@@ -152,7 +154,9 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   const url = new URL(href)
 
-  const currentLang = navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en'
+  const currentLang = navigator.language.toLowerCase().startsWith('es')
+    ? 'es'
+    : 'en'
   if (!strings || oldLang !== currentLang) {
     strings = await getStrings()
     oldLang = currentLang
@@ -352,7 +356,9 @@ presence.on('UpdateData', async () => {
 
     const displayTitle = contextTitle || strings.NAV_UNKNOWTITLE_STATE
     const displayBanner = contextBanner || ActivityAssets.Logo
-    const displaySeasonOrNothing = contextSeasonNumber ? `S${contextSeasonNumber} • ` : ''
+    const displaySeasonOrNothing = contextSeasonNumber
+      ? `S${contextSeasonNumber} • `
+      : ''
 
     const presenceData: PresenceData = {
       details: `${strings.NAV_WATCHING_STATE} ${displayTitle}`,

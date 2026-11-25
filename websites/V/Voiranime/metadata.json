@@ -28,7 +28,7 @@
   },
   "url": "voiranime.cx",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voiranime[.]cx[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voiranime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voiranime/assets/thumbnail.png",
   "color": "#1a1920",

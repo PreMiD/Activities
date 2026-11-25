@@ -77,7 +77,9 @@ presence.on('UpdateData', async () => {
       )?.textContent // episode or empty if it's a movie
 
       if (!privacy && groupWatchId) {
-        presenceData.details = `${title} ${subtitle ? `- ${subtitle}` : ''}`
+        presenceData.details = `${title} ${subtitle
+          ? `- ${subtitle}`
+          : ''}`
         presenceData.state = 'In a GroupWatch'
       }
       else if (privacy) {
@@ -148,7 +150,9 @@ presence.on('UpdateData', async () => {
       )?.textContent // episode or empty if it's a movie
 
       if (!privacy) {
-        presenceData.details = `${title} ${subtitle ? `- ${subtitle}` : ''}`
+        presenceData.details = `${title} ${subtitle
+          ? `- ${subtitle}`
+          : ''}`
         presenceData.state = (await strings).watchLive
       }
       else if (privacy) {
@@ -201,7 +205,9 @@ presence.on('UpdateData', async () => {
       )?.alt ?? undefined
     }
 
-    presenceData.details = `${title} ${subtitle ? `- ${subtitle}` : ''}`
+    presenceData.details = `${title} ${subtitle
+      ? `- ${subtitle}`
+      : ''}`
     presenceData.state = 'Starting a GroupWatch'
     // set GroupWatch participants size
     presenceData.partySize = groupWatchCount

@@ -246,7 +246,9 @@ presence.on('UpdateData', async () => {
         if (posterElement) {
           const posterUrl = posterElement.getAttribute('src')
           if (posterUrl) {
-            const fullPosterUrl = posterUrl.startsWith('//') ? `https:${posterUrl}` : posterUrl
+            const fullPosterUrl = posterUrl.startsWith('//')
+              ? `https:${posterUrl}`
+              : posterUrl
             presenceData.largeImageKey = fullPosterUrl
           }
         }
@@ -316,7 +318,9 @@ presence.on('UpdateData', async () => {
         posterUrl = posterElement.getAttribute('src')
 
         if (posterUrl) {
-          const fullPosterUrl = posterUrl.startsWith('//') ? `https:${posterUrl}` : posterUrl
+          const fullPosterUrl = posterUrl.startsWith('//')
+            ? `https:${posterUrl}`
+            : posterUrl
           presenceData.largeImageKey = fullPosterUrl
         }
       }
@@ -372,7 +376,9 @@ presence.on('UpdateData', async () => {
         posterUrl = posterElement.getAttribute('src')
 
         if (posterUrl) {
-          const fullPosterUrl = posterUrl.startsWith('//') ? `https:${posterUrl}` : posterUrl
+          const fullPosterUrl = posterUrl.startsWith('//')
+            ? `https:${posterUrl}`
+            : posterUrl
           presenceData.largeImageKey = fullPosterUrl
         }
       }
@@ -390,17 +396,23 @@ presence.on('UpdateData', async () => {
         if (menu.style.display === 'none') {
           await parseVideo()
           presenceData.details = title
-          presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle ? ` - ${episodeTitle}` : ''}`
+          presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle
+            ? ` - ${episodeTitle}`
+            : ''}`
         }
         else {
           presenceData.details = `Viewing ${title}`
-          presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle ? ` - ${episodeTitle}` : ''}`
+          presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle
+            ? ` - ${episodeTitle}`
+            : ''}`
         }
       }
       else {
         await parseVideo()
         presenceData.details = title
-        presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle ? ` - ${episodeTitle}` : ''}`
+        presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle
+          ? ` - ${episodeTitle}`
+          : ''}`
       }
 
       if (title === 'Browsing') {
@@ -428,11 +440,15 @@ presence.on('UpdateData', async () => {
           if (menu.style.display === 'none') {
             await parseVideo()
             presenceData.details = title
-            presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle ? ` - ${episodeTitle}` : ''}`
+            presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle
+              ? ` - ${episodeTitle}`
+              : ''}`
           }
           else {
             presenceData.details = `Viewing ${title}`
-            presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle ? ` - ${episodeTitle}` : ''}`
+            presenceData.state = `S${season || '?'}:E${episode || '?'}${episodeTitle
+              ? ` - ${episodeTitle}`
+              : ''}`
           }
         }
         if (title === 'Browsing') {

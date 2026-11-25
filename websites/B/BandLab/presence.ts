@@ -43,14 +43,18 @@ presence.on('UpdateData', async () => {
   })
 
   function firstSrcFromSrcsetProvided(e: Element | null): string | undefined {
-    return e === null ? ActivityAssets.Logo : e.getAttribute('srcset')?.split(' ')[0]
+    return e === null
+      ? ActivityAssets.Logo
+      : e.getAttribute('srcset')?.split(' ')[0]
   }
 
   const { pathname, search, href } = document.location
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    startTimestamp: studioTimestamp !== 0 ? studioTimestamp : browsingTimestamp,
+    startTimestamp: studioTimestamp !== 0
+      ? studioTimestamp
+      : browsingTimestamp,
     type: ActivityType.Playing,
   }
 
@@ -211,7 +215,9 @@ presence.on('UpdateData', async () => {
   }
 
   if (document.querySelector('.profile-card-title')) {
-    presenceData.details = pathname.startsWith('/band/') ? 'Viewing band: ' : strings.viewUser
+    presenceData.details = pathname.startsWith('/band/')
+      ? 'Viewing band: '
+      : strings.viewUser
     presenceData.buttons = [
       {
         label: strings.buttonViewPage,

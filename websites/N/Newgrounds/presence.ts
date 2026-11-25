@@ -82,7 +82,9 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = 'User Profile'
 
     if (await presence.getSetting<boolean>('showprofilename')) {
-      presenceData.state = userName && userName.length < 2 ? `User: ${userName}` : userName
+      presenceData.state = userName && userName.length < 2
+        ? `User: ${userName}`
+        : userName
       if (buttons) {
         presenceData.buttons = [
           {
@@ -165,7 +167,9 @@ presence.on('UpdateData', async () => {
     if (document.location.pathname.startsWith('/art/view')) {
       presenceData.details = 'Viewing art'
       if (await presence.getSetting<boolean>('itemname')) {
-        presenceData.state = itemName && itemName.length < 2 ? `Art: ${itemName}` : itemName
+        presenceData.state = itemName && itemName.length < 2
+          ? `Art: ${itemName}`
+          : itemName
         if (buttons) {
           presenceData.buttons = [
             {
@@ -188,7 +192,9 @@ presence.on('UpdateData', async () => {
         case 'movie':
           presenceData.details = 'Watching a movie'
           if (await presence.getSetting<boolean>('itemname')) {
-            presenceData.state = itemName && itemName.length < 2 ? `Movie: ${itemName}` : itemName
+            presenceData.state = itemName && itemName.length < 2
+              ? `Movie: ${itemName}`
+              : itemName
             if (buttons) {
               presenceData.buttons = [
                 {
@@ -231,7 +237,9 @@ presence.on('UpdateData', async () => {
           }
           presenceData.details = 'Playing a game'
           if (await presence.getSetting<boolean>('itemname')) {
-            presenceData.state = itemName && itemName.length < 2 ? `Game: ${itemName}` : itemName
+            presenceData.state = itemName && itemName.length < 2
+              ? `Game: ${itemName}`
+              : itemName
             if (buttons) {
               presenceData.buttons = [
                 {
@@ -262,14 +270,18 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = ActivityAssets.User
       presenceData.smallImageText = 'User Profile'
       if (await presence.getSetting<boolean>('showprofilename')) {
-        presenceData.state = userName && userName.length < 2 ? `User: ${userName}` : userName
+        presenceData.state = userName && userName.length < 2
+          ? `User: ${userName}`
+          : userName
       }
     }
     else if (document.location.pathname.startsWith('/bbs/topic/')) {
       const itemName = document.querySelector('.pod-head h2')?.textContent
       presenceData.details = 'Viewing a forum topic'
       if (await presence.getSetting<boolean>('topicname')) {
-        presenceData.state = itemName && itemName.length < 2 ? `Topic: ${itemName}` : itemName
+        presenceData.state = itemName && itemName.length < 2
+          ? `Topic: ${itemName}`
+          : itemName
         if (buttons) {
           presenceData.buttons = [
             {
@@ -292,7 +304,9 @@ presence.on('UpdateData', async () => {
       )?.textContent
       presenceData.details = 'Viewing a collection'
       if (await presence.getSetting<boolean>('itemname')) {
-        presenceData.state = itemName && itemName.length < 2 ? `Collection: ${itemName}` : itemName
+        presenceData.state = itemName && itemName.length < 2
+          ? `Collection: ${itemName}`
+          : itemName
         if (buttons) {
           presenceData.buttons = [
             {
@@ -323,7 +337,9 @@ presence.on('UpdateData', async () => {
       )?.textContent
       presenceData.details = 'Viewing a playlist'
       if (await presence.getSetting<boolean>('itemname')) {
-        presenceData.state = itemName && itemName.length < 2 ? `Playlist: ${itemName}` : itemName
+        presenceData.state = itemName && itemName.length < 2
+          ? `Playlist: ${itemName}`
+          : itemName
         if (buttons) {
           presenceData.buttons = [
             {
@@ -374,8 +390,11 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = 'Searching'
     if (await presence.getSetting<boolean>('showsearchterm')) {
       const query = new URLSearchParams(document.location.search).get('terms')
-      if (query)
-        presenceData.state = query.length < 2 ? `Query: ${query}` : query
+      if (query) {
+        presenceData.state = query.length < 2
+          ? `Query: ${query}`
+          : query
+      }
     }
   }
 

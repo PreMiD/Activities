@@ -28,7 +28,9 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('logo'),
   ])
   const presenceData: PresenceData = {
-    largeImageKey: logo === 0 ? ActivityAssets.Logo : ActivityAssets.Logo2,
+    largeImageKey: logo === 0
+      ? ActivityAssets.Logo
+      : ActivityAssets.Logo2,
   }
   const urlpath = window.location.pathname.split('/')
 
@@ -83,7 +85,7 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
 
 presence.on(

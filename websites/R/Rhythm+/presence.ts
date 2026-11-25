@@ -74,12 +74,18 @@ presence.on('UpdateData', async () => {
       if (!songInfo || !sheetInfo)
         return
       presenceData.details = `${songInfo?.title} ${
-        songInfo?.subtitle ? ` (${songInfo?.subtitle})` : ''
+        songInfo?.subtitle
+          ? ` (${songInfo?.subtitle})`
+          : ''
       }`
       presenceData.state = `Diff ${sheetInfo?.difficulty} | ${
-        Math.floor(sheetInfo?.length / 60).toString().length === 1 ? '0' : ''
+        Math.floor(sheetInfo?.length / 60).toString().length === 1
+          ? '0'
+          : ''
       }${Math.floor(sheetInfo?.length / 60)}:${
-        Math.floor(sheetInfo?.length % 60).toString().length === 1 ? '0' : ''
+        Math.floor(sheetInfo?.length % 60).toString().length === 1
+          ? '0'
+          : ''
       }${Math.floor(sheetInfo?.length % 60)} | ${sheetInfo?.keys} Keys | ${
         sheetInfo?.noteCount
       } Notes`

@@ -19,7 +19,9 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = `Reading a ${namespace} post`
       presenceData.state = document.querySelector('h1')?.textContent
-      presenceData.buttons = [{ label: 'Read Post', url: href }]
+      presenceData.buttons = [
+        { label: 'Read Post', url: href },
+      ]
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.post-cover')?.src
     }
   }
@@ -188,7 +190,9 @@ presence.on('UpdateData', async () => {
             .querySelector<HTMLAnchorElement>('.fancy-title')
             ?.textContent
             ?.trim()
-          presenceData.buttons = [{ label: 'View Topic', url: href }]
+          presenceData.buttons = [
+            { label: 'View Topic', url: href },
+          ]
           break
         }
         case 'tag': {

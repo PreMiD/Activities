@@ -29,7 +29,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Reading Documentation'
       if (pathList[1]) {
         presenceData.state = document.querySelector('.section+h1')
-        presenceData.buttons = [{ label: 'Read Docs', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Docs', url: href },
+        ]
       }
       break
     }
@@ -43,7 +45,9 @@ presence.on('UpdateData', async () => {
             header.querySelector('i')!,
           )
           presenceData.smallImageText = header
-          presenceData.buttons = [{ label: 'View Category', url: href }]
+          presenceData.buttons = [
+            { label: 'View Category', url: href },
+          ]
         }
         else {
           presenceData.details = 'Browsing Categories'
@@ -63,7 +67,9 @@ presence.on('UpdateData', async () => {
         if (family)
           presenceData.smallImageText = family.value
 
-        presenceData.buttons = [{ label: 'View Icon', url: href }]
+        presenceData.buttons = [
+          { label: 'View Icon', url: href },
+        ]
       }
       else {
         presenceData.details = 'Browsing Icons'

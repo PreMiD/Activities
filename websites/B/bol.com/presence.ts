@@ -19,7 +19,9 @@ function lowerCase(str: string, capitalFirstLetter?: boolean) {
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    buttons: [{ label: 'Pagina bekijken', url: document.location.href }],
+    buttons: [
+      { label: 'Pagina bekijken', url: document.location.href },
+    ],
   }
   const { pathname, href } = document.location
   const [privacy, buttons, covers] = await Promise.all([
@@ -61,7 +63,9 @@ presence.on('UpdateData', async () => {
             }`,
             true,
           )
-      presenceData.buttons = [{ label: 'Product bekijken', url: href }]
+      presenceData.buttons = [
+        { label: 'Product bekijken', url: href },
+      ]
 
       break
     }
@@ -69,7 +73,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = privacy
         ? 'Bekijkt producten in een categorie'
         : `Bekijkt ${lowerCase(zoekCategorie)}`
-      presenceData.buttons = [{ label: 'Categorie bekijken', url: href }]
+      presenceData.buttons = [
+        { label: 'Categorie bekijken', url: href },
+      ]
       break
     }
     case pathname === '/':

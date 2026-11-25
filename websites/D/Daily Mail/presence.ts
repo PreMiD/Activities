@@ -23,11 +23,22 @@ enum Pages {
 
 // possible expansion for other countries, leave as helper function
 function catToCountry(cat: string): string[] {
-  if (cat.startsWith('us'))
-    return [cat.replace('us', ''), 'Daily Mail (US)']
-  else if (cat.startsWith('au'))
-    return [cat.replace('au', ''), 'Daily Mail (US)']
-  return [cat.replace('us', ''), 'Daily Mail']
+  if (cat.startsWith('us')) {
+    return [
+      cat.replace('us', ''),
+      'Daily Mail (US)',
+    ]
+  }
+  else if (cat.startsWith('au')) {
+    return [
+      cat.replace('au', ''),
+      'Daily Mail (US)',
+    ]
+  }
+  return [
+    cat.replace('us', ''),
+    'Daily Mail',
+  ]
 }
 
 presence.on('UpdateData', async () => {

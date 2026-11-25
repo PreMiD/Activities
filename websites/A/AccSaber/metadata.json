@@ -14,7 +14,7 @@
     "wiki.accsaber.com"
   ],
   "regExp": "^https?[:][/][/](wiki[.])?accsaber[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AccSaber/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AccSaber/assets/thumbnail.png",
   "color": "#2563eb",

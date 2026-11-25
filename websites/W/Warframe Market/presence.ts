@@ -65,10 +65,12 @@ presence.on('UpdateData', async () => {
       presenceData.state = itemName
 
       if (showButtons) {
-        presenceData.buttons = [{
-          label: 'View Market Prices',
-          url: document.location.href,
-        }]
+        presenceData.buttons = [
+          {
+            label: 'View Market Prices',
+            url: document.location.href,
+          },
+        ]
       }
     }
   }
@@ -79,10 +81,12 @@ presence.on('UpdateData', async () => {
     presenceData.state = username
 
     if (showButtons) {
-      presenceData.buttons = [{
-        label: 'View Profile',
-        url: document.location.href,
-      }]
+      presenceData.buttons = [
+        {
+          label: 'View Profile',
+          url: document.location.href,
+        },
+      ]
     }
   }
   else if (pathname.startsWith('/auctions')) {

@@ -12,7 +12,12 @@ export default antfu(
     rules: {
       'new-cap': [
         'error',
-        { newIsCapExceptions: ['iFrame'], capIsNew: false, newIsCap: true, properties: true },
+        {
+          newIsCapExceptions: ['iFrame'],
+          capIsNew: false,
+          newIsCap: true,
+          properties: true,
+        },
       ],
     },
   },
@@ -59,7 +64,14 @@ export default antfu(
         },
         {
           pathPattern: '^settings$',
-          order: ['id', 'title', 'icon', 'value', 'placeholder', 'if'],
+          order: [
+            'id',
+            'title',
+            'icon',
+            'value',
+            'placeholder',
+            'if',
+          ],
         },
         {
           pathPattern: '^settings\\.if$',

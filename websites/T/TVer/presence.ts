@@ -34,7 +34,9 @@ interface PresenceRow {
 }
 
 function setProgramRows(data: PresenceData, program: PresenceRow, other: PresenceRow, programFirst: boolean, showProgram: boolean) {
-  const [details, state] = programFirst ? [program, other] : [other, program]
+  const [details, state] = programFirst
+    ? [program, other]
+    : [other, program]
   data.details = details.text
   data.detailsUrl = details.url
   data.state = state.text
@@ -110,12 +112,17 @@ presence.on('UpdateData', async () => {
       setProgramRows(
         presenceData,
         { text: title, url: seriesUrl },
-        { text: isScheduled ? strings.waitingLiveThe : tvStation, url: href },
+        {
+          text: isScheduled ? strings.waitingLiveThe : tvStation,
+          url: href,
+        },
         liveDetails === 1,
         displayType === 1,
       )
       presenceData.largeImageUrl = href
-      presenceData.buttons = [{ label: strings.buttonWatchStream, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonWatchStream, url: href },
+      ]
       if (liveStatus === 'live') {
         presenceData.smallImageKey = Assets.Live
         presenceData.smallImageText = strings.live
@@ -153,7 +160,9 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? strings.paused : strings.playing
       }
-      presenceData.buttons = [{ label: strings.buttonWatchVideo, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonWatchVideo, url: href },
+      ]
       break
     }
     case 'series': {

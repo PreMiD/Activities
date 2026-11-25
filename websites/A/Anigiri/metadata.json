@@ -22,7 +22,7 @@
   },
   "url": "anigiri.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anigiri[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anigiri/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anigiri/assets/thumbnail.jpg",
   "color": "#22c55e",

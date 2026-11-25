@@ -26,7 +26,9 @@ presence.on('UpdateData', async () => {
     const rd = document.querySelector(
       'body > div.page > div.container > div > h1',
     )
-    const ok = rd?.textContent ? !rd.textContent.includes('404') : true
+    const ok = rd?.textContent
+      ? !rd.textContent.includes('404')
+      : true
     presenceData.details = 'Market'
     presenceData.state = 'Viewing the Market'
     if (document.location.pathname.includes('/collections/') && ok) {
@@ -58,7 +60,9 @@ presence.on('UpdateData', async () => {
         '#shopify-section-cart--template > section > div > form > div.cart__footer > div.cart__footer-right > p > span',
       )
       presenceData.state = `Viewing cart${
-        priceA ? ` (${priceA.textContent} credits)` : ''
+        priceA
+          ? ` (${priceA.textContent} credits)`
+          : ''
       }`
     }
     if (document.location.pathname.includes('/pages/wishlist'))

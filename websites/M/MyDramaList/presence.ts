@@ -142,7 +142,9 @@ presence.on('UpdateData', async () => {
     })()
 
     if (filmData) {
-      presenceData.details = `Viewing ${filmData['@type'] === 'Movie' ? 'movie' : 'show'
+      presenceData.details = `Viewing ${filmData['@type'] === 'Movie'
+        ? 'movie'
+        : 'show'
       }:`
       presenceData.state = filmData.name
       presenceData.largeImageKey = filmData.image

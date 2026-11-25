@@ -16,7 +16,7 @@
   },
   "url": "karaoketype.com",
   "regExp": "^https?[:][/][/](www[.])?karaoketype[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KaraokeType/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KaraokeType/assets/thumbnail.png",
   "color": "#1DB954",

@@ -36,7 +36,12 @@ export async function test(service?: string) {
   )
 
   const compiler = new ActivityCompiler(folder, metadata, versionized)
-  await compiler.compile({ kill: true, validate: false, preCheck: true, zip: false })
+  await compiler.compile({
+    kill: true,
+    validate: false,
+    preCheck: true,
+    zip: false,
+  })
 
   const ws = new WebSocketServer(folder)
   if (!(await waitForExtension(ws))) {
@@ -60,7 +65,9 @@ export async function test(service?: string) {
     results = await tester.run({ signal: new AbortController().signal, interactive: true })
   }
   catch (err) {
-    const message = err instanceof Error ? err.message : String(err)
+    const message = err instanceof Error
+      ? err.message
+      : String(err)
     console.error(chalk.red(`✗ ${metadata.service}: ${message}`))
     await ws.close()
     process.exit(1)

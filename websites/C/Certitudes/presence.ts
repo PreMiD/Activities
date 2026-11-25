@@ -46,24 +46,54 @@ presence.on('UpdateData', async () => {
     const guessedPourcent = guessed?.querySelector('td.number:nth-of-type(5)')
     const guessedEmoji = guessed?.querySelector('td.emoji')
 
-    const formatWithGuessed = `${guessedWord ? `${guessedWord?.textContent} • ` : ''}${guessedTemp ? `(${guessedTemp?.textContent}°C${guessedEmoji?.textContent}` : ''}${guessedPourcent && guessedPourcent?.textContent !== '' ? ` | ${guessedPourcent?.textContent}‰` : ''}${guessedTemp?.textContent ? `)` : ''}`
-    const formatWithoutGuessed = `${topGuessWord ? `${topGuessWord?.textContent} • ` : ''}${topGuessTemp ? `(${topGuessTemp?.textContent}°C${topGuessEmoji?.textContent}` : ''}${topGuessPourcent && topGuessPourcent?.textContent !== '' ? ` | ${topGuessPourcent?.textContent}‰` : ''}${topGuessTemp?.textContent ? `)` : ''}`
+    const formatWithGuessed = `${guessedWord
+      ? `${guessedWord?.textContent} • `
+      : ''}${guessedTemp
+      ? `(${guessedTemp?.textContent}°C${guessedEmoji?.textContent}`
+      : ''}${guessedPourcent && guessedPourcent?.textContent !== ''
+      ? ` | ${guessedPourcent?.textContent}‰`
+      : ''}${guessedTemp?.textContent
+      ? `)`
+      : ''}`
+    const formatWithoutGuessed = `${topGuessWord
+      ? `${topGuessWord?.textContent} • `
+      : ''}${topGuessTemp
+      ? `(${topGuessTemp?.textContent}°C${topGuessEmoji?.textContent}`
+      : ''}${topGuessPourcent && topGuessPourcent?.textContent !== ''
+      ? ` | ${topGuessPourcent?.textContent}‰`
+      : ''}${topGuessTemp?.textContent
+      ? `)`
+      : ''}`
 
     const sink = document.querySelector('tr.sink')
-    const guessesLength = !sink && guessedWord ? guesses.length : (guesses.length === 0 ? 0 : guesses.length - 1)
+    const guessesLength = !sink && guessedWord
+      ? guesses.length
+      : (guesses.length === 0
+          ? 0
+          : guesses.length - 1)
 
-    presenceData.name = hostname === 'cemantix.certitudes.org' ? 'Cémantix' : 'Cemantle'
+    presenceData.name = hostname === 'cemantix.certitudes.org'
+      ? 'Cémantix'
+      : 'Cemantle'
     if (guessedTemp?.textContent !== '100,00' && topGuessTemp?.textContent !== '100,00' && guessedPourcent?.textContent !== '1000' && topGuessPourcent?.textContent !== '1000') {
       presenceData.details = `Searching for the word of the day #${dayNum || '??'}`
       presenceData.state = guessedWord ? formatWithGuessed : formatWithoutGuessed
     }
     else {
       presenceData.details = `Solved the word of the day #${dayNum || '??'}!`
-      presenceData.state = !privacy ? (guessedWord && formatWithGuessed !== '' ? formatWithGuessed : formatWithoutGuessed) : ''
+      presenceData.state = !privacy
+        ? (guessedWord && formatWithGuessed !== ''
+            ? formatWithGuessed
+            : formatWithoutGuessed)
+        : ''
     }
-    presenceData.largeImageKey = hostname === 'cemantix.certitudes.org' ? ActivityAssets.Cemantix : ActivityAssets.Cemantle
+    presenceData.largeImageKey = hostname === 'cemantix.certitudes.org'
+      ? ActivityAssets.Cemantix
+      : ActivityAssets.Cemantle
     presenceData.smallImageKey = Assets.Search
-    presenceData.smallImageText = `${guessesLength} guess${guessesLength > 1 ? 'es' : ''} made`
+    presenceData.smallImageText = `${guessesLength} guess${guessesLength > 1
+      ? 'es'
+      : ''} made`
     presenceData.buttons = [
       {
         label: 'Play Now',
@@ -97,21 +127,67 @@ presence.on('UpdateData', async () => {
     const solved = document.querySelector('#success')
     const finalWord = document.querySelector('h2')?.textContent?.trim()
 
-    const formatWithGuess = `${lastGuess ? `${lastGuess} • ` : ''}${!goodWords && !incorrectWords ? '(' : (!goodWords ? '(' : '')}${goodWords ? `(${goodWords}🟩` : ''}${(goodWords && incorrectWords) || (goodWords && unknownWords) ? ', ' : ''}${incorrectWords ? `${incorrectWords}🟧` : ''}${(goodWords && unknownWords) || (incorrectWords && unknownWords) ? ', ' : ''}${unknownWords ? `${unknownWords}🟥)` : ''}${!incorrectWords && !unknownWords ? ')' : (!unknownWords ? ')' : '')}`
-    const formatWithoutGuess = `${!goodWords && !incorrectWords ? '(' : (!goodWords ? '(' : '')}${goodWords ? `(${goodWords}🟩` : ''}${(goodWords && incorrectWords) || (goodWords && unknownWords) ? ', ' : ''}${incorrectWords ? `${incorrectWords}🟧` : ''}${(goodWords && unknownWords) || (incorrectWords && unknownWords) ? ', ' : ''}${unknownWords ? `${unknownWords}🟥)` : ''}${!incorrectWords && !unknownWords ? ')' : (!unknownWords ? ')' : '')}`
+    const formatWithGuess = `${lastGuess
+      ? `${lastGuess} • `
+      : ''}${!goodWords && !incorrectWords
+      ? '('
+      : (!goodWords
+          ? '('
+          : '')}${goodWords
+      ? `(${goodWords}🟩`
+      : ''}${(goodWords && incorrectWords) || (goodWords && unknownWords)
+      ? ', '
+      : ''}${incorrectWords
+      ? `${incorrectWords}🟧`
+      : ''}${(goodWords && unknownWords) || (incorrectWords && unknownWords)
+      ? ', '
+      : ''}${unknownWords
+      ? `${unknownWords}🟥)`
+      : ''}${!incorrectWords && !unknownWords
+      ? ')'
+      : (!unknownWords
+          ? ')'
+          : '')}`
+    const formatWithoutGuess = `${!goodWords && !incorrectWords
+      ? '('
+      : (!goodWords
+          ? '('
+          : '')}${goodWords
+      ? `(${goodWords}🟩`
+      : ''}${(goodWords && incorrectWords) || (goodWords && unknownWords)
+      ? ', '
+      : ''}${incorrectWords
+      ? `${incorrectWords}🟧`
+      : ''}${(goodWords && unknownWords) || (incorrectWords && unknownWords)
+      ? ', '
+      : ''}${unknownWords
+      ? `${unknownWords}🟥)`
+      : ''}${!incorrectWords && !unknownWords
+      ? ')'
+      : (!unknownWords
+          ? ')'
+          : '')}`
 
-    presenceData.name = hostname === 'pedantix.certitudes.org' ? 'Pédantix' : 'Pedantle'
+    presenceData.name = hostname === 'pedantix.certitudes.org'
+      ? 'Pédantix'
+      : 'Pedantle'
     if (!solved?.getAttribute('style')) {
       presenceData.details = `Searching for the wiki page of the day #${dayNum || '??'}`
       presenceData.state = formatWithGuess?.replace(', ,', ',')
     }
     else {
       presenceData.details = `Solved the wiki page of the day #${dayNum || '??'}!`
-      presenceData.state = !privacy ? `${finalWord} • ${formatWithoutGuess?.replace(', ,', ',')}` : formatWithoutGuess?.replace(', ,', ',')
+      presenceData.state = !privacy
+        ? `${finalWord} • ${formatWithoutGuess?.replace(', ,', ',')}`
+        : formatWithoutGuess?.replace(', ,', ',')
     }
-    presenceData.largeImageKey = hostname === 'pedantix.certitudes.org' ? ActivityAssets.Pedantix : ActivityAssets.Pedantle
+    presenceData.largeImageKey = hostname === 'pedantix.certitudes.org'
+      ? ActivityAssets.Pedantix
+      : ActivityAssets.Pedantle
     presenceData.smallImageKey = Assets.Search
-    presenceData.smallImageText = `${guessNumber} word${guessNumber > 1 ? 's' : ''} guessed`
+    presenceData.smallImageText = `${guessNumber} word${guessNumber > 1
+      ? 's'
+      : ''} guessed`
     presenceData.buttons = [
       {
         label: 'Play Now',

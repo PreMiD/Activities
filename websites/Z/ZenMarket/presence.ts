@@ -44,7 +44,9 @@ presence.on('UpdateData', async () => {
       )
       const cartTable = document.querySelector<HTMLTableElement>('.shop-stripped')
       const warehouseItems = warehouseTable ? warehouseTable.rows.length : 0
-      const cartItems = cartTable ? cartTable.rows.length - 1 : 0
+      const cartItems = cartTable
+        ? cartTable.rows.length - 1
+        : 0
 
       presenceData.details = 'Viewing Account'
       presenceData.state = `${
@@ -74,7 +76,9 @@ presence.on('UpdateData', async () => {
           const products = document.querySelector(
             '#auctions > div:nth-child(2) > .col-md-12',
           )
-          const watchCount = products ? products.children.length - 1 : 0
+          const watchCount = products
+            ? products.children.length - 1
+            : 0
 
           presenceData.details = 'Looking at watched auction items'
           presenceData.state = `${
@@ -131,9 +135,15 @@ presence.on('UpdateData', async () => {
     default: {
       if (item?.title) {
         presenceData.details = `Looking at ${item?.title}`
-        let text = `${item?.price ? `Price: ${item?.price} ||` : ''}  ${
-          item?.condition ? `Condition: ${item?.condition} ||` : ''
-        } ${item?.seller ? `Seller: ${item?.seller} ||` : ''}`
+        let text = `${item?.price
+          ? `Price: ${item?.price} ||`
+          : ''}  ${
+          item?.condition
+            ? `Condition: ${item?.condition} ||`
+            : ''
+        } ${item?.seller
+          ? `Seller: ${item?.seller} ||`
+          : ''}`
         if (text.endsWith(' || '))
           text = text.slice(0, text.length - 4)
 
