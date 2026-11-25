@@ -28,7 +28,9 @@ interface Anime404PremidPresence {
 }
 
 function truncate(value: string, max = 128): string {
-  return value.length > max ? `${value.slice(0, max - 1)}...` : value
+  return value.length > max
+    ? `${value.slice(0, max - 1)}...`
+    : value
 }
 
 function getLivePlayback(): Pick<
@@ -42,8 +44,12 @@ function getLivePlayback(): Pick<
     return {}
 
   return {
-    currentTime: Number.isFinite(video.currentTime) ? video.currentTime : 0,
-    duration: Number.isFinite(video.duration) ? video.duration : 0,
+    currentTime: Number.isFinite(video.currentTime)
+      ? video.currentTime
+      : 0,
+    duration: Number.isFinite(video.duration)
+      ? video.duration
+      : 0,
     paused: video.paused,
   }
 }
@@ -253,15 +259,21 @@ presence.on('UpdateData', () => {
 
   if ((isWatchPage || isMovieWatchPage) && title) {
     presenceData.details = truncate(
-      episodeLabel ? `${title} - ${episodeLabel}` : title,
+      episodeLabel
+        ? `${title} - ${episodeLabel}`
+        : title,
     )
     // Episode title was previously shown only for `tv`, so anime lost it even
     // though the site publishes one. Pair it with the audio track instead.
     const stateParts = data.mediaType === 'movie'
       ? ['Movie']
       : [
-          data.episodeTitle || (data.mediaType === 'tv' ? 'TV Episode' : null),
-          data.audio ? data.audio.toUpperCase() : null,
+          data.episodeTitle || (data.mediaType === 'tv'
+            ? 'TV Episode'
+            : null),
+          data.audio
+            ? data.audio.toUpperCase()
+            : null,
         ]
     presenceData.state = truncate(stateParts.filter(Boolean).join(' - '))
 

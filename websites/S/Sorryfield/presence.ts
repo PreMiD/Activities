@@ -55,7 +55,9 @@ presence.on('UpdateData', async () => {
         .querySelector('.song>.desc')
         ?.textContent
         ?.trim()
-      presenceData.buttons = [{ label: '듣기', url: href }]
+      presenceData.buttons = [
+        { label: '듣기', url: href },
+      ]
       const playing = document
         .querySelector<HTMLElement>('.control>button>i')
         ?.classList
@@ -100,7 +102,9 @@ presence.on('UpdateData', async () => {
         .querySelector('.current>.song>.title>.desc>.highlight')
         ?.textContent
         ?.trim()
-      presenceData.buttons = [{ label: '듣기', url: href }]
+      presenceData.buttons = [
+        { label: '듣기', url: href },
+      ]
       presenceData.type = ActivityType.Listening
       const playing = document
         .querySelector<HTMLElement>('.control>button>i')
@@ -173,7 +177,9 @@ presence.on('UpdateData', async () => {
                 .querySelectorAll('.difficulty-bar>.item')[i]
                 ?.getAttribute('data-active') === 'true'
             ) {
-              menuName = `난도 ${i === 31 ? '30+' : i.toString()} 채보`
+              menuName = `난도 ${i === 31
+                ? '30+'
+                : i.toString()} 채보`
               break
             }
           }
@@ -225,7 +231,9 @@ presence.on('UpdateData', async () => {
       }
 
       presenceData.largeImageKey = imageKey
-      presenceData.buttons = [{ label: '자바! 플레이하기', url: href }]
+      presenceData.buttons = [
+        { label: '자바! 플레이하기', url: href },
+      ]
     }
     else if (pathname.includes('/edit')) {
       presenceData.state = `채보 수정 중: ${document
@@ -261,7 +269,9 @@ presence.on('UpdateData', async () => {
           ?.textContent
       }`
       presenceData.type = ActivityType.Watching
-      presenceData.buttons = [{ label: '리플레이 보기', url: href }]
+      presenceData.buttons = [
+        { label: '리플레이 보기', url: href },
+      ]
     }
     else if (pathname.includes('/shop')) {
       presenceData.state = '상점'
@@ -286,7 +296,9 @@ presence.on('UpdateData', async () => {
           ?.textContent
           ?.trim()
           .replace('/', ' of ')})`
-        presenceData.buttons = [{ label: '방 참여하기', url: href }]
+        presenceData.buttons = [
+          { label: '방 참여하기', url: href },
+        ]
       }
       if (document.querySelector('.chart-header')) {
         const chartHeader = document.querySelector('.chart-header')
@@ -317,7 +329,9 @@ presence.on('UpdateData', async () => {
       } Lv.${document.querySelector('.level')?.textContent} / ${
         chartHeader?.children[1]?.children[1]?.textContent
       } - ${chartHeader?.children[1]?.children[0]?.textContent}`
-      presenceData.buttons = [{ label: '채보 플레이하기', url: href }]
+      presenceData.buttons = [
+        { label: '채보 플레이하기', url: href },
+      ]
     }
   }
   presence.setActivity(presenceData)

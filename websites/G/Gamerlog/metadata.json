@@ -11,7 +11,7 @@
   },
   "url": "gamerlog.app",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gamerlog[.]app[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gamerlog/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gamerlog/assets/thumbnail.png",
   "color": "#0a0a0b",

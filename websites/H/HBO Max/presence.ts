@@ -75,7 +75,9 @@ function getTitleInfo(usePresenceName: boolean) {
       details: usePresenceName
         ? episodeItem.attributes.name
         : showItem.attributes.name,
-      state: isMovie ? 'Movie' : `Season ${s}, Episode ${e}`,
+      state: isMovie
+        ? 'Movie'
+        : `Season ${s}, Episode ${e}`,
       largeImageKey: getCoverArt(showItem),
       largeImageText: isMovie
         ? showItem.attributes.name
@@ -137,8 +139,11 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = info.largeImageKey
         presenceData.largeImageText = info.largeImageText
       }
-      if (info?.pageUrl)
-        presenceData.buttons = [{ label: 'View Series', url: info.pageUrl }]
+      if (info?.pageUrl) {
+        presenceData.buttons = [
+          { label: 'View Series', url: info.pageUrl },
+        ]
+      }
       break
     }
 
@@ -154,8 +159,11 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = info.largeImageKey
         presenceData.largeImageText = info.largeImageText
       }
-      if (info?.pageUrl)
-        presenceData.buttons = [{ label: 'View Movie', url: info.pageUrl }]
+      if (info?.pageUrl) {
+        presenceData.buttons = [
+          { label: 'View Movie', url: info.pageUrl },
+        ]
+      }
       break
     }
 
@@ -175,12 +183,19 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageText = info.largeImageText
         }
         if (info.isMovie) {
-          presenceData.buttons = [{ label: 'Watch Movie', url: info.pageUrl }]
+          presenceData.buttons = [
+            { label: 'Watch Movie', url: info.pageUrl },
+          ]
         }
         else {
           presenceData.buttons = info.showUrl
-            ? [{ label: 'Watch Episode', url: info.pageUrl }, { label: 'View Series', url: info.showUrl }]
-            : [{ label: 'Watch Episode', url: info.pageUrl }]
+            ? [
+                { label: 'Watch Episode', url: info.pageUrl },
+                { label: 'View Series', url: info.showUrl },
+              ]
+            : [
+                { label: 'Watch Episode', url: info.pageUrl },
+              ]
         }
       }
       else {

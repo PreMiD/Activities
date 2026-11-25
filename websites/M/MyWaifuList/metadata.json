@@ -12,7 +12,7 @@
   },
   "url": "mywaifulist.moe",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*mywaifulist[.]moe[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyWaifuList/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyWaifuList/assets/thumbnail.png",
   "color": "#3B82F6",

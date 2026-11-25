@@ -32,7 +32,10 @@ let latestPlayerMeta: PlayerMeta | any = {}
 // 监听消息
 window.addEventListener('message', (event) => {
   if (event.data.type === 'PREMID_PLAYER_META') {
-    latestPlayerMeta = { ...latestPlayerMeta, ...event.data.data }
+    latestPlayerMeta = {
+      ...latestPlayerMeta,
+      ...event.data.data,
+    }
   }
 })
 
@@ -134,7 +137,9 @@ function createProgressBar(
   const progress = Math.min(Math.floor((time / duration) * 100), 100)
   const numChars = Math.floor((progress / 100) * barLength)
 
-  return `${barFill.repeat(numChars)}${barTrack.repeat(barLength - numChars)} ${showLabel ? `${progress}%` : ''}`.trimEnd()
+  return `${barFill.repeat(numChars)}${barTrack.repeat(barLength - numChars)} ${showLabel
+    ? `${progress}%`
+    : ''}`.trimEnd()
 }
 
 function capitalize(str: string): string {

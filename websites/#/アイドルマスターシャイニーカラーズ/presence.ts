@@ -19,8 +19,12 @@ presence.on('UpdateData', async () => {
   const currentPath = iframeState?.pathname ?? parentPath
   const currentHash = iframeState?.hash ?? parentHash
 
-  const cleanHash = currentHash ? currentHash.split('?')[0] : ''
-  const currentRoute = (cleanHash && cleanHash.length > 1) ? cleanHash.substring(1) : currentPath
+  const cleanHash = currentHash
+    ? currentHash.split('?')[0]
+    : ''
+  const currentRoute = (cleanHash && cleanHash.length > 1)
+    ? cleanHash.substring(1)
+    : currentPath
 
   const presenceData: PresenceData = {
     name: 'シャニマス',

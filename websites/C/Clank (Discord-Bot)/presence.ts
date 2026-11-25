@@ -5,7 +5,12 @@ const presence = new Presence({
   clientId: '775415193760169995',
 })
 const browsingTimestamp: number = Math.floor(Date.now() / 1000)
-const sectionIds: string[] = ['discord-bot', 'discord-bot-features', 'discord-bot-tutorial', 'discord-bot-footer']
+const sectionIds: string[] = [
+  'discord-bot',
+  'discord-bot-features',
+  'discord-bot-tutorial',
+  'discord-bot-footer',
+]
 let currentVisibleId: string | null = null
 
 const observer = new IntersectionObserver((entries: IntersectionObserverEntry[]): void => {
@@ -14,7 +19,9 @@ const observer = new IntersectionObserver((entries: IntersectionObserverEntry[])
       currentVisibleId = entry.target.id
     }
   })
-}, { threshold: [0.25] })
+}, {
+  threshold: [0.25],
+})
 
 function getUserLanguage(): 'de-DE' | 'en-US' {
   const lang: string = navigator.language.toLowerCase()

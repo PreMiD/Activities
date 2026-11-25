@@ -23,19 +23,25 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/docs')) {
     presenceData.details = 'Reading Bun Docs'
     presenceData.state = document.title.replace(/ \| Bun Docs$/, '')
-    presenceData.buttons = [{ label: 'View Documentation', url: href }]
+    presenceData.buttons = [
+      { label: 'View Documentation', url: href },
+    ]
   }
   else if (pathname.startsWith('/guides')) {
     presenceData.details = 'Reading Bun Guides'
     presenceData.state = document.title
-    presenceData.buttons = [{ label: 'View Guide', url: href }]
+    presenceData.buttons = [
+      { label: 'View Guide', url: href },
+    ]
   }
   else if (pathname.startsWith('/blog')) {
     presenceData.details = 'Browsing Bun Blog'
     if (args[2]) {
       presenceData.details = 'Reading Bun Blog'
       presenceData.state = document.title
-      presenceData.buttons = [{ label: 'View Blog Post', url: href }]
+      presenceData.buttons = [
+        { label: 'View Blog Post', url: href },
+      ]
     }
   }
 

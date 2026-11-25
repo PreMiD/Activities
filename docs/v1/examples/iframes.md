@@ -121,7 +121,9 @@ presence.on('UpdateData', async () => {
 
     // Set the details and state
     presenceData.details = title || 'Watching a video'
-    presenceData.state = author ? `By ${author}` : 'Unknown author'
+    presenceData.state = author
+      ? `By ${author}`
+      : 'Unknown author'
 
     // Set the large image text
     presenceData.largeImageText = 'iFrameExample'

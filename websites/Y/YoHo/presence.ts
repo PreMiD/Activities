@@ -83,7 +83,9 @@ import { ActivityType, getTimestamps } from 'premid'
 
     if (episode) {
       messagedEpisode = {
-        label: season ? `Сезон ${season} • серия ${episode}` : `Серия ${episode}`,
+        label: season
+          ? `Сезон ${season} • серия ${episode}`
+          : `Серия ${episode}`,
         receivedAt: Date.now(),
       }
     }
@@ -99,8 +101,12 @@ import { ActivityType, getTimestamps } from 'premid'
     const currentTime = Number(data.currentTime)
 
     playerStates.set(data.url, {
-      duration: Number.isFinite(duration) && duration > 0 ? duration : 0,
-      currentTime: Number.isFinite(currentTime) && currentTime >= 0 ? currentTime : 0,
+      duration: Number.isFinite(duration) && duration > 0
+        ? duration
+        : 0,
+      currentTime: Number.isFinite(currentTime) && currentTime >= 0
+        ? currentTime
+        : 0,
       paused: data.paused !== false,
       episode: cleanText(data.episode),
       receivedAt: Date.now(),
@@ -108,7 +114,9 @@ import { ActivityType, getTimestamps } from 'premid'
   })
 
   function cleanText(value: unknown): string {
-    return typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : ''
+    return typeof value === 'string'
+      ? value.replace(/\s+/g, ' ').trim()
+      : ''
   }
 
   function absoluteUrl(value: unknown): string {
@@ -134,7 +142,9 @@ import { ActivityType, getTimestamps } from 'premid'
     return {
       title: cleanText(marker.dataset.title) || titleFromMeta(),
       year: cleanText(marker.dataset.year),
-      mediaType: marker.dataset.mediaType === 'tv' ? 'series' : 'film',
+      mediaType: marker.dataset.mediaType === 'tv'
+        ? 'series'
+        : 'film',
     }
   }
 
@@ -167,8 +177,12 @@ import { ActivityType, getTimestamps } from 'premid'
         if (!media)
           continue
 
-        const image = Array.isArray(media.image) ? media.image[0] : media.image
-        const value = isRecord(image) ? image.url : image
+        const image = Array.isArray(media.image)
+          ? media.image[0]
+          : media.image
+        const value = isRecord(image)
+          ? image.url
+          : image
         const url = absoluteUrl(value)
 
         if (url)
@@ -257,7 +271,9 @@ import { ActivityType, getTimestamps } from 'premid'
     }
 
     const episode = value.match(/(?:серия|episode|ep)\s*(\d+)/i)
-    return episode ? `Серия ${episode[1]}` : value.slice(0, 80)
+    return episode
+      ? `Серия ${episode[1]}`
+      : value.slice(0, 80)
   }
 
   async function updateActivity(): Promise<void> {
@@ -298,7 +314,9 @@ import { ActivityType, getTimestamps } from 'premid'
     }
 
     const playback = getPlayback()
-    const kind = titleData.mediaType === 'series' ? 'сериал' : 'фильм'
+    const kind = titleData.mediaType === 'series'
+      ? 'сериал'
+      : 'фильм'
 
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
@@ -306,19 +324,25 @@ import { ActivityType, getTimestamps } from 'premid'
       state: titleData.year
         ? `${kind[0]!.toUpperCase()}${kind.slice(1)} • ${titleData.year}`
         : kind,
-      largeImageKey: showPoster ? findPoster() : LOGO,
+      largeImageKey: showPoster
+        ? findPoster()
+        : LOGO,
       largeImageText: titleData.year
         ? `${titleData.title} (${titleData.year})`
         : titleData.title,
     }
 
     if (showButtons) {
-      presenceData.buttons = [{ label: 'Смотреть на YoHo', url: document.location.href }]
+      presenceData.buttons = [
+        { label: 'Смотреть на YoHo', url: document.location.href },
+      ]
     }
 
     if (playback && (playback.duration > 0 || playback.currentTime > 0 || playback.episode)) {
       const episode = episodeLabel(playback.episode || getMessagedEpisode())
-      const duration = playback.duration > 0 ? formatDuration(playback.duration) : ''
+      const duration = playback.duration > 0
+        ? formatDuration(playback.duration)
+        : ''
 
       if (playback.paused && playback.duration <= 0 && playback.currentTime <= 0) {
         presenceData.state = `${episode} • выбирает серию`
@@ -328,10 +352,14 @@ import { ActivityType, getTimestamps } from 'premid'
           ? `${formatDuration(playback.currentTime)} / ${duration}`
           : formatDuration(playback.currentTime)
 
-        presenceData.state = `${episode ? `${episode} • ` : ''}Пауза • ${progress}`
+        presenceData.state = `${episode
+          ? `${episode} • `
+          : ''}Пауза • ${progress}`
       }
       else {
-        presenceData.state = `${episode || `Смотрит ${kind}`}${duration ? ` • ${duration}` : ''}`
+        presenceData.state = `${episode || `Смотрит ${kind}`}${duration
+          ? ` • ${duration}`
+          : ''}`
 
         if (playback.duration > playback.currentTime) {
           [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(

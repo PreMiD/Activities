@@ -291,26 +291,86 @@ interface LiveEventInfo {
  * keyword could be a substring of another's; none currently collide.
  */
 const LEAGUE_KEYWORDS: [string, string[]][] = [
-  ['MLB', ['mlb']],
-  ['CPBL', ['cpbl', '中華職棒']],
-  ['NBA', ['nba']],
-  ['WNBA', ['wnba']],
-  ['Premier League', ['premier league']],
-  ['LaLiga', ['laliga', 'la liga']],
-  ['Serie A', ['serie a']],
-  ['Bundesliga', ['bundesliga']],
-  ['Champions League', ['champions league']],
-  ['F1', ['f1', 'formula 1', 'formula1']],
-  ['MotoGP', ['motogp']],
-  ['UFC', ['ufc']],
-  ['ATP', ['atp']],
-  ['WTA', ['wta']],
-  ['PGA', ['pga']],
-  ['LPGA', ['lpga']],
-  ['BWF', ['bwf']],
-  ['NFL', ['nfl']],
-  ['NHL', ['nhl']],
-  ['Esports', ['esports', '電競']],
+  [
+    'MLB',
+    ['mlb'],
+  ],
+  [
+    'CPBL',
+    ['cpbl', '中華職棒'],
+  ],
+  [
+    'NBA',
+    ['nba'],
+  ],
+  [
+    'WNBA',
+    ['wnba'],
+  ],
+  [
+    'Premier League',
+    ['premier league'],
+  ],
+  [
+    'LaLiga',
+    ['laliga', 'la liga'],
+  ],
+  [
+    'Serie A',
+    ['serie a'],
+  ],
+  [
+    'Bundesliga',
+    ['bundesliga'],
+  ],
+  [
+    'Champions League',
+    ['champions league'],
+  ],
+  [
+    'F1',
+    ['f1', 'formula 1', 'formula1'],
+  ],
+  [
+    'MotoGP',
+    ['motogp'],
+  ],
+  [
+    'UFC',
+    ['ufc'],
+  ],
+  [
+    'ATP',
+    ['atp'],
+  ],
+  [
+    'WTA',
+    ['wta'],
+  ],
+  [
+    'PGA',
+    ['pga'],
+  ],
+  [
+    'LPGA',
+    ['lpga'],
+  ],
+  [
+    'BWF',
+    ['bwf'],
+  ],
+  [
+    'NFL',
+    ['nfl'],
+  ],
+  [
+    'NHL',
+    ['nhl'],
+  ],
+  [
+    'Esports',
+    ['esports', '電競'],
+  ],
 ]
 
 /**
@@ -389,7 +449,13 @@ function detectSportType(text: string): SportType {
 /**
  * Known sports-channel brand names on Hami Video's /channel/ pages.
  */
-const SPORTS_CHANNEL_NAMES = ['Hami體育', '愛爾達體育', '博斯運動', '博斯網球', '博斯高球']
+const SPORTS_CHANNEL_NAMES = [
+  'Hami體育',
+  '愛爾達體育',
+  '博斯運動',
+  '博斯網球',
+  '博斯高球',
+]
 
 /**
  * Keywords that indicate an actual sporting event/league is currently
@@ -491,7 +557,9 @@ function getProgramTitleFromJsonLd(): string | undefined {
   for (const script of scripts) {
     try {
       const data: unknown = JSON.parse(script.textContent ?? '')
-      const entries = Array.isArray(data) ? data : [data]
+      const entries = Array.isArray(data)
+        ? data
+        : [data]
       for (const entry of entries) {
         if (entry === null || typeof entry !== 'object')
           continue
@@ -677,8 +745,12 @@ function parseSeasonEpisode(raw: string | undefined): { season: number | null, e
   const episodeGroup = episodeMatch?.[1]
 
   return {
-    season: seasonGroup !== undefined ? Number.parseInt(seasonGroup, 10) : null,
-    episode: episodeGroup !== undefined ? Number.parseInt(episodeGroup, 10) : null,
+    season: seasonGroup !== undefined
+      ? Number.parseInt(seasonGroup, 10)
+      : null,
+    episode: episodeGroup !== undefined
+      ? Number.parseInt(episodeGroup, 10)
+      : null,
   }
 }
 
@@ -1012,8 +1084,12 @@ presence.on('UpdateData', async () => {
     // movies, variety, kids, etc. — not just sports broadcasts. Read the
     // channel/program info once up front so it can both (a) decide sports
     // vs. plain TV below, and (b) be reused for the "Watching TV" state.
-    const channelName = liveDetected ? await getChannelName() : undefined
-    const currentProgramTitle = liveDetected ? await getCurrentProgramTitle() : undefined
+    const channelName = liveDetected
+      ? await getChannelName()
+      : undefined
+    const currentProgramTitle = liveDetected
+      ? await getCurrentProgramTitle()
+      : undefined
 
     let contentType = classifyContentType(vodCategory ?? '', vodSubcategory ?? '', liveDetected)
     if (liveDetected) {
@@ -1041,7 +1117,13 @@ presence.on('UpdateData', async () => {
 
     const liveSportType = contentType === ContentType.SportsLive
       ? detectSportType(
-          [liveDescription.event, liveDescription.channel, vodCategory, vodSubcategory, title]
+          [
+            liveDescription.event,
+            liveDescription.channel,
+            vodCategory,
+            vodSubcategory,
+            title,
+          ]
             .filter((part): part is string => Boolean(part))
             .join(' '),
         )
@@ -1073,33 +1155,47 @@ presence.on('UpdateData', async () => {
     switch (contentType) {
       case ContentType.Movie:
       case ContentType.SportsReplay:
-        details = contentType === ContentType.Movie ? strings.watchingMovie : strings.watchingSportsReplay
-        state = privacyMode || !showTitle ? undefined : title
+        details = contentType === ContentType.Movie
+          ? strings.watchingMovie
+          : strings.watchingSportsReplay
+        state = privacyMode || !showTitle
+          ? undefined
+          : title
         break
 
       case ContentType.Series:
         details = strings.watchingSeries
-        state = privacyMode ? undefined : buildEpisodicState()
+        state = privacyMode
+          ? undefined
+          : buildEpisodicState()
         break
 
       case ContentType.Anime:
         details = strings.watchingAnime
-        state = privacyMode ? undefined : buildEpisodicState()
+        state = privacyMode
+          ? undefined
+          : buildEpisodicState()
         break
 
       case ContentType.Documentary:
         details = strings.watchingDocumentary
-        state = privacyMode ? undefined : buildEpisodicState()
+        state = privacyMode
+          ? undefined
+          : buildEpisodicState()
         break
 
       case ContentType.Kids:
         details = strings.watchingKids
-        state = privacyMode ? undefined : buildEpisodicState()
+        state = privacyMode
+          ? undefined
+          : buildEpisodicState()
         break
 
       case ContentType.Variety:
         details = strings.watchingVariety
-        state = privacyMode ? undefined : buildEpisodicState()
+        state = privacyMode
+          ? undefined
+          : buildEpisodicState()
         break
 
       case ContentType.SportsLive: {
@@ -1116,7 +1212,9 @@ presence.on('UpdateData', async () => {
           // parsed event (optionally prefixed with its league), or the
           // generic fallback string.
           state = resolvedEvent
-            ? (league ? `${league} · ${resolvedEvent}` : resolvedEvent)
+            ? (league
+                ? `${league} · ${resolvedEvent}`
+                : resolvedEvent)
             : strings.liveEventFallback
         }
         break
@@ -1139,7 +1237,9 @@ presence.on('UpdateData', async () => {
 
       default:
         details = strings.watchingMovie
-        state = privacyMode || !showTitle ? undefined : title
+        state = privacyMode || !showTitle
+          ? undefined
+          : title
     }
 
     function buildEpisodicState(): string | undefined {

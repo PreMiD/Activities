@@ -247,10 +247,15 @@ presence.on('UpdateData', async () => {
     if (vidState.includes('{0}'))
       delete presenceData.state
 
-    if (!live)
+    if (!live) {
       liveSince = null
-    else if (liveSince?.videoId !== videoId)
-      liveSince = { videoId, start: Math.floor(Date.now() / 1000) }
+    }
+    else if (liveSince?.videoId !== videoId) {
+      liveSince = {
+        videoId,
+        start: Math.floor(Date.now() / 1000),
+      }
+    }
 
     // No position to show if paused or live
     if (video.paused || live) {

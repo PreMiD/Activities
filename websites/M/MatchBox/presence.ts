@@ -53,7 +53,9 @@ presence.on('UpdateData', async () => {
         ?.textContent
         ?.split(' ')[0]
     } MMR`
-    presenceData.buttons = [{ label: 'View Profile', url: href }]
+    presenceData.buttons = [
+      { label: 'View Profile', url: href },
+    ]
   }
   else if (pathname === '/settings') {
     presenceData.details = 'Viewing settings'

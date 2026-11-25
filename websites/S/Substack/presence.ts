@@ -51,7 +51,9 @@ presence.on('UpdateData', async () => {
     else if (pathname.startsWith('/search')) {
       const searchInput = document.querySelector<HTMLInputElement>('.reader-nav-page input')
       presenceData.details = privacy ? 'Searching for content' : 'Searching for:'
-      presenceData.state = privacy ? '' : searchInput?.value || decodeURIComponent(splitPathname[1] || '').trim() || ''
+      presenceData.state = privacy
+        ? ''
+        : searchInput?.value || decodeURIComponent(splitPathname[1] || '').trim() || ''
       presenceData.smallImageKey = Assets.Search
     }
     else if (pathname.startsWith('/leaderboard')) {
@@ -74,22 +76,34 @@ presence.on('UpdateData', async () => {
         const chatUserTag = document.querySelector<HTMLAnchorElement>('.reader-nav-page a[class*=header]')?.href || document.querySelector<HTMLAnchorElement>('.reader-nav-page a[href^="/@"]')?.href
         const chatUserName = document.querySelector(`.reader-nav-page a[href="${chatUserTag}"] div[class*="font-text"]`)?.textContent?.trim() || document.querySelector(`.reader-nav-page a[href="/@${chatUserTag?.split('@')[1]}"] div[class*="font-text"]`)?.textContent?.trim() || 'Unknown User'
         const chatUserPic = document.querySelector<HTMLImageElement>(`.reader-nav-page a[href="${chatUserTag}"] img`)?.src || document.querySelector<HTMLImageElement>(`.reader-nav-page a[href="/@${chatUserTag?.split('@')[1]}"] img`)?.src
-        presenceData.details = privacy ? 'Chatting with someone' : `Chatting with ${chatUserName}`
-        presenceData.largeImageKey = !privacy && userPic && chatUserTag ? resizeImageUrl(chatUserPic || ActivityAssets.Logo, 512) : ActivityAssets.Logo
+        presenceData.details = privacy
+          ? 'Chatting with someone'
+          : `Chatting with ${chatUserName}`
+        presenceData.largeImageKey = !privacy && userPic && chatUserTag
+          ? resizeImageUrl(chatUserPic || ActivityAssets.Logo, 512)
+          : ActivityAssets.Logo
         cacheInfoChat = {
           username: chatUserName,
           picture: chatUserPic || ActivityAssets.Logo,
         }
       }
       else if (/^\/chat\/[^/]+\/post/.test(pathname)) {
-        presenceData.details = privacy ? 'Viewing a Post in Chat' : `Viewing a Post in ${cacheInfoChat?.username} Chat` || 'Viewing a Post in Chat'
-        presenceData.largeImageKey = !privacy && cacheInfoChat?.picture ? cacheInfoChat.picture : ActivityAssets.Logo
+        presenceData.details = privacy
+          ? 'Viewing a Post in Chat'
+          : `Viewing a Post in ${cacheInfoChat?.username} Chat` || 'Viewing a Post in Chat'
+        presenceData.largeImageKey = !privacy && cacheInfoChat?.picture
+          ? cacheInfoChat.picture
+          : ActivityAssets.Logo
       }
     }
     else if (/^\/@[^/]+$/.test(pathname) || /^\/@[^/]+\/notes$/.test(pathname)) {
-      presenceData.details = privacy ? 'Viewing someones Activity' : `Viewing ${username}'s Activity`
+      presenceData.details = privacy
+        ? 'Viewing someones Activity'
+        : `Viewing ${username}'s Activity`
       if (!privacy) {
-        presenceData.largeImageKey = userPic && userProfilePicture ? resizeImageUrl(userProfilePicture, 512) : ActivityAssets.Logo
+        presenceData.largeImageKey = userPic && userProfilePicture
+          ? resizeImageUrl(userProfilePicture, 512)
+          : ActivityAssets.Logo
         if (buttons) {
           presenceData.buttons = [
             {
@@ -101,9 +115,13 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (/^\/@[^/]+\/posts$/.test(pathname)) {
-      presenceData.details = privacy ? 'Viewing someones Posts' : `Viewing ${username}'s Posts`
+      presenceData.details = privacy
+        ? 'Viewing someones Posts'
+        : `Viewing ${username}'s Posts`
       if (!privacy) {
-        presenceData.largeImageKey = userPic && userProfilePicture ? resizeImageUrl(userProfilePicture, 512) : ActivityAssets.Logo
+        presenceData.largeImageKey = userPic && userProfilePicture
+          ? resizeImageUrl(userProfilePicture, 512)
+          : ActivityAssets.Logo
         if (buttons) {
           presenceData.buttons = [
             {
@@ -115,9 +133,13 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (/^\/@[^/]+\/likes$/.test(pathname)) {
-      presenceData.details = privacy ? 'Viewing someones Likes & Replies' : `Viewing ${username}'s Likes & Replies`
+      presenceData.details = privacy
+        ? 'Viewing someones Likes & Replies'
+        : `Viewing ${username}'s Likes & Replies`
       if (!privacy) {
-        presenceData.largeImageKey = userPic && userProfilePicture ? resizeImageUrl(userProfilePicture, 512) : ActivityAssets.Logo
+        presenceData.largeImageKey = userPic && userProfilePicture
+          ? resizeImageUrl(userProfilePicture, 512)
+          : ActivityAssets.Logo
         if (buttons) {
           presenceData.buttons = [
             {
@@ -129,9 +151,13 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (/^\/@[^/]+\/reads$/.test(pathname)) {
-      presenceData.details = privacy ? 'Viewing someones Reads' : `Viewing ${username}'s Reads`
+      presenceData.details = privacy
+        ? 'Viewing someones Reads'
+        : `Viewing ${username}'s Reads`
       if (!privacy) {
-        presenceData.largeImageKey = userPic && userProfilePicture ? resizeImageUrl(userProfilePicture, 512) : ActivityAssets.Logo
+        presenceData.largeImageKey = userPic && userProfilePicture
+          ? resizeImageUrl(userProfilePicture, 512)
+          : ActivityAssets.Logo
         if (buttons) {
           presenceData.buttons = [
             {
@@ -143,9 +169,13 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (/^\/@[^/]+\/note\/[^/]+$/.test(pathname)) {
-      presenceData.details = privacy ? 'Viewing someones Note' : `Viewing ${username}'s Note`
+      presenceData.details = privacy
+        ? 'Viewing someones Note'
+        : `Viewing ${username}'s Note`
       if (!privacy) {
-        presenceData.largeImageKey = userPic && userProfilePicture ? resizeImageUrl(userProfilePicture, 512) : ActivityAssets.Logo
+        presenceData.largeImageKey = userPic && userProfilePicture
+          ? resizeImageUrl(userProfilePicture, 512)
+          : ActivityAssets.Logo
         if (buttons) {
           presenceData.buttons = [
             {

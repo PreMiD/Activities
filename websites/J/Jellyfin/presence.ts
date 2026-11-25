@@ -296,7 +296,10 @@ async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
   try {
     const res = await fetchWithTimeout(
       `${jellyfinBasenameUrl()}Users/${clientInfo?.userId}/Items/${itemId}`,
-      { credentials: 'include', headers: authHeaders() },
+      {
+        credentials: 'include',
+        headers: authHeaders(),
+      },
     )
     if (!res.ok) {
       markFailed(failureKey)
@@ -322,7 +325,10 @@ async function obtainNowPlayingItemId(): Promise<string | null> {
   try {
     const res = await fetchWithTimeout(
       `${jellyfinBasenameUrl()}Sessions?deviceId=${encodeURIComponent(clientInfo?.deviceId ?? '')}`,
-      { credentials: 'include', headers: authHeaders() },
+      {
+        credentials: 'include',
+        headers: authHeaders(),
+      },
     )
     if (res.ok) {
       const sessions: Session[] = await res.json()
@@ -333,7 +339,10 @@ async function obtainNowPlayingItemId(): Promise<string | null> {
     itemId = null
   }
 
-  nowPlayingCache = { itemId, fetchedAt: Date.now() }
+  nowPlayingCache = {
+    itemId,
+    fetchedAt: Date.now(),
+  }
   return itemId
 }
 
@@ -360,7 +369,10 @@ async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
       + '&IncludeArtists=false&IncludeItemTypes=Movie,Episode&Limit=3'
       + '&Fields=PrimaryImageAspectRatio%2CCanDelete%2CBasicSyncInfo%2CMediaSourceCount'
       + '&Recursive=true&EnableTotalRecordCount=false&ImageTypeLimit=1',
-      { credentials: 'include', headers: authHeaders() },
+      {
+        credentials: 'include',
+        headers: authHeaders(),
+      },
     )
     if (!res.ok) {
       markFailed(failureKey)
@@ -624,7 +636,9 @@ async function buildMediaPresence(
       const episode = mediaInfo.IndexNumber
       const hasFilename = /[.\\/]/.test(mediaInfo.Name ?? '')
       const epName = hasFilename
-        ? (season && episode ? `Episode ${episode}` : 'Episode')
+        ? (season && episode
+            ? `Episode ${episode}`
+            : 'Episode')
         : (mediaInfo.Name ?? 'Episode')
 
       const seasonEpisode = season && episode
@@ -637,7 +651,9 @@ async function buildMediaPresence(
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
         details: mediaInfo.SeriesName,
-        state: overview ?? (seasonEpisode ? `${seasonEpisode} • ${epName}` : epName),
+        state: overview ?? (seasonEpisode
+          ? `${seasonEpisode} • ${epName}`
+          : epName),
         largeImageKey: await getCoverUrl(mediaInfo, settings),
       }
 
@@ -698,8 +714,12 @@ async function buildMediaPresence(
       }
 
       const credits = bookCredits(mediaInfo.People)
-      const overview = mediaInfo.Overview ? truncate(mediaInfo.Overview) : null
-      const genreText = mediaInfo.Genres?.length ? mediaInfo.Genres.slice(0, 2).join(', ') : null
+      const overview = mediaInfo.Overview
+        ? truncate(mediaInfo.Overview)
+        : null
+      const genreText = mediaInfo.Genres?.length
+        ? mediaInfo.Genres.slice(0, 2).join(', ')
+        : null
 
       const presenceData: MediaPresenceData = {
         type: activityType,
@@ -800,7 +820,7 @@ function handleOfficialWebsite(settings: Settings): PresenceData | null {
       presenceData.state = 'On contact page'
       break
     default:
-      if (location.pathname.indexOf('/docs/') === 0) {
+      if (location.pathname.startsWith('/docs/')) {
         presenceData.state = `Reading the docs: ${document.title
           .split('|')[0]
           ?.trim()}`
@@ -911,8 +931,12 @@ async function handleItemDetails(settings: Settings): Promise<PresenceData | nul
     case 'Book':
     case 'AudioBook': {
       const credits = bookCredits(data.People)
-      const genreText = data.Genres?.length ? data.Genres.slice(0, 2).join(', ') : null
-      const fallback = data.Type === 'AudioBook' ? 'Audiobook' : 'Book'
+      const genreText = data.Genres?.length
+        ? data.Genres.slice(0, 2).join(', ')
+        : null
+      const fallback = data.Type === 'AudioBook'
+        ? 'Audiobook'
+        : 'Book'
       presenceData.state = credits ?? genreText ?? fallback
       break
     }
@@ -953,12 +977,16 @@ async function handleVideoPlayback(settings: Settings): Promise<PresenceData | n
   // The page title is only the series name for episodes on some versions, so
   // ask the server what this device is playing and search by title as a fallback.
   const nowPlayingId = await obtainNowPlayingItemId()
-  const nowPlayingInfo = nowPlayingId ? await obtainMediaInfo(nowPlayingId) : null
+  const nowPlayingInfo = nowPlayingId
+    ? await obtainMediaInfo(nowPlayingId)
+    : null
   if (nowPlayingInfo)
     return buildMediaPresence(nowPlayingInfo, settings)
 
   const pageTitle = document.title.trim()
-  const [mediaInfo] = pageTitle ? await searchMedia(pageTitle) : []
+  const [mediaInfo] = pageTitle
+    ? await searchMedia(pageTitle)
+    : []
 
   if (mediaInfo) {
     const info = await obtainMediaInfo(mediaInfo.Id)

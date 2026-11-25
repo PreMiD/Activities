@@ -69,7 +69,9 @@ function channelKey(name?: string): string | undefined {
   if (!name)
     return undefined
   const key = name.toLowerCase().replace(/[\s.]/g, '').replace('ki.ka', 'kika')
-  return key in channelAssets ? key : undefined
+  return key in channelAssets
+    ? key
+    : undefined
 }
 
 /**
@@ -201,7 +203,9 @@ presence.on('UpdateData', async () => {
     if (stateText)
       presenceData.state = stateText
 
-    presenceData.largeImageKey = showCover !== false && cover ? cover : ActivityAssets.Logo
+    presenceData.largeImageKey = showCover !== false && cover
+      ? cover
+      : ActivityAssets.Logo
     presenceData.largeImageText = info.series ?? ogTitle
 
     const channel = channelKey(info.channel)
@@ -233,7 +237,10 @@ presence.on('UpdateData', async () => {
 
     if (showButtons !== false) {
       presenceData.buttons = [
-        { label: live ? localized.buttonWatchStream : localized.buttonWatchVideo, url: href },
+        {
+          label: live ? localized.buttonWatchStream : localized.buttonWatchVideo,
+          url: href,
+        },
       ]
       if (info.seriesUrl) {
         presenceData.buttons.push({

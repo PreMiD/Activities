@@ -75,7 +75,10 @@ iframe.on('UpdateData', async () => {
     '.video-container video',
   ]
   // Gộp tất cả selector
-  const allSelectors = [...videoSelectors, ...additionalSelectors]
+  const allSelectors = [
+    ...videoSelectors,
+    ...additionalSelectors,
+  ]
   // Tìm video đầu tiên phù hợp với một trong các selector
   for (const selector of allSelectors) {
     const videoElement = document.querySelector<HTMLVideoElement>(selector)

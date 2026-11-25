@@ -83,7 +83,9 @@ const SITE_STRINGS: Record<'en' | 'tr', Omit<PresenceStrings, 'play' | 'pause' |
 }
 
 export async function getStrings(presence: Presence, lang?: string): Promise<PresenceStrings> {
-  const normalized = (lang ?? '').toLowerCase().startsWith('tr') ? 'tr' : 'en'
+  const normalized = (lang ?? '').toLowerCase().startsWith('tr')
+    ? 'tr'
+    : 'en'
   const general = await presence.getStrings({
     play: 'general.playing',
     pause: 'general.paused',
@@ -95,7 +97,10 @@ export async function getStrings(presence: Presence, lang?: string): Promise<Pre
     watchingSeries: 'general.watchingSeries',
   })
 
-  return { ...general, ...SITE_STRINGS[normalized] }
+  return {
+    ...general,
+    ...SITE_STRINGS[normalized],
+  }
 }
 
 export type ProfileTabKey = keyof Pick<PresenceStrings, 'tabPosts' | 'tabMedia' | 'tabWatchlist' | 'tabFavorites' | 'tabHistory'>

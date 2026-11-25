@@ -51,7 +51,9 @@ presence.on('UpdateData', () => {
   else if (url.includes('problem')) {
     const problemURL = `https://dmoj.ca/problem/${url[2]}`
 
-    presenceData.buttons = [{ label: 'View Problem', url: problemURL }]
+    presenceData.buttons = [
+      { label: 'View Problem', url: problemURL },
+    ]
 
     if (url.includes('submit')) {
       presenceData.details = 'Submitting to problem:'
@@ -310,7 +312,9 @@ presence.on('UpdateData', () => {
       .querySelector('.tabs > h2')
       ?.textContent
       ?.trim()
-    presenceData.buttons = [{ label: 'View Contest', url: contestURL }]
+    presenceData.buttons = [
+      { label: 'View Contest', url: contestURL },
+    ]
 
     if (url.includes('stats')) {
       presenceData.details = 'Viewing statistics of contest:'

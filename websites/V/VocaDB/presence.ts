@@ -255,7 +255,11 @@ presence.on('UpdateData', async () => {
       presenceData.details = PlayQueueStore.items[PlayQueueStore.currentIndex]?.entry?.name
       presenceData.state = PlayQueueStore.items[PlayQueueStore.currentIndex]?.entry?.artistString
       presenceData.largeImageKey = PlayQueueStore.items[PlayQueueStore.currentIndex]?.entry?.urlThumb || ActivityAssets.Logo
-      presenceData.smallImageKey = PlayQueueStore.repeat === 'One' ? Assets.RepeatOne : PlayQueueStore.repeat === 'All' ? Assets.Repeat : Assets.Play
+      presenceData.smallImageKey = PlayQueueStore.repeat === 'One'
+        ? Assets.RepeatOne
+        : PlayQueueStore.repeat === 'All'
+          ? Assets.Repeat
+          : Assets.Play
       if (!document.querySelector('iframe')?.src?.includes('soundcloud') && media.duration) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(media.currentTime, media.duration)
       }

@@ -65,7 +65,9 @@ presence.on('UpdateData', async () => {
       && category
         ? category.textContent
         : ''
-    } ${hostname.endsWith('.com') ? 'Manhwas' : 'Mangas'}`
+    } ${hostname.endsWith('.com')
+      ? 'Manhwas'
+      : 'Mangas'}`
     if (order)
       presenceData.state = `Ordered By ${order.textContent}`
     presenceData.smallImageText = presenceData.smallImageKey = Assets.Viewing
@@ -109,15 +111,21 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Reading Commments'
         presenceData.smallImageText = presenceData.smallImageKey = Assets.Reading
       }
-      if (buttons)
-        presenceData.buttons = [{ label: 'See Comments', url: href }]
+      if (buttons) {
+        presenceData.buttons = [
+          { label: 'See Comments', url: href },
+        ]
+      }
     }
     else {
       presenceData.details = 'Reading Summary'
       if (title)
         presenceData.state = title.textContent
-      if (buttons)
-        presenceData.buttons = [{ label: 'Read Summary', url: href }]
+      if (buttons) {
+        presenceData.buttons = [
+          { label: 'Read Summary', url: href },
+        ]
+      }
     }
   }
   else if (pathname.startsWith('/user-settings')) {
@@ -144,5 +152,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

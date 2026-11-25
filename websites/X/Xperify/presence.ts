@@ -58,10 +58,22 @@ presence.on('UpdateData', async () => {
   }
   catch {}
 
-  const drill = s.drill ? `${s.drill}${s.diff === 'Hard' ? ' (Hard)' : ''}` : ''
-  const score = s.score !== undefined && s.score !== '' ? Number(String(s.score).replace(/[^\d.]/g, '')).toLocaleString('en-US') : ''
-  if (s.id && !s.workshop)
-    play = { label: (s.status === 'results' ? 'Beat my score' : `Play ${s.drill}`).slice(0, 32), url: `https://xperify.in/drills/${s.id}/` }
+  const drill = s.drill
+    ? `${s.drill}${s.diff === 'Hard'
+      ? ' (Hard)'
+      : ''}`
+    : ''
+  const score = s.score !== undefined && s.score !== ''
+    ? Number(String(s.score).replace(/[^\d.]/g, '')).toLocaleString('en-US')
+    : ''
+  if (s.id && !s.workshop) {
+    play = {
+      label: (s.status === 'results'
+        ? 'Beat my score'
+        : `Play ${s.drill}`).slice(0, 32),
+      url: `https://xperify.in/drills/${s.id}/`,
+    }
+  }
 
   switch (s.status) {
     case 'playing':
@@ -83,8 +95,11 @@ presence.on('UpdateData', async () => {
       break
     case 'results':
       presenceData.details = `Finished ${drill}`
-      if (showScore && score)
-        presenceData.state = s.rank ? `Scored ${score} · rank #${s.rank}` : `Scored ${score}`
+      if (showScore && score) {
+        presenceData.state = s.rank
+          ? `Scored ${score} · rank #${s.rank}`
+          : `Scored ${score}`
+      }
       break
     case 'reaction':
       presenceData.details = 'Taking the reaction time test'

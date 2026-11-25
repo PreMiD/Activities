@@ -153,7 +153,9 @@ function parseQuery(search: string) {
   return JSON.parse(
     `{"${search.replaceAll('&', '","').replaceAll('=', '":"')}"}`,
     (key, value) => {
-      return key === '' ? value : decodeURIComponent(value)
+      return key === ''
+        ? value
+        : decodeURIComponent(value)
     },
   )
 }

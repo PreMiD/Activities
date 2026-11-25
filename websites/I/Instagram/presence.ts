@@ -117,7 +117,9 @@ presence.on('UpdateData', async () => {
         { label: 'Watch Reel', url: href },
         {
           label: 'View Creator\'s Profile',
-          url: user ? `https://www.instagram.com/${user}` : '',
+          url: user
+            ? `https://www.instagram.com/${user}`
+            : '',
         },
       ]
       break
@@ -212,19 +214,33 @@ function getDateString(date: Date) {
 
   switch (true) {
     case seconds < 60:
-      return `${Math.floor(seconds)} second${seconds === 1 ? '' : 's'} ago`
+      return `${Math.floor(seconds)} second${seconds === 1
+        ? ''
+        : 's'} ago`
     case seconds < 3600:
-      return `${minutes} minute${minutes === 1 ? '' : 's'} ago`
+      return `${minutes} minute${minutes === 1
+        ? ''
+        : 's'} ago`
     case seconds < 86400:
-      return `${hours} hour${hours === 1 ? '' : 's'} ago`
+      return `${hours} hour${hours === 1
+        ? ''
+        : 's'} ago`
     case seconds < 604800:
-      return `${days} day${days === 1 ? '' : 's'} ago`
+      return `${days} day${days === 1
+        ? ''
+        : 's'} ago`
     case seconds < 2419200:
-      return `${days / 7} week${days === 7 ? '' : 's'} ago`
+      return `${days / 7} week${days === 7
+        ? ''
+        : 's'} ago`
     case seconds < 29030400:
-      return `${days / 30} month${days === 30 ? '' : 's'} ago`
+      return `${days / 30} month${days === 30
+        ? ''
+        : 's'} ago`
     default:
-      return `${days / 365} year${days === 365 ? '' : 's'} ago`
+      return `${days / 365} year${days === 365
+        ? ''
+        : 's'} ago`
   }
 }
 

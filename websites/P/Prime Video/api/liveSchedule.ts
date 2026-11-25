@@ -41,7 +41,9 @@ export async function fetchLiveSchedule(playback: PlaybackRequest): Promise<Live
 
   return {
     airings,
-    clockOffset: typeof station?.now === 'number' ? station.now - requestedAt : 0,
+    clockOffset: typeof station?.now === 'number'
+      ? station.now - requestedAt
+      : 0,
     stationLogo: pickImage(station?.station?.images, 'LOGO'),
   }
 }

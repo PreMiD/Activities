@@ -86,7 +86,9 @@ function getPageContext(): PageInfo {
   }
   else if (path.includes('/qcm-cyber-securite/')) {
     const quiz = params.get('quiz')
-    info.details = quiz ? `📚 QCM : ${quiz}` : '📚 Fait un QCM'
+    info.details = quiz
+      ? `📚 QCM : ${quiz}`
+      : '📚 Fait un QCM'
     info.state = '🎓 En formation'
     info.pageType = quiz ? 'qcm' : 'qcm-list'
   }
@@ -94,7 +96,9 @@ function getPageContext(): PageInfo {
     const nom = document.querySelector('h1')?.textContent?.trim()
     const scoreEl = Array.from(document.querySelectorAll('strong, b')).find(e => e.textContent?.includes('pts'))
 
-    info.details = nom ? `🏆 Profil : ${nom}` : '🏆 Regarde un profil'
+    info.details = nom
+      ? `🏆 Profil : ${nom}`
+      : '🏆 Regarde un profil'
     info.state = scoreEl?.textContent?.trim() || '📊 Statistiques'
     info.pageType = 'profile'
   }
@@ -147,17 +151,26 @@ async function updatePresence() {
 
   switch (info.pageType) {
     case 'challenge':
-      activity.buttons = [{ label: '⚔️ Faire ce challenge', url: window.location.href }]
+      activity.buttons = [
+        { label: '⚔️ Faire ce challenge', url: window.location.href },
+      ]
       break
     case 'qcm':
-      activity.buttons = [{ label: '📚 Faire ce QCM', url: window.location.href }]
+      activity.buttons = [
+        { label: '📚 Faire ce QCM', url: window.location.href },
+      ]
       break
     case 'profile':
-      activity.buttons = [{ label: '👤 Voir le profil', url: window.location.href }]
+      activity.buttons = [
+        { label: '👤 Voir le profil', url: window.location.href },
+      ]
       break
     case 'list':
-      if (info.category && info.category !== 'les challenges')
-        activity.buttons = [{ label: `📋 Voir ${info.category}`, url: window.location.href }]
+      if (info.category && info.category !== 'les challenges') {
+        activity.buttons = [
+          { label: `📋 Voir ${info.category}`, url: window.location.href },
+        ]
+      }
 
       break
   }

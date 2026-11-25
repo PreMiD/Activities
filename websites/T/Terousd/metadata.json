@@ -11,7 +11,7 @@
   },
   "url": "stream.terousd.site",
   "regExp": "^https?[:][/][/]stream[.]terousd[.]site[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Terousd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Terousd/assets/thumbnail.jpg",
   "color": "#E50914",

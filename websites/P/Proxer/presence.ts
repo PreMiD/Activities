@@ -107,7 +107,7 @@ presence.on('UpdateData', () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
 
 function getByXpath<T>(xpath: string, extractor: (e: Node) => T): T | Node | null {

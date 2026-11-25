@@ -72,7 +72,9 @@ presence.on('UpdateData', async () => {
       const titleText = document.querySelector('h1.program-details__title')?.textContent
 
       if ((titleLogo || titleText) && !privacy) {
-        presenceData.state = `${titleLogo} ansehen...` ? titleLogo : `${titleText} +  ansehen...`
+        presenceData.state = `${titleLogo} ansehen...`
+          ? titleLogo
+          : `${titleText} +  ansehen...`
       }
       else { presenceData.state = 'Etwas ansehen...' }
     }
@@ -92,13 +94,17 @@ presence.on('UpdateData', async () => {
 
       // If Video Is Part Of A Show
       if (document.querySelector('[data-testid="more-episodes-toggle"]')) {
-        privacy ? presenceData.details = strings.watchingSeries : presenceData.details = title
+        privacy
+          ? presenceData.details = strings.watchingSeries
+          : presenceData.details = title
         if (!privacy) {
           presenceData.state = episode
         }
       }
       else {
-        privacy ? presenceData.details = strings.watchingMovie : presenceData.details = title
+        privacy
+          ? presenceData.details = strings.watchingMovie
+          : presenceData.details = title
       }
 
       if (!video.paused) {

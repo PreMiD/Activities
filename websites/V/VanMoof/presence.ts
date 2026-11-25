@@ -111,7 +111,9 @@ presence.on('UpdateData', async () => {
             const bikeName = document.querySelectorAll('.m-info__top-title')[1]?.textContent
 
             presenceData.state = `Managing Bike${
-              bikeName ? `: ${bikeName}` : ''
+              bikeName
+                ? `: ${bikeName}`
+                : ''
             }`
           }
 

@@ -37,18 +37,24 @@ presence.on('UpdateData', () => {
     ?? pageTitle?.replace(/\s*[-|]\s*Anime3rb.*$/i, '')
     ?? heading
     ?? 'Anime'
-  const videos = [...document.querySelectorAll('video')]
+  const videos = [
+    ...document.querySelectorAll('video'),
+  ]
   const video = videos
     .filter(video => !video.paused && Number.isFinite(video.duration) && video.duration > 0)
     .sort((first, second) => second.currentTime - first.currentTime)[0]
     ?? videos[0]
 
   presenceData.details = animeTitle
-  presenceData.state = episode ? `Episode ${episode}` : 'Watching an episode'
-  presenceData.buttons = [{
-    label: 'Watch Episode',
-    url: document.location.href,
-  }]
+  presenceData.state = episode
+    ? `Episode ${episode}`
+    : 'Watching an episode'
+  presenceData.buttons = [
+    {
+      label: 'Watch Episode',
+      url: document.location.href,
+    },
+  ]
 
   if (video && Number.isFinite(video.duration) && video.duration > 0) {
     wasWatching = true

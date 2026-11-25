@@ -88,8 +88,12 @@ presence.on('UpdateData', async () => {
   ])
 
   for (const [path, data] of Object.entries(pages)) {
-    if (document.location.hash.includes(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (document.location.hash.includes(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   if (oldLang !== newLang || !strings) {

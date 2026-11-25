@@ -35,7 +35,9 @@ async function getTokenInfo(
       const pair = data.pairs[0]
       const getTitlePrice = () => {
         const priceMatch = document.title.match(/\$([0-9.]+)/)
-        return priceMatch?.[1] ? Number.parseFloat(priceMatch[1]) : 0
+        return priceMatch?.[1]
+          ? Number.parseFloat(priceMatch[1])
+          : 0
       }
       let price = getTitlePrice()
       // price get from title instead of API, for efficiency

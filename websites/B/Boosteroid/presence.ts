@@ -77,8 +77,12 @@ presence.on('UpdateData', async () => {
         return
       }
 
-      const imagenFinal = typeof game.icon === 'string' ? game.icon.split('?')[0] : BOOSTEROID_LOGO
-      const tiendas = game.stores ? Object.keys(game.stores) : []
+      const imagenFinal = typeof game.icon === 'string'
+        ? game.icon.split('?')[0]
+        : BOOSTEROID_LOGO
+      const tiendas = game.stores
+        ? Object.keys(game.stores)
+        : []
       let rawStore = 'default'
 
       if (game.name.includes('(Xbox)')) {

@@ -70,7 +70,9 @@ async function buildLessonPresence(): Promise<PresenceData> {
   const courseLink = document.querySelector('a.text-base.font-medium.text-gray-900')
   const courseName = courseLink?.textContent?.trim() || 'Unknown'
   const courseUrl = courseLink?.getAttribute('href') || ''
-  const fullCourseUrl = courseUrl ? new URL(courseUrl, document.location.origin).href : ''
+  const fullCourseUrl = courseUrl
+    ? new URL(courseUrl, document.location.origin).href
+    : ''
 
   // Media state detection
   const media = document.querySelector('media-controller')
@@ -107,7 +109,9 @@ async function buildLessonPresence(): Promise<PresenceData> {
   // Only add course button if we have a valid URL
   if (fullCourseUrl) {
     const courseButton: ButtonData = { label: 'View Course', url: fullCourseUrl }
-    presence.buttons = presence.buttons ? [presence.buttons[0], courseButton] : [courseButton]
+    presence.buttons = presence.buttons
+      ? [presence.buttons[0], courseButton]
+      : [courseButton]
   }
 
   if (video) {
@@ -170,7 +174,9 @@ PRESENCE.on('UpdateData', async () => {
         details: 'Browsing course:',
         state: courseTitle,
         smallImageKey: Assets.Search,
-        buttons: [{ label: 'View Course', url: document.location.href }],
+        buttons: [
+          { label: 'View Course', url: document.location.href },
+        ],
       }
       break
     }
@@ -183,7 +189,9 @@ PRESENCE.on('UpdateData', async () => {
         details: 'Browsing certifications:',
         state: certTitle,
         smallImageKey: Assets.Search,
-        buttons: [{ label: 'View Certification', url: document.location.href }],
+        buttons: [
+          { label: 'View Certification', url: document.location.href },
+        ],
       }
       break
     }
@@ -203,7 +211,9 @@ PRESENCE.on('UpdateData', async () => {
         ...presence,
         type: ActivityType.Watching,
         details: 'Browsing Courses',
-        state: filter ? `${filter} Courses` : 'All Courses',
+        state: filter
+          ? `${filter} Courses`
+          : 'All Courses',
       }
       trackDifficultyChanges()
       break

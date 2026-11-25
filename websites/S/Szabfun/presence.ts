@@ -51,7 +51,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Reading documentation'
   }
   else if (currentPageName) {
-    presenceData.details = currentSegment === 'login' ? 'Managing account' : 'Playing a game'
+    presenceData.details = currentSegment === 'login'
+      ? 'Managing account'
+      : 'Playing a game'
     presenceData.state = currentPageName
   }
   else {

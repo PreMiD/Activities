@@ -23,7 +23,9 @@ presence.on('UpdateData', async () => {
     const activeTab = document.querySelector('[class*="bg-gradient-to-r"][class*="from-"]')
     const tabText = activeTab?.textContent?.trim()
 
-    presenceData.details = username ? `Profil: ${username}` : 'Profilinde'
+    presenceData.details = username
+      ? `Profil: ${username}`
+      : 'Profilinde'
     if (tabText)
       presenceData.state = tabText
   }

@@ -193,8 +193,11 @@ presence.on('UpdateData', async () => {
     }
   }
   const setButton = (label: string) => {
-    if (showButtons)
-      presenceData.buttons = [{ label, url: href }]
+    if (showButtons) {
+      presenceData.buttons = [
+        { label, url: href },
+      ]
+    }
   }
   // Compare the alt property instead of building a selector, titles can contain quotes
   const avatar = (alt?: string) => () => alt
@@ -213,7 +216,9 @@ presence.on('UpdateData', async () => {
         const isSettings = pathSplit[2] === 'settings'
         presenceData.details = (isSettings ? strings.editingProject : strings.viewingProject).replace('{0}', typeName)
         // On a specific version page, add the version name after the project name
-        const versionName = pathSplit[2] === 'version' ? document.querySelector('[class*="page"] > [class*="content"] h2')?.textContent?.trim() : undefined
+        const versionName = pathSplit[2] === 'version'
+          ? document.querySelector('[class*="page"] > [class*="content"] h2')?.textContent?.trim()
+          : undefined
         setState([mainTitle, versionName && `(${versionName})`].filter(Boolean).join(' '))
         if (pathSplit[0] === 'collection')
           setImage(firstAvatar)
@@ -252,7 +257,9 @@ presence.on('UpdateData', async () => {
           break
         }
         case 'organization': {
-          presenceData.details = pathSplit[2] === 'settings' ? strings.managingOrganization : strings.viewingOrganization
+          presenceData.details = pathSplit[2] === 'settings'
+            ? strings.managingOrganization
+            : strings.viewingOrganization
           setState(mainTitle || pathSplit[1])
           setImage(avatar(mainTitle))
           setButton(strings.buttonViewOrganization)
@@ -268,13 +275,17 @@ presence.on('UpdateData', async () => {
           break
         }
         case 'hosting': {
-          presenceData.details = pathSplit[1] === 'manage' ? strings.managingServers : strings.hostingServer
+          presenceData.details = pathSplit[1] === 'manage'
+            ? strings.managingServers
+            : strings.hostingServer
           break
         }
         case 'news': {
           if (pathSplit[1] === 'article') {
             const articleTitle = document.querySelector('h2')?.textContent
-            presenceData.details = privacy || !articleTitle ? strings.readingAnArticle : strings.readingArticle
+            presenceData.details = privacy || !articleTitle
+              ? strings.readingAnArticle
+              : strings.readingArticle
             setState(articleTitle)
           }
           else if (pathSplit[1] === 'changelog') {

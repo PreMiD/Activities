@@ -74,8 +74,11 @@ presence.on('UpdateData', async () => {
           )?.textContent
 
           presenceData.details = 'Documentation'
-          if (chapter)
-            presenceData.state = `${chapter}${section ? ` - ${section}` : ''}`
+          if (chapter) {
+            presenceData.state = `${chapter}${section
+              ? ` - ${section}`
+              : ''}`
+          }
           presenceData.smallImageText = strings.reading
           presenceData.smallImageKey = Assets.Reading
           break

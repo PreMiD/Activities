@@ -74,7 +74,9 @@ presence.on('UpdateData', async () => {
           presenceData.state = `${strings.searchFor} ${homepageInput?.value}`
           if (document.querySelector('.CbirPreview-Preview')) {
             presenceData.state = `${strings.search} ${
-              oldLang === 'ru' ? 'по картинке' : 'by images'
+              oldLang === 'ru'
+                ? 'по картинке'
+                : 'by images'
             }`
             if (logo && !privacy) {
               presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
@@ -108,7 +110,9 @@ presence.on('UpdateData', async () => {
 
         case 'pogoda':
           presenceData.details = `${strings.watching} ${
-            oldLang === 'ru' ? 'погоду' : 'weather'
+            oldLang === 'ru'
+              ? 'погоду'
+              : 'weather'
           }`
           presenceData.state = document
             .querySelector<HTMLTitleElement>('title')
@@ -120,14 +124,18 @@ presence.on('UpdateData', async () => {
 
         case 'collections':
           presenceData.details = `${strings.watching} ${
-            oldLang === 'ru' ? 'избранное' : 'favourites'
+            oldLang === 'ru'
+              ? 'избранное'
+              : 'favourites'
           }`
           presenceData.state = document.querySelector(
             '.cl-cards-type-filter__button_active',
           )?.firstChild?.textContent
           if (document.querySelector('.cl-board-header-title__name')) {
             presenceData.details = `${strings.watching} ${
-              oldLang === 'ru' ? 'папку в избранном' : 'folder in favourites'
+              oldLang === 'ru'
+                ? 'папку в избранном'
+                : 'folder in favourites'
             }`
             presenceData.state = document.querySelector(
               '.cl-board-header-title__name',

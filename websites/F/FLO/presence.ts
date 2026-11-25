@@ -143,12 +143,12 @@ presence.on('UpdateData', async () => {
               '.chart_content_head>h4',
             )?.textContent
           }
-          else if (location.pathname.indexOf('/storage') === 0) {
+          else if (location.pathname.startsWith('/storage')) {
             presenceData.smallImageKey = Assets.Search
             presenceData.smallImageText = '보관함'
             presenceData.details = '보관함'
           }
-          else if (location.pathname.indexOf('/purchase') === 0) {
+          else if (location.pathname.startsWith('/purchase')) {
             presenceData.details = '이용권'
           }
           else if (location.pathname === '/intro') {

@@ -47,7 +47,9 @@ function router({ path }: { path: string, presenceData: PresenceData }): Route {
       },
       smallImageKey: () => Assets.Reading,
       smallImageText: () => 'Browsing',
-      buttons: () => [{ label: 'View Profile', url: href }],
+      buttons: () => [
+        { label: 'View Profile', url: href },
+      ],
     },
     {
       path: /^\/learn\/(?!.*\bhome\b).*\/$/,
@@ -243,7 +245,9 @@ function router({ path }: { path: string, presenceData: PresenceData }): Route {
       state: () => {
         return document.querySelector('[data-e2e=\'hero-title\']')?.textContent ?? undefined
       },
-      buttons: () => [{ label: 'View Course', url: href }],
+      buttons: () => [
+        { label: 'View Course', url: href },
+      ],
     },
     {
       path: /^\/specializations\/.+$/,
@@ -253,7 +257,9 @@ function router({ path }: { path: string, presenceData: PresenceData }): Route {
       state: () => {
         return document.querySelector('[data-e2e=\'hero-title\']')?.textContent ?? undefined
       },
-      buttons: () => [{ label: 'View Course', url: href }],
+      buttons: () => [
+        { label: 'View Course', url: href },
+      ],
     },
     {
       path: /^\/search*/,
@@ -271,7 +277,9 @@ function router({ path }: { path: string, presenceData: PresenceData }): Route {
             ?.split(' ')[0]
         } results`
       },
-      buttons: () => [{ label: 'View Results', url: href }],
+      buttons: () => [
+        { label: 'View Results', url: href },
+      ],
     },
     {
       path: /^\/.*$/,

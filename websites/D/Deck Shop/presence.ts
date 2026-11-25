@@ -57,7 +57,9 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
           'article > section:first-child img[src*=card]',
         )
-        presenceData.buttons = [{ label: strings.buttonViewCard, url: href }]
+        presenceData.buttons = [
+          { label: strings.buttonViewCard, url: href },
+        ]
       }
       else {
         presenceData.details = strings.browseCards
@@ -172,7 +174,9 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
             'article section > div:first-child > img',
           )
-          presenceData.buttons = [{ label: strings.buttonViewClan, url: href }]
+          presenceData.buttons = [
+            { label: strings.buttonViewClan, url: href },
+          ]
           break
         }
         case 'top': {

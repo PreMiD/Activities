@@ -93,7 +93,9 @@ presence.on('UpdateData', async () => {
     }
     else {
       presenceData.details = `Đang tìm ${
-        truyen ? 'truyện' : sangTac ? 'sáng tác' : 'convert'
+        truyen
+          ? 'truyện'
+          : sangTac ? 'sáng tác' : 'convert'
       } ...`
     }
   }

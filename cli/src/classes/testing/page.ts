@@ -53,8 +53,10 @@ async function pollUserBar(message: string, untilCode: string | null): Promise<U
 
   // Indirect eval runs the until condition in the extension's isolated user-script world.
   // The DOM is shared with the page, but page JavaScript globals are not.
-  // eslint-disable-next-line no-eval
-  const done = untilCode ? !!(await (0, eval)(`(${untilCode})`)()) : false
+  const done = untilCode
+    // eslint-disable-next-line no-eval
+    ? !!(await (0, eval)(`(${untilCode})`)())
+    : false
   return { choice: state.__pmdUserChoice ?? null, done }
 }
 
@@ -124,7 +126,11 @@ export function createPage(rpc: TestRpc, opts: {
     throwIfAborted()
     const tabId = requireTab()
     throwIfTabFailed()
-    const result = await untilTabFails(rpc.request<{ value: Awaited<R> }>('evaluate', { tabId, code: fn.toString(), args }))
+    const result = await untilTabFails(rpc.request<{ value: Awaited<R> }>('evaluate', {
+      tabId,
+      code: fn.toString(),
+      args,
+    }))
     return result.value
   }
 
@@ -282,5 +288,17 @@ export function createPage(rpc: TestRpc, opts: {
     }, key)
   }
 
-  return { goto, click, fill, waitFor, evaluate, waitForUser, url: currentUrl, reload, back, press, dispose: unsubscribe }
+  return {
+    goto,
+    click,
+    fill,
+    waitFor,
+    evaluate,
+    waitForUser,
+    url: currentUrl,
+    reload,
+    back,
+    press,
+    dispose: unsubscribe,
+  }
 }

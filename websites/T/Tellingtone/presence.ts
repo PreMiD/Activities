@@ -52,7 +52,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector<HTMLHeadingElement>('div.head > h1')?.textContent
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('div.head > img')?.src
 
-      presenceData.buttons = [{ label: strings.buttonViewSeries, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewSeries, url: href },
+      ]
   }
   if (document.querySelector('div#Player')) {
     presenceData.details = strings.listeningTo

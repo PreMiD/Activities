@@ -42,7 +42,9 @@ function galaxySessionStart(galaxy: string): number {
 
 function text(selector: string): string | undefined {
   const value = document.querySelector(selector)?.textContent?.trim()
-  return value && value !== '—' && value !== '…' ? value : undefined
+  return value && value !== '—' && value !== '…'
+    ? value
+    : undefined
 }
 
 presence.on('UpdateData', async () => {
@@ -62,9 +64,13 @@ presence.on('UpdateData', async () => {
   const page = pathname.match(/^\/galaxy\/([^/]+)(?:\/([^/]+))?/)
 
   if (game) {
-    const empire = showEmpire ? text('[data-field="player-name"]') : undefined
+    const empire = showEmpire
+      ? text('[data-field="player-name"]')
+      : undefined
     const galaxy = `Galaxy ${titleCase(game)}`
-    presenceData.details = empire ? `${empire} in ${galaxy}` : galaxy
+    presenceData.details = empire
+      ? `${empire} in ${galaxy}`
+      : galaxy
     presenceData.startTimestamp = galaxySessionStart(game)
 
     // Set by the game only while the player's public profile page exists.
@@ -79,7 +85,9 @@ presence.on('UpdateData', async () => {
     }
 
     const openDialog = document.querySelector('dialog[open]')?.id
-    const sector = showSector ? text('[data-field="nameplate-sector"]') : undefined
+    const sector = showSector
+      ? text('[data-field="nameplate-sector"]')
+      : undefined
     if (openDialog && dialogStates[openDialog])
       presenceData.state = dialogStates[openDialog]
     else if (sector)

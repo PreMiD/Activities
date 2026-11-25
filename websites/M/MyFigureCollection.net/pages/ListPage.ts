@@ -6,7 +6,9 @@ export class ListPage extends BasePage {
     presenceData.details = strings.viewList
     presenceData.state = getTitle()
     presenceData.smallImageKey = await squareImage(getThumbnail())
-    presenceData.buttons = [getButton(strings.buttonViewList)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewList),
+    ]
     return false
   }
 }

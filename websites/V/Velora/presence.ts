@@ -11,7 +11,14 @@ enum ActivityAssets {
 
 // Real static routes on velora.tv. Anything else is Next's `[username]`
 // catch-all route, even for usernames that don't exist.
-const STATIC_ROUTES = new Set(['', 'browse', 'login', 'register', 'settings', 'about'])
+const STATIC_ROUTES = new Set([
+  '',
+  'browse',
+  'login',
+  'register',
+  'settings',
+  'about',
+])
 
 function formatSlug(slug: string): string {
   return slug.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
@@ -36,7 +43,10 @@ const MATURE_TAGS = new Set(['mature', 'nsfw', '18+', 'adult'])
 // are available, so we check Velora's own tag data rather than showing the
 // real title/thumbnail for streams tagged as mature.
 function isMatureStream(streamInfo: VeloraStreamInfo): boolean {
-  const tags = [...(streamInfo.sessionTags ?? []), ...(streamInfo.identityTags ?? [])]
+  const tags = [
+    ...(streamInfo.sessionTags ?? []),
+    ...(streamInfo.identityTags ?? []),
+  ]
   return tags.some(tag => MATURE_TAGS.has(tag.toLowerCase()))
 }
 
@@ -71,7 +81,10 @@ async function getChannel(username: string): Promise<VeloraUser | null> {
     presence.error(`Failed to fetch Velora channel data: ${e}`)
   }
 
-  channelCache.set(username, { data, fetchedAt: Date.now() })
+  channelCache.set(username, {
+    data,
+    fetchedAt: Date.now(),
+  })
   return data
 }
 
@@ -190,12 +203,16 @@ async function updateActivity(): Promise<void> {
     const mature = isMatureStream(channel.streamInfo)
     const hide = privacy || mature
 
-    presenceData.details = hide ? 'Watching a livestream' : (channel.streamInfo.title || 'Untitled stream')
+    presenceData.details = hide
+      ? 'Watching a livestream'
+      : (channel.streamInfo.title || 'Untitled stream')
 
     if (!hide) {
       if (usePresenceName) {
         presenceData.name = channel.displayName
-        const bioText = channel.bio ? extractBioText(channel.bio) : ''
+        const bioText = channel.bio
+          ? extractBioText(channel.bio)
+          : ''
         if (bioText)
           presenceData.state = bioText
       }
@@ -205,7 +222,9 @@ async function updateActivity(): Promise<void> {
 
       const tag = [
         showCategory ? channel.streamInfo.categoryName : undefined,
-        showViewerCount ? `${channel.streamInfo.viewerCount} viewers` : undefined,
+        showViewerCount
+          ? `${channel.streamInfo.viewerCount} viewers`
+          : undefined,
       ].filter(Boolean).join(' • ')
       if (tag)
         (presenceData as PresenceData).largeImageText = tag
@@ -242,7 +261,9 @@ async function updateActivity(): Promise<void> {
       if (usePresenceName) {
         presenceData.name = channel.displayName
         presenceData.details = 'Browsing their channel'
-        const bioText = channel.bio ? extractBioText(channel.bio) : ''
+        const bioText = channel.bio
+          ? extractBioText(channel.bio)
+          : ''
         if (bioText)
           presenceData.state = bioText
       }

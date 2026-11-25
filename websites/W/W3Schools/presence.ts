@@ -8,7 +8,15 @@ function capitalize(text: string): string {
     .map(str => str.charAt(0).toUpperCase() + str.slice(1))
     .join(' ')
 }
-const whitelist = ['HTML', 'CSS', 'SQL', 'PHP', 'W3.CSS', 'JQUERY', 'XML']
+const whitelist = [
+  'HTML',
+  'CSS',
+  'SQL',
+  'PHP',
+  'W3.CSS',
+  'JQUERY',
+  'XML',
+]
 
 let elapsed: number, oldUrl: string
 

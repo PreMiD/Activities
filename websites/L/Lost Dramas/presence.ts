@@ -44,7 +44,9 @@ function getDramaName(slug?: string): string {
   if (heading)
     return heading
 
-  return slug ? slug.replace(/-/g, ' ') : 'Lost Dramas'
+  return slug
+    ? slug.replace(/-/g, ' ')
+    : 'Lost Dramas'
 }
 
 function getEpisodeNumber(route: string[]): string | null {
@@ -99,7 +101,9 @@ presence.on('UpdateData', async () => {
     if (poster)
       coverCache.set(slug, poster)
 
-    const cover = showCover ? coverCache.get(slug) : null
+    const cover = showCover
+      ? coverCache.get(slug)
+      : null
     if (cover)
       presenceData.largeImageKey = cover
 

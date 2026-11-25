@@ -49,7 +49,9 @@ presence.on('UpdateData', async () => {
         if (pathList[1]) {
           presenceData.details = 'Reading a news article'
           presenceData.state = document.querySelector<HTMLSpanElement>('.title-text')
-          presenceData.buttons = [{ label: 'Read Article', url: href }]
+          presenceData.buttons = [
+            { label: 'Read Article', url: href },
+          ]
         }
         else {
           presenceData.details = 'Browsing news articles'
@@ -84,9 +86,13 @@ presence.on('UpdateData', async () => {
             isSpecial ? 'special manga' : 'manga'
           } episode`
           presenceData.state = `Episode ${
-            isSpecial ? pathList[1] : +pathList[1] - 1
+            isSpecial
+              ? pathList[1]
+              : +pathList[1] - 1
           }`
-          presenceData.buttons = [{ label: 'Read Manga', url: href }]
+          presenceData.buttons = [
+            { label: 'Read Manga', url: href },
+          ]
         }
         else {
           presenceData.details = 'Browsing manga'

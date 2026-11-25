@@ -25,7 +25,9 @@ const ASSETS = {
 function getUsername(): string {
   const userElement = document.querySelector('span.htb-text-primary.htb-heading-xl.htb-font-bold')
   const name = userElement?.textContent?.trim()
-  return name ? `Username: ${name}` : 'Browsing Dashboard'
+  return name
+    ? `Username: ${name}`
+    : 'Browsing Dashboard'
 }
 
 function getBrowsingState(context: string): string {
@@ -39,13 +41,17 @@ function getBrowsingState(context: string): string {
     active: 'active',
   }
 
-  const stateType = tab && states[tab] ? states[tab] : 'all'
+  const stateType = tab && states[tab]
+    ? states[tab]
+    : 'all'
   return `Browsing ${stateType} ${context}`
 }
 
 function getResourceName(index: number): string | null {
   const parts = window.location.pathname.split('/')
-  return parts[index] ? decodeURIComponent(parts[index]) : null
+  return parts[index]
+    ? decodeURIComponent(parts[index])
+    : null
 }
 
 function getHomePageDetails(settings: DashboardSettings) {
@@ -69,7 +75,9 @@ function getHomePageDetails(settings: DashboardSettings) {
       parts.push(`Flags: ${flags}`)
   }
 
-  return parts.length > 0 ? parts.join(' | ') : 'Browsing Dashboard'
+  return parts.length > 0
+    ? parts.join(' | ')
+    : 'Browsing Dashboard'
 }
 
 function getMachineDetails() {
@@ -79,10 +87,14 @@ function getMachineDetails() {
   const machineImg = document.querySelector('.avatar-icon-name-details img')
   const src = machineImg?.getAttribute('src')
 
-  const avatar = (src && src.startsWith('http')) ? src : null
+  const avatar = (src && src.startsWith('http'))
+    ? src
+    : null
 
   return {
-    details: statusEl ? `Playing Machine '${name}'` : `Looking at '${name}' Machine`,
+    details: statusEl
+      ? `Playing Machine '${name}'`
+      : `Looking at '${name}' Machine`,
     state: statusEl
       ? `${vpnEl?.textContent?.trim() || 'Server'} - Online`
       : 'Status: Offline',
@@ -192,7 +204,9 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = 'Challenges'
       if (resource) {
         const name = getResourceName(2)
-        presenceData.state = name ? `Solving Challenge: '${name}'` : 'Solving Challenge'
+        presenceData.state = name
+          ? `Solving Challenge: '${name}'`
+          : 'Solving Challenge'
       }
       else {
         presenceData.state = getBrowsingState('challenges')
@@ -204,7 +218,9 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = 'Sherlocks'
       if (resource) {
         const name = getResourceName(2)
-        presenceData.state = name ? `Solving Sherlock: '${name}'` : 'Solving Sherlock'
+        presenceData.state = name
+          ? `Solving Sherlock: '${name}'`
+          : 'Solving Sherlock'
       }
       else {
         presenceData.state = getBrowsingState('Sherlocks')

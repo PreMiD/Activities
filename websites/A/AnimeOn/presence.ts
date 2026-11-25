@@ -38,7 +38,9 @@ function text(selector: string): string | null {
 
 function image(selector: string): string | null {
   const src = document.querySelector<HTMLImageElement>(selector)?.src
-  return src?.startsWith('http') ? src : null
+  return src?.startsWith('http')
+    ? src
+    : null
 }
 
 //* The player never changes the URL, so the episode number only lives in a badge next to the title.
@@ -72,10 +74,14 @@ function questProgress(): string | null {
 //* A collection page carries exactly one "<count> аниме" pair, and the count sits
 //* in the element right before that label.
 function collectionSize(): string | null {
-  const label = [...document.querySelectorAll('span')]
+  const label = [
+    ...document.querySelectorAll('span'),
+  ]
     .find(span => !span.children.length && span.textContent?.trim() === 'аниме')
   const count = label?.previousElementSibling?.textContent?.trim()
-  return count && /^\d+$/.test(count) ? count : null
+  return count && /^\d+$/.test(count)
+    ? count
+    : null
 }
 
 //* Section names already sit in the URL, so a page can be labelled from it instead of
@@ -100,7 +106,9 @@ function clockToSeconds(clock: string): number | null {
 //* which prints it as "<elapsed>−<remaining>" in one row. That dash is U+2212, not a
 //* hyphen, and it is the page's only such label.
 function togetherTimestamps(): [number, number] | null {
-  const row = [...document.querySelectorAll('span')]
+  const row = [
+    ...document.querySelectorAll('span'),
+  ]
     .find(span => !span.children.length && /^[−-]\d{1,2}:\d{2}$/.test(span.textContent?.trim() ?? ''))
     ?.parentElement
   const [elapsed, remaining] = (row?.textContent?.trim() ?? '').split(/[−-]/).map(part => clockToSeconds(part.trim()))
@@ -113,13 +121,18 @@ function togetherTimestamps(): [number, number] | null {
 //* but only the room variant appends the dub, so the longest match is the richest one.
 //* On both pages the anime title is the document's only link into /anime/.
 function togetherStream(): { title: string | null, line: string | null } {
-  const lines = [...document.querySelectorAll('span')]
+  const lines = [
+    ...document.querySelectorAll('span'),
+  ]
     .filter(span => !span.children.length)
     .map(span => span.textContent?.trim() ?? '')
     .filter(label => /^Серия\s+\d+/.test(label))
     .sort((a, b) => b.length - a.length)
 
-  return { title: text('a[href^="/anime/"]'), line: lines[0] ?? null }
+  return {
+    title: text('a[href^="/anime/"]'),
+    line: lines[0] ?? null,
+  }
 }
 
 presence.on('UpdateData', async () => {
@@ -187,7 +200,9 @@ presence.on('UpdateData', async () => {
       const animeId = pathname.match(/^\/anime\/.*?-(\d+)\/?$/)?.[1]
       const title = text('h1')
       const video = document.querySelector<HTMLVideoElement>('#player video')
-      const cover = animeId ? image(`img[src*="/anime/posters/${animeId}_"]`) : null
+      const cover = animeId
+        ? image(`img[src*="/anime/posters/${animeId}_"]`)
+        : null
 
       if (showCover && cover)
         presenceData.largeImageKey = cover
@@ -327,8 +342,11 @@ presence.on('UpdateData', async () => {
       }
 
       //* Only offer the invite when something is actually on; otherwise it leads nowhere.
-      if (showJoinButton !== false && title)
-        buttonLabel = pathname === '/together' ? 'Join Stream' : 'Join Room'
+      if (showJoinButton !== false && title) {
+        buttonLabel = pathname === '/together'
+          ? 'Join Stream'
+          : 'Join Room'
+      }
       break
     }
     case pathname === '/schedule': {
@@ -339,11 +357,16 @@ presence.on('UpdateData', async () => {
     //* Auth-gated pages whose headings were checked to carry no personal data.
     case pathname === '/quests' || pathname === '/achievements' || pathname === '/store' || pathname === '/cosmetics': {
       const heading = text('h1')
-      const progress = pathname === '/quests' ? questProgress() : null
+      const progress = pathname === '/quests'
+        ? questProgress()
+        : null
 
       presenceData.details = viewPage
-      if (heading)
-        presenceData.state = progress ? `${heading} • ${progress}` : heading
+      if (heading) {
+        presenceData.state = progress
+          ? `${heading} • ${progress}`
+          : heading
+      }
       break
     }
     //* The /profile heading greets the user by name, so it must never reach the presence.
@@ -356,7 +379,10 @@ presence.on('UpdateData', async () => {
       const tab = text('[role="tab"][aria-selected="true"]')?.replace(/\d+$/, '').trim()
 
       presenceData.details = viewPage
-      presenceData.state = [text('h1'), tab].filter(Boolean).join(' • ') || 'My list'
+      presenceData.state = [
+        text('h1'),
+        tab,
+      ].filter(Boolean).join(' • ') || 'My list'
       break
     }
     default: {
@@ -389,8 +415,11 @@ presence.on('UpdateData', async () => {
     delete presenceData.endTimestamp
   }
 
-  if (showButtons && buttonLabel)
-    presenceData.buttons = [{ label: buttonLabel, url: href }]
+  if (showButtons && buttonLabel) {
+    presenceData.buttons = [
+      { label: buttonLabel, url: href },
+    ]
+  }
 
   presence.setActivity(presenceData)
 })

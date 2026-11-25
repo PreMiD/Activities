@@ -158,7 +158,9 @@ presence.on('UpdateData', async () => {
       }
       if (details) {
         presenceData.details = details[
-          [...document.querySelector('body')?.classList ?? []]
+          [
+            ...document.querySelector('body')?.classList ?? [],
+          ]
             .find(v => /ns--?\d/.test(v))
             ?.split('[', 1)[0]
             ?.slice(3) ?? ''
@@ -207,7 +209,9 @@ presence.on('UpdateData', async () => {
       }
       if (details) {
         presenceData.details = details[
-          [...document.querySelector('body')?.classList ?? []]
+          [
+            ...document.querySelector('body')?.classList ?? [],
+          ]
             .find(v => /ns--?\d/.test(v))
             ?.split('[', 1)[0]
             ?.slice(3) ?? ''

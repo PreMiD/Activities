@@ -307,7 +307,9 @@ function updateActivity(): void {
     largeImageKey: finalPoster,
     largeImageText: finalTitle,
     type: ActivityType.Watching,
-    details: isSerie ? `📺 ${finalTitle}` : `🎬 ${finalTitle}`,
+    details: isSerie
+      ? `📺 ${finalTitle}`
+      : `🎬 ${finalTitle}`,
     state: isSerie
       ? seasonText && episodeText
         ? `${seasonText}, ${episodeText}`
