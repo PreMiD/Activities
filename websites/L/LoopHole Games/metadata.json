@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": ".calsone",
+    "id": "485425065597468675"
+  },
+  "service": "LoopHole Games",
+  "description": {
+    "en": "LoopHole Games is a free arcade of browser games: idle games, arcade games and board games."
+  },
+  "url": "loopholegames.co.uk",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*loopholegames[.]co[.]uk[/]",
+  "version": "1.0.0",
+  "logo": "https://loopholegames.co.uk/assets/discord/loophole.png",
+  "thumbnail": "https://loopholegames.co.uk/assets/og/home.jpg",
+  "color": "#8b5cf6",
+  "category": "games",
+  "tags": [
+    "browser-games",
+    "idle-games",
+    "arcade",
+    "html5",
+    "loophole"
+  ],
+  "settings": [
+    {
+      "id": "showDetails",
+      "title": "Show Game Details",
+      "icon": "fas fa-info-circle",
+      "value": true,
+      "description": "Show live details from the game, like your current wave"
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true,
+      "description": "Show a Play button, and a Join Party button when you're in a party"
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Time Played",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show how long you've been playing"
+    }
+  ]
+}
