@@ -1,0 +1,158 @@
+{
+  "exercism.dashboard": {
+    "description": "Shown when the user is on their Exercism dashboard",
+    "message": "Viewing the dashboard"
+  },
+  "exercism.tracks": {
+    "description": "Shown when browsing the list of all programming language tracks",
+    "message": "Browsing tracks"
+  },
+  "exercism.chooseLanguage": {
+    "description": "Second line while browsing the list of tracks (each track is a programming language)",
+    "message": "Choosing a language"
+  },
+  "exercism.track": {
+    "description": "Shown when viewing the main page of a programming language track",
+    "message": "Viewing a track"
+  },
+  "exercism.trackOf": {
+    "description": "Name of a track. {0} is a programming language, e.g. 'Rust track'",
+    "message": "{0} track"
+  },
+  "exercism.exercises": {
+    "description": "Shown when browsing the exercises of a track",
+    "message": "Browsing exercises"
+  },
+  "exercism.viewExercise": {
+    "description": "Shown when viewing an exercise. {0} is the exercise name, e.g. 'Hello World'",
+    "message": "Viewing {0}"
+  },
+  "exercism.viewAnExercise": {
+    "description": "Shown when viewing an exercise, without naming it (privacy mode)",
+    "message": "Viewing an exercise"
+  },
+  "exercism.solving": {
+    "description": "Shown when solving an exercise in the online editor. {0} is the exercise name",
+    "message": "Solving {0}"
+  },
+  "exercism.solvingAnExercise": {
+    "description": "Shown when solving an exercise, without naming it (privacy mode)",
+    "message": "Solving an exercise"
+  },
+  "exercism.iterations": {
+    "description": "Shown when reviewing the submitted versions (iterations) of a solution. {0} is the exercise name",
+    "message": "Reviewing iterations of {0}"
+  },
+  "exercism.iterationsPrivate": {
+    "description": "Shown when reviewing the submitted versions (iterations) of a solution, without naming the exercise",
+    "message": "Reviewing iterations"
+  },
+  "exercism.solutions": {
+    "description": "Shown when reading other people's solutions to an exercise. {0} is the exercise name",
+    "message": "Community solutions for {0}"
+  },
+  "exercism.solutionsPrivate": {
+    "description": "Shown when reading other people's solutions, without naming the exercise",
+    "message": "Viewing community solutions"
+  },
+  "exercism.digDeeper": {
+    "description": "Shown when reading approaches and articles about an exercise. {0} is the exercise name",
+    "message": "Digging deeper into {0}"
+  },
+  "exercism.digDeeperPrivate": {
+    "description": "Shown when reading approaches and articles about an exercise, without naming it",
+    "message": "Digging deeper into an exercise"
+  },
+  "exercism.mentored": {
+    "description": "Shown when a student is in a mentoring session about an exercise. {0} is the exercise name",
+    "message": "Getting mentored on {0}"
+  },
+  "exercism.mentoredPrivate": {
+    "description": "Shown when a student is in a mentoring session, without naming the exercise",
+    "message": "Getting mentored"
+  },
+  "exercism.concepts": {
+    "description": "Shown when browsing the programming concepts of a track",
+    "message": "Browsing concepts"
+  },
+  "exercism.learning": {
+    "description": "Shown when reading about a programming concept. {0} is the concept, e.g. 'Strings'",
+    "message": "Learning {0}"
+  },
+  "exercism.learningAConcept": {
+    "description": "Shown when reading about a programming concept, without naming it",
+    "message": "Learning a concept"
+  },
+  "exercism.mentoring": {
+    "description": "Shown when the user is volunteering as a mentor",
+    "message": "Mentoring"
+  },
+  "exercism.mentoringInbox": {
+    "description": "Second line while mentoring: the mentor is checking their inbox",
+    "message": "Checking the inbox"
+  },
+  "exercism.mentoringQueue": {
+    "description": "Second line while mentoring: the mentor is browsing pending requests",
+    "message": "Browsing the queue"
+  },
+  "exercism.mentoringStudent": {
+    "description": "Second line while mentoring: the mentor is in a discussion with a student",
+    "message": "Mentoring a student"
+  },
+  "exercism.mentoringRequest": {
+    "description": "Second line while mentoring: the mentor is reviewing a mentoring request",
+    "message": "Reviewing a request"
+  },
+  "exercism.journey": {
+    "description": "Shown when the user is viewing their own progress (the 'Journey' page)",
+    "message": "Reviewing their journey"
+  },
+  "exercism.community": {
+    "description": "Shown when viewing the community page",
+    "message": "Exploring the community"
+  },
+  "exercism.blog": {
+    "description": "Shown when browsing the blog",
+    "message": "Browsing the blog"
+  },
+  "exercism.docs": {
+    "description": "Shown when reading the Exercism documentation",
+    "message": "Reading the docs"
+  },
+  "exercism.contributing": {
+    "description": "Shown when viewing the pages about contributing to Exercism",
+    "message": "Contributing to Exercism"
+  },
+  "exercism.maintaining": {
+    "description": "Shown when a maintainer is managing tracks",
+    "message": "Maintaining tracks"
+  },
+  "exercism.notifications": {
+    "description": "Shown when viewing notifications",
+    "message": "Checking notifications"
+  },
+  "exercism.challenge": {
+    "description": "Shown when viewing a coding challenge, e.g. #48in24",
+    "message": "Taking on a challenge"
+  },
+  "exercism.insiders": {
+    "description": "Shown when viewing the page of Insiders (Exercism's supporter program)",
+    "message": "Checking out Insiders"
+  },
+  "exercism.donate": {
+    "description": "Shown when viewing the donation page",
+    "message": "Supporting Exercism"
+  },
+  "exercism.about": {
+    "description": "Shown when reading the 'About Exercism' pages",
+    "message": "Learning about Exercism"
+  },
+  "exercism.buttonViewExercise": {
+    "description": "Button label that opens the exercise page",
+    "message": "View Exercise"
+  },
+  "exercism.buttonViewTrack": {
+    "description": "Button label that opens the track page (a programming language)",
+    "message": "View Track"
+  }
+}
