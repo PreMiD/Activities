@@ -26,9 +26,16 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let player: PlayerData | null = null
 let playerSeen = 0
 
+let iframeVideoId = ''
+let iframeVideoIdAt = 0
+
 presence.on('iFrameData', (data: unknown) => {
   player = data as PlayerData
   playerSeen = Date.now()
+  if (player.videoId && player.videoId !== iframeVideoId) {
+    iframeVideoId = player.videoId
+    iframeVideoIdAt = Date.now()
+  }
 })
 
 /**
@@ -36,6 +43,7 @@ presence.on('iFrameData', (data: unknown) => {
  * The player also reports what it's playing to zig~zag's page ("infoDelivery" messages), which includes the id.
  */
 let apiVideoId = ''
+let apiVideoIdAt = 0
 
 function videoIdFromMessage(data: unknown): string {
   let message = data
@@ -59,8 +67,10 @@ window.addEventListener('message', (event: MessageEvent) => {
   if (!/^https:\/\/(?:www\.)?youtube(?:-nocookie)?\.com$/.test(event.origin))
     return
   const id = videoIdFromMessage(event.data)
-  if (id)
+  if (id && id !== apiVideoId) {
     apiVideoId = id
+    apiVideoIdAt = Date.now()
+  }
 })
 
 const isTimer = (text: string) => /^\d{1,3}(?::\d{2}){1,2}$/.test(text.trim())
@@ -209,7 +219,10 @@ presence.on('UpdateData', async () => {
     song = player.title.slice(sep + 3).trim()
   }
 
-  const videoId = apiVideoId || player.videoId
+  // both sources can report the video; use whichever saw the newest track first, so the cover changes with the song
+  const videoId = apiVideoIdAt >= iframeVideoIdAt
+    ? apiVideoId || iframeVideoId
+    : iframeVideoId || apiVideoId
 
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
