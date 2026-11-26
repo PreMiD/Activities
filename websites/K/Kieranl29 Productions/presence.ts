@@ -3,8 +3,10 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+const ASSETS = 'https://raw.githubusercontent.com/DJKieranl29/Presences/kl29-productions/websites/K/Kieranl29%20Productions/assets'
+
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/K/Kieranl29%20Productions/assets/logo.png',
+  Logo = 'https://raw.githubusercontent.com/DJKieranl29/Presences/kl29-productions/websites/K/Kieranl29%20Productions/assets/logo.png',
 }
 
 interface Site {
@@ -31,57 +33,57 @@ const sites: Record<string, Site> = {
   },
   'tff.wales': {
     name: 'Transport for Flamingo',
-    logo: 'https://kl29.co.uk/assets/tff.webp',
+    logo: `${ASSETS}/tff.png`,
     url: 'https://tff.wales/',
   },
   'uktransportboards.com': {
     name: 'UK Transport Boards',
-    logo: 'https://kl29.co.uk/assets/uktb-logo-white.png',
+    logo: `${ASSETS}/uktb.png`,
     url: 'https://uktransportboards.com/',
   },
   'shop.uktransportboards.com': {
     name: 'UK Transport Boards Shop',
-    logo: 'https://kl29.co.uk/assets/uktb-logo-white.png',
+    logo: `${ASSETS}/uktb.png`,
     url: 'https://shop.uktransportboards.com/',
   },
   'onemoreslice.co.uk': {
     name: 'One More Slice',
-    logo: 'https://i.ibb.co/Gv09NFKD/oneslicewhiteksmall.png',
+    logo: `${ASSETS}/oms.png`,
     url: 'https://onemoreslice.co.uk/',
   },
   'pogobakery.com': {
     name: 'Pogo Bakery',
-    logo: 'https://pogobakery.com/assets/pogologo.png',
+    logo: `${ASSETS}/pogo.png`,
     url: 'https://pogobakery.com/',
   },
   'framesocials.com': {
     name: 'Frame Socials',
-    logo: 'https://kl29.co.uk/assets/framesocials.png',
+    logo: `${ASSETS}/framesocials.png`,
     url: 'https://framesocials.com/',
   },
   'artsian.wales': {
     name: 'ArtSiân',
-    logo: 'https://artsian.wales/assets/artsian-logo-sm.png',
+    logo: `${ASSETS}/artsian.png`,
     url: 'https://artsian.wales/',
   },
   'southwalesaviationmuseum.com': {
     name: 'South Wales Aviation Museum',
-    logo: 'https://cdn.kieranl29productions.co.uk/dataimgs/swam.png',
+    logo: `${ASSETS}/swam.png`,
     url: 'https://southwalesaviationmuseum.com/',
   },
   'planetxo.uk': {
     name: 'PlanetXO',
-    logo: 'https://cdn.kieranl29productions.co.uk/dataimgs/planetxologo.png',
+    logo: `${ASSETS}/planetxo.png`,
     url: 'https://planetxo.uk/',
   },
   'builtbyjake.fit': {
     name: 'Built By Jake',
-    logo: 'https://cdn.kieranl29productions.co.uk/dataimgs/bbj/bbjlogowhite.png',
+    logo: `${ASSETS}/bbj.png`,
     url: 'https://www.builtbyjake.fit/',
   },
   'djlazyb.com': {
     name: 'The Chill Out Zone',
-    logo: 'https://cdn.kieranl29productions.co.uk/dataimgs/lazyb.png',
+    logo: `${ASSETS}/lazyb.png`,
     url: 'https://djlazyb.com/',
   },
 }

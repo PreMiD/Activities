@@ -31,8 +31,8 @@
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(kl29[.]co[.]uk|kieranl29productions[.]co[.]uk|tff[.]wales|uktransportboards[.]com|onemoreslice[.]co[.]uk|pogobakery[.]com|framesocials[.]com|artsian[.]wales|southwalesaviationmuseum[.]com|planetxo[.]uk|builtbyjake[.]fit|djlazyb[.]com)[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kieranl29%20Productions/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kieranl29%20Productions/assets/thumbnail.png",
+  "logo": "https://raw.githubusercontent.com/DJKieranl29/Presences/kl29-productions/websites/K/Kieranl29%20Productions/assets/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/DJKieranl29/Presences/kl29-productions/websites/K/Kieranl29%20Productions/assets/thumbnail.png",
   "color": "#F97316",
   "category": "other",
   "tags": [
