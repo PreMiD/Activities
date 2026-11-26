@@ -97,7 +97,12 @@ function getPageName(siteName: string): string {
   const path = document.location.pathname.replace(/\/+$/, '')
   if (!path)
     return 'Home'
-  const last = decodeURIComponent(path.split('/').pop() ?? '')
+  const segment = path.split('/').pop() ?? ''
+  let last = segment
+  try {
+    last = decodeURIComponent(segment)
+  }
+  catch {}
   return last.replace(/[-_]+/g, ' ').replace(/\.\w+$/, '').replace(/\b\w/g, c => c.toUpperCase())
 }
 
