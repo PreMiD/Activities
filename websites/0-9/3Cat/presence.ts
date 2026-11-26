@@ -79,19 +79,30 @@ const CHANNELS: Record<string, string> = {
   'oca1': 'Canal ocasional',
 }
 
-const RADIO_CHANNELS = ['catalunya-radio', 'ocr1', '3catinfo-radio', 'icat', 'catalunya-musica']
+const RADIO_CHANNELS = [
+  'catalunya-radio',
+  'ocr1',
+  '3catinfo-radio',
+  'icat',
+  'catalunya-musica',
+]
 
 let lastPath = ''
 let pageTimestamp = Math.floor(Date.now() / 1000)
 let iframeData: (MediaState & { at: number }) | null = null
 
 presence.on('iFrameData', (data: unknown) => {
-  iframeData = { ...(data as MediaState), at: Date.now() }
+  iframeData = {
+    ...(data as MediaState),
+    at: Date.now(),
+  }
 })
 
 function clean(text?: string | null): string {
   const value = (text ?? '').replace(/\s+/g, ' ').replace(/\s*[-|–]\s*3Cat\s*$/i, '').trim()
-  return value.length > 128 ? `${value.slice(0, 125)}...` : value
+  return value.length > 128
+    ? `${value.slice(0, 125)}...`
+    : value
 }
 
 function pretty(slug?: string): string {
@@ -118,7 +129,9 @@ function metaIsFresh(): boolean {
 }
 
 function getMedia(): MediaState | null {
-  const el = [...document.querySelectorAll<HTMLMediaElement>('video, audio')]
+  const el = [
+    ...document.querySelectorAll<HTMLMediaElement>('video, audio'),
+  ]
     .find(m => m.readyState >= 1 && (m.duration > 0 || !Number.isFinite(m.duration)))
   if (el) {
     return {
@@ -169,9 +182,15 @@ async function update() {
   const shareUrl = `${document.location.origin}${document.location.pathname}`
   const fresh = metaIsFresh()
   const h1 = clean(document.querySelector('h1')?.textContent)
-  const ogTitle = fresh ? clean(meta('og:title')) : ''
-  const ogImage = fresh ? meta('og:image') : ''
-  const coverImage = (showCover !== false && ogImage) ? new URL(ogImage, document.location.href).href : DEFAULT_IMAGE
+  const ogTitle = fresh
+    ? clean(meta('og:title'))
+    : ''
+  const ogImage = fresh
+    ? meta('og:image')
+    : ''
+  const coverImage = (showCover !== false && ogImage)
+    ? new URL(ogImage, document.location.href).href
+    : DEFAULT_IMAGE
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
@@ -191,7 +210,9 @@ async function update() {
   const isSearch = segs.includes('cercador')
   const isHome = segs.length === 0 || (segs.length === 1 && segs[0] === '3cat')
   const isSection = segs[0] === '3cat' && !!segs[1] && !!SECTIONS[segs[1]] && !isVideo
-  const subName = SITES[segs[0] ?? ''] ? SITE_SUB[segs[1] ?? ''] : undefined
+  const subName = SITES[segs[0] ?? '']
+    ? SITE_SUB[segs[1] ?? '']
+    : undefined
   const isSite = !!SITES[segs[0] ?? ''] && !isRadio && !isVideo
     && (segs.length === 1 || (!!subName && segs.length === 2) || segs[0] === '3catinfo')
   const isProgram = !isVideo && ((segs[0] === '3cat' && segs.length >= 2 && !SECTIONS[segs[1] ?? '']) || (segs[0] === 'tv3' && segs.length >= 2))
@@ -203,10 +224,16 @@ async function update() {
     isMediaPage = true
     if (isAudio)
       presenceData.type = ActivityType.Listening
-    const prefix = (h1 && ogTitle.endsWith(h1)) ? ogTitle.slice(0, ogTitle.length - h1.length).replace(/\s*[-–]\s*$/, '').trim() : ''
-    const series = /^(?:Pel·lícula|Documental|Reportatge|Curtmetratge|Telefilm|Programa|Sèrie|Vídeo|Àudio|Podcast|Pòdcast)$/i.test(prefix) ? '' : prefix
+    const prefix = (h1 && ogTitle.endsWith(h1))
+      ? ogTitle.slice(0, ogTitle.length - h1.length).replace(/\s*[-–]\s*$/, '').trim()
+      : ''
+    const series = /^(?:Pel·lícula|Documental|Reportatge|Curtmetratge|Telefilm|Programa|Sèrie|Vídeo|Àudio|Podcast|Pòdcast)$/i.test(prefix)
+      ? ''
+      : prefix
     const videoTitle = h1 || ogTitle || 'Contingut de 3Cat'
-    presenceData.details = clean(series ? `${series} - ${videoTitle}` : videoTitle)
+    presenceData.details = clean(series
+      ? `${series} - ${videoTitle}`
+      : videoTitle)
     presenceData.detailsUrl = shareUrl
     presenceData.largeImageKey = coverImage
     presenceData.largeImageText = ogTitle || presenceData.details
@@ -214,14 +241,22 @@ async function update() {
   }
   else if (isLive) {
     const slug = segs[2] ?? ''
-    const channel = slug ? (CHANNELS[slug] ?? pretty(slug)) : ''
+    const channel = slug
+      ? (CHANNELS[slug] ?? pretty(slug))
+      : ''
     isMediaPage = !!channel
     const isAudio = RADIO_CHANNELS.includes(slug)
     if (isAudio)
       presenceData.type = ActivityType.Listening
-    presenceData.details = channel ? (isAudio ? `Escoltant ${channel}` : `${channel} en directe`) : 'Explorant els directes'
+    presenceData.details = channel
+      ? (isAudio
+          ? `Escoltant ${channel}`
+          : `${channel} en directe`)
+      : 'Explorant els directes'
     presenceData.detailsUrl = shareUrl
-    presenceData.largeImageText = channel ? (isAudio ? 'Ràdio en directe' : 'Directe de 3Cat') : 'Directes de 3Cat'
+    presenceData.largeImageText = channel
+      ? (isAudio ? 'Ràdio en directe' : 'Directe de 3Cat')
+      : 'Directes de 3Cat'
     if (channel)
       applyMedia(presenceData, getMedia())
   }
@@ -240,7 +275,9 @@ async function update() {
       params.get('text') ?? params.get('q') ?? params.get('cerca') ?? params.get('query')
       ?? document.querySelector<HTMLInputElement>('input[type="search"], input[name="text"], input[name="q"]')?.value,
     )
-    presenceData.details = (!hideSearch && term) ? `Cercant: ${term}` : 'Cercant a 3Cat'
+    presenceData.details = (!hideSearch && term)
+      ? `Cercant: ${term}`
+      : 'Cercant a 3Cat'
     presenceData.detailsUrl = shareUrl
     presenceData.largeImageText = 'Cercador de 3Cat'
   }
@@ -265,7 +302,9 @@ async function update() {
     isProgramPage = true
     const season = path.match(/temporada[-/](\d+)/i)?.[1]
     const name = h1 || pretty(segs[1])
-    presenceData.details = season ? `${name} (Temporada ${season})` : name
+    presenceData.details = season
+      ? `${name} (Temporada ${season})`
+      : name
     presenceData.detailsUrl = shareUrl
     presenceData.largeImageKey = coverImage
     presenceData.largeImageText = ogTitle || name
