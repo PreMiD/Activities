@@ -26,11 +26,6 @@ const sites: Record<string, Site> = {
     logo: ActivityAssets.Logo,
     url: 'https://kieranl29productions.co.uk/',
   },
-  'nearme.kl29.co.uk': {
-    name: 'Aircraft Near Me',
-    logo: ActivityAssets.Logo,
-    url: 'https://nearme.kl29.co.uk/',
-  },
   'tff.wales': {
     name: 'Transport for Flamingo',
     logo: `${ASSETS}/tff.png`,
@@ -45,6 +40,11 @@ const sites: Record<string, Site> = {
     name: 'UK Transport Boards Shop',
     logo: `${ASSETS}/uktb.png`,
     url: 'https://shop.uktransportboards.com/',
+  },
+  'uktransportboards.co.uk': {
+    name: 'UK Transport Boards',
+    logo: `${ASSETS}/uktb.png`,
+    url: 'https://uktransportboards.co.uk/',
   },
   'onemoreslice.co.uk': {
     name: 'One More Slice',
@@ -65,26 +65,6 @@ const sites: Record<string, Site> = {
     name: 'ArtSiân',
     logo: `${ASSETS}/artsian.png`,
     url: 'https://artsian.wales/',
-  },
-  'southwalesaviationmuseum.com': {
-    name: 'South Wales Aviation Museum',
-    logo: `${ASSETS}/swam.png`,
-    url: 'https://southwalesaviationmuseum.com/',
-  },
-  'planetxo.uk': {
-    name: 'PlanetXO',
-    logo: `${ASSETS}/planetxo.png`,
-    url: 'https://planetxo.uk/',
-  },
-  'builtbyjake.fit': {
-    name: 'Built By Jake',
-    logo: `${ASSETS}/bbj.png`,
-    url: 'https://www.builtbyjake.fit/',
-  },
-  'djlazyb.com': {
-    name: 'The Chill Out Zone',
-    logo: `${ASSETS}/lazyb.png`,
-    url: 'https://djlazyb.com/',
   },
 }
 

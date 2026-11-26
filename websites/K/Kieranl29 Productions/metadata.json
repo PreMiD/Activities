@@ -11,25 +11,21 @@
     "KL29 Productions"
   ],
   "description": {
-    "en": "Kieranl29 Productions builds websites, tools and services for businesses and communities across Wales and the UK. This activity covers KL29 and the customer sites we build and run, including UK Transport Boards, One More Slice, Pogo Bakery, Frame Socials, ArtSian and the South Wales Aviation Museum."
+    "en": "Kieranl29 Productions builds websites, tools and services for businesses and communities across Wales and the UK. This activity covers KL29 and the customer sites we build and run, including UK Transport Boards, One More Slice, Pogo Bakery, Frame Socials and ArtSiân."
   },
   "url": [
     "kl29.co.uk",
-    "nearme.kl29.co.uk",
     "kieranl29productions.co.uk",
     "tff.wales",
     "uktransportboards.com",
     "shop.uktransportboards.com",
+    "uktransportboards.co.uk",
     "onemoreslice.co.uk",
     "pogobakery.com",
     "framesocials.com",
-    "artsian.wales",
-    "southwalesaviationmuseum.com",
-    "planetxo.uk",
-    "builtbyjake.fit",
-    "djlazyb.com"
+    "artsian.wales"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(kl29[.]co[.]uk|kieranl29productions[.]co[.]uk|tff[.]wales|uktransportboards[.]com|onemoreslice[.]co[.]uk|pogobakery[.]com|framesocials[.]com|artsian[.]wales|southwalesaviationmuseum[.]com|planetxo[.]uk|builtbyjake[.]fit|djlazyb[.]com)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(kl29[.]co[.]uk|kieranl29productions[.]co[.]uk|tff[.]wales|uktransportboards[.]com|uktransportboards[.]co[.]uk|onemoreslice[.]co[.]uk|pogobakery[.]com|framesocials[.]com|artsian[.]wales)[/]",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/DJKieranl29/Presences/kl29-productions/websites/K/Kieranl29%20Productions/assets/logo.png",
   "thumbnail": "https://raw.githubusercontent.com/DJKieranl29/Presences/kl29-productions/websites/K/Kieranl29%20Productions/assets/thumbnail.png",
