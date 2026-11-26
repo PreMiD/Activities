@@ -3,10 +3,10 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const ASSETS = 'https://raw.githubusercontent.com/DJKieranl29/Presences/kl29-productions/websites/K/Kieranl29%20Productions/assets'
+const ASSETS = 'https://cdn.rcd.gg/PreMiD/websites/K/Kieranl29%20Productions/assets'
 
 enum ActivityAssets {
-  Logo = 'https://raw.githubusercontent.com/DJKieranl29/Presences/kl29-productions/websites/K/Kieranl29%20Productions/assets/logo.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/K/Kieranl29%20Productions/assets/logo.png',
 }
 
 interface Site {
