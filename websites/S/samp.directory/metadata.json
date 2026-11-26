@@ -74,6 +74,24 @@
       }
     },
     {
+      "id": "weapon",
+      "title": "Show Weapon",
+      "icon": "fa-solid fa-gun",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "money",
+      "title": "Show Money",
+      "icon": "fa-solid fa-dollar-sign",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
       "id": "timestamp",
       "title": "Show Timestamp",
       "icon": "fa-solid fa-clock",

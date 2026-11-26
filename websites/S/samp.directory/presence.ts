@@ -20,6 +20,8 @@ interface GameState {
   jobName: string | null
   activity: 'mission' | 'race' | 'deathmatch' | null
   wanted: number
+  weapon?: { id: number, name: string } | null
+  money?: number
 }
 
 // The site's pages are under a language's prefix ("/ru/servers") but for English's
@@ -74,11 +76,13 @@ function gameDetails(game: GameState, showJob: boolean): string {
 }
 
 presence.on('UpdateData', async () => {
-  const [showArea, showVehicle, showJob, showWanted, showTime, privacy] = await Promise.all([
+  const [showArea, showVehicle, showJob, showWanted, showWeapon, showMoney, showTime, privacy] = await Promise.all([
     presence.getSetting<boolean>('area'),
     presence.getSetting<boolean>('vehicle'),
     presence.getSetting<boolean>('job'),
     presence.getSetting<boolean>('wanted'),
+    presence.getSetting<boolean>('weapon'),
+    presence.getSetting<boolean>('money'),
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('privacy'),
   ])
@@ -111,8 +115,15 @@ presence.on('UpdateData', async () => {
         parts.push(game.vehicle)
       if (showWanted && game.wanted > 0)
         parts.push('★'.repeat(Math.min(6, game.wanted)))
+      if (showMoney && typeof game.money === 'number')
+        parts.push(`$${game.money.toLocaleString('en-US')}`)
       if (parts.length)
         presenceData.state = parts.join(' · ')
+      // (the weapon in hand: its picture small in the corner, its name over it)
+      if (showWeapon && game.weapon) {
+        presenceData.smallImageKey = `https://samp.directory/reference/weapons/${game.weapon.id}.png`
+        presenceData.smallImageText = game.weapon.name
+      }
     }
     if (!playingSince)
       playingSince = Math.floor(Date.now() / 1000)
