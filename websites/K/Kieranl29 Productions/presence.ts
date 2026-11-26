@@ -115,13 +115,9 @@ presence.on('UpdateData', async () => {
 
   if (showButtons) {
     presenceData.buttons = [
-      {
-        label: `Visit ${site.name}`.slice(0, 32),
-        url: site.url,
-      },
+      { label: 'View Site', url: site.url },
+      { label: 'View Creator', url: 'https://kl29.co.uk/' },
     ]
-    if (!isKl29)
-      presenceData.buttons.push({ label: 'Kieranl29 Productions', url: 'https://kl29.co.uk/' })
   }
 
   presence.setActivity(presenceData)
