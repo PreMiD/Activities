@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: 'REPLACE_WITH_DISCORD_APPLICATION_ID',
+  clientId: '1448472833385828432',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
