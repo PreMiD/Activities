@@ -32,7 +32,7 @@ function countWords(text: string | null | undefined): number {
 // "ds-toggle-button--selected" while enabled (confirmed in the app's
 // own JS/CSS bundles, 2026-11-17). The label tells the two apart.
 function isSearchModeOn(): boolean {
-  const labels = new Set(['Search', 'スマート検索', '联网搜索'])
+  const labels = new Set(['Search', 'スマート検索', '智能搜索'])
   for (const el of document.querySelectorAll('.ds-toggle-button--selected')) {
     if (labels.has(el.textContent?.trim() ?? ''))
       return true
@@ -42,7 +42,6 @@ function isSearchModeOn(): boolean {
 
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
-  const showTitle = await presence.getSetting<boolean>('showTitle')
 
   let presenceDetail: string, presenceState: string
   let smallImageKey: string, smallImageText: string
@@ -53,9 +52,7 @@ presence.on('UpdateData', async () => {
     presenceDetail = strings?.newPrompt ?? ''
   }
   else if (pathname.includes('/a/chat/s')) {
-    presenceDetail = (showTitle
-      ? document.querySelector('div.d8ed659a')?.textContent?.trim()
-      : undefined) || strings?.talkingWithAi || ''
+    presenceDetail = strings?.talkingWithAi || ''
   }
   else {
     presenceDetail = strings?.talkingWithAi ?? ''
@@ -72,10 +69,12 @@ presence.on('UpdateData', async () => {
     for (const el of document.querySelectorAll('.ds-message')) {
       const answers = el.querySelectorAll('.ds-markdown')
       if (answers.length) {
-        for (const answer of answers)
-          wordCount += countWords(answer.textContent)
+        for (const answer of answers) {
+          if (!answer.closest('.ds-think-content'))
+            wordCount += countWords(answer.textContent)
+        }
       }
-      else {
+      else if (el.textContent?.trim()) {
         askedCount++
         wordCount += countWords(el.textContent)
       }
@@ -94,12 +93,12 @@ presence.on('UpdateData', async () => {
     smallImageText = strings?.askingQuestion ?? ''
   }
   // Used for checking if the AI is currently responding
-  else if (document.querySelector('div[class=\'f9bf7997 d7dc56a8\']')) {
+  else if (document.querySelector('div._4f9bf79.d7dc56a8:not(._43c05b5)')) {
     presenceState = strings?.aiTalking ?? ''
     smallImageKey = ActivityAssets.Talking
     smallImageText = strings?.aiTalking ?? ''
   }
-  else if (document.querySelector('div.f9bf7997.d7dc56a8.c05b5566')) {
+  else if (document.querySelector('div._4f9bf79.d7dc56a8._43c05b5')) {
     presenceState = conversationStats ?? strings?.readingResponse ?? ''
     smallImageKey = Assets.Reading
     smallImageText = strings?.readingResponse ?? ''
