@@ -242,7 +242,10 @@ presence.on('UpdateData', async () => {
       const boatName = party.name
         ? `“${party.name}”`
         : 'boat party'
-      presenceData.state = `${presenceData.state} · ⛵ ${boatName} (${party.sailors} aboard)`.slice(0, 128)
+      const aboard = showSailors
+        ? ` (${party.sailors} aboard)`
+        : ''
+      presenceData.state = `${presenceData.state} · ⛵ ${boatName}${aboard}`.slice(0, 128)
       presenceData.smallImageKey = ActivityAssets.Logo
       const crew = showSailors && party.names.length
         ? `sailing with ${party.names.join(', ')}`
