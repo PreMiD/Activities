@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "850028897118584843",
+    "name": "kieranl29"
+  },
+  "service": "Kieranl29 Productions",
+  "altnames": [
+    "KL29",
+    "KL29 Productions"
+  ],
+  "description": {
+    "en": "Kieranl29 Productions builds websites, tools and services for businesses and communities across Wales and the UK. This activity covers KL29 and the customer sites we build and run, including UK Transport Boards, One More Slice, Pogo Bakery, Frame Socials, ArtSian and the South Wales Aviation Museum."
+  },
+  "url": [
+    "kl29.co.uk",
+    "nearme.kl29.co.uk",
+    "kieranl29productions.co.uk",
+    "tff.wales",
+    "uktransportboards.com",
+    "shop.uktransportboards.com",
+    "onemoreslice.co.uk",
+    "pogobakery.com",
+    "framesocials.com",
+    "artsian.wales",
+    "southwalesaviationmuseum.com",
+    "planetxo.uk",
+    "builtbyjake.fit",
+    "djlazyb.com"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(kl29[.]co[.]uk|kieranl29productions[.]co[.]uk|tff[.]wales|uktransportboards[.]com|onemoreslice[.]co[.]uk|pogobakery[.]com|framesocials[.]com|artsian[.]wales|southwalesaviationmuseum[.]com|planetxo[.]uk|builtbyjake[.]fit|djlazyb[.]com)[/]",
+  "version": "1.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kieranl29%20Productions/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kieranl29%20Productions/assets/thumbnail.png",
+  "color": "#F97316",
+  "category": "other",
+  "tags": [
+    "kl29",
+    "web-design",
+    "business",
+    "transport",
+    "food"
+  ],
+  "settings": [
+    {
+      "id": "showPage",
+      "title": "Show Page",
+      "icon": "fas fa-file-alt",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ]
+}
