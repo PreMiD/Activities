@@ -21,6 +21,16 @@ const sites: Record<string, Site> = {
     logo: ActivityAssets.Logo,
     url: 'https://kl29.co.uk/',
   },
+  'portal.kl29.co.uk': {
+    name: 'SWAM Portal',
+    logo: `${ASSETS}/swam.png`,
+    url: 'https://portal.kl29.co.uk/',
+  },
+  'portaldev.kl29.co.uk': {
+    name: 'SWAM Portal (Dev Build)',
+    logo: `${ASSETS}/swam.png`,
+    url: 'https://portaldev.kl29.co.uk/',
+  },
   'kieranl29productions.co.uk': {
     name: 'Kieranl29 Productions',
     logo: ActivityAssets.Logo,
