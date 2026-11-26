@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "sanakyds",
+    "id": "730993114206044201"
+  },
+  "service": "Speedrun Ethereum",
+  "description": {
+    "en": "Speedrun Ethereum is a hands-on series of challenges to learn Solidity by building real dApps with Scaffold-ETH 2: NFTs, crowdfunding, token vendors, DEXs, lending and more.",
+    "es": "Speedrun Ethereum es una serie práctica de retos para aprender Solidity construyendo dApps reales con Scaffold-ETH 2: NFTs, crowdfunding, venta de tokens, DEXs, préstamos y más."
+  },
+  "url": "speedrunethereum.com",
+  "regExp": "^https?[:][/][/](www[.])?speedrunethereum[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/dizzi1222/premid-activities/premid-assets/Speedrun%20Ethereum/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/dizzi1222/premid-activities/premid-assets/Speedrun%20Ethereum/thumbnail.png",
+  "color": "#088484",
+  "category": "other",
+  "tags": [
+    "solidity",
+    "blockchain",
+    "web3",
+    "scaffold-eth",
+    "coding",
+    "education"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Elapsed Time",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-link",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

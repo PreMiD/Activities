@@ -1,0 +1,50 @@
+{
+  "speedrunethereum.challenge": {
+    "description": "Shown when the user is working on a challenge. {0} is its name (e.g. Challenge: Tokenization).",
+    "message": "Challenge: {0}"
+  },
+  "speedrunethereum.doingChallenge": {
+    "description": "Shown in privacy mode when the user is working on a challenge.",
+    "message": "Doing a challenge"
+  },
+  "speedrunethereum.gettingStarted": {
+    "description": "Shown when the user is reading the getting started page.",
+    "message": "Reading the getting started guide"
+  },
+  "speedrunethereum.builders": {
+    "description": "Shown when the user is browsing the list of builders.",
+    "message": "Browsing builders"
+  },
+  "speedrunethereum.builds": {
+    "description": "Shown when the user is browsing the builds (projects shared by builders).",
+    "message": "Browsing builds"
+  },
+  "speedrunethereum.build": {
+    "description": "Shown when the user is viewing a build (a project shared by a builder).",
+    "message": "Viewing a build"
+  },
+  "speedrunethereum.guides": {
+    "description": "Shown when the user is browsing the Solidity tutorials and guides.",
+    "message": "Browsing guides"
+  },
+  "speedrunethereum.learnSolidity": {
+    "description": "Shown when the user is viewing the Solidity course roadmap.",
+    "message": "Viewing the Solidity roadmap"
+  },
+  "speedrunethereum.buildPrompts": {
+    "description": "Shown when the user is browsing the build prompts (project ideas).",
+    "message": "Browsing build prompts"
+  },
+  "speedrunethereum.blockExplorer": {
+    "description": "Shown when the user is using the block explorer of the site.",
+    "message": "Using the block explorer"
+  },
+  "speedrunethereum.buttonViewChallenge": {
+    "description": "Button that opens the challenge being done.",
+    "message": "View Challenge"
+  },
+  "speedrunethereum.buttonViewBuild": {
+    "description": "Button that opens the build being viewed.",
+    "message": "View Build"
+  }
+}
