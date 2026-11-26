@@ -19,7 +19,7 @@
   },
   "url": "upbeatradio.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*upbeatradio[.]net[/]",
-  "version": "3.3.3",
+  "version": "3.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/thumbnail.png",
   "color": "#212121",

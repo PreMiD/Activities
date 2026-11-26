@@ -250,6 +250,13 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Play
   }
 
+  presenceData.buttons = [
+    {
+      label: 'Check out the New Experience',
+      url: 'https://upbeatradio.net/v3/UpBeat.Hub',
+    },
+  ]
+
   if (presenceData.details)
     presence.setActivity(presenceData)
   else presence.clearActivity()
