@@ -119,7 +119,6 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: site.logo,
-    largeImageText: site.name,
     details: `Browsing ${site.name}`,
     startTimestamp: browsingTimestamp,
   }
@@ -133,7 +132,12 @@ presence.on('UpdateData', async () => {
     presenceData.state = getPageName(site.name)
 
   if (showButtons) {
-    presenceData.buttons = [{ label: `Visit ${site.name}`.slice(0, 32), url: site.url }]
+    presenceData.buttons = [
+      {
+        label: `Visit ${site.name}`.slice(0, 32),
+        url: site.url,
+      },
+    ]
     if (!isKl29)
       presenceData.buttons.push({ label: 'Kieranl29 Productions', url: 'https://kl29.co.uk/' })
   }
