@@ -14,6 +14,7 @@
   "service": "bilibilitv",
   "description": {
     "en": "bilibili.tv is an ad-free anime streaming website.",
+    "fr": "bilibili.tv est un site de streaming d'anime sans publicité.",
     "vi": "bilibili.tv là nền tảng xem anime trực tuyến không có quảng cáo."
   },
   "url": [
@@ -21,7 +22,7 @@
     "studio.bilibili.tv"
   ],
   "regExp": "^https?[:][/][/](www|studio)[.]bilibili[.]tv[/]",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/bilibilitv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/bilibilitv/assets/thumbnail.png",
   "color": "#2e62ff",

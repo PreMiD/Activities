@@ -1,42 +1,49 @@
-import { Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '972073369564483584',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-async function getStrings() {
-  return presence.getStrings(
-    {
-      play: 'general.playing',
-      pause: 'general.paused',
-      search: 'general.search',
-      episode: 'general.episode',
-      browsing: 'general.browsing',
-      viewHome: 'general.viewHome',
-      viewChannel: 'general.viewChannel',
-      watchingVid: 'general.watchingVid',
-      viewCategory: 'general.viewCategory',
-      readingAbout: 'general.readingAbout',
-      searchSomething: 'general.searchSomething',
-      buttonWatchVideo: 'general.buttonWatchVideo',
-      buttonViewEpisode: 'general.buttonViewEpisode',
-    },
+// bilibili.tv doesn't display hours in the time but only minutes over 60 minutes and seconds.
+// timestampFromFormat always returns 0 for this format, so we need to implement our own parser.
+function parseBilibiliTime(timeStr: string): number {
+  const parts = timeStr.trim().split(':').map(Number)
+  if (parts.some(Number.isNaN))
+    return 0
 
-  )
+  if (parts.length === 3)
+    return parts[0]! * 3600 + parts[1]! * 60 + parts[2]!
+  if (parts.length === 2)
+    return parts[0]! * 60 + parts[1]!
+  return parts[0] ?? 0
 }
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
 
 presence.on('UpdateData', async () => {
-  const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
-  const presenceData: PresenceData = {
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    search: 'general.search',
+    episode: 'general.episode',
+    browsing: 'general.browsing',
+    viewHome: 'general.viewHome',
+    viewChannel: 'general.viewChannel',
+    watchingVid: 'general.watchingVid',
+    viewCategory: 'general.viewCategory',
+    readingAbout: 'general.readingAbout',
+    searchSomething: 'general.searchSomething',
+    buttonWatchVideo: 'general.buttonWatchVideo',
+    buttonViewEpisode: 'general.buttonViewEpisode',
+  })
+  let presenceData: PresenceData = {
+    type: ActivityType.Playing,
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/bilibilitv/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
   const { hostname, href, pathname } = document.location
   const pathArray = pathname?.split('/')
   const title = document.querySelector('.bstar-meta__title')?.textContent
+  const video = document.querySelector<HTMLVideoElement>('player-mobile-video-wrap video, video')
   const playing = !document.querySelector(
     'img.player-mobile-icon.player-mobile-pause-icon.player-mobile-active',
   )
@@ -45,10 +52,7 @@ presence.on('UpdateData', async () => {
     ?.content
     ?.split('?')?.[0]
     ?? 'https://cdn.rcd.gg/PreMiD/websites/B/bilibilitv/assets/logo.png'
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+
   // Main Site
   if (hostname === 'www.bilibili.tv') {
     const pathKey = Number.isNaN(Number(pathArray[2]))
@@ -119,18 +123,13 @@ presence.on('UpdateData', async () => {
       }
     }
     if (pathKey === 'video' || pathKey === 'play') {
+      presenceData = { ...presenceData, type: ActivityType.Watching }
       presenceData.largeImageKey = thumbnail
       presenceData.smallImageKey = playing ? Assets.Play : Assets.Pause
       if (playing) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-          timestampFromFormat(
-            document.querySelector('.player-mobile-time-current-text')
-              ?.textContent ?? '00:00',
-          ),
-          timestampFromFormat(
-            document.querySelector('.player-mobile-time-total-text')
-              ?.textContent ?? '00:00',
-          ),
+          video?.currentTime || parseBilibiliTime(document.querySelector('.player-mobile-time-current-text')?.textContent || '00:00') || 0,
+          video?.duration || parseBilibiliTime(document.querySelector('.player-mobile-time-total-text')?.textContent || '00:00') || 0,
         )
       }
     }
