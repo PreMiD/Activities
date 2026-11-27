@@ -423,6 +423,12 @@ function logoKey(id: number): string {
   return `NID${Math.floor(id / 100000)}-SID${id % 100000}`
 }
 
+function formatProgramTitle(title: string): string {
+  return title
+    .replaceAll('🈑', '［字］')
+    .replaceAll('🈓', '［デ］')
+}
+
 // denpa の局名は全角英字で返るため、名前で照合するときは半角へ寄せる
 function normalizeName(name: string): string {
   return name
@@ -604,7 +610,9 @@ presence.on('UpdateData', async () => {
     const serviceId = Number(new URLSearchParams(search).get('service'))
     const service = await resolveLiveService(serviceId)
     const prog = service?.now ?? null
-    presenceData.details = showProgram ? (prog?.title ?? 'ライブ視聴中') : 'ライブ視聴中'
+    presenceData.details = showProgram && prog
+      ? formatProgramTitle(prog.title)
+      : 'ライブ視聴中'
     presenceData.state = service?.name ?? 'ライブ'
     const liveLogo = service ? getLogo(service, servicesCache) : null
     if (liveLogo) {
@@ -626,7 +634,9 @@ presence.on('UpdateData', async () => {
   if (rec) {
     const recording = await getRecording(Number(rec[1]!))
     const service = recording ? await getService(recording.serviceId) : null
-    presenceData.details = showProgram ? (recording?.title ?? '録画番組を視聴中') : '録画番組を視聴中'
+    presenceData.details = showProgram && recording
+      ? formatProgramTitle(recording.title)
+      : '録画番組を視聴中'
     presenceData.state = service?.name ?? recording?.serviceName ?? '録画番組'
     const recLogo = service
       ? getLogo(service, servicesCache)
@@ -650,7 +660,9 @@ presence.on('UpdateData', async () => {
   if (chase) {
     const recording = await getRecording(Number(chase[1]!))
     const service = recording ? await getService(recording.serviceId) : null
-    presenceData.details = showProgram ? (recording?.title ?? '追っかけ再生中') : '追っかけ再生中'
+    presenceData.details = showProgram && recording
+      ? formatProgramTitle(recording.title)
+      : '追っかけ再生中'
     presenceData.state = service?.name ?? recording?.serviceName ?? '録画番組'
     const chaseLogo = service
       ? getLogo(service, servicesCache)
