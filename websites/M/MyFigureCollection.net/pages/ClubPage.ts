@@ -12,7 +12,9 @@ export class ClubPage extends BasePage {
     presenceData.state = getTitle()
     presenceData.smallImageKey = await squareImage(getThumbnail())
     presenceData.smallImageText = getCurrentLink()
-    presenceData.buttons = [getButton(strings.buttonViewClub)]
+    presenceData.buttons = [
+      getButton(strings.buttonViewClub),
+    ]
     return false
   }
 

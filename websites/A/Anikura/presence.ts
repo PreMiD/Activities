@@ -49,7 +49,9 @@ function getEpisodeTitleFromDOM(): string | null {
     return null
   const altText = epImg.getAttribute('alt') || ''
   const match = altText.match(/titled\s+['"](.+?)['"]/i)
-  return match && match[1] ? match[1].trim() : null
+  return match && match[1]
+    ? match[1].trim()
+    : null
 }
 function parseTimeToSeconds(timeStr: string | null): number | null {
   if (!timeStr)
@@ -103,7 +105,9 @@ function getCoverImageFromDOM(epNum?: string, lang?: string, isProfile?: boolean
   }
 
   if (epNum) {
-    const langQuery = lang ? `[href*="lang=${lang}"]` : ''
+    const langQuery = lang
+      ? `[href*="lang=${lang}"]`
+      : ''
     const activeLink = document.querySelector<HTMLAnchorElement>(`a[href*="ep=${epNum}"]${langQuery}`)
       || document.querySelector<HTMLAnchorElement>(`a[href*="ep=${epNum}"]`)
 
@@ -125,7 +129,9 @@ function getCoverImageFromDOM(epNum?: string, lang?: string, isProfile?: boolean
     || document.querySelector<HTMLImageElement>('img._coverImg_2wrhc_89')
     || document.querySelector<HTMLImageElement>('img[class*="_coverImg_"]')
   const src = coverImg?.src || coverImg?.getAttribute('src')
-  return src && src.startsWith('http') && !src.includes('/avatars/') ? src : null
+  return src && src.startsWith('http') && !src.includes('/avatars/')
+    ? src
+    : null
 }
 
 const getStrings = presence.getStrings({
@@ -248,7 +254,9 @@ presence.on('UpdateData', async () => {
     if (!useMultiLanguage)
       return fallback
     const val = rawStrings[key]
-    return val && !val.startsWith('general.') ? val : fallback
+    return val && !val.startsWith('general.')
+      ? val
+      : fallback
   }
 
   const presenceData: PresenceData = {
@@ -303,8 +311,12 @@ presence.on('UpdateData', async () => {
         }
       }
 
-      const filterDesc = parts.length > 0 ? `${parts.join(' ')} ${base}` : base
-      const audioText = audio ? ` [${formatAnimeSlug(audio)}]` : ''
+      const filterDesc = parts.length > 0
+        ? `${parts.join(' ')} ${base}`
+        : base
+      const audioText = audio
+        ? ` [${formatAnimeSlug(audio)}]`
+        : ''
       presenceData.state = `Browsing ${filterDesc}${audioText}`
       break
     }
@@ -331,11 +343,15 @@ presence.on('UpdateData', async () => {
         let subText = ''
         if (tab === 'followers') {
           const count = followersCount
-          subText = ` (Followers${count ? `: ${count}` : ''})`
+          subText = ` (Followers${count
+            ? `: ${count}`
+            : ''})`
         }
         else if (tab === 'following') {
           const count = followingCount
-          subText = ` (Following${count ? `: ${count}` : ''})`
+          subText = ` (Following${count
+            ? `: ${count}`
+            : ''})`
         }
         else if (tab) {
           subText = ` (${formatAnimeSlug(tab)})`
@@ -356,13 +372,17 @@ presence.on('UpdateData', async () => {
           if (view === 'library') {
             let libText = ''
             if (lib) {
-              libText = lib === 'mal' || lib === 'anilist' ? lib.toUpperCase() : formatAnimeSlug(lib) || ''
+              libText = lib === 'mal' || lib === 'anilist'
+                ? lib.toUpperCase()
+                : formatAnimeSlug(lib) || ''
             }
             let tabText = ''
             if (tab) {
               tabText = ` • ${formatAnimeSlug(tab)}`
             }
-            stateText = `Viewing Social Library${libText ? ` (${libText})` : ''}${tabText}`
+            stateText = `Viewing Social Library${libText
+              ? ` (${libText})`
+              : ''}${tabText}`
           }
           else {
             stateText = `Viewing Social ${formatAnimeSlug(view)}`
@@ -388,21 +408,29 @@ presence.on('UpdateData', async () => {
     case pathname === '/settings': {
       presenceData.details = 'Anikura'
       const tab = searchParams.get('tab')
-      presenceData.state = tab ? `Editing Settings (${formatAnimeSlug(tab)})` : 'Editing Settings'
+      presenceData.state = tab
+        ? `Editing Settings (${formatAnimeSlug(tab)})`
+        : 'Editing Settings'
       break
     }
     case pathname.includes('/search') || searchParams.has('query') || searchParams.has('q'): {
       const query = searchParams.get('query') ?? searchParams.get('q') ?? searchParams.get('search') ?? ''
       const searchingStr = getString('searching', 'Searching')
       presenceData.details = 'Anikura'
-      presenceData.state = query ? `${searchingStr} "${query}"` : `${searchingStr}...`
+      presenceData.state = query
+        ? `${searchingStr} "${query}"`
+        : `${searchingStr}...`
       break
     }
     case isAnime: {
       const infoMatch = pathname.match(/\/anime\/\d+\/([^?/#]+)/i)
-      const finalAnimeTitle = animeTitle || (infoMatch && infoMatch[1] ? formatAnimeSlug(infoMatch[1]) : null)
+      const finalAnimeTitle = animeTitle || (infoMatch && infoMatch[1]
+        ? formatAnimeSlug(infoMatch[1])
+        : null)
       const coverUrl = coverUrlDefault
-      presenceData.details = finalAnimeTitle ? `${getString('viewing', 'Viewing')} ${finalAnimeTitle}` : 'Browsing Anime Info'
+      presenceData.details = finalAnimeTitle
+        ? `${getString('viewing', 'Viewing')} ${finalAnimeTitle}`
+        : 'Browsing Anime Info'
       presenceData.state = finalAnimeTitle ? 'Reading Details & Overview' : 'Exploring Info Catalog'
       presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
       if (showButtons) {
@@ -414,7 +442,9 @@ presence.on('UpdateData', async () => {
       const watchMatch = pathname.match(/\/watch\/\d+\/([^?/#]+)/i)
       const epNum = searchParams.get('ep') ?? '1'
       const lang = searchParams.get('lang') ?? ''
-      const showTitle = animeTitle || (watchMatch && watchMatch[1] ? formatAnimeSlug(watchMatch[1]) : null) || 'Anime'
+      const showTitle = animeTitle || (watchMatch && watchMatch[1]
+        ? formatAnimeSlug(watchMatch[1])
+        : null) || 'Anime'
       const coverUrl = coverUrlWatch || coverUrlDefault
       let epLine = `Episode ${epNum}`
       const finalEpTitle = showEpTitle ? epTitle : null
@@ -476,10 +506,14 @@ presence.on('UpdateData', async () => {
     }
     default: {
       const catalogMatch = pathname.match(/\/(?:anime|watch)\/\d+\/([^?/#]+)/i)
-      const finalAnimeTitle = animeTitle || (catalogMatch && catalogMatch[1] ? formatAnimeSlug(catalogMatch[1]) : null)
+      const finalAnimeTitle = animeTitle || (catalogMatch && catalogMatch[1]
+        ? formatAnimeSlug(catalogMatch[1])
+        : null)
       const coverUrl = coverUrlDefault
       presenceData.details = getString('browsing', 'Browsing...')
-      presenceData.state = finalAnimeTitle ? `${getString('viewing', 'Viewing')} ${finalAnimeTitle}` : 'Exploring Catalog'
+      presenceData.state = finalAnimeTitle
+        ? `${getString('viewing', 'Viewing')} ${finalAnimeTitle}`
+        : 'Exploring Catalog'
       presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
       break
     }

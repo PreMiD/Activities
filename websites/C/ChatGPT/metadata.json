@@ -13,6 +13,10 @@
     {
       "id": "135058085386387457",
       "name": "Extiriority"
+    },
+    {
+      "name": "0120r",
+      "id": "754572586914021468"
     }
   ],
   "service": "ChatGPT",
@@ -22,7 +26,7 @@
   },
   "url": "chatgpt.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*chatgpt[.]com[/]",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ChatGPT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ChatGPT/assets/thumbnail.png",
   "color": "#FFFFFF",

@@ -123,7 +123,9 @@ presence.on('UpdateData', async () => {
     const newVid = document.location.href.match(/BV[^&]{10}|(?<=av)\d+/)?.[0]
     if (vid !== newVid) {
       vid = newVid
-      const idType = vid?.startsWith('BV') ? 'bvid' : 'aid'
+      const idType = vid?.startsWith('BV')
+        ? 'bvid'
+        : 'aid'
       const response = await (fetch(
         `https://api.bilibili.com/x/web-interface/view?${idType}=${vid}`,
       ).then(e => e.json()))

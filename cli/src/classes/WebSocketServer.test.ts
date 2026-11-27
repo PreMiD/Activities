@@ -45,8 +45,13 @@ describe('webSocketServer test RPC', () => {
     const client = await connectClient()
     client.on('message', (raw) => {
       const message = parse(raw)
-      if (message.type === 'test')
-        client.send(JSON.stringify({ type: 'testResponse', id: message.id, result: { version: 1 } }))
+      if (message.type === 'test') {
+        client.send(JSON.stringify({
+          type: 'testResponse',
+          id: message.id,
+          result: { version: 1 },
+        }))
+      }
     })
     await vi.waitFor(() => expect(server.isConnected).toBe(true))
 
@@ -146,14 +151,23 @@ describe('webSocketServer test RPC', () => {
     const unsubscribe = server.onTestEvent(first)
     server.onTestEvent(second)
 
-    const firstEvent: TestEvent = { tabId: 1, kind: 'setActivity', data: { details: 'Browsing' } }
+    const firstEvent: TestEvent = {
+      tabId: 1,
+      kind: 'setActivity',
+      data: { details: 'Browsing' },
+    }
     client.send(JSON.stringify({ type: 'testEvent', ...firstEvent }))
     await vi.waitFor(() => expect(second).toHaveBeenCalledTimes(1))
     expect(first).toHaveBeenCalledWith(firstEvent)
 
     unsubscribe()
     client.send(JSON.stringify({ type: 'testEvent', tabId: 1, kind: 'clearActivity' }))
-    client.send(JSON.stringify({ type: 'testEvent', tabId: 2, kind: 'error', error: 'bad url' }))
+    client.send(JSON.stringify({
+      type: 'testEvent',
+      tabId: 2,
+      kind: 'error',
+      error: 'bad url',
+    }))
     await vi.waitFor(() => expect(second).toHaveBeenCalledTimes(3))
 
     expect(first).toHaveBeenCalledTimes(1)
@@ -199,8 +213,14 @@ describe('webSocketServer test RPC', () => {
     const client = await connectClient()
     client.on('message', (raw) => {
       const message = parse(raw)
-      if (message.type === 'test')
-        client.send(JSON.stringify({ type: 'testResponse', id: message.id, error: null, result: 'ok' }))
+      if (message.type === 'test') {
+        client.send(JSON.stringify({
+          type: 'testResponse',
+          id: message.id,
+          error: null,
+          result: 'ok',
+        }))
+      }
     })
     await vi.waitFor(() => expect(server.isConnected).toBe(true))
 

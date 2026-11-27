@@ -28,7 +28,9 @@ function normalizePath(pathname: string): string {
     .replace(/\/+/g, '/')
     .replace(/\/(?:index\.php|index\.html)(?=\/|$)/i, '')
     .replace(/\/+$/, '')
-  return normalized === '' ? '/' : normalized
+  return normalized === ''
+    ? '/'
+    : normalized
 }
 
 // Match complete route segments so /music-other cannot become /music.
@@ -132,7 +134,9 @@ function getMiniPlayerNowPlaying(): string {
   if (!sanitized || /^nothing$/i.test(sanitized))
     return ''
   const artist = cleanText(document.getElementById('mini-player-artist')?.textContent)
-  return artist ? `${sanitized} — ${artist}` : sanitized
+  return artist
+    ? `${sanitized} — ${artist}`
+    : sanitized
 }
 
 function getMiniPlayerAlbumArt(): string {
@@ -186,8 +190,12 @@ const pageStatuses: Record<string, PageStatus> = {
   '/account/password': 'Updating account password',
   '/api/': 'Using API endpoints',
   '/bookmarks': 'Reviewing saved posts',
-  '/chat': (pathname, searchParams) => pathname !== '/chat' || searchParams.has('id') ? 'In a private chat' : 'Managing private chats',
-  '/contact': (_pathname, searchParams) => searchParams.get('dashboard') === '1' ? 'Reviewing contact submissions' : 'Sending a message',
+  '/chat': (pathname, searchParams) => pathname !== '/chat' || searchParams.has('id')
+    ? 'In a private chat'
+    : 'Managing private chats',
+  '/contact': (_pathname, searchParams) => searchParams.get('dashboard') === '1'
+    ? 'Reviewing contact submissions'
+    : 'Sending a message',
   '/data/': 'Viewing file',
   '/discord': 'Viewing Discord info',
   '/error/403': '403 forbidden',
@@ -206,8 +214,12 @@ const pageStatuses: Record<string, PageStatus> = {
     if (searchParams.has('reply_to'))
       return 'Replying to a feed comment'
     const username = cleanText(document.getElementById('post-username')?.textContent).replace(/^@+/, '')
-    const postStatus = username ? `Viewing post by @${username}` : 'Viewing feed post'
-    return feedDate ? `${postStatus} | ${feedDate}` : postStatus
+    const postStatus = username
+      ? `Viewing post by @${username}`
+      : 'Viewing feed post'
+    return feedDate
+      ? `${postStatus} | ${feedDate}`
+      : postStatus
   },
   '/formatting': 'Viewing formatting reference',
   '/formatting/example': 'Viewing an example page',
@@ -227,7 +239,9 @@ const pageStatuses: Record<string, PageStatus> = {
   '/merch': 'Browsing merch',
   '/music': () => {
     const nowPlaying = getMiniPlayerNowPlaying()
-    return isMusicPlaying() ? nowPlaying || 'Playing music' : 'Browsing the music library'
+    return isMusicPlaying()
+      ? nowPlaying || 'Playing music'
+      : 'Browsing the music library'
   },
   '/music/upload': 'Uploading a music release',
   '/notifications': 'Reading notifications',
@@ -258,18 +272,27 @@ const pageStatuses: Record<string, PageStatus> = {
   '/tools/upload': 'Transferring files peer-to-peer',
   '/wiki': () => {
     const pageTitle = getWikiPageTitle()
-    return pageTitle ? `Reading ${pageTitle}` : 'Reading the developer wiki'
+    return pageTitle
+      ? `Reading ${pageTitle}`
+      : 'Reading the developer wiki'
   },
 }
 
 function getStatusForPath(pathname: string, search: string): string {
   const route = Object.hasOwn(pageStatuses, pathname)
     ? pathname
-    : ['/feed/posts', '/journal/posts', '/chat', '/tools/mdpaste/s'].find(route => isRoute(pathname, route))
+    : [
+        '/feed/posts',
+        '/journal/posts',
+        '/chat',
+        '/tools/mdpaste/s',
+      ].find(route => isRoute(pathname, route))
       || ['/api/', '/data/'].find(route => pathname.startsWith(route))
   if (route) {
     const status = pageStatuses[route]!
-    return typeof status === 'function' ? status(pathname, new URLSearchParams(search)) : status
+    return typeof status === 'function'
+      ? status(pathname, new URLSearchParams(search))
+      : status
   }
 
   const heading = getDocumentHeadingText()
@@ -288,15 +311,21 @@ presence.on('UpdateData', () => {
     ? '404 not found'
     : (title === 'forbidden' || /^(?:error[ :/-]*)?403(?:\b|$)/.test(title))
         ? '403 forbidden'
-        : (title === 'internal error' || /^(?:error[ :/-]*)?50[0-9x](?:\b|$)/.test(title)) ? 'Server error page' : ''
+        : (title === 'internal error' || /^(?:error[ :/-]*)?50[0-9x](?:\b|$)/.test(title))
+            ? 'Server error page'
+            : ''
   const playing = !errorState && normalizedPath === '/music' && isMusicPlaying()
   presence.setActivity({
-    largeImageKey: playing ? getMiniPlayerAlbumArt() || ActivityAssets.Logo : ActivityAssets.Logo,
+    largeImageKey: playing
+      ? getMiniPlayerAlbumArt() || ActivityAssets.Logo
+      : ActivityAssets.Logo,
     details: getDetailsPath(normalizedPath),
     startTimestamp: browsingTimestamp,
     state: cleanText(errorState || getStatusForPath(normalizedPath, search)).slice(0, 128),
     buttons: !errorState && canLinkPage(normalizedPath)
-      ? [{ label: 'Visit page', url: `https://fridge.dev${normalizedPath}` }]
+      ? [
+          { label: 'Visit page', url: `https://fridge.dev${normalizedPath}` },
+        ]
       : undefined,
   })
 })

@@ -19,13 +19,17 @@ presence.on('UpdateData', async () => {
     '/popular': {
       details: 'Viewing',
       state: 'Popular caards',
-      buttons: [{ label: 'View Popular Caards', url: href }],
+      buttons: [
+        { label: 'View Popular Caards', url: href },
+      ],
     },
     '/feed': { details: 'Viewing feed' },
     '/partners': {
       details: 'Viewing page',
       state: 'Partners',
-      buttons: [{ label: 'View Partners', url: href }],
+      buttons: [
+        { label: 'View Partners', url: href },
+      ],
     },
     '/privacy': { details: 'Viewing', state: 'Privacy Policy' },
     '/tos': { details: 'Viewing', state: 'Terms of Service' },
@@ -33,8 +37,12 @@ presence.on('UpdateData', async () => {
   }
 
   for (const [path, data] of Object.entries(pages)) {
-    if (pathname.includes(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (pathname.includes(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   switch (host) {

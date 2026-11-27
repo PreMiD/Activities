@@ -13,7 +13,12 @@ enum ActivityAssets {
 presence.on('UpdateData', async () => {
   const logo = await presence.getSetting<number>('logo')
   const presenceData: PresenceData = {
-    largeImageKey: [ActivityAssets.White, ActivityAssets.WhiteBG, ActivityAssets.Black, ActivityAssets.BlackBG][logo] || ActivityAssets.White,
+    largeImageKey: [
+      ActivityAssets.White,
+      ActivityAssets.WhiteBG,
+      ActivityAssets.Black,
+      ActivityAssets.BlackBG,
+    ][logo] || ActivityAssets.White,
     startTimestamp: browsingTimestamp,
   }
 
@@ -162,8 +167,11 @@ presence.on('UpdateData', async () => {
       ?.trim()
     const title = detailsTitle || legendTitle || popupIdeaTitle || fullIdeaTitle
 
-    if (title)
-      presenceData.state = tickerTitle ? `${tickerTitle} • ${title}` : title // e.g. "AAPL • Apple Inc."
+    if (title) {
+      presenceData.state = tickerTitle
+        ? `${tickerTitle} • ${title}`
+        : title
+    } // e.g. "AAPL • Apple Inc."
   }
   else if (window.location.pathname.startsWith('/script')) {
     presenceData.details = 'Viewing Script...'

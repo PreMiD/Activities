@@ -28,7 +28,14 @@ function createFakeRpc(handler: Handler) {
       return () => listeners.delete(listener)
     },
   }
-  return { rpc, calls, emit, listeners, ready, timeouts }
+  return {
+    rpc,
+    calls,
+    emit,
+    listeners,
+    ready,
+    timeouts,
+  }
 }
 
 function evaluateCalls(calls: { method: string, params: any }[]) {
@@ -75,7 +82,11 @@ describe('createPage', () => {
     await page.goto('https://example.com/a')
     expect(calls[0]).toEqual({
       method: 'openTab',
-      params: { url: 'https://example.com/a', service: 'Example', settings: { quality: 'high' } },
+      params: {
+        url: 'https://example.com/a',
+        service: 'Example',
+        settings: { quality: 'high' },
+      },
     })
     expect(session.tabId).toBe(7)
 
@@ -87,7 +98,9 @@ describe('createPage', () => {
   })
 
   it('goto outwaits the extension, which allows 300s for a page that needs the user', async () => {
-    const { rpc, timeouts } = createFakeRpc(method => method === 'openTab' ? { tabId: 7 } : {})
+    const { rpc, timeouts } = createFakeRpc(method => method === 'openTab'
+      ? { tabId: 7 }
+      : {})
     const { page } = makePage(rpc)
 
     await page.goto('https://example.com/a')
@@ -112,7 +125,10 @@ describe('createPage', () => {
     await vi.advanceTimersByTimeAsync(0)
 
     expect(onWaiting).toHaveBeenCalledWith('Finish on consent.example.com (sign in or accept), the test continues on its own')
-    expect(calls).toContainEqual({ method: 'focus', params: { tabId: 7 } })
+    expect(calls).toContainEqual({
+      method: 'focus',
+      params: { tabId: 7 },
+    })
 
     finishOpen()
     await going
@@ -133,7 +149,11 @@ describe('createPage', () => {
     expect(value).toBe(42)
     const last = calls[calls.length - 1]
     expect(last.method).toBe('evaluate')
-    expect(last.params).toEqual({ tabId: 3, code: fn.toString(), args: [1, 'x'] })
+    expect(last.params).toEqual({
+      tabId: 3,
+      code: fn.toString(),
+      args: [1, 'x'],
+    })
   })
 
   it('evaluate throws when no page is open', async () => {
@@ -217,8 +237,11 @@ describe('createPage', () => {
     const { rpc, emit } = createFakeRpc((method, params) => {
       if (method === 'openTab')
         return { tabId: 1 }
-      if (method === 'evaluate' && params.code.startsWith('async function pollUserBar'))
-        return { value: { choice: null, done: false } }
+      if (method === 'evaluate' && params.code.startsWith('async function pollUserBar')) {
+        return {
+          value: { choice: null, done: false },
+        }
+      }
       return { value: undefined }
     })
     const { page } = makePage(rpc)
@@ -257,7 +280,9 @@ describe('createPage', () => {
     const { page, onWaiting } = makePage(rpc)
     await page.goto('https://example.com')
 
-    await page.waitForUser('Log in', { until: () => true })
+    await page.waitForUser('Log in', {
+      until: () => true,
+    })
 
     expect(onWaiting).not.toHaveBeenCalled()
     expect(calls.some(call => call.method === 'focus')).toBe(false)
@@ -268,8 +293,11 @@ describe('createPage', () => {
     const handler: Handler = (method) => {
       if (method === 'openTab')
         return { tabId: 5 }
-      if (method === 'evaluate')
-        return { value: { choice: 'continue', done: false } }
+      if (method === 'evaluate') {
+        return {
+          value: { choice: 'continue', done: false },
+        }
+      }
       return {}
     }
 
@@ -278,7 +306,10 @@ describe('createPage', () => {
     await interactivePage.page.goto('https://example.com')
     await interactivePage.page.waitForUser('Log in')
     expect(interactive.calls.filter(call => call.method === 'focus')).toEqual([
-      { method: 'focus', params: { tabId: 5 } },
+      {
+        method: 'focus',
+        params: { tabId: 5 },
+      },
     ])
     expect(interactivePage.onWaiting).toHaveBeenCalledWith('Log in')
 
@@ -298,7 +329,9 @@ describe('createPage', () => {
         barPolls++
         if (barPolls === 1)
           throw new Error('Page navigated during evaluate')
-        return { value: { choice: 'continue', done: false } }
+        return {
+          value: { choice: 'continue', done: false },
+        }
       }
       return { value: undefined }
     })
@@ -356,7 +389,12 @@ describe('createPage', () => {
   })
 
   it('back waits until the url changes, ignoring mid-navigation errors', async () => {
-    const hrefs = ['https://example.com/b', undefined, 'https://example.com/b', 'https://example.com/a']
+    const hrefs = [
+      'https://example.com/b',
+      undefined,
+      'https://example.com/b',
+      'https://example.com/a',
+    ]
     const { rpc, calls } = createFakeRpc((method, params) => {
       if (method === 'openTab')
         return { tabId: 2 }
@@ -414,8 +452,11 @@ describe('createPage', () => {
     const { rpc } = createFakeRpc((method, params) => {
       if (method === 'openTab')
         return { tabId: 2 }
-      if (method === 'evaluate' && params.code.includes('__pmd_wait_for_user'))
-        return { value: { choice: 'skip', done: false } }
+      if (method === 'evaluate' && params.code.includes('__pmd_wait_for_user')) {
+        return {
+          value: { choice: 'skip', done: false },
+        }
+      }
       return { value: undefined }
     })
     const { page } = makePage(rpc)
@@ -454,9 +495,13 @@ describe('waitForUser with an async until', () => {
     const win: { __pmdUserChoice?: string } = {}
     vi.stubGlobal('window', win)
     vi.stubGlobal('document', {
-      getElementById: () => ({ remove() {} }),
+      getElementById: () => ({
+        remove() {},
+      }),
       createElement: () => ({}),
-      documentElement: { append() {} },
+      documentElement: {
+        append() {},
+      },
     })
 
     let barPolls = 0
@@ -488,7 +533,9 @@ describe('waitForUser with an async until', () => {
     })
     await page.goto('https://example.com')
 
-    const waiting = page.waitForUser('Log in', { until: async () => false })
+    const waiting = page.waitForUser('Log in', {
+      until: async () => false,
+    })
     await vi.advanceTimersByTimeAsync(2000)
 
     await expect(waiting).resolves.toBeUndefined()

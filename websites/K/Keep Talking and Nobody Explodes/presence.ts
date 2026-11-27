@@ -25,14 +25,18 @@ presence.on('UpdateData', async () => {
 
   if (current.hostname.split('.')[0] === 'bombmanual') {
     // Bomb manual page
-    switch (isLanguageCode(path[0]!) ? path[1] : path[0]) {
+    switch (isLanguageCode(path[0]!)
+      ? path[1]
+      : path[0]) {
       // Web manual, PDF manual
       case 'web':
       case 'print': {
         if (timestamp === 0 || isNewLocation(previous, current))
           timestamp = Date.now()
 
-        const pages = [...document.querySelectorAll<HTMLDivElement>('.page')]
+        const pages = [
+          ...document.querySelectorAll<HTMLDivElement>('.page'),
+        ]
         const page = Math.round(
           (window.scrollY / getDocumentHeight()) * (pages.length - 1),
         )

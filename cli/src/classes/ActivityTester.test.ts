@@ -39,7 +39,11 @@ function createFakeRpc(options: { onOpenTab?: () => void, helloFails?: boolean, 
           const tabId = nextTabId++
           options.onOpenTab?.()
           // Set presence after the tab id is returned, so the activity handle is listening for it.
-          setTimeout(emit, 0, { tabId, kind: 'setActivity', data: { details: 'Hello' } })
+          setTimeout(emit, 0, {
+            tabId,
+            kind: 'setActivity',
+            data: { details: 'Hello' },
+          })
           return { tabId }
         }
         case 'evaluate': {
@@ -47,8 +51,11 @@ function createFakeRpc(options: { onOpenTab?: () => void, helloFails?: boolean, 
           if (code.includes('readyState'))
             return { value: 'complete' }
           // The user bar reports that the user clicked "Skip test".
-          if (code.includes('__pmd_wait_for_user'))
-            return { value: { choice: 'skip', done: false } }
+          if (code.includes('__pmd_wait_for_user')) {
+            return {
+              value: { choice: 'skip', done: false },
+            }
+          }
           return { value: undefined }
         }
         default:
@@ -149,12 +156,16 @@ describe('activityTester', () => {
 
   it('stops on cancel and reports cancelled', async () => {
     const abortRun = new AbortController()
-    const { rpc, calls } = createFakeRpc({ onOpenTab: () => abortRun.abort() })
+    const { rpc, calls } = createFakeRpc({
+      onOpenTab: () => abortRun.abort(),
+    })
     const tester = new ActivityTester(FIXTURES, 'Example', rpc, vi.fn(), { outDir })
 
     const results = await tester.run({ signal: abortRun.signal, interactive: false })
 
-    expect(results.map(({ name, status }) => [name, status])).toEqual([['fails', 'cancelled']])
+    expect(results.map(({ name, status }) => [name, status])).toEqual([
+      ['fails', 'cancelled'],
+    ])
     expect(callsTo(calls, 'openTab')).toHaveLength(1)
     expect(callsTo(calls, 'closeTab')).toHaveLength(1)
   })
@@ -175,7 +186,9 @@ describe('activityTester', () => {
     const tester = new ActivityTester(FIXTURES, 'Example', rpc, vi.fn(), { outDir })
 
     expect(await tester.isSupported()).toBe(false)
-    expect(calls).toEqual([{ method: 'hello', params: {} }])
+    expect(calls).toEqual([
+      { method: 'hello', params: {} },
+    ])
   })
 
   it('isSupported passes the several-browsers error through instead of reporting no support', async () => {
@@ -226,10 +239,28 @@ describe('reporter', () => {
     const report = createReporter('Example', log)
     const base = { file: 'a.test.ts', durationMs: 1500 }
 
-    report({ type: 'result', result: { ...base, name: 'ok', status: 'passed' } })
-    report({ type: 'result', result: { ...base, name: 'bad', status: 'failed', error: 'nope', lastActivity: { details: 'x' } } })
-    report({ type: 'result', result: { ...base, name: 'later', status: 'skipped' } })
-    report({ type: 'result', result: { ...base, name: 'stopped', status: 'cancelled' } })
+    report({
+      type: 'result',
+      result: { ...base, name: 'ok', status: 'passed' },
+    })
+    report({
+      type: 'result',
+      result: {
+        ...base,
+        name: 'bad',
+        status: 'failed',
+        error: 'nope',
+        lastActivity: { details: 'x' },
+      },
+    })
+    report({
+      type: 'result',
+      result: { ...base, name: 'later', status: 'skipped' },
+    })
+    report({
+      type: 'result',
+      result: { ...base, name: 'stopped', status: 'cancelled' },
+    })
     printSummary([
       { ...base, name: 'ok', status: 'passed' },
       { ...base, name: 'bad', status: 'failed' },

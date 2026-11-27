@@ -20,7 +20,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector(
         '#site-content > div > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div > div > div > div > section > div._b8stb0 > span > h1',
       )?.textContent
-      presenceData.buttons = [{ label: 'View Room', url: href }]
+      presenceData.buttons = [
+        { label: 'View Room', url: href },
+      ]
     }
   }
   else if (pathname.includes('/book')) {
@@ -40,7 +42,9 @@ presence.on('UpdateData', async () => {
           '[data-plugin-in-point-id="GUEST_PICKER"] > div > div > div._b7b6bk > div._1qyi2pa > div._jbk4n3',
         )?.textContent
       }`
-      presenceData.buttons = [{ label: 'View Booking Details', url: href }]
+      presenceData.buttons = [
+        { label: 'View Booking Details', url: href },
+      ]
     }
   }
   else if (pathname.includes('/inbox')) {

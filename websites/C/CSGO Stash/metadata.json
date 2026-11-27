@@ -15,7 +15,7 @@
   },
   "url": "csgostash.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*csgostash[.]com[/]",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CSGO%20Stash/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CSGO%20Stash/assets/thumbnail.png",
   "color": "#13AFF0",

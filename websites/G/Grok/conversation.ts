@@ -103,15 +103,22 @@ async function fetchConversationFallback(id: string): Promise<void> {
   inflight = (async () => {
     const next: ConversationCache = {
       id,
-      title: cache?.id === id ? cache.title : null,
-      lastPrompt: cache?.id === id ? cache.lastPrompt : null,
+      title: cache?.id === id
+        ? cache.title
+        : null,
+      lastPrompt: cache?.id === id
+        ? cache.lastPrompt
+        : null,
       fetchedAt: Date.now(),
     }
 
     try {
       const detail = await fetch(
         `https://grok.com/rest/app-chat/conversations_v2/${encodeURIComponent(id)}`,
-        { credentials: 'include', headers: { Accept: 'application/json' } },
+        {
+          credentials: 'include',
+          headers: { Accept: 'application/json' },
+        },
       )
       if (detail.ok) {
         const payload = await detail.json() as {
@@ -128,7 +135,10 @@ async function fetchConversationFallback(id: string): Promise<void> {
     try {
       const nodesResponse = await fetch(
         `https://grok.com/rest/app-chat/conversations/${encodeURIComponent(id)}/response-node`,
-        { credentials: 'include', headers: { Accept: 'application/json' } },
+        {
+          credentials: 'include',
+          headers: { Accept: 'application/json' },
+        },
       )
       if (nodesResponse.ok) {
         const nodesPayload = await nodesResponse.json() as {
@@ -197,8 +207,12 @@ export async function getConversationInfo(pathname: string): Promise<Conversatio
 
   return {
     id,
-    title: title ?? (cache?.id === id ? cache.title : null),
-    lastPrompt: lastPrompt ?? (cache?.id === id ? cache.lastPrompt : null),
+    title: title ?? (cache?.id === id
+      ? cache.title
+      : null),
+    lastPrompt: lastPrompt ?? (cache?.id === id
+      ? cache.lastPrompt
+      : null),
     isGenerating: isGenerating(),
   }
 }

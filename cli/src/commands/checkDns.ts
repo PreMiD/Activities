@@ -91,9 +91,15 @@ export async function checkDns(
         await writeFile(summaryPath, body)
         core.setOutput('has_changes', 'true')
         core.setOutput('summary_path', summaryPath)
-        core.setOutput('has_deletions', changes.removed.length > 0 ? 'true' : 'false')
-        core.setOutput('has_updates', changes.updated.length > 0 ? 'true' : 'false')
-        core.setOutput('has_multiple_activities', (changes.removed.length + changes.updated.length >= 2) ? 'true' : 'false')
+        core.setOutput('has_deletions', changes.removed.length > 0
+          ? 'true'
+          : 'false')
+        core.setOutput('has_updates', changes.updated.length > 0
+          ? 'true'
+          : 'false')
+        core.setOutput('has_multiple_activities', (changes.removed.length + changes.updated.length >= 2)
+          ? 'true'
+          : 'false')
       }
 
       success(
@@ -151,7 +157,9 @@ async function checkActivity(
     const metadata = JSON.parse(content)
 
     // Extract URLs (handle both string and array)
-    const urls = Array.isArray(metadata.url) ? metadata.url : [metadata.url]
+    const urls = Array.isArray(metadata.url)
+      ? metadata.url
+      : [metadata.url]
 
     // Separate URLs into those to check and those to skip (localhost/IPs)
     const urlsToCheck: string[] = []
@@ -346,7 +354,9 @@ async function updateActivity(
   const metadata = JSON.parse(content)
 
   // Update URL field
-  metadata.url = validUrls.length === 1 ? validUrls[0] : validUrls
+  metadata.url = validUrls.length === 1
+    ? validUrls[0]
+    : validUrls
 
   // Increment version
   if (!valid(metadata.version)) {

@@ -53,7 +53,9 @@ presence.on('UpdateData', async () => {
       for (const player of players)
         latestInfo = latestInfo.replace(new RegExp(player, 'g'), 'A player')
 
-      presenceData.state = latestInfo ? `🎲 ${latestInfo}` : ''
+      presenceData.state = latestInfo
+        ? `🎲 ${latestInfo}`
+        : ''
     }
 
     if (!startTimestamp)

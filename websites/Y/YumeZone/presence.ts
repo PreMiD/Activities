@@ -109,7 +109,9 @@ presence.on('UpdateData', async () => {
 
     const ogTitle = document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.getAttribute('content') || ''
     const domTitle = document.querySelector<HTMLElement>('.anime-title, [data-anime-title], h1')?.textContent?.trim()
-    const animeTitle = domTitle || (ogTitle ? cleanAnimeTitle(ogTitle) : 'Anime')
+    const animeTitle = domTitle || (ogTitle
+      ? cleanAnimeTitle(ogTitle)
+      : 'Anime')
 
     const pathParts = pathname.split('/').filter(Boolean)
     const animeId = pathParts[1] ?? ''
@@ -117,7 +119,9 @@ presence.on('UpdateData', async () => {
 
     presenceData.type = ActivityType.Watching
     presenceData.details = animeTitle
-    presenceData.state = epNumber ? `Episode ${epNumber}` : 'Streaming'
+    presenceData.state = epNumber
+      ? `Episode ${epNumber}`
+      : 'Streaming'
 
     // Show dynamic episode screencap or anime poster if cover setting is enabled
     if (cover) {
@@ -172,9 +176,13 @@ presence.on('UpdateData', async () => {
 
     if (pathParts.length >= 3) {
       const heading = document.querySelector<HTMLElement>('h1, h2, .manga-title')?.textContent?.trim()
-      const title = heading || (pathParts[2] ? pathParts[2].replace(/-/g, ' ') : 'Manga')
+      const title = heading || (pathParts[2]
+        ? pathParts[2].replace(/-/g, ' ')
+        : 'Manga')
       const isChapter = pathParts.length >= 4
-      const chapterSlug = isChapter && pathParts[3] ? pathParts[3] : ''
+      const chapterSlug = isChapter && pathParts[3]
+        ? pathParts[3]
+        : ''
       const mangaOverviewUrl = `https://yumezone.live/manga/${pathParts[1]}/${pathParts[2]}`
 
       presenceData.type = ActivityType.Watching
@@ -246,7 +254,9 @@ presence.on('UpdateData', async () => {
         },
         {
           label: 'Watch Anime',
-          url: animeId ? `https://yumezone.live/watch/${animeId}/1` : href,
+          url: animeId
+            ? `https://yumezone.live/watch/${animeId}/1`
+            : href,
         },
       ]
     }

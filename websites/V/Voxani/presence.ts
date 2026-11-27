@@ -55,14 +55,18 @@ function getNameFromTitle(slugName: string): string {
       return ''
     const a = titleName.toLowerCase().replace(/[^a-z0-9]/g, '')
     const b = slugName.toLowerCase().replace(/[^a-z0-9]/g, '')
-    return (a && b && a.includes(b.slice(0, 8))) ? titleName : ''
+    return (a && b && a.includes(b.slice(0, 8)))
+      ? titleName
+      : ''
   }
   // Legacy format fallback: "Name - Watch Online"
   if (title.includes(' - Watch Online')) {
     const titleName = title.split(' - Watch Online')[0]?.trim() || ''
     const a = titleName.toLowerCase().replace(/[^a-z0-9]/g, '')
     const b = slugName.toLowerCase().replace(/[^a-z0-9]/g, '')
-    return (a && b && a.includes(b.slice(0, 8))) ? titleName : ''
+    return (a && b && a.includes(b.slice(0, 8)))
+      ? titleName
+      : ''
   }
   return ''
 }
@@ -132,11 +136,15 @@ function parseEmbedMessage(data: unknown): any {
       return { event: data }
     }
   }
-  return typeof data === 'object' ? data : null
+  return typeof data === 'object'
+    ? data
+    : null
 }
 
 function getEmbedEventName(payload: any): string {
-  const nested = typeof payload?.data === 'object' ? payload.data : null
+  const nested = typeof payload?.data === 'object'
+    ? payload.data
+    : null
   return String(
     payload?.event
     || payload?.type
@@ -154,7 +162,9 @@ function getEmbedEventName(payload: any): string {
 }
 
 function getEmbedNumber(payload: any, keys: string[]): number | null {
-  const nested = typeof payload?.data === 'object' ? payload.data : null
+  const nested = typeof payload?.data === 'object'
+    ? payload.data
+    : null
   for (const key of keys) {
     const value = payload?.[key] ?? nested?.[key]
     const numberValue = Number(value)
@@ -175,8 +185,20 @@ function ensureEmbedListener() {
       return
 
     const eventName = getEmbedEventName(payload)
-    const current = getEmbedNumber(payload, ['currentTime', 'current_time', 'current', 'time', 'seconds', 'position'])
-    const total = getEmbedNumber(payload, ['duration', 'durationSeconds', 'duration_seconds', 'total'])
+    const current = getEmbedNumber(payload, [
+      'currentTime',
+      'current_time',
+      'current',
+      'time',
+      'seconds',
+      'position',
+    ])
+    const total = getEmbedNumber(payload, [
+      'duration',
+      'durationSeconds',
+      'duration_seconds',
+      'total',
+    ])
 
     if (current != null) {
       if (current > embedCurrentTime + 0.1 || Math.abs(current - embedCurrentTime) > 2) {
@@ -197,7 +219,14 @@ function ensureEmbedListener() {
     else if (['paused', 'pause'].includes(eventName)) {
       embedIsPlaying = false
     }
-    else if (['ended', 'end', 'complete', 'completed', 'finish', 'finished'].includes(eventName)) {
+    else if ([
+      'ended',
+      'end',
+      'complete',
+      'completed',
+      'finish',
+      'finished',
+    ].includes(eventName)) {
       embedIsPlaying = false
     }
   })
@@ -244,7 +273,9 @@ presence.on('UpdateData', async () => {
     // episode info
     const epText = document.querySelector('h1.font-display')?.textContent?.trim() || ''
     const epMatch = epText.match(/Episode\s+(\d+)/i)
-    const epNum = epMatch ? epMatch[1] || '1' : '1'
+    const epNum = epMatch
+      ? epMatch[1] || '1'
+      : '1'
     const epTitle = document.querySelector('.text-muted-foreground.text-sm.mt-1.line-clamp-1')?.textContent?.trim()
 
     // single episode = movie
@@ -258,7 +289,9 @@ presence.on('UpdateData', async () => {
       if (epTitle)
         presenceData.state = epTitle
       const sMatch = animeName.match(/Season\s+(\d+)/i)
-      presenceData.largeImageText = `Season ${sMatch ? sMatch[1] || '1' : '1'}, Episode ${epNum}`
+      presenceData.largeImageText = `Season ${sMatch
+        ? sMatch[1] || '1'
+        : '1'}, Episode ${epNum}`
     }
 
     // playback state
@@ -341,8 +374,11 @@ presence.on('UpdateData', async () => {
       presenceData.startTimestamp = browsingTimestamp
     }
 
-    if (showButtons)
-      presenceData.buttons = [{ label: 'Watch Episode', url: href }]
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'Watch Episode', url: href },
+      ]
+    }
 
   // anime detail
   }
@@ -360,8 +396,11 @@ presence.on('UpdateData', async () => {
     presenceData.state = title
     presenceData.startTimestamp = browsingTimestamp
 
-    if (showButtons)
-      presenceData.buttons = [{ label: 'View Anime', url: href }]
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'View Anime', url: href },
+      ]
+    }
 
   // search
   }
@@ -378,7 +417,14 @@ presence.on('UpdateData', async () => {
     const activeBtn = document.querySelector('button[class*="bg-primary"]')
     const txt = cleanTabText(activeBtn?.textContent?.trim() || '')
     presenceData.details = 'Trending Anime'
-    presenceData.state = ['Today', 'This Week', 'This Month', 'All Time'].includes(txt) ? txt : 'What\'s Hot Right Now'
+    presenceData.state = [
+      'Today',
+      'This Week',
+      'This Month',
+      'All Time',
+    ].includes(txt)
+      ? txt
+      : 'What\'s Hot Right Now'
     presenceData.startTimestamp = browsingTimestamp
 
   // profile
@@ -397,7 +443,9 @@ presence.on('UpdateData', async () => {
     }
 
     presenceData.details = 'Viewing Profile'
-    presenceData.state = userName ? `@${userName}` : 'My Profile'
+    presenceData.state = userName
+      ? `@${userName}`
+      : 'My Profile'
     presenceData.startTimestamp = browsingTimestamp
 
   // my lists / favorites
@@ -428,7 +476,9 @@ presence.on('UpdateData', async () => {
     const tab = cleanTabText(rawTab)
 
     presenceData.details = 'Browsing Library'
-    presenceData.state = tab ? `Collections · ${tab}` : 'Collections'
+    presenceData.state = tab
+      ? `Collections · ${tab}`
+      : 'Collections'
     presenceData.startTimestamp = browsingTimestamp
 
   // playlists
@@ -462,7 +512,9 @@ presence.on('UpdateData', async () => {
     }
     else if (pathname.includes('/forum/')) {
       const t = document.querySelector<HTMLElement>('h1')?.textContent?.trim()
-      presenceData.details = t ? `Reading: ${t}` : 'Reading Post'
+      presenceData.details = t
+        ? `Reading: ${t}`
+        : 'Reading Post'
       presenceData.state = 'Community Forum'
     }
     else {

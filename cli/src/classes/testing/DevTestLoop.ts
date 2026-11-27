@@ -101,7 +101,9 @@ export class DevTestLoop {
       printSummary(results, this.deps.log)
     }
     catch (error) {
-      const message = error instanceof Error ? error.message : String(error)
+      const message = error instanceof Error
+        ? error.message
+        : String(error)
       this.deps.log(chalk.red(`✗ ${this.deps.service}: ${message}`))
     }
     finally {
@@ -131,6 +133,7 @@ export function listenForKeys(loop: Pick<DevTestLoop, 'togglePause' | 'runNow'>)
 
   readline.emitKeypressEvents(process.stdin)
   process.stdin.setRawMode(true)
+  process.stdin.resume()
   process.stdin.on('keypress', (_input, key) => {
     if (key?.ctrl && key.name === 'c')
       process.exit(0)

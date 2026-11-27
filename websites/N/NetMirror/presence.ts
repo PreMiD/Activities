@@ -50,7 +50,9 @@ function limitText(text?: string): string | undefined {
   if (!text)
     return undefined
 
-  return text.length > 128 ? `${text.slice(0, 125)}...` : text
+  return text.length > 128
+    ? `${text.slice(0, 125)}...`
+    : text
 }
 
 function getMetaContent(selector: string): string | undefined {
@@ -121,7 +123,9 @@ function getCoverImage(): string | undefined {
   }
 
   const metaImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
-  return isUsableImage(metaImage) ? metaImage : undefined
+  return isUsableImage(metaImage)
+    ? metaImage
+    : undefined
 }
 
 const coverImageCache = new Map<string, Promise<string | Blob | undefined>>()
@@ -249,7 +253,9 @@ function getSection(pathname: string): { details: string, smallImageKey: string,
 
   if (/search/i.test(pathname) || searchQuery) {
     return {
-      details: limitText(searchQuery ? `Searching for "${searchQuery}"` : 'Searching') ?? 'Searching',
+      details: limitText(searchQuery
+        ? `Searching for "${searchQuery}"`
+        : 'Searching') ?? 'Searching',
       smallImageKey: Assets.Search,
     }
   }
@@ -438,7 +444,9 @@ presence.on('UpdateData', async () => {
 
     const processedCover = await processCoverImage(coverImage)
 
-    presenceData.details = titleText ? `Viewing ${titleText}` : 'Viewing details'
+    presenceData.details = titleText
+      ? `Viewing ${titleText}`
+      : 'Viewing details'
     presenceData.state = limitText(descriptionText) || 'Reading synopsis'
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Viewing'

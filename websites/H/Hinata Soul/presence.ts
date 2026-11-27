@@ -57,7 +57,9 @@ presence.on('UpdateData', async () => {
 
     presenceData.name = showName
     presenceData.details = `Assistindo: ${showName}`
-    presenceData.state = episodeNumber ? `Episódio ${episodeNumber}` : 'Episódio'
+    presenceData.state = episodeNumber
+      ? `Episódio ${episodeNumber}`
+      : 'Episódio'
 
     const videoElement = document.querySelector<HTMLVideoElement>('video')
 

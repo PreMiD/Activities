@@ -55,7 +55,9 @@ presence.on('UpdateData', async () => {
       const name = document.querySelector('.basic-profile-card__details-keys')?.nextSibling?.textContent?.trim()
       const userAvatar = document.querySelector('.basic-profile-card__avatar')?.getAttribute('src')
 
-      presenceData.details = `TLX Profile: ${profileUsernameRegex}${name ? ` (${name})` : ''}`
+      presenceData.details = `TLX Profile: ${profileUsernameRegex}${name
+        ? ` (${name})`
+        : ''}`
 
       // Set user avatar as small image if exists
       if (userAvatar) {
@@ -190,7 +192,9 @@ presence.on('UpdateData', async () => {
       const currentPage = document.querySelector('a[aria-current]')?.textContent?.trim() ?? ''
       const totalPage = document.querySelector('.pagination ul li:last-child')?.previousSibling?.textContent?.trim() ?? ''
 
-      presenceData.details = pathname.endsWith('/mine') ? 'My Submissions' : 'Submissions'
+      presenceData.details = pathname.endsWith('/mine')
+        ? 'My Submissions'
+        : 'Submissions'
       presenceData.state = `${paginatedText} [Page: ${currentPage}/${totalPage}]`
     }
   }
@@ -201,7 +205,9 @@ presence.on('UpdateData', async () => {
     const currentPage = document.querySelector('a[aria-current]')?.textContent?.trim() ?? ''
     const totalPage = document.querySelector('.pagination ul li:last-child')?.previousSibling?.textContent?.trim() ?? ''
 
-    presenceData.details = pathname === '/ranking/scores' ? 'Ranking Scores' : 'Ranking'
+    presenceData.details = pathname === '/ranking/scores'
+      ? 'Ranking Scores'
+      : 'Ranking'
     presenceData.state = `${paginatedText} [Page: ${currentPage}/${totalPage}]`
   }
 

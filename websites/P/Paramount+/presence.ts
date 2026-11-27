@@ -58,8 +58,12 @@ presence.on('UpdateData', async () => {
           name: showData.partOfSeries.name,
           details: showData.partOfSeries.name,
           state: `S${showData.partOfSeason.seasonNumber}:E${showData.episodeNumber} - ${showData.name}`,
-          smallImageKey: video && video.paused ? Assets.Pause : Assets.Play,
-          smallImageText: video && video.paused ? strings.pause : strings.play,
+          smallImageKey: video && video.paused
+            ? Assets.Pause
+            : Assets.Play,
+          smallImageText: video && video.paused
+            ? strings.pause
+            : strings.play,
           largeImageKey: showData.image || Logos.Paramount,
         }
 

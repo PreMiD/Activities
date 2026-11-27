@@ -12,7 +12,7 @@
   },
   "url": "hinatasoul.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*hinatasoul[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hinata%20Soul/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hinata%20Soul/assets/thumbnail.png",
   "color": "#000000",

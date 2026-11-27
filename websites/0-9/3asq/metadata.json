@@ -11,7 +11,7 @@
   },
   "url": "3asq.online",
   "regExp": "^https?[:][/][/](www[.])?3asq[.]online[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/lrQuCiY.png",
   "thumbnail": "https://i.imgur.com/IJEzc87.png",
   "color": "#e67e22",

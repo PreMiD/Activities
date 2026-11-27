@@ -60,16 +60,29 @@ presence.on('UpdateData', async () => {
     case 'live':
     case 'vods': {
       const liveStatus = pathname.split('/')[2] === 'live'
-      const streamTitle = liveStatus ? document.querySelector('[class^="live_title"]')?.textContent : document.querySelector('[class^="video_information"]>h2')?.textContent
+      const streamTitle = liveStatus
+        ? document.querySelector('[class^="live_title"]')?.textContent
+        : document.querySelector('[class^="video_information"]>h2')?.textContent
       const streamerName = document.querySelector('[class^="user_name"]')?.textContent
       const streamerLogo = document.querySelector<HTMLImageElement>('.StreamerCardView>[class^="streamer_info"]>[class^="user_avatar"]>a>picture>source')?.srcset
       const streamPlaying = Boolean(document.querySelector('button.vjs-playing'))
       presenceData.details = streamTitle ?? undefined
       presenceData.state = streamerName ?? undefined
-      presenceData.largeImageKey = showStreamerLogo ? (streamerLogo ?? undefined) : ActivityAssets.Logo
-      presenceData.smallImageKey = liveStatus ? Assets.Live : (streamPlaying ? Assets.Play : Assets.Pause)
-      presenceData.smallImageText = liveStatus ? strings.live : (streamPlaying ? strings.play : strings.pause)
-      presenceData.buttons = [{ url: href, label: liveStatus ? strings.watchStream : strings.watchVideo }]
+      presenceData.largeImageKey = showStreamerLogo
+        ? (streamerLogo ?? undefined)
+        : ActivityAssets.Logo
+      presenceData.smallImageKey = liveStatus
+        ? Assets.Live
+        : (streamPlaying ? Assets.Play : Assets.Pause)
+      presenceData.smallImageText = liveStatus
+        ? strings.live
+        : (streamPlaying ? strings.play : strings.pause)
+      presenceData.buttons = [
+        {
+          url: href,
+          label: liveStatus ? strings.watchStream : strings.watchVideo,
+        },
+      ]
       if (!liveStatus) {
         const nowTimestamp = document.querySelector('.vjs-unified-time-current')?.textContent ?? ''
         const durationTimestamp = document.querySelector('.vjs-unified-time-duration')?.textContent ?? ''

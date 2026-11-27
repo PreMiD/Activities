@@ -74,7 +74,9 @@ function findBestVideo(): HTMLVideoElement | null {
     if (!bestVideo)
       return video
 
-    return getVideoPriority(video) > getVideoPriority(bestVideo) ? video : bestVideo
+    return getVideoPriority(video) > getVideoPriority(bestVideo)
+      ? video
+      : bestVideo
   }, null as HTMLVideoElement | null)
 }
 
@@ -106,7 +108,17 @@ function queueStateRefresh(): void {
   }, 200)
 }
 
-const events = ['loadedmetadata', 'durationchange', 'timeupdate', 'play', 'pause', 'seeked', 'playing', 'waiting', 'canplay']
+const events = [
+  'loadedmetadata',
+  'durationchange',
+  'timeupdate',
+  'play',
+  'pause',
+  'seeked',
+  'playing',
+  'waiting',
+  'canplay',
+]
 for (const eventName of events)
   document.addEventListener(eventName, queueStateRefresh, true)
 

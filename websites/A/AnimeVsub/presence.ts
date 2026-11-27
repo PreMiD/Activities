@@ -87,7 +87,12 @@ async function updatePresence() {
         .map((ep) => {
           const href = ep.getAttribute('href')
           const numMatch = ep.textContent?.trim().match(/\d+/)
-          return href && numMatch ? { num: Number.parseInt(numMatch[0]), url: href } : null
+          return href && numMatch
+            ? {
+                num: Number.parseInt(numMatch[0]),
+                url: href,
+              }
+            : null
         })
         .filter(Boolean)
         .sort((a, b) => (a?.num ?? 0) - (b?.num ?? 0))

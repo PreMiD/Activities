@@ -35,7 +35,9 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('logo'),
   ])
   const presenceData: PresenceData = {
-    largeImageKey: logo === 0 ? ActivityAssets.Logo0 : ActivityAssets.Logo1,
+    largeImageKey: logo === 0
+      ? ActivityAssets.Logo0
+      : ActivityAssets.Logo1,
     startTimestamp: browsingTimestamp,
     name: 'Anime-Odcinki',
   }

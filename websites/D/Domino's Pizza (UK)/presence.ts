@@ -145,7 +145,9 @@ presence.on('UpdateData', () => {
 
                   presenceData.details = 'Viewing cart'
                   presenceData.state = `Total: ${priceText} ${
-                    saving ? `(${savingText} saved)` : ''
+                    saving
+                      ? `(${savingText} saved)`
+                      : ''
                   }`
 
                   break

@@ -31,10 +31,16 @@ presence.on('UpdateData', async () => {
 
   if (path.includes('-g-') || path.includes('goods.html')) {
     data.details = 'Viewing product:'
-    data.state = title ? (title.length > 128 ? `${title.substring(0, 125)}...` : title) : 'Unknown'
+    data.state = title
+      ? (title.length > 128
+          ? `${title.substring(0, 125)}...`
+          : title)
+      : 'Unknown'
   }
   else if (path.includes('search_result')) {
-    data.details = query ? `Searching: ${query}` : 'Searching for products'
+    data.details = query
+      ? `Searching: ${query}`
+      : 'Searching for products'
   }
   else if (path.includes('cart')) {
     data.details = 'Viewing their cart'

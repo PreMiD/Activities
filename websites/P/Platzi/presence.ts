@@ -58,7 +58,9 @@ presence.on('UpdateData', async () => {
 
       if (input.value.replace(/ /g, '') !== '') {
         presenceData.state = `Buscando: ${input.value}${
-          blogPage ? ` [Pagina ${blogPage.textContent}]` : ''
+          blogPage
+            ? ` [Pagina ${blogPage.textContent}]`
+            : ''
         }`
       }
     }
@@ -107,7 +109,9 @@ presence.on('UpdateData', async () => {
 
       if (input.value.replace(/ /g, '') !== '') {
         presenceData.state = `Buscando: ${input.value}${
-          forumPage ? ` [Pagina ${forumPage.textContent}]` : ''
+          forumPage
+            ? ` [Pagina ${forumPage.textContent}]`
+            : ''
         }`
       }
     }
@@ -164,7 +168,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viendo el perfil de'
 
     if (
-      [...document.querySelectorAll('.SingleTab')].some(tab => tab.textContent === 'Mi Portafolio')
+      [
+        ...document.querySelectorAll('.SingleTab'),
+      ].some(tab => tab.textContent === 'Mi Portafolio')
     ) {
       presenceData.details = 'Viendo su perfil'
     }
@@ -305,7 +311,9 @@ presence.on('UpdateData', async () => {
         '.CourseRow-title',
       )?.textContent
       presenceData.state = `Examen ${
-        score >= 9 ? 'aprobado' : 'no aprobado'
+        score >= 9
+          ? 'aprobado'
+          : 'no aprobado'
       }. [${score} en ${
         document
           .querySelector('.ExamResults-score-answers')

@@ -27,7 +27,9 @@ export class TranslationCache {
   refresh(language: unknown) {
     if (this.disposed)
       return
-    const key = typeof language === 'string' && language ? language : 'auto'
+    const key = typeof language === 'string' && language
+      ? language
+      : 'auto'
     if (key === this.language && Date.now() < this.nextRefresh)
       return
     if (key !== this.language)
@@ -41,7 +43,9 @@ export class TranslationCache {
       const messages = { ...defaultMessages }
       for (const name of ['viewWork', 'paused'] as const) {
         const value = result?.[name]
-        const maximum = name === 'viewWork' ? 32 : 128
+        const maximum = name === 'viewWork'
+          ? 32
+          : 128
         if (typeof value === 'string' && value.trim().length >= 2
           && value.trim().length <= maximum && value !== stringKeys[name]) {
           messages[name] = value.trim()

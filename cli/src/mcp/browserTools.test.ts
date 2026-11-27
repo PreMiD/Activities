@@ -62,7 +62,16 @@ vi.mock('../classes/ActivityTester.js', () => ({
   ActivityTester: class {},
 }))
 
-const activity = { metadata: { service: 'YouTube', apiVersion: 1, version: '1.0.0', url: 'youtube.com' }, folder: '/repo/websites/Y/YouTube', versionized: false }
+const activity = {
+  metadata: {
+    service: 'YouTube',
+    apiVersion: 1,
+    version: '1.0.0',
+    url: 'youtube.com',
+  },
+  folder: '/repo/websites/Y/YouTube',
+  versionized: false,
+}
 
 let browserTools: typeof import('./browserTools.js')
 
@@ -121,13 +130,24 @@ describe('browserTools', () => {
   it('get_activity returns the buffered latest event once', async () => {
     await browserTools.getConnection()
     const listener = testEventListener()
-    listener({ tabId: 3, kind: 'setActivity', data: { details: 'first' } })
-    listener({ tabId: 3, kind: 'setActivity', data: { details: 'second' } })
+    listener({
+      tabId: 3,
+      kind: 'setActivity',
+      data: { details: 'first' },
+    })
+    listener({
+      tabId: 3,
+      kind: 'setActivity',
+      data: { details: 'second' },
+    })
 
     const first = await browserTools.getActivity({ tabId: 3, timeoutMs: 5000 })
     const second = await browserTools.getActivity({ tabId: 3, timeoutMs: 10 })
 
-    expect(first).toEqual({ kind: 'setActivity', activity: { details: 'second' } })
+    expect(first).toEqual({
+      kind: 'setActivity',
+      activity: { details: 'second' },
+    })
     expect(second).toEqual({ kind: 'none', activity: null })
   })
 

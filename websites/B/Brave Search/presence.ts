@@ -62,7 +62,9 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'search': {
-      presenceData.details = !privacy ? strings.search : strings.searchPrivate
+      presenceData.details = !privacy
+        ? strings.search
+        : strings.searchPrivate
       break
     }
     case 'images': {

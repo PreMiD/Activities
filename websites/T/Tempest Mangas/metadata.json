@@ -12,7 +12,7 @@
   },
   "url": "tempestmangas.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tempestmangas[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Mangas/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Mangas/assets/thumbnail.png",
   "color": "#6ad2f7",

@@ -157,7 +157,9 @@ presence.on('UpdateData', async () => {
       break
 
     case title?.replace(' ', '+'):
-      presenceData.details = `Профиль ${!privacy ? title : 'пользователя'}`
+      presenceData.details = `Профиль ${!privacy
+        ? title
+        : 'пользователя'}`
       presenceData.largeImageKey = isImageExist('.avatar img')
       presenceData.smallImageKey = Assets.Viewing
       break
@@ -193,7 +195,9 @@ presence.on('UpdateData', async () => {
     case 'versions':
     case 'topics':
       presenceData.details = `Профиль ${
-        !privacy ? pathname.split('/')[1]?.replace('+', ' ') : 'пользователя'
+        !privacy
+          ? pathname.split('/')[1]?.replace('+', ' ')
+          : 'пользователя'
       }`
       presenceData.state = title
       presenceData.smallImageKey = Assets.Viewing
@@ -211,7 +215,9 @@ presence.on('UpdateData', async () => {
 
     case 'history':
       presenceData.details = `Профиль ${
-        !privacy ? pathname.split('/')[1]?.replace('+', ' ') : 'пользователя'
+        !privacy
+          ? pathname.split('/')[1]?.replace('+', ' ')
+          : 'пользователя'
       }`
       presenceData.state = 'История списка'
       presenceData.largeImageKey = isImageExist('.submenu-triangle img')
@@ -221,7 +227,9 @@ presence.on('UpdateData', async () => {
     case 'list':
       if (pathname.split('/')[3]?.match(/anime|manga/)) {
         presenceData.details = `${textContent('.subheadline')} ${
-          !privacy ? pathname.split('/')[1] : 'пользователя'
+          !privacy
+            ? pathname.split('/')[1]
+            : 'пользователя'
         }`
         presenceData.state = document.querySelector<HTMLElement>(
           '.mylist .b-link.selected',

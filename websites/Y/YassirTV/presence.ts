@@ -56,12 +56,16 @@ function cleanTitle(title: string): string {
   if (!parts.length)
     return title.trim()
 
-  return parts.reduce((a, b) => (b.length > a.length ? b : a))
+  return parts.reduce((a, b) => (b.length > a.length
+    ? b
+    : a))
 }
 
 function parseMinuteFromTitle(title: string): string | null {
   const match = title.match(/(\d{1,3}(?:\+\d{1,2})?)['\u2019\u02BC]/)
-  return match ? `${match[1]}'` : null
+  return match
+    ? `${match[1]}'`
+    : null
 }
 
 presence.on('UpdateData', async () => {
@@ -95,7 +99,9 @@ presence.on('UpdateData', async () => {
     }
 
     if (home && away) {
-      presenceData.details = score ? `${home} ${score} ${away}` : `${home} vs ${away}`
+      presenceData.details = score
+        ? `${home} ${score} ${away}`
+        : `${home} vs ${away}`
     }
     else {
       presenceData.details = document.title

@@ -52,7 +52,9 @@ presence.on('UpdateData', async () => {
       }
       case 'live.pramborsfm.com': {
         const buttonAction = [
-          ...[...document.querySelectorAll('button')].pop()!.classList,
+          ...[
+            ...document.querySelectorAll('button'),
+          ].pop()!.classList,
         ]
           .pop()
           ?.split('--')

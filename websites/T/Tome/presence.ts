@@ -44,9 +44,13 @@ presence.on('UpdateData', async () => {
 
     const overviewTitle = document.querySelector('.watch-overview-title')?.textContent?.trim()
     const breadcrumbTitles = document.querySelectorAll('.watch-breadcrumbs .watch-bc-title')
-    const breadcrumbTitle = breadcrumbTitles.length > 1 ? breadcrumbTitles[1]?.textContent?.trim() : null
+    const breadcrumbTitle = breadcrumbTitles.length > 1
+      ? breadcrumbTitles[1]?.textContent?.trim()
+      : null
     const docTitle = document.title.replace(/\s*[—–-]\s*Tome.*$/i, '').trim()
-    const animeTitle = overviewTitle || breadcrumbTitle || (docTitle !== 'Tomes' && docTitle !== 'Tome' ? docTitle : '') || 'Anime'
+    const animeTitle = overviewTitle || breadcrumbTitle || (docTitle !== 'Tomes' && docTitle !== 'Tome'
+      ? docTitle
+      : '') || 'Anime'
 
     const bcEp = document.querySelector('.watch-bc-ep')?.textContent?.trim()
     const currentCardTitle = document.querySelector('.watch-ep-card.current .watch-ep-card-title, .watch-ep-row.current .watch-ep-row-title')?.textContent?.trim()

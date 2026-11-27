@@ -61,7 +61,12 @@ export function getPlayerData(container: ParentNode | null): PlayerData {
     '.cc-user-rating-white',
   ], container)
 
-  return { name, rating: ratingRaw ? cleanRating(ratingRaw) : null }
+  return {
+    name,
+    rating: ratingRaw
+      ? cleanRating(ratingRaw)
+      : null,
+  }
 }
 
 export function formatMatch(top: PlayerData, bottom: PlayerData, format: number = 0, hideRating: boolean = false, vsString: string = 'vs'): string | undefined {
@@ -69,14 +74,18 @@ export function formatMatch(top: PlayerData, bottom: PlayerData, format: number 
     const name = p.name || undefined
     if (!name)
       return undefined
-    return (p.rating && !hideRating) ? `${name} (${p.rating})` : name
+    return (p.rating && !hideRating)
+      ? `${name} (${p.rating})`
+      : name
   }
 
   if (!top.name && !bottom.name)
     return undefined
 
   if (format === 2) {
-    return bottom.name ? formatPlayer(bottom) : undefined
+    return bottom.name
+      ? formatPlayer(bottom)
+      : undefined
   }
 
   if (format === 1) {
@@ -113,5 +122,7 @@ export function getGameMode(doc: Document): string | null {
     return null
 
   const raw = modeEl.getAttribute('rating-type')
-  return raw ? raw.charAt(0).toUpperCase() + raw.slice(1) : null
+  return raw
+    ? raw.charAt(0).toUpperCase() + raw.slice(1)
+    : null
 }

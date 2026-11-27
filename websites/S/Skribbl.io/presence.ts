@@ -68,7 +68,9 @@ function isInGame() {
 }
 
 function getCurrentWord() {
-  return [...document.querySelectorAll('#game-word .hints [class*=\'hint\']')]
+  return [
+    ...document.querySelectorAll('#game-word .hints [class*=\'hint\']'),
+  ]
     .map(e => e.textContent)
     .join('')
 }

@@ -88,8 +88,12 @@ presence.on('UpdateData', () => {
     const container = document.querySelector('[data-premid-page="releases"]')
     const viewMode = container?.getAttribute('data-premid-view')
 
-    presenceData.details = viewMode === 'orbit' ? 'Exploring 3D Audio Archive' : 'Browsing Discography'
-    presenceData.state = viewMode === 'orbit' ? 'Interactive 3D Mode' : 'List View'
+    presenceData.details = viewMode === 'orbit'
+      ? 'Exploring 3D Audio Archive'
+      : 'Browsing Discography'
+    presenceData.state = viewMode === 'orbit'
+      ? 'Interactive 3D Mode'
+      : 'List View'
   }
 
   // ─── Upcoming Page ───
@@ -115,7 +119,9 @@ presence.on('UpdateData', () => {
 
     // Override the main details if they are listening to music
     presenceData.type = ActivityType.Listening
-    presenceData.details = paused ? `Paused: ${trackTitle}` : `Listening to ${trackTitle}`
+    presenceData.details = paused
+      ? `Paused: ${trackTitle}`
+      : `Listening to ${trackTitle}`
     presenceData.state = `by ${artist || 'OKISO'}`
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? 'Paused' : 'okiso.net'

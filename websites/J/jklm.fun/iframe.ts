@@ -38,8 +38,12 @@ async function getRulesData(gameType: GameType): Promise<{ dictionary: string | 
 
   return {
     dictionary: dictionaryElement?.textContent || null,
-    maxPlayers: maxPlayerElement ? Number.parseInt(maxPlayerElement.value || '0', 10) : null,
-    lives: livesElement ? Number.parseInt(livesElement.value || '0', 10) : null,
+    maxPlayers: maxPlayerElement
+      ? Number.parseInt(maxPlayerElement.value || '0', 10)
+      : null,
+    lives: livesElement
+      ? Number.parseInt(livesElement.value || '0', 10)
+      : null,
     difficulty: difficulty?.textContent || null,
   }
 }

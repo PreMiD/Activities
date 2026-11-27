@@ -81,7 +81,7 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
-      if (document.location.pathname.indexOf('/movie/watch/') === 0) {
+      if (document.location.pathname.startsWith('/movie/watch/')) {
         // Watching Movie
         const title = document.querySelector(
           '#UIMovieSummary > ul > li > div.block2 > a > h3',

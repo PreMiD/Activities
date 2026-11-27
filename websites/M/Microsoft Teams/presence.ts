@@ -96,7 +96,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'In a meeting'
       presenceData.state = memberCount
         ? `${memberCount[0]} ${
-          memberCount[0] === '1' ? 'participant' : 'participants'
+          memberCount[0] === '1'
+            ? 'participant'
+            : 'participants'
         } in a room`
         : 'Unknown participant(s) in a room'
 

@@ -36,7 +36,9 @@ presence.on('UpdateData', async () => {
   }
 
   if (navigator.mediaSession.metadata) {
-    const videos = [...document.querySelectorAll('video')].filter(v => v.duration > 0)
+    const videos = [
+      ...document.querySelectorAll('video'),
+    ].filter(v => v.duration > 0)
     const video = videos.find(v => !v.paused) ?? videos[0]
     const paused = !video || video.paused
 

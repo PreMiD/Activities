@@ -96,7 +96,9 @@ enum ActivityAssets {
      * @param sm String for ShootMania
      */
     const chooseTwo = (tm: string, sm: string): string => {
-      return presenceData.smallImageKey === ActivityAssets.Tm ? tm : sm
+      return presenceData.smallImageKey === ActivityAssets.Tm
+        ? tm
+        : sm
     }
 
     switch (currentURL.hostname.split('.')[0]) {

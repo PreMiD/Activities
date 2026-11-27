@@ -57,7 +57,7 @@
     "app.wolvesville.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wolvesville[.]com[/]",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/thumbnail.png",
   "color": "#FF4181",

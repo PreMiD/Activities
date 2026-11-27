@@ -51,7 +51,9 @@ presence.on('UpdateData', async () => {
   }
   // Main Site
   if (hostname === 'www.bilibili.tv') {
-    const pathKey = Number.isNaN(Number(pathArray[2])) ? pathArray[2] : pathArray[1]
+    const pathKey = Number.isNaN(Number(pathArray[2]))
+      ? pathArray[2]
+      : pathArray[1]
     switch (pathKey) {
       case 'video': {
         presenceData.details = strings.watchingVid
