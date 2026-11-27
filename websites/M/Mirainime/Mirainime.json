@@ -1,0 +1,122 @@
+{
+  "mirainime.animePage": {
+    "description": "Button that opens the anime detail page",
+    "message": "Anime Page"
+  },
+  "mirainime.badge": {
+    "description": "Badge and tier page",
+    "message": "Badge & Tier"
+  },
+  "mirainime.bookmarks": {
+    "description": "Bookmarks page",
+    "message": "Bookmarks"
+  },
+  "mirainime.browse": {
+    "description": "Anime catalog / anime list page",
+    "message": "Anime Catalog"
+  },
+  "mirainime.browsing": {
+    "description": "Shown when browsing an unsupported page",
+    "message": "Browsing Mirainime"
+  },
+  "mirainime.characters": {
+    "description": "Characters page",
+    "message": "Characters"
+  },
+  "mirainime.community": {
+    "description": "Community forum page",
+    "message": "Community"
+  },
+  "mirainime.complete": {
+    "description": "Completed anime page",
+    "message": "Completed Anime"
+  },
+  "mirainime.detail": {
+    "description": "Viewing an anime detail page",
+    "message": "Anime Details"
+  },
+  "mirainime.download": {
+    "description": "Download page for an episode",
+    "message": "Download Page"
+  },
+  "mirainime.episode": {
+    "description": "Episode label, followed by the episode number",
+    "message": "Episode"
+  },
+  "mirainime.explore": {
+    "description": "Button that opens the anime catalog",
+    "message": "Explore Anime"
+  },
+  "mirainime.genreLabel": {
+    "description": "Prefix for a genre page, followed by the genre name",
+    "message": "Genre"
+  },
+  "mirainime.history": {
+    "description": "Watch history page",
+    "message": "Watch History"
+  },
+  "mirainime.home": {
+    "description": "Homepage",
+    "message": "Home"
+  },
+  "mirainime.movie": {
+    "description": "Label shown for anime movies (episode number 0)",
+    "message": "Movie"
+  },
+  "mirainime.notifications": {
+    "description": "Notifications page",
+    "message": "Notifications"
+  },
+  "mirainime.ongoing": {
+    "description": "Ongoing anime page",
+    "message": "Ongoing Anime"
+  },
+  "mirainime.people": {
+    "description": "Voice actors page",
+    "message": "Voice Actors"
+  },
+  "mirainime.playlist": {
+    "description": "My playlist page",
+    "message": "My Playlist"
+  },
+  "mirainime.premium": {
+    "description": "Premium page",
+    "message": "Premium"
+  },
+  "mirainime.ranking": {
+    "description": "Ranking / leaderboard page",
+    "message": "Leaderboard"
+  },
+  "mirainime.reels": {
+    "description": "Reels page",
+    "message": "Reels"
+  },
+  "mirainime.schedule": {
+    "description": "Airing schedule page",
+    "message": "Airing Schedule"
+  },
+  "mirainime.search": {
+    "description": "Search page",
+    "message": "Searching Anime"
+  },
+  "mirainime.seasonLabel": {
+    "description": "Prefix for a season page, followed by the season name",
+    "message": "Season"
+  },
+  "mirainime.social": {
+    "description": "Social feed page (/home)",
+    "message": "Social Feed"
+  },
+  "mirainime.task": {
+    "description": "Premium tasks page",
+    "message": "Premium Tasks"
+  },
+  "mirainime.themes": {
+    "description": "Theme songs page",
+    "message": "Theme Songs"
+  },
+  "mirainime.upcoming": {
+    "description": "Upcoming anime page",
+    "message": "Upcoming Anime"
+  }
+}
