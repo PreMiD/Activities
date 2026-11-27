@@ -45,6 +45,13 @@ async function getStrings() {
     thread: 'general.readingAThread',
     list: 'general.viewAList',
     genre: 'general.viewAGenre',
+    browsingAnime: 'phasmaanime.browsingAnime',
+    latestEpisodes: 'phasmaanime.latestEpisodes',
+    animeMovies: 'phasmaanime.animeMovies',
+    seasonalAnime: 'phasmaanime.seasonalAnime',
+    airingSchedule: 'phasmaanime.airingSchedule',
+    community: 'phasmaanime.community',
+    watchTogether: 'phasmaanime.watchTogether',
   })
 }
 
@@ -182,13 +189,13 @@ presence.on('UpdateData', async () => {
   else {
     const pages: [RegExp, string][] = [
       [/^\/$/, strings.home],
-      [/^\/browse/, 'Browsing anime'],
-      [/^\/latest/, 'Latest episodes'],
-      [/^\/movies/, 'Anime movies'],
-      [/^\/seasonal/, 'Seasonal anime'],
-      [/^\/schedule/, 'Airing schedule'],
-      [/^\/community/, 'Community'],
-      [/^\/together/, 'Watch together'],
+      [/^\/browse/, strings.browsingAnime],
+      [/^\/latest/, strings.latestEpisodes],
+      [/^\/movies/, strings.animeMovies],
+      [/^\/seasonal/, strings.seasonalAnime],
+      [/^\/schedule/, strings.airingSchedule],
+      [/^\/community/, strings.community],
+      [/^\/together/, strings.watchTogether],
       [/^\/profile/, strings.profile],
     ]
     presenceData.details = pages.find(([re]) => re.test(pathname))?.[1] ?? strings.browsing
