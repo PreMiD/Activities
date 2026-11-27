@@ -9,6 +9,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let logo: Blob | null = null
+let logoRequest: Promise<void> | null = null
 let iframeState: { pathname: string, hash: string } | null = null
 
 presence.on('iFrameData', (data: unknown) => {
@@ -20,17 +21,20 @@ presence.on('iFrameData', (data: unknown) => {
 })
 
 presence.on('UpdateData', async () => {
-  if (!logo) {
-    try {
-      const response = await fetch('https://i.imgur.com/FZIYZxz.png')
-      if (!response.ok)
-        throw new Error(`HTTP ${response.status}`)
+  if (!logo && !logoRequest) {
+    logoRequest = fetch('https://i.imgur.com/FZIYZxz.png')
+      .then(async (response) => {
+        if (!response.ok)
+          throw new Error(`HTTP ${response.status}`)
 
-      logo = await response.blob()
-    }
-    catch (error) {
-      presence.error(`Failed to load the activity logo: ${error}`)
-    }
+        logo = await response.blob()
+      })
+      .catch((error) => {
+        presence.error(`Failed to load the activity logo: ${error}`)
+      })
+      .finally(() => {
+        logoRequest = null
+      })
   }
 
   const { pathname: parentPath, hash: parentHash } = document.location
