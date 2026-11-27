@@ -1,4 +1,3 @@
-import { franc } from 'franc-min'
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
@@ -44,7 +43,7 @@ function countWords(text: string | null | undefined): number {
   const trimmed = text?.trim()
   return trimmed
     ? Array.from(
-      new Intl.Segmenter(franc(trimmed), { granularity: 'word' }).segment(
+      new Intl.Segmenter(undefined, { granularity: 'word' }).segment(
         trimmed,
       ),
     ).filter(segment => segment.isWordLike).length
