@@ -17,7 +17,7 @@
   },
   "url": "chat.deepseek.com",
   "regExp": "^https?[:][/][/]chat[.]deepseek[.]com[/]",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/thumbnail.png",
   "color": "#2885d1",

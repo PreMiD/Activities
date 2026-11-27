@@ -25,7 +25,11 @@ enum ActivityAssets {
 function countWords(text: string | null | undefined): number {
   const trimmed = text?.trim()
   return trimmed
-    ? trimmed.split(/\s+/).length
+    ? Array.from(
+      new Intl.Segmenter(undefined, { granularity: 'word' }).segment(
+        trimmed,
+      ),
+    ).filter(segment => segment.isWordLike).length
     : 0
 }
 
@@ -60,23 +64,15 @@ presence.on('UpdateData', async () => {
     presenceDetail = strings?.talkingWithAi ?? ''
   }
 
-  // Count the conversation the same way the ChatGPT and Claude
-  // presences do. Every message is a .ds-message element: a user
-  // message holds the question text directly, while an AI message
-  // holds its answer in .ds-markdown elements.
+  // Every message is a .ds-message element: a user message holds its
+  // question text directly, while an AI message holds .ds-markdown elements.
   let conversationStats: string | undefined
   if (pathname.includes('/a/chat/s')) {
     let askedCount = 0
     let wordCount = 0
     for (const el of document.querySelectorAll('.ds-message')) {
       const answers = el.querySelectorAll('.ds-markdown')
-      if (answers.length) {
-        for (const answer of answers) {
-          if (!answer.closest('.ds-think-content'))
-            wordCount += countWords(answer.textContent)
-        }
-      }
-      else if (el.textContent?.trim()) {
+      if (!answers.length && el.textContent?.trim()) {
         askedCount++
         wordCount += countWords(el.textContent)
       }
@@ -88,22 +84,17 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // Checking if the user is currently typing a question
-  if (document.querySelector('#chat-input')?.textContent?.trim()) {
-    presenceState = strings?.askingQuestion ?? ''
-    smallImageKey = Assets.Writing
-    smallImageText = strings?.askingQuestion ?? ''
-  }
   // Used for checking if the AI is currently responding
-  else if (document.querySelector('div._4f9bf79.d7dc56a8:not(._43c05b5)')) {
+  if (document.querySelector('div._4f9bf79.d7dc56a8:not(._43c05b5)')) {
     presenceState = strings?.aiTalking ?? ''
     smallImageKey = ActivityAssets.Talking
     smallImageText = strings?.aiTalking ?? ''
   }
-  else if (document.querySelector('div._4f9bf79.d7dc56a8._43c05b5')) {
-    presenceState = conversationStats ?? strings?.readingResponse ?? ''
-    smallImageKey = Assets.Reading
-    smallImageText = strings?.readingResponse ?? ''
+  // Checking if the user is currently typing a question
+  else if (document.querySelector('#chat-input')?.textContent?.trim()) {
+    presenceState = strings?.askingQuestion ?? ''
+    smallImageKey = Assets.Writing
+    smallImageText = strings?.askingQuestion ?? ''
   }
   else if (isSearchModeOn()) {
     presenceState = ''
@@ -111,9 +102,10 @@ presence.on('UpdateData', async () => {
     smallImageText = strings?.search ?? ''
   }
   else {
-    presenceState = conversationStats ?? ''
-    smallImageKey = Assets.Viewing
-    smallImageText = strings?.browsing ?? ''
+    presenceDetail = conversationStats ?? presenceDetail
+    presenceState = strings?.talkingWithAi ?? ''
+    smallImageKey = Assets.Writing
+    smallImageText = strings?.talkingWithAi ?? ''
   }
 
   presence.setActivity({
