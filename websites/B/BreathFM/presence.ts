@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/B/BreathFM/assets/0.jpg',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/B/BreathFM/assets/logo.jpg',
 }
 
 async function getStrings() {
@@ -68,7 +68,7 @@ function absoluteUrl(src?: string): string | undefined {
   if (!src)
     return undefined
   try {
-    return new URL(src, location.origin).href
+    return new URL(src, document.location.origin).href
   }
   catch {
     return undefined
@@ -148,7 +148,7 @@ async function getPlayback(): Promise<Playback | null> {
 }
 
 function getPageData(privacy: boolean, showTimestamps: boolean): PresenceData {
-  const segments = location.pathname.split('/').filter(Boolean)
+  const segments = document.location.pathname.split('/').filter(Boolean)
   const page = segments[0] ?? ''
   const data: PresenceData = {
     name: 'BreathFM',
@@ -260,8 +260,8 @@ presence.on('UpdateData', async () => {
   }
 
   const stationUrl = playback.stationId
-    ? `${location.origin}/?station=${encodeURIComponent(playback.stationId)}`
-    : `${location.origin}/`
+    ? `${document.location.origin}/?station=${encodeURIComponent(playback.stationId)}`
+    : `${document.location.origin}/`
   presenceData.largeImageUrl = stationUrl
 
   if (showTimestamps) {
@@ -276,7 +276,7 @@ presence.on('UpdateData', async () => {
       { label: strings.buttonListenAlong, url: stationUrl },
     ]
     if (trackId)
-      presenceData.buttons.push({ label: strings.buttonViewPage, url: `${location.origin}/track/${trackId}` })
+      presenceData.buttons.push({ label: strings.buttonViewPage, url: `${document.location.origin}/track/${trackId}` })
   }
 
   presence.setActivity(presenceData)
