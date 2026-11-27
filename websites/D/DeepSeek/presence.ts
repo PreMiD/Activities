@@ -24,7 +24,9 @@ enum ActivityAssets {
 
 function countWords(text: string | null | undefined): number {
   const trimmed = text?.trim()
-  return trimmed ? trimmed.split(/\s+/).length : 0
+  return trimmed
+    ? trimmed.split(/\s+/).length
+    : 0
 }
 
 // The DeepThink and search toggles share DeepSeek's toggle button
