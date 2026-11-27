@@ -606,15 +606,11 @@ presence.on('UpdateData', async () => {
     presenceData.state = service?.name ?? 'ライブ'
     const liveLogo = service ? getLogo(service, servicesCache) : null
     if (liveLogo) {
-      presenceData.largeImageKey = liveLogo
+      presenceData.largeImageKey = LOGO
       presenceData.largeImageText = service?.name ?? 'denpa'
-      presenceData.smallImageKey = LOGO
-      presenceData.smallImageText = video?.paused ? 'denpa (一時停止中)' : 'denpa (ライブ視聴中)'
     }
-    else {
-      presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Live
-      presenceData.smallImageText = video?.paused ? '一時停止中' : 'ライブ視聴中'
-    }
+    presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Live
+    presenceData.smallImageText = video?.paused ? '一時停止中' : 'ライブ視聴中'
     if (showTimestamp && prog && !video?.paused) {
       presenceData.startTimestamp = Math.floor(prog.startAt / 1000)
       presenceData.endTimestamp = Math.floor(prog.endAt / 1000)
@@ -636,15 +632,11 @@ presence.on('UpdateData', async () => {
         ? getLogo({ id: recording.serviceId, name: recording.serviceName }, servicesCache)
         : null
     if (recLogo) {
-      presenceData.largeImageKey = recLogo
+      presenceData.largeImageKey = LOGO
       presenceData.largeImageText = service?.name ?? recording?.serviceName ?? 'denpa'
-      presenceData.smallImageKey = LOGO
-      presenceData.smallImageText = video?.paused ? 'denpa (一時停止中)' : 'denpa (録画再生中)'
     }
-    else {
-      presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video?.paused ? '一時停止中' : '再生中'
-    }
+    presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
+    presenceData.smallImageText = video?.paused ? '一時停止中' : '再生中'
     if (showTimestamp && video && !video.paused && Number.isFinite(video.duration))
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     publish()
@@ -664,15 +656,11 @@ presence.on('UpdateData', async () => {
         ? getLogo({ id: recording.serviceId, name: recording.serviceName }, servicesCache)
         : null
     if (chaseLogo) {
-      presenceData.largeImageKey = chaseLogo
+      presenceData.largeImageKey = LOGO
       presenceData.largeImageText = service?.name ?? recording?.serviceName ?? 'denpa'
-      presenceData.smallImageKey = LOGO
-      presenceData.smallImageText = video?.paused ? 'denpa (一時停止中)' : 'denpa (追っかけ再生中)'
     }
-    else {
-      presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video?.paused ? '一時停止中' : '追っかけ再生中'
-    }
+    presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
+    presenceData.smallImageText = video?.paused ? '一時停止中' : '追っかけ再生中'
     // 追っかけは尺が伸び続けるので、放送開始からの経過だけを出す
     if (showTimestamp && recording && !video?.paused)
       presenceData.startTimestamp = Math.floor(recording.startAt / 1000)
