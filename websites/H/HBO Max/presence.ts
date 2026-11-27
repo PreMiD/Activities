@@ -74,15 +74,26 @@ function getTitleInfo(usePresenceName: boolean) {
 
     if (isMovie) {
       const releaseDate = getAttrs(episodeItem)?.airDate ?? getAttrs(showItem)?.premiereDate
-      const year = releaseDate ? new Date(releaseDate).getUTCFullYear() : undefined
+      const year = releaseDate
+        ? new Date(releaseDate).getUTCFullYear()
+        : undefined
       const editId = (episodeItem.relationships as any)?.edit?.data?.id as string | undefined
-      const durationMs = editId ? getAttrs(findById(editId))?.duration as number | undefined : undefined
-      const minutes = durationMs ? Math.floor(durationMs / 60_000) : undefined
+      const durationMs = editId
+        ? getAttrs(findById(editId))?.duration as number | undefined
+        : undefined
+      const minutes = durationMs
+        ? Math.floor(durationMs / 60_000)
+        : undefined
 
       return {
         name: usePresenceName ? showName : 'HBO Max',
         details: showName,
-        state: [year, minutes ? `${minutes} minutes` : undefined].filter(Boolean).join(' • ') || undefined,
+        state: [
+          year,
+          minutes
+            ? `${minutes} minutes`
+            : undefined,
+        ].filter(Boolean).join(' • ') || undefined,
         largeImageKey: getCoverArt(showItem),
         largeImageText: showName,
         isMovie,
@@ -213,10 +224,14 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageText = info.largeImageText
         }
         if (info.isMovie === undefined) {
-          presenceData.buttons = [{ label: 'Watch Now', url: info.pageUrl }]
+          presenceData.buttons = [
+            { label: 'Watch Now', url: info.pageUrl },
+          ]
         }
         else if (info.isMovie) {
-          presenceData.buttons = [{ label: 'Watch Movie', url: info.pageUrl }]
+          presenceData.buttons = [
+            { label: 'Watch Movie', url: info.pageUrl },
+          ]
         }
         else {
           presenceData.buttons = info.showUrl
