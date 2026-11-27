@@ -128,7 +128,8 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = playing ? Assets.Play : Assets.Pause
       if (playing) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-          video?.currentTime || parseBilibiliTime(document.querySelector('.player-mobile-time-current-text')?.textContent || '00:00') || 0, video?.duration || parseBilibiliTime(document.querySelector('.player-mobile-time-total-text')?.textContent || '00:00') || 0
+          video?.currentTime || parseBilibiliTime(document.querySelector('.player-mobile-time-current-text')?.textContent || '00:00') || 0,
+          video?.duration || parseBilibiliTime(document.querySelector('.player-mobile-time-total-text')?.textContent || '00:00') || 0,
         )
       }
     }
