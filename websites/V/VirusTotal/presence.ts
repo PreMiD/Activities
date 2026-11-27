@@ -139,16 +139,24 @@ presence.on('UpdateData', () => {
           presenceData.state = user
         }
         else if (pathname.includes('/comments')) {
-          presenceData.details = user ? `Viewing ${user}'s comments...` : 'Viewing comments...'
+          presenceData.details = user
+            ? `Viewing ${user}'s comments...`
+            : 'Viewing comments...'
         }
         else if (pathname.includes('/graphs')) {
-          presenceData.details = user ? `Viewing ${user}'s graphs...` : 'Viewing graphs...'
+          presenceData.details = user
+            ? `Viewing ${user}'s graphs...`
+            : 'Viewing graphs...'
         }
         else if (pathname.includes('/collections')) {
-          presenceData.details = user ? `Viewing ${user}'s collections...` : 'Viewing collections...'
+          presenceData.details = user
+            ? `Viewing ${user}'s collections...`
+            : 'Viewing collections...'
         }
         else {
-          presenceData.details = user ? `Viewing ${user}'s profile` : 'Viewing a profile'
+          presenceData.details = user
+            ? `Viewing ${user}'s profile`
+            : 'Viewing a profile'
         }
       }
       else if (pathname.includes('/services-overview')) {

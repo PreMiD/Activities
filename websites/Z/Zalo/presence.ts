@@ -24,7 +24,9 @@ presence.on('UpdateData', async () => {
     // Custom field 1 hoặc set default
     const enableCustomText = await presence.getSetting<boolean>('btnCustomText')
     const customText = await presence.getSetting<string>('customText')
-    presenceData.details = enableCustomText ? customText : `In Chat`
+    presenceData.details = enableCustomText
+      ? customText
+      : `In Chat`
 
     // Loại tin nhắn (cá nhân/nhóm/nhóm cộng đồng)
     const currChatType = document.querySelector('.chat-info__header__title > span')?.getAttribute('data-translate-inner')

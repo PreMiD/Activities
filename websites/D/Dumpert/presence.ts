@@ -35,7 +35,9 @@ presence.on('UpdateData', async () => {
           ?.textContent
           ?.split('\'')[1]
       }`
-    presenceData.state = sortElement ? `Gesorteerd op: ${sortElement}` : ''
+    presenceData.state = sortElement
+      ? `Gesorteerd op: ${sortElement}`
+      : ''
     presence.setActivity(presenceData)
     return
   }
@@ -119,7 +121,9 @@ presence.on('UpdateData', async () => {
               ?.textContent
               ?.split('\'')[1]
           }`
-      presenceData.state = sortElement ? `Gesorteerd op: ${sortElement}` : ''
+      presenceData.state = sortElement
+        ? `Gesorteerd op: ${sortElement}`
+        : ''
       presenceData.buttons = [
         {
           label: 'Bekijk Content',

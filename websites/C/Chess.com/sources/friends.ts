@@ -12,7 +12,9 @@ const friendsResolver: Resolver = {
 
     if (count) {
       const num = Number.parseInt(count.replace(/\D/g, ''))
-      return num === 1 ? `${count} ${t.friends_single}` : `${count} ${t.friends_plural}`
+      return num === 1
+        ? `${count} ${t.friends_single}`
+        : `${count} ${t.friends_plural}`
     }
 
     return t.overview

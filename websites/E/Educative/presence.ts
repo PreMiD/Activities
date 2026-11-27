@@ -33,7 +33,9 @@ function setCourseInfo() {
         ?.closest('.CollectionSidebarCategory-sc-15b6owa-0')
         ?.querySelectorAll('h5')[0]
         ?.textContent ?? ''
-      chapterName = chapter + lesson && chapter ? ' - ' : `${lesson}`
+      chapterName = chapter + lesson && chapter
+        ? ' - '
+        : `${lesson}`
     }
     else {
       courseName = document.querySelectorAll('h1')[0]?.textContent

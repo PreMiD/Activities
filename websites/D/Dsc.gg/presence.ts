@@ -19,17 +19,25 @@ presence.on('UpdateData', async () => {
   const pages: Record<string, PresenceData> = {
     '/about': {
       details: '📚 About',
-      buttons: [{ label: 'View Page', url: href }],
+      buttons: [
+        { label: 'View Page', url: href },
+      ],
     },
     '/premium': {
       details: '💎 Premium',
-      buttons: [{ label: 'View Page', url: href }],
+      buttons: [
+        { label: 'View Page', url: href },
+      ],
     },
   }
 
   for (const [path, data] of Object.entries(pages)) {
-    if (pathname.includes(path))
-      presenceData = { ...presenceData, ...data } as PresenceData
+    if (pathname.includes(path)) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+      } as PresenceData
+    }
   }
 
   if (host === 'dsc.gg') {

@@ -1,7 +1,9 @@
 import type { Settings } from '../types.js'
 
 function asBool(value: unknown, fallback: boolean): boolean {
-  return typeof value === 'boolean' ? value : fallback
+  return typeof value === 'boolean'
+    ? value
+    : fallback
 }
 
 export class SettingsManager {

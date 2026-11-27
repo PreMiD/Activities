@@ -40,7 +40,9 @@ const puzzleResolver: Resolver = {
       if (doc.querySelector('[data-cy="startSession"]'))
         return t.common_menu
       const score = getText(['[data-cy="solved-count"]'])
-      return score ? `${t.score}: ${score}` : `${t.score}: 0`
+      return score
+        ? `${t.score}: ${score}`
+        : `${t.score}: 0`
     }
 
     if (doc.location.pathname.includes('/battle')) {

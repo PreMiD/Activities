@@ -111,9 +111,13 @@ describe('activityCompiler DMCA check', () => {
     //* Mock global fetch for libraryVersion and locales checks
     vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string) => {
       if (url.includes('/locales')) {
-        return Promise.resolve({ json: () => Promise.resolve(['en']) })
+        return Promise.resolve({
+          json: () => Promise.resolve(['en']),
+        })
       }
-      return Promise.resolve({ json: () => Promise.resolve(null) })
+      return Promise.resolve({
+        json: () => Promise.resolve(null),
+      })
     }))
   })
 
@@ -125,7 +129,12 @@ describe('activityCompiler DMCA check', () => {
     const compiler = new ActivityCompiler('/test/HiAnime', mockMetadata, false)
 
     //* Access private method via compile with validate: true
-    const result = await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+    const result = await compiler.compile({
+      kill: false,
+      validate: true,
+      preCheck: false,
+      zip: false,
+    })
 
     expect(result).toBe(false)
     expect(mocks.isDmcaBlocked).toHaveBeenCalledWith('HiAnime', expect.any(Set))
@@ -147,7 +156,12 @@ describe('activityCompiler DMCA check', () => {
     const { ActivityCompiler } = await import('./ActivityCompiler.js')
     const compiler = new ActivityCompiler('/test/YouTube', safeMetadata, false)
 
-    await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+    await compiler.compile({
+      kill: false,
+      validate: true,
+      preCheck: false,
+      zip: false,
+    })
 
     //* Should not have been blocked by DMCA check (may fail for other reasons in test env)
     expect(mocks.isDmcaBlocked).toHaveBeenCalledWith('YouTube', expect.any(Set))
@@ -166,9 +180,13 @@ describe('activityCompiler regExp URL check', () => {
     mocks.isDmcaBlocked.mockReturnValue(false)
     vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string) => {
       if (url.includes('/locales')) {
-        return Promise.resolve({ json: () => Promise.resolve(['en']) })
+        return Promise.resolve({
+          json: () => Promise.resolve(['en']),
+        })
       }
-      return Promise.resolve({ json: () => Promise.resolve(null) })
+      return Promise.resolve({
+        json: () => Promise.resolve(null),
+      })
     }))
   })
 
@@ -179,7 +197,12 @@ describe('activityCompiler regExp URL check', () => {
     const { ActivityCompiler } = await import('./ActivityCompiler.js')
     const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
 
-    await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+    await compiler.compile({
+      kill: false,
+      validate: true,
+      preCheck: false,
+      zip: false,
+    })
 
     expect(mocks.addSarifLog).not.toHaveBeenCalledWith(
       expect.objectContaining({
@@ -195,7 +218,12 @@ describe('activityCompiler regExp URL check', () => {
     const { ActivityCompiler } = await import('./ActivityCompiler.js')
     const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
 
-    const result = await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+    const result = await compiler.compile({
+      kill: false,
+      validate: true,
+      preCheck: false,
+      zip: false,
+    })
 
     expect(result).toBe(false)
     expect(mocks.addSarifLog).toHaveBeenCalledWith(
@@ -217,7 +245,12 @@ describe('activityCompiler regExp URL check', () => {
     const { ActivityCompiler } = await import('./ActivityCompiler.js')
     const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
 
-    await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+    await compiler.compile({
+      kill: false,
+      validate: true,
+      preCheck: false,
+      zip: false,
+    })
 
     expect(mocks.addSarifLog).not.toHaveBeenCalledWith(
       expect.objectContaining({
@@ -237,7 +270,12 @@ describe('activityCompiler regExp URL check', () => {
     const { ActivityCompiler } = await import('./ActivityCompiler.js')
     const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
 
-    const result = await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+    const result = await compiler.compile({
+      kill: false,
+      validate: true,
+      preCheck: false,
+      zip: false,
+    })
 
     expect(result).toBe(false)
     expect(mocks.addSarifLog).toHaveBeenCalledWith(
@@ -255,7 +293,12 @@ describe('activityCompiler regExp URL check', () => {
     const { ActivityCompiler } = await import('./ActivityCompiler.js')
     const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
 
-    const result = await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+    const result = await compiler.compile({
+      kill: false,
+      validate: true,
+      preCheck: false,
+      zip: false,
+    })
 
     expect(result).toBe(false)
     expect(mocks.addSarifLog).toHaveBeenCalledWith(

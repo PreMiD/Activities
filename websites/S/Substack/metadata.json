@@ -12,7 +12,7 @@
   },
   "url": "substack.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*substack[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Substack/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Substack/assets/thumbnail.jpeg",
   "color": "#FE8247",

@@ -35,7 +35,9 @@ presence.on('UpdateData', async () => {
       case 'quote': {
         const marketPourcentage = document.querySelector(`c-wiz[style*='visibility: visible'] span.NydbP.tnNmPe`)?.getAttribute('aria-label')
         const marketResult = document.querySelector(`c-wiz[style*='visibility: visible'] span.P2Luy.ZYVHBb`)?.textContent
-        presenceData.details = !privacy ? `Viewing market : ${document.querySelector(`c-wiz[style*='visibility: visible'] div.zzDege`)?.textContent}` : 'Browsing through markets'
+        presenceData.details = !privacy
+          ? `Viewing market : ${document.querySelector(`c-wiz[style*='visibility: visible'] div.zzDege`)?.textContent}`
+          : 'Browsing through markets'
         if (marketResult?.startsWith('+') && !privacy) {
           presenceData.smallImageKey = ActivityAssets.chartUp
           presenceData.smallImageText = `${marketPourcentage} • ${marketResult}`
@@ -55,10 +57,14 @@ presence.on('UpdateData', async () => {
         const portfolioType = document.querySelector(`c-wiz[style*='visibility: visible'] div.xsHABd span.zMQeMc`)?.textContent
         const portfolioName = document.querySelector(`c-wiz[style*='visibility: visible'] div.xsHABd span.sZflkf`)?.textContent
         if (portfolioType === 'insert_chart') {
-          presenceData.details = !privacy ? `Explore Portfolio : ${portfolioName}` : 'Explore their Portfolios'
+          presenceData.details = !privacy
+            ? `Explore Portfolio : ${portfolioName}`
+            : 'Explore their Portfolios'
         }
         else if (portfolioType === 'format_list_bulleted') {
-          presenceData.details = !privacy ? `Explore Watchlist : ${portfolioName}` : 'Explore their Watchlists'
+          presenceData.details = !privacy
+            ? `Explore Watchlist : ${portfolioName}`
+            : 'Explore their Watchlists'
         }
 
         break

@@ -55,7 +55,9 @@ function getKnownDuration(video: HTMLVideoElement): number {
 }
 
 function collectVideos(root: Document | ShadowRoot): HTMLVideoElement[] {
-  const videos = [...root.querySelectorAll<HTMLVideoElement>('video')]
+  const videos = [
+    ...root.querySelectorAll<HTMLVideoElement>('video'),
+  ]
 
   for (const element of root.querySelectorAll<HTMLElement>('*')) {
     if (element.shadowRoot)
@@ -118,19 +120,21 @@ function getStateFromClassName(className: string): boolean | undefined {
 }
 
 function getButtonPlaybackState(root: HTMLElement): boolean | undefined {
-  const controls = [...root.querySelectorAll<HTMLElement>(
-    [
-      '[aria-label]',
-      '[title]',
-      '[data-title]',
-      '.jw-icon-playback',
-      '.plyr__control',
-      '.vjs-play-control',
-      '.dplayer-play-icon',
-      '.art-control-playAndPause',
-      '.xgplayer-play',
-    ].join(', '),
-  )].filter(isElementVisible)
+  const controls = [
+    ...root.querySelectorAll<HTMLElement>(
+      [
+        '[aria-label]',
+        '[title]',
+        '[data-title]',
+        '.jw-icon-playback',
+        '.plyr__control',
+        '.vjs-play-control',
+        '.dplayer-play-icon',
+        '.art-control-playAndPause',
+        '.xgplayer-play',
+      ].join(', '),
+    ),
+  ].filter(isElementVisible)
 
   for (const control of controls) {
     const label = [
@@ -173,10 +177,18 @@ function getVideoScore(video: HTMLVideoElement): number {
   return (
     Math.min(visibleArea / 40, 8000)
     + (isPlaying ? 250 : 0)
-    + (video.currentTime > 0 ? 1200 : 0)
-    + (Number.isFinite(duration) && duration > 0 ? Math.min(duration, 1000) : 0)
-    + (isElementVisible(video) ? 500 : 0)
-    + (selectedVideo === video ? 500 : 0)
+    + (video.currentTime > 0
+      ? 1200
+      : 0)
+    + (Number.isFinite(duration) && duration > 0
+      ? Math.min(duration, 1000)
+      : 0)
+    + (isElementVisible(video)
+      ? 500
+      : 0)
+    + (selectedVideo === video
+      ? 500
+      : 0)
     + video.readyState
   )
 }
@@ -188,7 +200,9 @@ function pickBestVideo(): HTMLVideoElement | undefined {
     return undefined
 
   const best = videos.reduce((best, candidate) => {
-    return getVideoScore(candidate) > getVideoScore(best) ? candidate : best
+    return getVideoScore(candidate) > getVideoScore(best)
+      ? candidate
+      : best
   })
 
   if (selectedVideo?.isConnected && videos.includes(selectedVideo)) {
@@ -246,8 +260,12 @@ function getCurrentVideoState(): IFrameVideoData | null {
     const duration = getKnownDuration(video)
 
     return {
-      currentTime: Number.isFinite(video.currentTime) ? video.currentTime : undefined,
-      duration: Number.isFinite(duration) ? duration : undefined,
+      currentTime: Number.isFinite(video.currentTime)
+        ? video.currentTime
+        : undefined,
+      duration: Number.isFinite(duration)
+        ? duration
+        : undefined,
       paused: getDomPlaybackState(video) ?? (video.paused || video.ended),
       readyState: video.readyState,
       sampledAt: Date.now(),
@@ -297,9 +315,15 @@ function getStateKey(video: IFrameVideoData | null): string {
     : ''
 
   return [
-    video.paused === true ? 'paused' : video.paused === false ? 'playing' : 'unknown',
+    video.paused === true
+      ? 'paused'
+      : video.paused === false
+        ? 'playing'
+        : 'unknown',
     time,
-    Number.isFinite(video.duration) ? Math.round(video.duration ?? 0) : '',
+    Number.isFinite(video.duration)
+      ? Math.round(video.duration ?? 0)
+      : '',
     video.src ?? video.url ?? '',
   ].join('|')
 }

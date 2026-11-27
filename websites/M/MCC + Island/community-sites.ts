@@ -81,7 +81,9 @@ function lighthouseSection(username: string, route?: string): string | undefined
       && url.pathname.startsWith(`/player/${username}/`)
       && (link.getAttribute('aria-current') === 'page' || link.classList.contains('border-neutral-50'))
   })
-  const activeRoute = active ? new URL(active.getAttribute('href')!, document.location.href).pathname.match(/\/player\/[^/]+\/([^/]+)/)?.[1] : undefined
+  const activeRoute = active
+    ? new URL(active.getAttribute('href')!, document.location.href).pathname.match(/\/player\/[^/]+\/([^/]+)/)?.[1]
+    : undefined
   return sections[activeRoute ?? ''] ?? 'Games'
 }
 
@@ -102,7 +104,9 @@ function imageSource(image: HTMLImageElement | null | undefined): string | undef
   if (!source)
     return undefined
   const url = new URL(source, document.location.href)
-  return url.protocol === 'https:' ? url.href : undefined
+  return url.protocol === 'https:'
+    ? url.href
+    : undefined
 }
 
 function player(site: CommunitySite): PlayerProfile {
@@ -121,7 +125,9 @@ function player(site: CommunitySite): PlayerProfile {
     lighthouseProfile = undefined
   const section = site === 'hub'
     ? hubSection()
-    : site === 'lighthouse' ? lighthouseSection(username, match[2]) : undefined
+    : site === 'lighthouse'
+      ? lighthouseSection(username, match[2])
+      : undefined
   const head = Array.from(document.querySelectorAll<HTMLImageElement>('img[alt]')).find((image) => {
     const alt = image.alt.toLowerCase()
     const expected = username.toLowerCase()
@@ -133,32 +139,46 @@ function player(site: CommunitySite): PlayerProfile {
   })
   const heading = site === 'stats'
     ? document.querySelector('h1.username')
-    : site === 'hub' ? document.querySelector('h1') : undefined
-  const name = site === 'lighthouse' ? head?.alt : heading?.textContent?.trim()
+    : site === 'hub'
+      ? document.querySelector('h1')
+      : undefined
+  const name = site === 'lighthouse'
+    ? head?.alt
+    : heading?.textContent?.trim()
   // A newly changed URL must not publish the previous player's profile while SPA content loads.
   if (!head || name?.toLowerCase() !== username.toLowerCase()) {
-    const cached = site === 'lighthouse' ? lighthouseProfile?.profile : undefined
+    const cached = site === 'lighthouse'
+      ? lighthouseProfile?.profile
+      : undefined
     return { ...cached, name: username, section }
   }
   const crown = Array.from(document.querySelectorAll<HTMLImageElement>(site === 'lighthouse'
     ? 'img[alt="Crown Level Icon"]'
-    : site === 'hub' ? 'img[alt="Crown Icon"]' : '.level-box img.level-icon'))
+    : site === 'hub'
+      ? 'img[alt="Crown Icon"]'
+      : '.level-box img.level-icon'))
     .find(image => site === 'stats' || crownLevel(image))
   const levelText = site === 'stats'
     ? document.querySelector('.level-box .level-value .visually-hidden')?.textContent
     ?? document.querySelector('.level-box .level-value')?.textContent
-    : crown ? crownLevel(crown) : undefined
+    : crown
+      ? crownLevel(crown)
+      : undefined
   const level = levelText?.trim().match(/^\d{1,4}$/)?.[0]
   const profile: PlayerProfile = {
     name,
     head: imageSource(head),
-    crown: level ? imageSource(crown) : undefined,
+    crown: level
+      ? imageSource(crown)
+      : undefined,
     level,
     section,
   }
   if (site === 'lighthouse') {
     const previous = lighthouseProfile?.profile
-    const expires = profile.head && profile.crown && profile.level ? Date.now() + 30000 : lighthouseProfile?.expires ?? Date.now() + 30000
+    const expires = profile.head && profile.crown && profile.level
+      ? Date.now() + 30000
+      : lighthouseProfile?.expires ?? Date.now() + 30000
     profile.head ??= previous?.head
     if (!profile.crown || !profile.level) {
       profile.crown = previous?.crown
@@ -192,7 +212,12 @@ export async function waitForCommunityProfile(site: CommunitySite, privacy: bool
         finish()
     })
     timeout = setTimeout(finish, 2000)
-    observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, characterData: true })
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true,
+    })
     if (ready())
       finish()
   })
@@ -230,13 +255,20 @@ export function communitySelection(site: CommunitySite, privacy = false): string
       lighthouseProfile = undefined
     return JSON.stringify([document.location.href, 'private'])
   }
-  return JSON.stringify([document.location.href, site === 'radar' ? radarIsland() : player(site)])
+  return JSON.stringify([
+    document.location.href,
+    site === 'radar'
+      ? radarIsland()
+      : player(site),
+  ])
 }
 
 export function getCommunityData(site: CommunitySite, privacy: boolean, buttons: boolean): Partial<PresenceData> {
   const result: Partial<PresenceData> = {
     name: labels[site],
-    details: site === 'radar' ? 'Looking at the Radar' : privacy ? 'Looking at statistics' : 'Browsing statistics',
+    details: site === 'radar'
+      ? 'Looking at the Radar'
+      : privacy ? 'Looking at statistics' : 'Browsing statistics',
     largeImageKey: CommunityAssets[site],
     largeImageText: names[site],
   }
@@ -259,7 +291,9 @@ export function getCommunityData(site: CommunitySite, privacy: boolean, buttons:
   const profile = player(site)
   if (profile.name) {
     result.details = 'Looking at player statistics'
-    result.state = profile.section ? `${profile.name} · ${profile.section}` : profile.name
+    result.state = profile.section
+      ? `${profile.name} · ${profile.section}`
+      : profile.name
     if (profile.head) {
       result.largeImageKey = profile.head
       result.largeImageText = profile.name
@@ -272,7 +306,9 @@ export function getCommunityData(site: CommunitySite, privacy: boolean, buttons:
       const url = new URL(document.location.href)
       url.search = ''
       url.hash = ''
-      result.buttons = [{ label: 'View Player Statistics', url: url.href }]
+      result.buttons = [
+        { label: 'View Player Statistics', url: url.href },
+      ]
       if (profile.head)
         result.largeImageUrl = url.href
     }

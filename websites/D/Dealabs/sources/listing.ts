@@ -25,7 +25,9 @@ const listingResolver: Resolver = {
     if (path.includes('/search')) {
       const urlParams = new URLSearchParams(document.location.search)
       const q = urlParams.get('q')
-      return (q && !settings.hideDealTitles) ? `"${q}"` : t.searchingEllipsis
+      return (q && !settings.hideDealTitles)
+        ? `"${q}"`
+        : t.searchingEllipsis
     }
     return t.hunting
   },

@@ -44,7 +44,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector(
         '#content-canvas > div.cap > div > h2 > a > span',
       )?.textContent
-      presenceData.buttons = [{ label: 'View Category', url: href }]
+      presenceData.buttons = [
+        { label: 'View Category', url: href },
+      ]
     }
   }
   else if (pathname === '/community') {
@@ -56,24 +58,32 @@ presence.on('UpdateData', async () => {
       .querySelector('#content-canvas > main > h1')
       ?.textContent
       ?.replace('Forums → ', '')
-    presenceData.buttons = [{ label: 'View Forum', url: href }]
+    presenceData.buttons = [
+      { label: 'View Forum', url: href },
+    ]
   }
   else if (pathname.includes('thread')) {
     presenceData.details = 'Reading a forum thread'
     presenceData.state = document.querySelector('#thread-title')?.textContent
-    presenceData.buttons = [{ label: 'View Thread', url: href }]
+    presenceData.buttons = [
+      { label: 'View Thread', url: href },
+    ]
   }
   else if (pathname.includes('/user/')) {
     presenceData.details = 'Viewing a user\'s profile'
     presenceData.state = document.querySelector('#user-data > h1')?.textContent
-    presenceData.buttons = [{ label: 'View Profile', url: href }]
+    presenceData.buttons = [
+      { label: 'View Profile', url: href },
+    ]
   }
   else if (pathname.includes('/author/')) {
     presenceData.details = 'Viewing games created by'
     presenceData.state = document.querySelector(
       '#categorylisting > h2 > a',
     )?.textContent
-    presenceData.buttons = [{ label: 'View Profile', url: href }]
+    presenceData.buttons = [
+      { label: 'View Profile', url: href },
+    ]
   }
   else if (pathname.includes('/register')) {
     presenceData.details = 'Registering'
@@ -87,14 +97,18 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/games/')) {
     presenceData.details = 'Browsing'
     presenceData.state = 'All Games'
-    presenceData.buttons = [{ label: 'Browse Games', url: href }]
+    presenceData.buttons = [
+      { label: 'Browse Games', url: href },
+    ]
   }
   else if (pathname.includes('game')) {
     presenceData.details = 'Playing'
     presenceData.state = document.querySelector(
       '#content-canvas > section.game-header.clearfix > h1',
     )?.textContent
-    presenceData.buttons = [{ label: 'Play Game', url: href }]
+    presenceData.buttons = [
+      { label: 'Play Game', url: href },
+    ]
   }
   else {
     presenceData.details = 'Page Not Found'

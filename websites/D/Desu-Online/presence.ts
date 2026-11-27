@@ -69,7 +69,9 @@ presence.on('UpdateData', async () => {
   }
   else {
     switch (pathname) {
-      case pathname.startsWith('/anime/') ? pathname : null:
+      case pathname.startsWith('/anime/')
+        ? pathname
+        : null:
         if (pathname === '/anime/') {
           presenceData.details = 'Przegląda serie...'
         }
@@ -90,7 +92,9 @@ presence.on('UpdateData', async () => {
           ]
         }
         break
-      case pathname.startsWith('/blog/') ? pathname : null:
+      case pathname.startsWith('/blog/')
+        ? pathname
+        : null:
         if (pathname === '/blog/') {
           presenceData.details = 'Przegląda bloga'
           presenceData.state = 'Strona 1'
@@ -105,20 +109,28 @@ presence.on('UpdateData', async () => {
             .querySelectorAll('h1')[0]
             ?.textContent
             ?.replace('\n', '')
-          presenceData.buttons = [{ label: 'Czytaj', url: href }]
+          presenceData.buttons = [
+            { label: 'Czytaj', url: href },
+          ]
         }
         break
-      case pathname.startsWith('/season/') ? pathname : null:
+      case pathname.startsWith('/season/')
+        ? pathname
+        : null:
         presenceData.details = 'Przegląda sezon'
         presenceData.state = document.querySelector('div.newseason > h1')?.textContent
         break
-      case pathname.startsWith('/label/') ? pathname : null:
+      case pathname.startsWith('/label/')
+        ? pathname
+        : null:
         if (pathname === '/label/news/')
           presenceData.details = 'Przegląda newsy...'
         else if (pathname === '/label/recenzja/')
           presenceData.details = 'Przegląda recenzje...'
         break
-      case pathname.startsWith('/genres/') ? pathname : null:
+      case pathname.startsWith('/genres/')
+        ? pathname
+        : null:
         presenceData.details = 'Przegląda gatunek'
         presenceData.state = `${
           document.querySelector('div.releases > h1 > span')?.textContent
@@ -126,7 +138,9 @@ presence.on('UpdateData', async () => {
         if (pathname.includes('page'))
           presenceData.state += ` (Strona ${pathname.split('/')[4]})`
         break
-      case pathname.startsWith('/studio/') ? pathname : null:
+      case pathname.startsWith('/studio/')
+        ? pathname
+        : null:
         presenceData.details = 'Przegląda studio'
         presenceData.state = `${
           document.querySelector('div.releases > h1 > span')?.textContent
@@ -134,7 +148,9 @@ presence.on('UpdateData', async () => {
         if (pathname.includes('page'))
           presenceData.state += ` (Strona ${pathname.split('/')[4]})`
         break
-      case document.querySelector('div.video-content') ? pathname : null: {
+      case document.querySelector('div.video-content')
+        ? pathname
+        : null: {
         privacy
           ? (presenceData.name = 'Desu-Online')
           : (presenceData.name = document.querySelector('div.det > h3')!.textContent!)

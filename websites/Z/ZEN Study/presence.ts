@@ -89,10 +89,14 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = isPlaying ? 'Watching a lesson' : 'Lesson paused'
     if (privacyMode) {
-      presenceData.state = progressText ? `Learning（${progressText}）` : 'Learning'
+      presenceData.state = progressText
+        ? `Learning（${progressText}）`
+        : 'Learning'
     }
     else {
-      presenceData.state = progressText ? `${lessonTitle}（${progressText}）` : lessonTitle
+      presenceData.state = progressText
+        ? `${lessonTitle}（${progressText}）`
+        : lessonTitle
     }
   }
   // Viewing a course
@@ -101,7 +105,9 @@ presence.on('UpdateData', async () => {
     if (url.includes('/evaluation_report/')) {
       const progressText = getProgressText()
       presenceData.details = 'Viewing report'
-      presenceData.state = progressText ? `集中モード（${progressText}）` : '集中モード'
+      presenceData.state = progressText
+        ? `集中モード（${progressText}）`
+        : '集中モード'
     }
     else {
       // Try to get course/subject title from various selectors
@@ -112,7 +118,9 @@ presence.on('UpdateData', async () => {
         || 'A course'
 
       presenceData.details = 'Studying'
-      presenceData.state = privacyMode ? 'A course' : courseTitle.trim()
+      presenceData.state = privacyMode
+        ? 'A course'
+        : courseTitle.trim()
     }
   }
   // Viewing a genre
@@ -140,8 +148,11 @@ presence.on('UpdateData', async () => {
   // どのページでも進捗バーがあれば state に進捗度を付け足す
   if (!privacyMode) {
     const globalProgressText = getProgressText()
-    if (globalProgressText && !(presenceData.state && presenceData.state.includes('進捗度')))
-      presenceData.state = presenceData.state ? `${presenceData.state}（${globalProgressText}）` : globalProgressText
+    if (globalProgressText && !(presenceData.state && presenceData.state.includes('進捗度'))) {
+      presenceData.state = presenceData.state
+        ? `${presenceData.state}（${globalProgressText}）`
+        : globalProgressText
+    }
 
     presence.setActivity(presenceData)
   }

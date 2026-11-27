@@ -52,7 +52,9 @@ function squarePoster(source: string | null | undefined) {
   const file = source?.match(/\/(?:api\/tmdb-image|t\/p)\/\w+\/([\w.-]+)/)?.[1]
   if (!file)
     return
-  return /\.jpe?g$/i.test(file) ? `${site}/api/poster-square/512/${file}` : `https://image.tmdb.org/t/p/w500/${file}`
+  return /\.jpe?g$/i.test(file)
+    ? `${site}/api/poster-square/512/${file}`
+    : `https://image.tmdb.org/t/p/w500/${file}`
 }
 
 function pagePoster() {
@@ -62,7 +64,9 @@ function pagePoster() {
 }
 
 function pageYear() {
-  return [...document.querySelectorAll('.detail__meta span')]
+  return [
+    ...document.querySelectorAll('.detail__meta span'),
+  ]
     .map(span => span.textContent?.trim())
     .find(value => /^\d{4}$/.test(value ?? ''))
 }
@@ -77,13 +81,17 @@ function partyTitle(pathname: string) {
   if (!titleDetails.has(key)) {
     titleDetails.set(key, {})
     fetch(`/api/tmdb/${key}?language=en-US`, { credentials: 'same-origin' })
-      .then(response => (response.ok ? response.json() : null))
+      .then(response => (response.ok
+        ? response.json()
+        : null))
       .then((data) => {
         if (!data)
           return
         const date: string = data.release_date || data.first_air_date || ''
         titleDetails.set(key, {
-          poster: data.poster_path ? squarePoster(`/t/p/w500${data.poster_path}`) : undefined,
+          poster: data.poster_path
+            ? squarePoster(`/t/p/w500${data.poster_path}`)
+            : undefined,
           year: date.slice(0, 4) || undefined,
         })
       })
@@ -97,7 +105,11 @@ function partySize(): PresenceData['party'] {
   if (!(members > 0))
     return
   const limit = Number(text('.party-room__count')?.match(/\/\s*(\d+)/)?.[1]) || 100
-  return { partyId: 'flystream-watch-party', partySize: members, maxPartySize: Math.max(members, limit) }
+  return {
+    partyId: 'flystream-watch-party',
+    partySize: members,
+    maxPartySize: Math.max(members, limit),
+  }
 }
 
 function titleLink(pathname: string) {
@@ -111,11 +123,20 @@ function titleLink(pathname: string) {
 
 function parseTitle(value: string) {
   const series = value.match(/^(.+) S(\d+)E(\d+)$/)
-  if (series)
-    return { name: series[1]!, season: Number(series[2]), episode: Number(series[3]) }
+  if (series) {
+    return {
+      name: series[1]!,
+      season: Number(series[2]),
+      episode: Number(series[3]),
+    }
+  }
   const anime = value.match(/^(.+) E(\d+)$/)
-  if (anime)
-    return { name: anime[1]!, episode: Number(anime[2]) }
+  if (anime) {
+    return {
+      name: anime[1]!,
+      episode: Number(anime[2]),
+    }
+  }
   return { name: value }
 }
 
@@ -124,7 +145,9 @@ function playback(presenceData: PresenceData, video: HTMLVideoElement, line?: st
   presenceData.statusDisplayType = StatusDisplayType.Details
   presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
   presenceData.smallImageText = video.paused ? strings.pause : strings.play
-  const state = video.paused ? [line, 'Paused'].filter(Boolean).join(' · ') : line
+  const state = video.paused
+    ? [line, 'Paused'].filter(Boolean).join(' · ')
+    : line
   if (state)
     presenceData.state = state
   if (video.paused)
@@ -165,14 +188,23 @@ presence.on('UpdateData', async () => {
     }
     else {
       const title = parseTitle(playerTitle)
-      const party = inParty ? partyTitle(pathname) : undefined
+      const party = inParty
+        ? partyTitle(pathname)
+        : undefined
       const episodeName = text('.rp__episode-card.is-active .rp__episode-card-title')
       let line = title.season
         ? `S${title.season} E${title.episode}`
-        : title.episode ? `Episode ${title.episode}` : pageYear() ?? party?.year
+        : title.episode
+          ? `Episode ${title.episode}`
+          : pageYear() ?? party?.year
       if (inParty) {
         const size = partySize()
-        line = [line, size ? `Watch party ${size.partySize}/${size.maxPartySize}` : 'Watch party'].filter(Boolean).join(' · ')
+        line = [
+          line,
+          size
+            ? `Watch party ${size.partySize}/${size.maxPartySize}`
+            : 'Watch party',
+        ].filter(Boolean).join(' · ')
       }
       else if (line && title.episode && episodeName) {
         line = `${line} · ${episodeName}`
@@ -181,8 +213,11 @@ presence.on('UpdateData', async () => {
       playback(presenceData, video, line)
       if (covers)
         presenceData.largeImageKey = pagePoster() ?? party?.poster ?? ActivityAssets.Logo
-      if (buttons && link)
-        presenceData.buttons = [{ label: 'Watch on FlyStream', url: link }]
+      if (buttons && link) {
+        presenceData.buttons = [
+          { label: 'Watch on FlyStream', url: link },
+        ]
+      }
     }
     presence.setActivity(presenceData)
     return
@@ -191,7 +226,9 @@ presence.on('UpdateData', async () => {
   const trailer = document.querySelector<HTMLVideoElement>('.card-trailer-theater video')
   if (trailer && document.querySelector('.card-trailer-theater-open') && Number.isFinite(trailer.duration)) {
     presenceData.details = 'Watching a trailer'
-    playback(presenceData, trailer, privacy ? undefined : text('.card-trailer-theater__heading h2'))
+    playback(presenceData, trailer, privacy
+      ? undefined
+      : text('.card-trailer-theater__heading h2'))
     if (covers && !privacy)
       presenceData.largeImageKey = squarePoster(trailer.poster) ?? ActivityAssets.Logo
     presence.setActivity(presenceData)
@@ -210,7 +247,9 @@ presence.on('UpdateData', async () => {
   }
   else if (inParty) {
     const readying = text('.party-head__title')
-    const picked = readying && readying !== 'Watch party' ? readying : undefined
+    const picked = readying && readying !== 'Watch party'
+      ? readying
+      : undefined
     presenceData.details = picked ? 'Watch party · getting ready' : 'In a watch party'
     presenceData.state = picked ?? 'In the lobby'
     if (covers && readying)
@@ -230,15 +269,26 @@ presence.on('UpdateData', async () => {
   else if (titlePage) {
     const title = text('.detail__title') || document.querySelector<HTMLImageElement>('.detail__logo')?.alt
     const year = pageYear()
-    const kind = link?.includes('/movie/') || first === 'nextended' ? 'a movie' : link?.includes('/tv/') ? 'a show' : link?.includes('/anime/') ? 'an anime' : 'a title'
-    const label = title && year ? `${title} (${year})` : title || year
+    const kind = link?.includes('/movie/') || first === 'nextended'
+      ? 'a movie'
+      : link?.includes('/tv/')
+        ? 'a show'
+        : link?.includes('/anime/')
+          ? 'an anime'
+          : 'a title'
+    const label = title && year
+      ? `${title} (${year})`
+      : title || year
     presenceData.details = `Looking at ${kind}`
     if (label)
       presenceData.state = label
     if (covers)
       presenceData.largeImageKey = pagePoster() ?? ActivityAssets.Logo
-    if (buttons && title)
-      presenceData.buttons = [{ label: 'Open on FlyStream', url: link ?? `${site}${pathname}` }]
+    if (buttons && title) {
+      presenceData.buttons = [
+        { label: 'Open on FlyStream', url: link ?? `${site}${pathname}` },
+      ]
+    }
   }
   else if (first === 'person') {
     presenceData.details = 'Looking at the cast'

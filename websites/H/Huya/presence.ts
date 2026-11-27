@@ -115,7 +115,9 @@ presence.on('UpdateData', async () => {
     if (title && streamer)
       lastStream = { path: pathname, title, streamer }
 
-    const stream = lastStream?.path === pathname ? lastStream : undefined
+    const stream = lastStream?.path === pathname
+      ? lastStream
+      : undefined
 
     if (stream) {
       if (privacy) {

@@ -49,14 +49,18 @@ presence.on('UpdateData', async () => {
           document.querySelector<HTMLInputElement>('input[name=\'tier\']')?.value
         }`
         const name = document.querySelector<HTMLInputElement>('input[name=\'name\']')?.value
-        presenceDataSlide.state = `Nom : ${name === '' ? 'aucun nom' : name}`
+        presenceDataSlide.state = `Nom : ${name === ''
+          ? 'aucun nom'
+          : name}`
         slideshow.addSlide('nameSlide', presenceDataSlide, 5000)
         slideshow.addSlide('tierSlide', presenceData, 5000)
       }
       else if (pathArr.length > 2) {
         presenceData.details = 'Regarde l\'équipe'
         presenceData.state = document.querySelector('h1')?.textContent
-        presenceData.buttons = [{ label: 'Voir l\'Equipe', url: href }]
+        presenceData.buttons = [
+          { label: 'Voir l\'Equipe', url: href },
+        ]
       }
       break
     case 'pokemons':
@@ -69,7 +73,9 @@ presence.on('UpdateData', async () => {
           ?.split('de ')[1]
         presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.art-pokemon')?.src
         presenceData.smallImageKey = Assets.Reading
-        presenceData.buttons = [{ label: 'Voir la Fiche', url: href }]
+        presenceData.buttons = [
+          { label: 'Voir la Fiche', url: href },
+        ]
       }
       break
     case 'tiers':
@@ -81,11 +87,15 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Génération ${
         document.querySelector('div.labeled > a')?.textContent
       }`
-      presenceData.buttons = [{ label: 'Voir la Liste', url: href }]
+      presenceData.buttons = [
+        { label: 'Voir la Liste', url: href },
+      ]
       break
     case 'items':
     case 'moves': {
-      const caseString = startPath === 'moves' ? 'capacités' : 'objets'
+      const caseString = startPath === 'moves'
+        ? 'capacités'
+        : 'objets'
       presenceData.details = `Parcours la liste des ${caseString}`
       if (pathArr.length > 2) {
         presenceData.details = `Lit la fiche ${caseString.substring(
@@ -94,13 +104,17 @@ presence.on('UpdateData', async () => {
         )}`
         presenceData.state = document.querySelector('h1')?.textContent
         presenceData.smallImageKey = Assets.Reading
-        presenceData.buttons = [{ label: 'Voir la Fiche', url: href }]
+        presenceData.buttons = [
+          { label: 'Voir la Fiche', url: href },
+        ]
       }
       break
     }
     case 'abilities':
     case 'types': {
-      const caseString = startPath === 'types' ? 'types' : 'talents'
+      const caseString = startPath === 'types'
+        ? 'types'
+        : 'talents'
       presenceData.details = `Regarde la liste des ${caseString}`
       if (pathArr.length > 2) {
         presenceData.details = `Parcours la liste du ${caseString.substring(
@@ -135,12 +149,18 @@ presence.on('UpdateData', async () => {
         presenceData.details = staticDatas[startPath]?.[1]
         presenceData.state = document.querySelector('h1')?.textContent
         presenceData.largeImageKey = document.querySelector<HTMLImageElement>('div > img')?.src
-        presenceData.buttons = [{ label: 'Consulter la page', url: href }]
+        presenceData.buttons = [
+          { label: 'Consulter la page', url: href },
+        ]
       }
       break
     default:
-      if (Object.keys(staticPages).includes(startPath!))
-        presenceData = { ...presenceData, ...staticPages[startPath!] }
+      if (Object.keys(staticPages).includes(startPath!)) {
+        presenceData = {
+          ...presenceData,
+          ...staticPages[startPath!],
+        }
+      }
   }
 
   if ((privacy || !showButtons) && presenceData.buttons)

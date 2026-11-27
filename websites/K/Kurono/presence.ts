@@ -28,12 +28,19 @@ async function seasonLabel(slug: string, folder: string): Promise<string | undef
 
 // The player shows the series title directly above "S01 · EP 3 · Episode title".
 function episodeInfo(): { series: string, season: number, episode: number, title?: string } | null {
-  const label = [...document.querySelectorAll('p')].find(p => /^S\d+ · EP \d+/.test(p.textContent?.trim() ?? ''))
+  const label = [
+    ...document.querySelectorAll('p'),
+  ].find(p => /^S\d+ · EP \d+/.test(p.textContent?.trim() ?? ''))
   const series = label?.previousElementSibling?.textContent?.trim()
   const match = label?.textContent?.trim().match(/^S(\d+) · EP (\d+)(?: · (.+))?/)
   if (!match || !series)
     return null
-  return { series, season: Number(match[1]), episode: Number(match[2]), title: match[3] }
+  return {
+    series,
+    season: Number(match[1]),
+    episode: Number(match[2]),
+    title: match[3],
+  }
 }
 
 presence.on('UpdateData', async () => {
@@ -57,7 +64,9 @@ presence.on('UpdateData', async () => {
       data.largeImageText = info.title ?? info.series
       data.detailsUrl = `https://kurono.nl/series/${slug}`
       data.statusDisplayType = StatusDisplayType.Details
-      data.buttons = [{ label: 'Watch Episode', url: href }]
+      data.buttons = [
+        { label: 'Watch Episode', url: href },
+      ]
     }
     else {
       data.details = 'Watching an anime'

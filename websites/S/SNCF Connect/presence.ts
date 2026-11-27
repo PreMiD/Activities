@@ -58,13 +58,17 @@ presence.on('UpdateData', async () => {
   else if (path?.includes('/search/od')) {
     [origin, destination] = document.querySelectorAll<HTMLInputElement>('input.MuiInputBase-input')
     presenceData.details = privacy ? strings.searchingItinerariesToALocation : strings.searchingItineraries
-    presenceData.state = privacy ? '' : `${strings.departure?.replace('{0}', origin?.value || 'noData')} • ${strings.arrival?.replace('{0}', destination?.value || 'noData')}`
+    presenceData.state = privacy
+      ? ''
+      : `${strings.departure?.replace('{0}', origin?.value || 'noData')} • ${strings.arrival?.replace('{0}', destination?.value || 'noData')}`
   }
   else if (path?.includes('/doorToDoor/itineraries')) {
     [origin, destination] = document.querySelectorAll('[data-test="place"]');
     [originTime, destinationTime] = document.querySelectorAll('[data-test="time-label"]')
     presenceData.details = privacy ? strings.viewingDetailsOfAnItinerary : strings.viewingDetailsOfTheItinerary
-    presenceData.state = privacy ? '' : `${strings.departure?.replace('{0}', origin?.textContent?.trim() || 'noData')} (${originTime?.textContent?.trim() || 'noData'}) • ${strings.arrival?.replace('{0}', destination?.textContent?.trim() || 'noData')} (${destinationTime?.textContent?.trim() || 'noData'})`
+    presenceData.state = privacy
+      ? ''
+      : `${strings.departure?.replace('{0}', origin?.textContent?.trim() || 'noData')} (${originTime?.textContent?.trim() || 'noData'}) • ${strings.arrival?.replace('{0}', destination?.textContent?.trim() || 'noData')} (${destinationTime?.textContent?.trim() || 'noData'})`
   }
   else if (path?.includes('/shop/results/outward')) {
     [origin, destination] = document.querySelectorAll('[data-test="place"]');
@@ -72,7 +76,9 @@ presence.on('UpdateData', async () => {
     const outboundSelected = document.querySelector('.MuiDrawer-modal')
     if (outboundSelected) {
       presenceData.details = privacy ? strings.ratesOutbound : strings.rateOutbound
-      presenceData.state = privacy ? '' : `${strings.departure?.replace('{0}', origin?.textContent?.trim() || 'noData')} (${originTime?.textContent?.trim() || 'noData'}) • ${strings.arrival?.replace('{0}', destination?.textContent?.trim() || 'noData')} (${destinationTime?.textContent?.trim() || 'noData'})`
+      presenceData.state = privacy
+        ? ''
+        : `${strings.departure?.replace('{0}', origin?.textContent?.trim() || 'noData')} (${originTime?.textContent?.trim() || 'noData'}) • ${strings.arrival?.replace('{0}', destination?.textContent?.trim() || 'noData')} (${destinationTime?.textContent?.trim() || 'noData'})`
     }
     else {
       presenceData.details = strings.ratesOutbound
@@ -84,7 +90,9 @@ presence.on('UpdateData', async () => {
     const inboundSelected = document.querySelector('.MuiDrawer-modal')
     if (inboundSelected) {
       presenceData.details = privacy ? strings.ratesInbound : strings.rateInbound
-      presenceData.state = privacy ? '' : `${strings.departure?.replace('{0}', origin?.textContent?.trim() || 'noData')} (${originTime?.textContent?.trim() || 'noData'}) • ${strings.arrival?.replace('{0}', destination?.textContent?.trim() || 'noData')} (${destinationTime?.textContent?.trim() || 'noData'})`
+      presenceData.state = privacy
+        ? ''
+        : `${strings.departure?.replace('{0}', origin?.textContent?.trim() || 'noData')} (${originTime?.textContent?.trim() || 'noData'}) • ${strings.arrival?.replace('{0}', destination?.textContent?.trim() || 'noData')} (${destinationTime?.textContent?.trim() || 'noData'})`
     }
     else {
       presenceData.details = strings.ratesInbound
@@ -98,7 +106,9 @@ presence.on('UpdateData', async () => {
   }
   else if (path?.includes('/trips/detail')) {
     presenceData.details = privacy ? strings.viewingDetailsOfATicket : strings.viewingDetailsOfTheTicket
-    presenceData.state = privacy ? '' : document.querySelector('main h1')?.textContent || 'noData'
+    presenceData.state = privacy
+      ? ''
+      : document.querySelector('main h1')?.textContent || 'noData'
   }
   else if (path?.includes('/trips')) {
     presenceData.details = strings.viewingTickets
@@ -108,19 +118,29 @@ presence.on('UpdateData', async () => {
     const ileDeFranceSelect = document.querySelector('button[aria-pressed="true"]')
     const regionSelect = document.querySelector('span.Mui-checked')?.previousElementSibling
     presenceData.details = strings.viewingTrafficInfo
-    presenceData.state = privacy ? '' : `${categorySelected?.textContent?.trim() || 'noData'}`
+    presenceData.state = privacy
+      ? ''
+      : `${categorySelected?.textContent?.trim() || 'noData'}`
     if (ileDeFranceSelect) {
-      presenceData.state += privacy ? '' : ` • ${ileDeFranceSelect?.getAttribute('aria-label') || 'noData'}`
+      presenceData.state += privacy
+        ? ''
+        : ` • ${ileDeFranceSelect?.getAttribute('aria-label') || 'noData'}`
     }
     else if (regionSelect) {
-      presenceData.state += privacy ? '' : ` • ${regionSelect?.textContent?.trim() || 'noData'}`
+      presenceData.state += privacy
+        ? ''
+        : ` • ${regionSelect?.textContent?.trim() || 'noData'}`
     }
   }
   else if (path?.includes('/station-timetable/results')) {
     const trainInfos = document.querySelector('#modal-header-title')
     const departureTabSelected = document.querySelector('button#tab-departures[aria-selected="true"]')
-    presenceData.details = privacy ? (departureTabSelected ? strings.viewingADepartureTimes : strings.viewingAnArrivalTimes) : (departureTabSelected ? strings.viewingDepartureTimes : strings.viewingArrivalTimes)
-    presenceData.state = privacy ? '' : document.querySelector('main h1')?.textContent || 'noData'
+    presenceData.details = privacy
+      ? (departureTabSelected ? strings.viewingADepartureTimes : strings.viewingAnArrivalTimes)
+      : (departureTabSelected ? strings.viewingDepartureTimes : strings.viewingArrivalTimes)
+    presenceData.state = privacy
+      ? ''
+      : document.querySelector('main h1')?.textContent || 'noData'
     if (trainInfos && !privacy) {
       const stations = document.querySelectorAll('div[aria-labelledby="modal-header-title"] ul[role="list"]:last-child li span[data-test="timeline-station"]')
       const arrivalStation = document.querySelectorAll('div[aria-labelledby="modal-header-title"] ul[role="list"]:last-child li div[data-test="timeline-departure-time"] span')

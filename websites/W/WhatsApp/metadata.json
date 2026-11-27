@@ -22,7 +22,7 @@
   },
   "url": "web.whatsapp.com",
   "regExp": "^https?[:][/][/]web[.]whatsapp[.]com[/]",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WhatsApp/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WhatsApp/assets/thumbnail.jpg",
   "color": "#0dc143",

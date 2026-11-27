@@ -37,7 +37,9 @@ function getHeadTitle(opts?: {
       || document.querySelector('head > title')?.textContent?.trim()
       || ''
 
-  let t = preferOG ? og || tw || tag : tag || og || tw
+  let t = preferOG
+    ? og || tw || tag
+    : tag || og || tw
   if (!t)
     return null
 
@@ -114,7 +116,9 @@ presence.on('UpdateData', async () => {
       break
 
     default:
-      presenceData.details = `Browsing${title === 'Dicoding Indonesia' ? '...' : `: ${title}`}`
+      presenceData.details = `Browsing${title === 'Dicoding Indonesia'
+        ? '...'
+        : `: ${title}`}`
       break
   }
 

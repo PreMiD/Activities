@@ -45,9 +45,15 @@ presence.on('UpdateData', async () => {
   const { pathname } = document.location
 
   if (pathname.includes('/products')) {
-    presenceData.details = !privacyMode ? getCourseTitle() : 'Viewing a course details'
-    presenceData.state = !privacyMode ? getCreatorName() : ''
-    presenceData.largeImageKey = !privacyMode ? await getCourseThumbnail() : ''
+    presenceData.details = !privacyMode
+      ? getCourseTitle()
+      : 'Viewing a course details'
+    presenceData.state = !privacyMode
+      ? getCreatorName()
+      : ''
+    presenceData.largeImageKey = !privacyMode
+      ? await getCourseThumbnail()
+      : ''
     delete presenceData.smallImageKey
   }
   else if (pathname.includes('/cart')) {
@@ -64,8 +70,12 @@ presence.on('UpdateData', async () => {
       delete presenceData.state
   }
   else if (pathname.includes('/classroom')) {
-    presenceData.details = !privacyMode ? getWatchingCourseTitle() : 'Watching a course'
-    presenceData.state = !privacyMode ? getWatchingChapter() : ''
+    presenceData.details = !privacyMode
+      ? getWatchingCourseTitle()
+      : 'Watching a course'
+    presenceData.state = !privacyMode
+      ? getWatchingChapter()
+      : ''
     presenceData.smallImageKey = Assets.Viewing
 
     if (iFrameData.video && !privacyMode) {
@@ -96,10 +106,12 @@ presence.on('UpdateData', async () => {
       ]
     }
     else {
-      presenceData.buttons = [{
-        label: 'Favorite',
-        url: favoriteCourseURL,
-      }]
+      presenceData.buttons = [
+        {
+          label: 'Favorite',
+          url: favoriteCourseURL,
+        },
+      ]
     }
   }
 

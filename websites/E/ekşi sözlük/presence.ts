@@ -27,7 +27,9 @@ presence.on('UpdateData', async () => {
     presence.setActivity({
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/E/ek%C5%9Fi%20s%C3%B6zl%C3%BCk/assets/logo.png',
       details: 'Biri\'ne göz atıyor:',
-      state: who && who.textContent ? who.textContent : 'Belirsiz',
+      state: who && who.textContent
+        ? who.textContent
+        : 'Belirsiz',
       startTimestamp: Math.floor(Date.now() / 1000),
     })
   }
@@ -43,7 +45,9 @@ presence.on('UpdateData', async () => {
     presence.setActivity({
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/E/ek%C5%9Fi%20s%C3%B6zl%C3%BCk/assets/logo.png',
       details: 'Bir şey arıyor:',
-      state: entry && entry.textContent ? entry.textContent : 'Belirsiz',
+      state: entry && entry.textContent
+        ? entry.textContent
+        : 'Belirsiz',
       smallImageKey: Assets.Search,
       startTimestamp: Math.floor(Date.now() / 1000),
     })

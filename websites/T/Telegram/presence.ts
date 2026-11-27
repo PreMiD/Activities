@@ -55,7 +55,9 @@ function setPresenceData(
       : Assets.Reading
     presenceData.smallImageText = textArea?.textContent && textArea.textContent.length >= 1
       ? 'Typing a message'
-      : `Reading ${messagesCount} message${(messagesCount ?? 0) > 1 ? 's' : ''}`
+      : `Reading ${messagesCount} message${(messagesCount ?? 0) > 1
+        ? 's'
+        : ''}`
   }
   else if (isLoggedIn) {
     presenceData.details = 'Logged in'

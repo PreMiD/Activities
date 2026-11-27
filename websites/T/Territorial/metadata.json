@@ -14,7 +14,7 @@
     "www.territorial.io"
   ],
   "regExp": "^https?[:][/][/](www[.])?territorial[.]io[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Territorial/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Territorial/assets/thumbnail.jpg",
   "color": "#07283C",

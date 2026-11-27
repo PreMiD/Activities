@@ -115,7 +115,11 @@ presence.on('UpdateData', async () => {
           .split(/\D+/)
           .filter(Boolean)
           .map(Number)
-        const finLabel = finMine > finTheirs ? strings.victory : finMine < finTheirs ? strings.defeat : strings.tied
+        const finLabel = finMine > finTheirs
+          ? strings.victory
+          : finMine < finTheirs
+            ? strings.defeat
+            : strings.tied
 
         presenceData.details = formatLabel
         presenceData.state = `${finLabel} ${finMine}-${finTheirs}`
@@ -129,7 +133,11 @@ presence.on('UpdateData', async () => {
       const { _pbScores } = await presence.getPageVariable<{ _pbScores?: { p1: number, p2: number } }>('_pbScores')
       const mine = _pbScores?.p1 ?? 0
       const theirs = _pbScores?.p2 ?? 0
-      const resultLabel = mine > theirs ? strings.winning : mine < theirs ? strings.losing : strings.tied
+      const resultLabel = mine > theirs
+        ? strings.winning
+        : mine < theirs
+          ? strings.losing
+          : strings.tied
 
       presenceData.details = `${strings.inMatch}: ${formatLabel}`
       presenceData.state = `${resultLabel} ${mine}-${theirs}`
@@ -142,7 +150,9 @@ presence.on('UpdateData', async () => {
       const query = document.querySelector<HTMLInputElement>('#search-input')?.value
 
       presenceData.details = strings.searchingCards
-      presenceData.state = query ? `"${query}"` : undefined
+      presenceData.state = query
+        ? `"${query}"`
+        : undefined
       presenceData.smallImageKey = Assets.Search
       break
     }

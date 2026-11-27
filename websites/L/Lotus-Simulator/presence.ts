@@ -111,7 +111,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = title
 
         if (showButtons) {
-          presenceData.buttons = [{ label: 'View Post', url: href }]
+          presenceData.buttons = [
+            { label: 'View Post', url: href },
+          ]
         }
       }
       else if (href.includes('features-de')) {
@@ -141,10 +143,14 @@ presence.on('UpdateData', async () => {
           presenceData.details = 'Viewing Image'
 
           const imageAuthor = getAuthor()
-          presenceData.state = imageAuthor ? `${imageTitle} by ${imageAuthor}` : imageTitle
+          presenceData.state = imageAuthor
+            ? `${imageTitle} by ${imageAuthor}`
+            : imageTitle
 
           if (showButtons) {
-            presenceData.buttons = [{ label: 'View Image', url: href }]
+            presenceData.buttons = [
+              { label: 'View Image', url: href },
+            ]
           }
 
           const avatarUrl = getAvatar()
@@ -210,10 +216,14 @@ presence.on('UpdateData', async () => {
       else if (href.includes('entry') && fileTitle) {
         const fileAuthor = getAuthor()
         presenceData.details = 'Viewing File'
-        presenceData.state = fileAuthor ? `${fileTitle} by ${fileAuthor}` : fileTitle
+        presenceData.state = fileAuthor
+          ? `${fileTitle} by ${fileAuthor}`
+          : fileTitle
 
         if (showButtons) {
-          presenceData.buttons = [{ label: 'View File', url: href }]
+          presenceData.buttons = [
+            { label: 'View File', url: href },
+          ]
         }
 
         const previewImage = getAvatar()
@@ -235,7 +245,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = productTitle
 
         if (showButtons) {
-          presenceData.buttons = [{ label: 'View Product', url: href }]
+          presenceData.buttons = [
+            { label: 'View Product', url: href },
+          ]
         }
       }
     }

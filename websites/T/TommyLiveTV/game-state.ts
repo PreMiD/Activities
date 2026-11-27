@@ -148,10 +148,16 @@ function activity(details: string, state = '', options: ActivityOptions = {}): P
   const common = {
     name,
     details,
-    ...(visibleState ? { state: visibleState } : {}),
+    ...(visibleState
+      ? { state: visibleState }
+      : {}),
     largeImageKey: imageUrl,
-    ...(smallImageKey ? { smallImageKey } : {}),
-    ...(smallImageText ? { smallImageText } : {}),
+    ...(smallImageKey
+      ? { smallImageKey }
+      : {}),
+    ...(smallImageText
+      ? { smallImageText }
+      : {}),
   }
 
   if (type === ActivityType.Watching) {
@@ -162,10 +168,12 @@ function activity(details: string, state = '', options: ActivityOptions = {}): P
     }
     if (pageUrl) {
       data.detailsUrl = pageUrl
-      data.buttons = [{
-        label: 'Watch on TommyLiveTV',
-        url: pageUrl,
-      }]
+      data.buttons = [
+        {
+          label: 'Watch on TommyLiveTV',
+          url: pageUrl,
+        },
+      ]
     }
     return data
   }

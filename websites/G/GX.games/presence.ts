@@ -46,7 +46,9 @@ presence.on('UpdateData', async () => {
       const tags = document.querySelectorAll('[href*=\'tagAlias\'] > span')
       presenceData.details = document.querySelector('h3')
       presenceData.state = `${tags[0]?.textContent}, ${tags[1]?.textContent}, ${tags[2]?.textContent}`
-      presenceData.buttons = [{ label: 'View Game', url: href }]
+      presenceData.buttons = [
+        { label: 'View Game', url: href },
+      ]
       if (cover) {
         presenceData.largeImageKey = document.querySelector<HTMLMetaElement>(
           'meta[property=\'og:image\']',
@@ -59,7 +61,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Challenge: ${
         document.querySelector('main h6')?.textContent
       }`
-      presenceData.buttons = [{ label: 'View Game', url: href }]
+      presenceData.buttons = [
+        { label: 'View Game', url: href },
+      ]
       if (cover) {
         presenceData.largeImageKey = document.querySelector<HTMLMetaElement>(
           'meta[property=\'og:image\']',
@@ -80,7 +84,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${
         document.querySelector('main [href=\'/\'] ')?.parentElement?.lastChild?.textContent
       }`
-      presenceData.buttons = [{ label: 'View Page', url: href }]
+      presenceData.buttons = [
+        { label: 'View Page', url: href },
+      ]
       break
     }
     case 'profile': {

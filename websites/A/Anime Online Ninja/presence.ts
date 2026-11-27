@@ -59,14 +59,18 @@ async function getEpisode(text: string) {
   const episodeNumber = sm?.[2] ?? '1'
   const seasonAnime = `Season ${seasonNumber}`
   const numberEpisode = `Episode ${episodeNumber}`
-  const epDesc = ((p3 => (p3 && /temporada/i.test(p3.textContent || '')) ? p3.nextElementSibling?.textContent : p3?.textContent)(document.querySelector('#info > div > p:nth-child(3)')) || 'Viendo en Anime Online Ninja').trim().slice(0, 123)
+  const epDesc = ((p3 => (p3 && /temporada/i.test(p3.textContent || ''))
+    ? p3.nextElementSibling?.textContent
+    : p3?.textContent)(document.querySelector('#info > div > p:nth-child(3)')) || 'Viendo en Anime Online Ninja').trim().slice(0, 123)
   const nameAnimeUrl = document
     .querySelector('#single > div.content.right > div.pag_episodes > div:nth-child(2) > a')
     ?.getAttribute('href') ?? undefined
 
   const img = document.querySelector<HTMLImageElement>('#dt_galery img.lazy')
   const raw = img?.dataset?.src ?? img?.getAttribute('src') ?? img?.src ?? ActivityAssets.Logo
-  const bannerImg = typeof raw === 'string' ? raw.trim().replace(/\r?\n/g, '') : ActivityAssets.Logo
+  const bannerImg = typeof raw === 'string'
+    ? raw.trim().replace(/\r?\n/g, '')
+    : ActivityAssets.Logo
 
   cacheEpisode = {
     text,

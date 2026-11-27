@@ -26,8 +26,15 @@ export function extToCountry(url: string): string {
     mx: 'Mexico',
   }
   let country: string
-  if (extension === 'com')
-    country = url.includes('irish') ? 'Ireland' : 'UK'
-  else country = extensionToCountry[extension!.toLowerCase()]!
-  return country ? ` (${country})` : ''
+  if (extension === 'com') {
+    country = url.includes('irish')
+      ? 'Ireland'
+      : 'UK'
+  }
+  else {
+    country = extensionToCountry[extension!.toLowerCase()]!
+  }
+  return country
+    ? ` (${country})`
+    : ''
 }

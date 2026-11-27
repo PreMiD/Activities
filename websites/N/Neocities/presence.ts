@@ -30,7 +30,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing a site:'
       presenceData.state = document.querySelector<HTMLSpanElement>('h2 > span')?.textContent
       presenceData.smallImageKey = Assets.Reading
-      presenceData.buttons = [{ label: 'View site', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View site', url: document.URL },
+      ]
     }
     else if (pathname === '/activity') {
       presenceData.details = 'Viewing Recent Activities'
@@ -61,7 +63,9 @@ presence.on('UpdateData', async () => {
     if (pathname.startsWith('/blog')) {
       presenceData.details = 'Reading a blog:'
       presenceData.state = document.title
-      presenceData.buttons = [{ label: 'Read blog', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'Read blog', url: document.URL },
+      ]
     }
   }
   else {

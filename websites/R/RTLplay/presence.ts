@@ -280,11 +280,15 @@ presence.on('UpdateData', async () => {
               presenceData.largeImageKey = await getThumbnail(
                 media.results.now.imageUrl,
               )
-              presenceData.state = media.results.now.artistName ? `${media.results.now.name} - ${media.results.now.artistName}` : getChannel(pathParts[3]!).name
+              presenceData.state = media.results.now.artistName
+                ? `${media.results.now.name} - ${media.results.now.artistName}`
+                : getChannel(pathParts[3]!).name
 
               if (usePresenceName && !useChannelName) {
                 const detail = media.results.now.programmeName || media.results.now.artistName
-                presenceData.name = detail ? strings.on.replace('{0}', detail).replace('{1}', presenceData.name) : presenceData.name
+                presenceData.name = detail
+                  ? strings.on.replace('{0}', detail).replace('{1}', presenceData.name)
+                  : presenceData.name
               }
 
               presenceData.largeImageText = strings.watchingLiveMusic
@@ -413,7 +417,9 @@ presence.on('UpdateData', async () => {
 
             if (usePresenceName && !useChannelName) {
               const detail = data.programmeName || data.artistName
-              presenceData.name = detail ? strings.on.replace('{0}', detail).replace('{1}', presenceData.name) : presenceData.name
+              presenceData.name = detail
+                ? strings.on.replace('{0}', detail).replace('{1}', presenceData.name)
+                : presenceData.name
             }
 
             if (useTimestamps && pathParts[2] !== 'live') {
@@ -666,7 +672,9 @@ presence.on('UpdateData', async () => {
         }
         else {
           mediaName = document.querySelector('h1[class*="__title"]')?.textContent || 'Unknown Media'
-          mediaType = document.querySelector('meta[property="og:type"]')?.getAttribute('content')?.includes('movie') ? 'Movie' : 'TVSeries'
+          mediaType = document.querySelector('meta[property="og:type"]')?.getAttribute('content')?.includes('movie')
+            ? 'Movie'
+            : 'TVSeries'
           description = document.querySelector('p[class*="__root"]')?.textContent || ''
           coverArt = document.querySelector('[class*="__img"]')?.getAttribute('src') ?? ''
         }
@@ -689,10 +697,18 @@ presence.on('UpdateData', async () => {
         const seasonElement = document.querySelector(seasonSelector)
         const genresArray = document.querySelectorAll(genresSelector)
 
-        let subtitle = mediaType === 'Movie' ? strings.movie : strings.tvshow
-        subtitle += yearElement ? `, ${yearElement.textContent}` : '' // Add Release Year
-        subtitle += seasonElement && mediaType === 'TVSeries' ? ` - ${seasonElement.textContent}` : '' // Add amount of seasons
-        subtitle += durationElement ? ` - ${durationElement.textContent}` : '' // Add Duration
+        let subtitle = mediaType === 'Movie'
+          ? strings.movie
+          : strings.tvshow
+        subtitle += yearElement
+          ? `, ${yearElement.textContent}`
+          : '' // Add Release Year
+        subtitle += seasonElement && mediaType === 'TVSeries'
+          ? ` - ${seasonElement.textContent}`
+          : '' // Add amount of seasons
+        subtitle += durationElement
+          ? ` - ${durationElement.textContent}`
+          : '' // Add Duration
 
         for (const element of genresArray) // Add Genres
           subtitle += ` - ${element.textContent}`

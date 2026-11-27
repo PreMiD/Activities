@@ -77,7 +77,9 @@ export class WebSocketServer implements TestRpc {
   private isSending = false
   async send() {
     this.resendOnConnect = true
-    if (this.server.clients.size === 0 || [...this.server.clients.values()].every(client => client.readyState !== WebSocket.OPEN)) {
+    if (this.server.clients.size === 0 || [
+      ...this.server.clients.values(),
+    ].every(client => client.readyState !== WebSocket.OPEN)) {
       return
     }
 
@@ -235,7 +237,9 @@ export class WebSocketServer implements TestRpc {
       client.terminate()
 
     await new Promise<void>((resolve, reject) => {
-      this.server.close(err => err ? reject(err) : resolve())
+      this.server.close(err => err
+        ? reject(err)
+        : resolve())
     })
   }
 }

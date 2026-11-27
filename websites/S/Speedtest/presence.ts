@@ -41,9 +41,13 @@ presence.on('UpdateData', async () => {
       // 27 & 29 = nothing + unit
       if (upload.length === 29) {
         presenceData.details = `Live results - Ping ${
-          ping.length === 27 ? 'Testing' : ping
+          ping.length === 27
+            ? 'Testing'
+            : ping
         } | Download ${
-          download.length === 29 ? 'Testing' : download
+          download.length === 29
+            ? 'Testing'
+            : download
         } | Upload Testing`
         presenceData.state = `ISP: ${isp} | Server: ${server}`
       }
@@ -202,9 +206,15 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = `Testing ${server}`
       presenceData.details = `Live results - Ping ${
-        ping.length === 27 ? 'Testing' : ping
-      } | Download ${download.length === 29 ? 'Testing' : download} | Upload  ${
-        upload.length === 29 ? 'Testing' : upload
+        ping.length === 27
+          ? 'Testing'
+          : ping
+      } | Download ${download.length === 29
+        ? 'Testing'
+        : download} | Upload  ${
+        upload.length === 29
+          ? 'Testing'
+          : upload
       }`
       presenceData.state = `ISP: ${isp} | Server: ${server}`
     }

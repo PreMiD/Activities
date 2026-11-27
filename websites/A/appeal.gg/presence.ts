@@ -10,7 +10,9 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 function getServerId(url: string): string | null {
   const match = url.match(/\/(\d{17,19})(?:[/?#]|$)/)
-  return match ? (match[1] ?? null) : null
+  return match
+    ? (match[1] ?? null)
+    : null
 }
 
 function getServerInfo(): { name: string, icon: string } | null {
@@ -181,7 +183,9 @@ presence.on('UpdateData', async () => {
 
   // Privacy Mode Override
   if (enablePrivacyMode) {
-    presenceData.details = hostname === 'dashboard.appeal.gg' ? 'Browsing dashboard' : 'Browsing page'
+    presenceData.details = hostname === 'dashboard.appeal.gg'
+      ? 'Browsing dashboard'
+      : 'Browsing page'
     delete presenceData.state
     delete presenceData.smallImageKey
     delete presenceData.smallImageText

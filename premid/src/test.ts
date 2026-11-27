@@ -152,8 +152,12 @@ export function test(name: string, fn: TestFn): void
  */
 export function test(name: string, options: TestOptions, fn: TestFn): void
 export function test(name: string, optionsOrFn: TestOptions | TestFn, maybeFn?: TestFn): void {
-  const options = typeof optionsOrFn === 'function' ? {} : optionsOrFn
-  const fn = typeof optionsOrFn === 'function' ? optionsOrFn : maybeFn
+  const options = typeof optionsOrFn === 'function'
+    ? {}
+    : optionsOrFn
+  const fn = typeof optionsOrFn === 'function'
+    ? optionsOrFn
+    : maybeFn
 
   if (!fn)
     throw new TypeError(`test "${name}" needs a function`)

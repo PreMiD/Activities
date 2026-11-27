@@ -42,7 +42,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/reader/column') && args[3]) {
     presenceData.details = 'Reading Column'
     presenceData.state = getTitle()
-    presenceData.buttons = [{ label: 'Read Column', url: href }]
+    presenceData.buttons = [
+      { label: 'Read Column', url: href },
+    ]
   }
   else if (pathname.startsWith('/ebook') && args[2]) {
     presenceData.details = 'Browsing Ebook'
@@ -51,7 +53,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/reader/ebook') && args[3]) {
     presenceData.details = 'Reading Ebook'
     presenceData.state = getTitle()
-    presenceData.buttons = [{ label: 'Read Ebook', url: href }]
+    presenceData.buttons = [
+      { label: 'Read Ebook', url: href },
+    ]
   }
   else if (pathname.startsWith('/essay') && args[2]) {
     presenceData.details = 'Browsing Essay'
@@ -60,7 +64,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/reader/essay') && args[3]) {
     presenceData.details = 'Reading Essay'
     presenceData.state = getTitle()
-    presenceData.buttons = [{ label: 'Read Essay', url: href }]
+    presenceData.buttons = [
+      { label: 'Read Essay', url: href },
+    ]
   }
   else if (pathname.startsWith('/people') && args[2]) {
     presenceData.details = 'Viewing User Profile'

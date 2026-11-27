@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "741505960895315979",
+    "name": "yodev"
+  },
+  "service": "YesWeHack Dojo",
+  "description": {
+    "en": "YesWeHack Dojo is a free training platform with lessons and capture-the-flag challenges for bug bounty hunters."
+  },
+  "url": "dojo-yeswehack.com",
+  "regExp": "^https?[:][/][/]dojo-yeswehack[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YesWeHack%20Dojo/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YesWeHack%20Dojo/assets/thumbnail.png",
+  "color": "#115e59",
+  "category": "other",
+  "tags": [
+    "hacking",
+    "cybersecurity",
+    "bug-bounty",
+    "training"
+  ],
+  "settings": [
+    {
+      "id": "showTimestamp",
+      "title": "Show timestamp",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show buttons",
+      "icon": "fas fa-mouse-pointer",
+      "value": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "hideProfileName",
+      "title": "Hide profile names",
+      "icon": "fas fa-eye-slash",
+      "value": false
+    }
+  ]
+}

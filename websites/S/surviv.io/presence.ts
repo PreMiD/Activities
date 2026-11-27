@@ -66,10 +66,14 @@ presence.on('UpdateData', async () => {
     killcount = document.querySelector('.ui-player-kills')?.textContent ?? undefined
 
     presenceData.details = `${killcount} kill${
-      Number.parseInt(killcount ?? '0') !== 1 ? 's' : ''
+      Number.parseInt(killcount ?? '0') !== 1
+        ? 's'
+        : ''
     } with ${alivecount} alive`
     presenceData.state = `${
-      gamemode !== '50v50' ? `${gametype} - ` : ''
+      gamemode !== '50v50'
+        ? `${gametype} - `
+        : ''
     }${gamemode}`
   }
   if (!presenceData.details)

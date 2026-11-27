@@ -48,7 +48,9 @@ export async function getChangedActivities(): Promise<{
     return cache
   }
 
-  const changedFiles = (isCI ? await getChangedFilesCi() : await getChangedFilesLocal())
+  const changedFiles = (isCI
+    ? await getChangedFilesCi()
+    : await getChangedFilesLocal())
     .map(file => ({
       ...file,
       path: resolve(process.cwd(), decodeUtf8Escapes(file.path)),
@@ -107,7 +109,9 @@ export async function getChangedActivities(): Promise<{
       return {
         metadata: {
           service,
-          apiVersion: versionized ? Number(apiVersion) : 1,
+          apiVersion: versionized
+            ? Number(apiVersion)
+            : 1,
           description: {
             en: 'No description available',
           },
@@ -159,7 +163,9 @@ async function getChangedFilesCi() {
 
   const files = gitDiffParser.parse(await response.text())
   return files.map(file => ({
-    path: file.type === 'delete' ? file.oldPath : file.newPath,
+    path: file.type === 'delete'
+      ? file.oldPath
+      : file.newPath,
     deleted: file.type === 'delete',
   }))
 }

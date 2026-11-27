@@ -57,7 +57,9 @@ presence.on('UpdateData', async () => {
     if (showGame && game) {
       presenceData.name = game
       presenceData.details = 'G123 でプレイ中'
-      const image = showImage ? getOgImage() : null
+      const image = showImage
+        ? getOgImage()
+        : null
       if (image) {
         presenceData.largeImageKey = image
         presenceData.smallImageKey = LOGO
@@ -83,7 +85,9 @@ presence.on('UpdateData', async () => {
   // ***** ゲーム詳細 (g123.jp/game/:slug) *****
   if (slug) {
     presenceData.details = 'ゲーム詳細を閲覧中'
-    const game = showGame ? getGameName() : null
+    const game = showGame
+      ? getGameName()
+      : null
     if (game)
       presenceData.state = game
   }

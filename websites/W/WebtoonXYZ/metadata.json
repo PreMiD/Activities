@@ -12,7 +12,7 @@
   },
   "url": "www.webtoon.xyz",
   "regExp": "^https?[:][/][/](www[.])?webtoon[.]xyz[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WebtoonXYZ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WebtoonXYZ/assets/thumbnail.png",
   "color": "#eb2e73",

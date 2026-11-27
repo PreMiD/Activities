@@ -12,7 +12,9 @@ let wasWatchingVideo = false
 
 function getVideo(): HTMLVideoElement | null {
   const v = document.querySelector<HTMLVideoElement>('video')
-  return v && v.readyState > 0 ? v : null
+  return v && v.readyState > 0
+    ? v
+    : null
 }
 
 function getAnimeTitle(): string {
@@ -43,7 +45,9 @@ function getAniListId(): string | null {
 
 function getAniListUrl(): string | null {
   const id = getAniListId()
-  return document.querySelector<HTMLAnchorElement>('a[href*="anilist.co/anime/"]')?.href ?? (id ? `https://anilist.co/anime/${id}` : null)
+  return document.querySelector<HTMLAnchorElement>('a[href*="anilist.co/anime/"]')?.href ?? (id
+    ? `https://anilist.co/anime/${id}`
+    : null)
 }
 
 function getSubDubMode(): string | null {
@@ -51,7 +55,9 @@ function getSubDubMode(): string | null {
 }
 
 function getGenres(): string {
-  return [...document.querySelectorAll<HTMLElement>('a[href*="catalog?genres"]')]
+  return [
+    ...document.querySelectorAll<HTMLElement>('a[href*="catalog?genres"]'),
+  ]
     .map(a => a.textContent?.trim())
     .filter(Boolean)
     .slice(0, 3)
@@ -106,7 +112,11 @@ presence.on(
           : animeTitle
 
       presenceData.details = animeTitle
-      presenceData.state = `${episodeNum !== null ? `Episode ${episodeNum}` : 'Unknown Episode'}${!hideSubType && subDub ? ` \u00B7 ${subDub}` : ''}`
+      presenceData.state = `${episodeNum !== null
+        ? `Episode ${episodeNum}`
+        : 'Unknown Episode'}${!hideSubType && subDub
+        ? ` \u00B7 ${subDub}`
+        : ''}`
       if (video) {
         const paused = video.paused
         presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
@@ -147,7 +157,9 @@ presence.on(
               { label: 'Watch Episode', url: href },
               { label: 'View on AniList', url: anilistUrl },
             ]
-          : [{ label: 'Watch Episode', url: href }]
+          : [
+              { label: 'Watch Episode', url: href },
+            ]
       }
       else {
         delete presenceData.buttons
@@ -187,7 +199,9 @@ presence.on(
               { label: 'View Anime', url: href },
               { label: 'View on AniList', url: anilistUrl },
             ]
-          : [{ label: 'View Anime', url: href }]
+          : [
+              { label: 'View Anime', url: href },
+            ]
       }
       else {
         delete presenceData.buttons
@@ -203,8 +217,12 @@ presence.on(
       const query = params.get('search')
       const genre = params.get('genres')
 
-      presenceData.details = query ? 'Searching' : genre ? 'Browsing genre' : strings.browse
-      presenceData.state = query ? `"${query}"` : (genre ?? 'All anime')
+      presenceData.details = query
+        ? 'Searching'
+        : genre ? 'Browsing genre' : strings.browse
+      presenceData.state = query
+        ? `"${query}"`
+        : (genre ?? 'All anime')
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = strings.browse
 

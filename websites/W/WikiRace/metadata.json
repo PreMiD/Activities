@@ -12,7 +12,7 @@
   },
   "url": "wiki-race.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wiki-race[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WikiRace/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WikiRace/assets/thumbnail.png",
   "color": "#3732AB",

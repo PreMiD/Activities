@@ -39,7 +39,10 @@ Pass an options object as the second argument to change the defaults:
 ```typescript
 test(
   'shows the video title',
-  { settings: { showTitle: true }, timeout: 60_000 },
+  {
+    settings: { showTitle: true },
+    timeout: 60_000
+  },
   async ({ page, activity }) => {
     // ...
   },

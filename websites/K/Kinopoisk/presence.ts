@@ -232,7 +232,9 @@ presence.on('UpdateData', async () => {
         }
         else if (videoPlayerWrapper.querySelector('section[data-tid="SportEventPlayerMeta"]')) { // Sport VOD's
           contentTitle = videoPlayerWrapper.querySelector<HTMLHeadingElement>('section[data-tid="SportEventPlayerMeta"] > header')?.textContent?.trim()
-          contentSerieTitle = [...videoPlayerWrapper.querySelectorAll<HTMLSpanElement>('section[data-tid="SportEventPlayerMeta"] div[data-tid="Scoreboard"] > span')].map(el => el.textContent.trim()).join(' - ')
+          contentSerieTitle = [
+            ...videoPlayerWrapper.querySelectorAll<HTMLSpanElement>('section[data-tid="SportEventPlayerMeta"] div[data-tid="Scoreboard"] > span'),
+          ].map(el => el.textContent.trim()).join(' - ')
         }
         else if (videoPlayerWrapper.querySelector('div[data-tid="HighlightPlayerMeta"]')) { // Sport Highlights
           contentTitle = videoPlayerWrapper.querySelector<HTMLHeadingElement>('div[data-tid="HighlightPlayerMeta"] > h4')?.textContent?.trim()

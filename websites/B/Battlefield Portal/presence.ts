@@ -116,7 +116,10 @@ presence.on('UpdateData', async () => {
 
   if (time)
     presenceData.startTimestamp = editingStamp
-  if (buttons)
-    presenceData.buttons = [{ label: 'View Experience', url }]
+  if (buttons) {
+    presenceData.buttons = [
+      { label: 'View Experience', url },
+    ]
+  }
   presence.setActivity(presenceData)
 })

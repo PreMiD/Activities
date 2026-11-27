@@ -144,7 +144,9 @@ presence.on('UpdateData', () => {
     || document.location.pathname.includes('/vi/')
   ) {
     const titleParts = document.title?.split('-') ?? []
-    const title = titleParts.length > 0 ? titleParts[0]?.trim() ?? '' : ''
+    const title = titleParts.length > 0
+      ? titleParts[0]?.trim() ?? ''
+      : ''
     presenceData.details = `Annonce ${title}`
 
     const adsPrice = getAdPrice()

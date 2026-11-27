@@ -90,12 +90,16 @@ presence.on('UpdateData', async () => {
       'jobset': {
         smallImageKey: Assets.Viewing,
         details: 'Looking at an Hydra jobset',
-        state: privacy ? undefined : pathArray.slice(2).join(':'),
+        state: privacy
+          ? undefined
+          : pathArray.slice(2).join(':'),
       },
       'job': {
         smallImageKey: Assets.Viewing,
         details: 'Looking at an Hydra job',
-        state: privacy ? undefined : pathArray.slice(2).join(':'),
+        state: privacy
+          ? undefined
+          : pathArray.slice(2).join(':'),
       },
       'build': {
         smallImageKey: Assets.Viewing,
@@ -103,7 +107,9 @@ presence.on('UpdateData', async () => {
           ? undefined
           : `Job: ${document.querySelectorAll('.page-header').item(0)?.textContent?.split(' ').at(-1)}`,
         details: 'Looking at an Hydra build',
-        state: privacy ? undefined : `Build ${pathArray[2]}`,
+        state: privacy
+          ? undefined
+          : `Build ${pathArray[2]}`,
       },
       'eval': {
         smallImageKey: Assets.Viewing,
@@ -111,7 +117,9 @@ presence.on('UpdateData', async () => {
           ? undefined
           : `Jobset: ${document.querySelectorAll('.page-header').item(0)?.textContent?.split(' ').at(-1)}`,
         details: 'Looking at an Hydra evaluation',
-        state: privacy ? undefined : `Evaluation ${pathArray[2]}`,
+        state: privacy
+          ? undefined
+          : `Evaluation ${pathArray[2]}`,
       },
     },
   }
@@ -140,7 +148,10 @@ presence.on('UpdateData', async () => {
   if (hostname in topLevelData) {
     const hostData: PresenceData = topLevelData[hostname]!
 
-    presenceData = { ...presenceData, ...hostData }
+    presenceData = {
+      ...presenceData,
+      ...hostData,
+    }
     presence.setActivity(presenceData)
     return
   }
@@ -149,7 +160,10 @@ presence.on('UpdateData', async () => {
     const hostData = advancedData[hostname]!
     if (pathArray[1]! in hostData) {
       const pathData: PresenceData = hostData[pathArray[1]!]!
-      presenceData = { ...presenceData, ...pathData }
+      presenceData = {
+        ...presenceData,
+        ...pathData,
+      }
       presence.setActivity(presenceData)
       return
     }
@@ -158,7 +172,10 @@ presence.on('UpdateData', async () => {
   switch (hostname) {
     case 'nixos.org':
       if (pathArray[1]! in homeData) {
-        presenceData = { ...presenceData, ...homeData[pathArray[1]!] }
+        presenceData = {
+          ...presenceData,
+          ...homeData[pathArray[1]!],
+        }
       }
       else {
         presenceData.largeImageKey = ActivityAssets.LogoRainbow

@@ -162,7 +162,9 @@ presence.on('UpdateData', async () => {
     ]
   }
   if (page) {
-    presenceData.state = page.length > 128 ? `${page.slice(0, 120)}...` : (page as string)
+    presenceData.state = page.length > 128
+      ? `${page.slice(0, 120)}...`
+      : (page as string)
   }
 
   /**

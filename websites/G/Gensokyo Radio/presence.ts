@@ -246,7 +246,9 @@ presence.on('UpdateData', async () => {
     if (articleMatch) {
       const [, articleTitle, articleType] = articleMatch
       presenceData.details
-        = (articleType ?? '').toLowerCase() === 'news' ? 'Reading through news' : 'Reading a review'
+        = (articleType ?? '').toLowerCase() === 'news'
+          ? 'Reading through news'
+          : 'Reading a review'
       presenceData.state = articleTitle
     }
     else if (pathname.startsWith('/news')) {

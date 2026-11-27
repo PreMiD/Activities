@@ -10,7 +10,12 @@ function extractSeasonEpisode(text: string | null | undefined): SeasonEpisode | 
   if (!text)
     return null
   const match = text.match(/S(\d+)\s*E(\d+)/i)
-  return (match && match[1] && match[2]) ? { season: Number.parseInt(match[1]), episode: Number.parseInt(match[2]) } : null
+  return (match && match[1] && match[2])
+    ? {
+        season: Number.parseInt(match[1]),
+        episode: Number.parseInt(match[2]),
+      }
+    : null
 }
 
 function formatSeasonEpisode({ season, episode }: SeasonEpisode): string {
@@ -24,8 +29,11 @@ function formatSeasonEpisodeCompact({ season, episode }: SeasonEpisode, format: 
 }
 
 function getHeaderName(rawTitle: string, isTvShow: boolean, seasonEpisode: SeasonEpisode | null, movieHeaderFormat: number, showHeaderFormat: number, episodeFormat: number): string | undefined {
-  if (!isTvShow)
-    return movieHeaderFormat === 1 ? rawTitle : undefined
+  if (!isTvShow) {
+    return movieHeaderFormat === 1
+      ? rawTitle
+      : undefined
+  }
 
   if (showHeaderFormat === 0)
     return undefined
@@ -40,24 +48,43 @@ interface ImdbInfo { label: string, url: string, tconst: string | null, rating: 
 
 function getImdbInfo(title: string): ImdbInfo {
   const imdbLink = document.querySelector<HTMLAnchorElement>('a[href*="imdb.com/title"]')
-  if (!imdbLink?.href)
-    return { label: 'View on IMDb', url: `https://www.imdb.com/find/?q=${encodeURIComponent(title)}&s=tt`, tconst: null, rating: null }
+  if (!imdbLink?.href) {
+    return {
+      label: 'View on IMDb',
+      url: `https://www.imdb.com/find/?q=${encodeURIComponent(title)}&s=tt`,
+      tconst: null,
+      rating: null,
+    }
+  }
 
-  const rating = [...imdbLink.querySelectorAll('p')]
+  const rating = [
+    ...imdbLink.querySelectorAll('p'),
+  ]
     .map(p => p.textContent?.trim())
     .find(text => text && RATING_REGEX.test(text)) ?? null
 
   const tconst = imdbLink.href.match(/title\/(tt\d+)/)?.[1] ?? null
 
-  return { label: rating ? `IMDb: ${rating} ★` : 'View on IMDb', url: imdbLink.href, tconst, rating }
+  return {
+    label: rating
+      ? `IMDb: ${rating} ★`
+      : 'View on IMDb',
+    url: imdbLink.href,
+    tconst,
+    rating,
+  }
 }
 
 function getEpisodeRating(season: number, episode: number): string | null {
-  const episodeLink = [...document.querySelectorAll<HTMLAnchorElement>('.tv_episode a[season][episode]')]
+  const episodeLink = [
+    ...document.querySelectorAll<HTMLAnchorElement>('.tv_episode a[season][episode]'),
+  ]
     .find(a => Number(a.getAttribute('season')) === season && Number(a.getAttribute('episode')) === episode)
 
   const scoreText = episodeLink?.closest('.tv_episode')?.querySelector('.score span')?.textContent?.trim()
-  return (scoreText && RATING_REGEX.test(scoreText)) ? scoreText : null
+  return (scoreText && RATING_REGEX.test(scoreText))
+    ? scoreText
+    : null
 }
 
 function getImdbEpisodeButton(imdbInfo: ImdbInfo, seasonEpisode: SeasonEpisode): { label: string, url: string } | null {
@@ -67,7 +94,9 @@ function getImdbEpisodeButton(imdbInfo: ImdbInfo, seasonEpisode: SeasonEpisode):
   const rating = getEpisodeRating(seasonEpisode.season, seasonEpisode.episode)
 
   return {
-    label: rating ? `Episode Rating: ${rating} ★` : 'View Episode on IMDb',
+    label: rating
+      ? `Episode Rating: ${rating} ★`
+      : 'View Episode on IMDb',
     url: `https://www.imdb.com/title/${imdbInfo.tconst}/episodes?season=${seasonEpisode.season}`,
   }
 }
@@ -92,7 +121,9 @@ function getBrowsingStatus(): { details: string, state: string } {
 }
 
 presence.on('UpdateData', async () => {
-  const video = [...document.querySelectorAll('video')].find(v => v.src)
+  const video = [
+    ...document.querySelectorAll('video'),
+  ].find(v => v.src)
   const rawTitle = document.querySelector('.movie_title')?.textContent.trim() ?? null
   const [
     showBrowsingStatus,
@@ -146,7 +177,10 @@ presence.on('UpdateData', async () => {
 
     const params = new URLSearchParams(document.location.search)
     let seasonEpisode: SeasonEpisode | null = (params.get('season') && params.get('episode'))
-      ? { season: Number.parseInt(params.get('season')!), episode: Number.parseInt(params.get('episode')!) }
+      ? {
+          season: Number.parseInt(params.get('season')!),
+          episode: Number.parseInt(params.get('episode')!),
+        }
       : null
 
     if (!seasonEpisode) {
@@ -167,10 +201,14 @@ presence.on('UpdateData', async () => {
 
     const isTvShow = isTvShowUrl(document.location.href)
     presenceData.name = getHeaderName(rawTitle, isTvShow, seasonEpisode, movieHeaderFormat, showHeaderFormat, episodeFormat)
-    presenceData.state = seasonEpisode ? formatSeasonEpisode(seasonEpisode) : (isTvShow ? 'Watching TV Show' : 'Watching Movie')
+    presenceData.state = seasonEpisode
+      ? formatSeasonEpisode(seasonEpisode)
+      : (isTvShow ? 'Watching TV Show' : 'Watching Movie')
 
     const buttons: { label: string, url: string }[] = []
-    const imdbInfo = (showImdbButton || showEpisodeButton) ? getImdbInfo(rawTitle) : null
+    const imdbInfo = (showImdbButton || showEpisodeButton)
+      ? getImdbInfo(rawTitle)
+      : null
 
     if (showImdbButton && imdbInfo)
       buttons.push({ label: imdbInfo.label, url: imdbInfo.url })
@@ -205,7 +243,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = rawTitle
     if (showImdbButton) {
       const imdbInfo = getImdbInfo(rawTitle)
-      presenceData.buttons = [{ label: imdbInfo.label, url: imdbInfo.url }]
+      presenceData.buttons = [
+        { label: imdbInfo.label, url: imdbInfo.url },
+      ]
     }
   }
   else {

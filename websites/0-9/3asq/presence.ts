@@ -44,11 +44,17 @@ function parseChapterTitle() {
   const chapterPart = title.slice(CHAPTER_MARKER.length, fromMangaIndex).trim()
   const afterFromManga = title.slice(fromMangaIndex + FROM_MANGA_MARKER.length).trim()
   const translatedIndex = afterFromManga.indexOf(TRANSLATED_MARKER)
-  const manga = (translatedIndex === -1 ? afterFromManga : afterFromManga.slice(0, translatedIndex)).trim()
+  const manga = (translatedIndex === -1
+    ? afterFromManga
+    : afterFromManga.slice(0, translatedIndex)).trim()
 
   const dashIndex = chapterPart.indexOf('-')
-  const chapter = (dashIndex === -1 ? chapterPart : chapterPart.slice(0, dashIndex)).trim()
-  const subtitle = dashIndex === -1 ? undefined : chapterPart.slice(dashIndex + 1).trim()
+  const chapter = (dashIndex === -1
+    ? chapterPart
+    : chapterPart.slice(0, dashIndex)).trim()
+  const subtitle = dashIndex === -1
+    ? undefined
+    : chapterPart.slice(dashIndex + 1).trim()
 
   return { chapter, subtitle, manga }
 }
@@ -95,7 +101,9 @@ presence.on('UpdateData', async () => {
   if (params.has('s')) {
     // Search results, e.g. /?s=one+piece&post_type=wp-manga
     presenceData.details = privacy ? strings.searchSomething : strings.searchFor
-    presenceData.state = privacy ? undefined : (params.get('s') ?? undefined)
+    presenceData.state = privacy
+      ? undefined
+      : (params.get('s') ?? undefined)
   }
   else if (path.length === 0) {
     // Homepage
@@ -105,11 +113,17 @@ presence.on('UpdateData', async () => {
     // Chapter reading page: /manga/{slug}/{chapter}/
     const { chapter, subtitle, manga } = parseChapterTitle()
 
-    presenceData.details = `${FSI}${strings.reading}${PDI} ${FSI}${privacy ? strings.chapter : (manga ?? path[1])}${PDI}`
+    presenceData.details = `${FSI}${strings.reading}${PDI} ${FSI}${privacy
+      ? strings.chapter
+      : (manga ?? path[1])}${PDI}`
     presenceData.state = privacy
       ? undefined
-      : `${strings.chapter} ${chapter ?? path[2]}${subtitle ? ` - ${FSI}${subtitle}${PDI}` : ''}`
-    presenceData.largeImageKey = cover && coverImage ? coverImage : ActivityAssets.Logo
+      : `${strings.chapter} ${chapter ?? path[2]}${subtitle
+        ? ` - ${FSI}${subtitle}${PDI}`
+        : ''}`
+    presenceData.largeImageKey = cover && coverImage
+      ? coverImage
+      : ActivityAssets.Logo
 
     if (buttons && !privacy) {
       presenceData.buttons = [
@@ -123,10 +137,14 @@ presence.on('UpdateData', async () => {
   else if (path[0] === 'manga' && path[1]) {
     // Manga info page: /manga/{slug}/
     presenceData.details = strings.viewAManga
-    presenceData.state = privacy ? undefined : (getMangaNameFromTitle() ?? path[1])
+    presenceData.state = privacy
+      ? undefined
+      : (getMangaNameFromTitle() ?? path[1])
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = strings.view
-    presenceData.largeImageKey = cover && coverImage ? coverImage : ActivityAssets.Logo
+    presenceData.largeImageKey = cover && coverImage
+      ? coverImage
+      : ActivityAssets.Logo
 
     if (buttons && !privacy) {
       presenceData.buttons = [
@@ -147,13 +165,17 @@ presence.on('UpdateData', async () => {
   ) {
     // Manga list / genre / tag / author / artist archive pages
     presenceData.details = privacy ? strings.searchSomething : strings.searchFor
-    presenceData.state = privacy ? undefined : decodeURIComponent(path[1] ?? '')
+    presenceData.state = privacy
+      ? undefined
+      : decodeURIComponent(path[1] ?? '')
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = strings.search
   }
   else if (path[0] === 'blog') { // Articles / news
     presenceData.details = strings.reading
-    presenceData.state = privacy ? undefined : getMangaNameFromTitle()
+    presenceData.state = privacy
+      ? undefined
+      : getMangaNameFromTitle()
   }
   else {
     presenceData.details = strings.browsing

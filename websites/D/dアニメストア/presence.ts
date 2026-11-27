@@ -34,7 +34,10 @@ presence.on('UpdateData', async () => {
       type: ActivityType.Watching,
       details: title || undefined,
       state: episodeParts.join(' / ') || undefined,
-      largeImageText: [title, episodeParts.join(' - ')]
+      largeImageText: [
+        title,
+        episodeParts.join(' - '),
+      ]
         .filter(Boolean)
         .join(' / ') || undefined,
       smallImageKey: isPlaying ? Assets.Play : Assets.Pause,

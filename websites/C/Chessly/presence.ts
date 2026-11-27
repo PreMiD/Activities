@@ -121,7 +121,9 @@ presence.on('UpdateData', async () => {
         else {
           presenceData.details = 'Viewing a suggestion'
           presenceData.state = document.querySelector('h1')?.textContent
-          presenceData.buttons = [{ label: 'View Suggestion', url: href }]
+          presenceData.buttons = [
+            { label: 'View Suggestion', url: href },
+          ]
         }
       }
     }

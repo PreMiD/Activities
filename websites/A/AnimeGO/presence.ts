@@ -102,8 +102,12 @@ presence.on('UpdateData', async () => {
     if (video.exists) {
       const selectEpisodes = document.querySelector<HTMLSelectElement>('select[name=\'series\']')
       const currentEpisodeTitle = document.querySelector('.episode-info__name .episode-info__value')?.textContent
-      const serie = `${selectEpisodes?.options[selectEpisodes?.selectedIndex]?.text}${currentEpisodeTitle ? ` - ${currentEpisodeTitle}` : ''}`
-      presenceData.details = privacy ? `Смотрит ${currentType}` : titleContent
+      const serie = `${selectEpisodes?.options[selectEpisodes?.selectedIndex]?.text}${currentEpisodeTitle
+        ? ` - ${currentEpisodeTitle}`
+        : ''}`
+      presenceData.details = privacy
+        ? `Смотрит ${currentType}`
+        : titleContent
       presenceData.state = serie
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused ? strings.pause : strings.play
