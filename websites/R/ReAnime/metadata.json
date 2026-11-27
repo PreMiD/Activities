@@ -18,7 +18,7 @@
     "reanime.cz"
   ],
   "regExp": "^https?[:][/][/]reanime[.](to|cz)[/]",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/thumbnail.png",
   "color": "#C7FF00",
@@ -34,6 +34,16 @@
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
       "value": false
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Anime Title"
+      ]
     },
     {
       "id": "buttons",

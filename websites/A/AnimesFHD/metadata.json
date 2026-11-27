@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "852764595561955378",
+    "name": "_zadik_"
+  },
+  "service": "AnimesFHD",
+  "description": {
+    "en": "Watch dubbed and subtitled anime in Full HD, with release alerts, watch parties and a community, free on AnimesFHD.",
+    "pt": "Assista animes dublados e legendados em Full HD, com avisos de lançamento, salas para assistir junto e comunidade, grátis no AnimesFHD."
+  },
+  "url": "animesfhd.net",
+  "regExp": "^https?[:][/][/](www[.])?animesfhd[.]net[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimesFHD/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimesFHD/assets/thumbnail.png",
+  "color": "#a855f7",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "dublado",
+    "legendado",
+    "brasil",
+    "watch-party"
+  ],
+  "settings": [
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fad fa-link",
+      "value": true
+    },
+    {
+      "id": "showSearch",
+      "title": "Show Search Terms",
+      "icon": "fad fa-search",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
+}
