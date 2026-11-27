@@ -606,7 +606,6 @@ presence.on('UpdateData', async () => {
     presenceData.state = service?.name ?? 'ライブ'
     const liveLogo = service ? getLogo(service, servicesCache) : null
     if (liveLogo) {
-      presenceData.largeImageKey = LOGO
       presenceData.largeImageText = service?.name ?? 'denpa'
     }
     presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Live
@@ -632,7 +631,6 @@ presence.on('UpdateData', async () => {
         ? getLogo({ id: recording.serviceId, name: recording.serviceName }, servicesCache)
         : null
     if (recLogo) {
-      presenceData.largeImageKey = LOGO
       presenceData.largeImageText = service?.name ?? recording?.serviceName ?? 'denpa'
     }
     presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
@@ -656,7 +654,6 @@ presence.on('UpdateData', async () => {
         ? getLogo({ id: recording.serviceId, name: recording.serviceName }, servicesCache)
         : null
     if (chaseLogo) {
-      presenceData.largeImageKey = LOGO
       presenceData.largeImageText = service?.name ?? recording?.serviceName ?? 'denpa'
     }
     presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
