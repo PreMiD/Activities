@@ -199,13 +199,11 @@ presence.on('UpdateData', async () => {
     explore: 'mirainime.explore',
     genreLabel: 'mirainime.genreLabel',
     seasonLabel: 'mirainime.seasonLabel',
-    visit: 'mirainime.visit',
   })
 
   const playingText = t(strings, 'playing', 'Playing')
   const pausedText = t(strings, 'paused', 'Paused')
   const browsingText = t(strings, 'browsing', 'Browsing Mirainime')
-  const visitText = t(strings, 'visit', 'Visit Mirainime')
 
   const path = document.location.pathname
 
@@ -304,7 +302,7 @@ presence.on('UpdateData', async () => {
       data.startTimestamp = browsingTimestamp
 
     if (showButtons)
-      data.buttons = [{ label: visitText, url: SITE_URL }]
+      data.buttons = [{ label: t(strings, 'genreLabel', 'Genre'), url: `${SITE_URL}${path}` }]
   }
   else if (seasonMatch) {
     data.details = `${t(strings, 'seasonLabel', 'Season')}: ${prettifySlug(seasonMatch[1])}`
@@ -314,7 +312,7 @@ presence.on('UpdateData', async () => {
       data.startTimestamp = browsingTimestamp
 
     if (showButtons)
-      data.buttons = [{ label: visitText, url: SITE_URL }]
+      data.buttons = [{ label: t(strings, 'seasonLabel', 'Season'), url: `${SITE_URL}${path}` }]
   }
   else {
     const staticRoute = STATIC_ROUTES.find(route => route.pattern.test(path))
@@ -330,8 +328,19 @@ presence.on('UpdateData', async () => {
     if (showTimestamp)
       data.startTimestamp = browsingTimestamp
 
-    if (showButtons)
-      data.buttons = [{ label: visitText, url: SITE_URL }]
+    // Tombol ke halaman home tidak diizinkan reviewer PreMiD. Untuk halaman
+    // statis lain, tombol mengarah ke halaman yang sedang dibuka (spesifik).
+    if (
+      showButtons
+      && staticRoute
+      && staticRoute.key !== 'home'
+      && staticRoute.key !== 'social'
+    ) {
+      data.buttons = [{
+        label: t(strings, staticRoute.key, 'Open Page'),
+        url: document.location.href,
+      }]
+    }
   }
 
   // Batasi panjang teks supaya tidak melewati batas Discord (128 karakter).

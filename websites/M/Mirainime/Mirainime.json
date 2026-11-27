@@ -118,9 +118,5 @@
   "mirainime.upcoming": {
     "description": "Upcoming anime page",
     "message": "Upcoming Anime"
-  },
-  "mirainime.visit": {
-    "description": "Button that opens the Mirainime homepage",
-    "message": "Visit Mirainime"
   }
 }
