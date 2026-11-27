@@ -69,22 +69,50 @@ function getTitleInfo(usePresenceName: boolean) {
     const isMovie = episodeItem.attributes.videoType === 'MOVIE'
     const s = episodeItem.attributes.seasonNumber
     const e = episodeItem.attributes.episodeNumber
+    const showName = showItem.attributes.name
+    const episodeName = episodeItem.attributes.name
+
+    if (isMovie) {
+      const releaseDate = getAttrs(episodeItem)?.airDate ?? getAttrs(showItem)?.premiereDate
+      const year = releaseDate
+        ? new Date(releaseDate).getUTCFullYear()
+        : undefined
+      const editId = (episodeItem.relationships as any)?.edit?.data?.id as string | undefined
+      const durationMs = editId
+        ? getAttrs(findById(editId))?.duration as number | undefined
+        : undefined
+      const minutes = durationMs
+        ? Math.floor(durationMs / 60_000)
+        : undefined
+
+      return {
+        name: usePresenceName ? showName : 'HBO Max',
+        details: showName,
+        state: [
+          year,
+          minutes
+            ? `${minutes} minutes`
+            : undefined,
+        ].filter(Boolean).join(' • ') || undefined,
+        largeImageKey: getCoverArt(showItem),
+        largeImageText: showName,
+        isMovie,
+        pageUrl: document.location.href.split('?')[0]!,
+        showUrl: undefined,
+      }
+    }
 
     return {
-      name: usePresenceName ? showItem.attributes.name : 'Max',
-      details: usePresenceName
-        ? episodeItem.attributes.name
-        : showItem.attributes.name,
-      state: isMovie
-        ? 'Movie'
-        : `Season ${s}, Episode ${e}`,
+      name: usePresenceName ? showName : 'HBO Max',
+      details: (usePresenceName && episodeName) || showName,
+      state: usePresenceName || !episodeName
+        ? `Season ${s}, Episode ${e}`
+        : `S${s} E${e} - ${episodeName}`,
       largeImageKey: getCoverArt(showItem),
-      largeImageText: isMovie
-        ? showItem.attributes.name
-        : `S${s}:E${e} — ${episodeItem.attributes.name}`,
+      largeImageText: `Season ${s}, Episode ${e}`,
       isMovie,
       pageUrl: document.location.href.split('?')[0]!,
-      showUrl: `https://play.hbomax.com/series/${showId}`,
+      showUrl: `${document.location.origin}/series/${showId}`,
     }
   }
 
@@ -169,20 +197,38 @@ presence.on('UpdateData', async () => {
 
     case 'video': {
       const video = document.querySelector('video')
+      const playerTitle = document.querySelector('[data-testid="player-ux-asset-title"]')?.textContent?.trim()
       const info = getTitleInfo(usePresenceName && !privacyMode)
+        ?? (playerTitle
+          ? {
+              name: usePresenceName ? playerTitle : 'HBO Max',
+              details: playerTitle,
+              state: undefined,
+              largeImageKey: undefined,
+              largeImageText: undefined,
+              isMovie: undefined as boolean | undefined,
+              pageUrl: document.location.href.split('?')[0]!,
+              showUrl: undefined,
+            }
+          : null)
 
       if (!info || !video)
         break
 
       if (!privacyMode) {
-        presenceData.name = info.name
-        presenceData.details = info.details
+        presenceData.name = info.name ?? playerTitle
+        presenceData.details = info.details ?? playerTitle
         presenceData.state = info.state
         if (showCoverArt && info.largeImageKey) {
           presenceData.largeImageKey = info.largeImageKey
           presenceData.largeImageText = info.largeImageText
         }
-        if (info.isMovie) {
+        if (info.isMovie === undefined) {
+          presenceData.buttons = [
+            { label: 'Watch Now', url: info.pageUrl },
+          ]
+        }
+        else if (info.isMovie) {
           presenceData.buttons = [
             { label: 'Watch Movie', url: info.pageUrl },
           ]
@@ -199,7 +245,9 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
-        presenceData.details = info.isMovie ? 'Watching a movie' : 'Watching a series'
+        presenceData.details = info.isMovie === undefined
+          ? 'Watching HBO Max'
+          : info.isMovie ? 'Watching a movie' : 'Watching a series'
       }
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
@@ -219,7 +267,7 @@ presence.on('UpdateData', async () => {
       if (!showBrowsingStatus || privacyMode)
         return presence.clearActivity()
 
-      presenceData.details = 'Browsing Max...'
+      presenceData.details = 'Browsing HBO Max...'
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Browsing'
       break

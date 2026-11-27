@@ -13,6 +13,14 @@
     {
       "name": "colourfulplanets",
       "id": "1023108830760009768"
+    },
+    {
+      "name": "roubeiauxilio",
+      "id": "1348527661730889791"
+    },
+    {
+      "name": "mzrcos",
+      "id": "610663056925523998"
     }
   ],
   "service": "HBO Max",
@@ -25,7 +33,7 @@
     "play.hbomax.com"
   ],
   "regExp": "^https?[:][/][/](?:www[.]|play[.])?hbomax[.]com[/]",
-  "version": "1.2.6",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/thumbnail.jpeg",
   "color": "#0014a4",
