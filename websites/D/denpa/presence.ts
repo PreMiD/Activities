@@ -595,7 +595,9 @@ presence.on('UpdateData', async () => {
   }
 
   const { pathname, search } = document.location
-  const video = document.querySelector<HTMLVideoElement>('video')
+  const media = Array.from(document.querySelectorAll<HTMLMediaElement>('audio, video'))
+  const video = media.find(item => !item.paused && item.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA)
+    ?? media.find(item => item.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA)
 
   // ***** テレビのライブ視聴 *****
   if (pathname === '/live') {
@@ -606,6 +608,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = service?.name ?? 'ライブ'
     const liveLogo = service ? getLogo(service, servicesCache) : null
     if (liveLogo) {
+      presenceData.largeImageKey = liveLogo
       presenceData.largeImageText = service?.name ?? 'denpa'
     }
     presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Live
@@ -631,6 +634,7 @@ presence.on('UpdateData', async () => {
         ? getLogo({ id: recording.serviceId, name: recording.serviceName }, servicesCache)
         : null
     if (recLogo) {
+      presenceData.largeImageKey = recLogo
       presenceData.largeImageText = service?.name ?? recording?.serviceName ?? 'denpa'
     }
     presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
@@ -654,6 +658,7 @@ presence.on('UpdateData', async () => {
         ? getLogo({ id: recording.serviceId, name: recording.serviceName }, servicesCache)
         : null
     if (chaseLogo) {
+      presenceData.largeImageKey = chaseLogo
       presenceData.largeImageText = service?.name ?? recording?.serviceName ?? 'denpa'
     }
     presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
