@@ -208,8 +208,12 @@ presence.on('UpdateData', async () => {
   const path = document.location.pathname
 
   const episodeMatch = path.match(ROUTE.episode)
-  const animeDownloadMatch = episodeMatch ? null : path.match(ROUTE.animeDownload)
-  const animeMatch = episodeMatch || animeDownloadMatch ? null : path.match(ROUTE.anime)
+  const animeDownloadMatch = episodeMatch
+    ? null
+    : path.match(ROUTE.animeDownload)
+  const animeMatch = episodeMatch || animeDownloadMatch
+    ? null
+    : path.match(ROUTE.anime)
   const reelMatch = path.match(ROUTE.reel)
   const genreMatch = path.match(ROUTE.genre)
   const seasonMatch = path.match(ROUTE.season)
@@ -257,7 +261,10 @@ presence.on('UpdateData', async () => {
 
     if (showButtons) {
       data.buttons = [
-        { label: t(strings, 'animePage', 'Anime Page'), url: `${SITE_URL}/anime/${slug}` },
+        {
+          label: t(strings, 'animePage', 'Anime Page'),
+          url: `${SITE_URL}/anime/${slug}`,
+        },
       ]
     }
   }
@@ -268,8 +275,14 @@ presence.on('UpdateData', async () => {
     data.details = animeTitle(slug)
     data.state = t(strings, 'download', 'Download Page')
 
-    if (showButtons)
-      data.buttons = [{ label: t(strings, 'animePage', 'Anime Page'), url: `${SITE_URL}/anime/${slug}` }]
+    if (showButtons) {
+      data.buttons = [
+        {
+          label: t(strings, 'animePage', 'Anime Page'),
+          url: `${SITE_URL}/anime/${slug}`,
+        },
+      ]
+    }
   }
   else if (animeMatch) {
     const slug = animeMatch[1] ?? ''
@@ -281,8 +294,14 @@ presence.on('UpdateData', async () => {
     if (showTimestamp)
       data.startTimestamp = browsingTimestamp
 
-    if (showButtons)
-      data.buttons = [{ label: t(strings, 'explore', 'Explore Anime'), url: `${SITE_URL}/anime-list` }]
+    if (showButtons) {
+      data.buttons = [
+        {
+          label: t(strings, 'explore', 'Explore Anime'),
+          url: `${SITE_URL}/anime-list`,
+        },
+      ]
+    }
   }
   else if (reelMatch) {
     const slug = reelMatch[1] ?? ''
@@ -291,8 +310,14 @@ presence.on('UpdateData', async () => {
     data.details = animeTitle(slug)
     data.state = t(strings, 'reels', 'Reels')
 
-    if (showButtons)
-      data.buttons = [{ label: t(strings, 'animePage', 'Anime Page'), url: `${SITE_URL}/anime/${slug}` }]
+    if (showButtons) {
+      data.buttons = [
+        {
+          label: t(strings, 'animePage', 'Anime Page'),
+          url: `${SITE_URL}/anime/${slug}`,
+        },
+      ]
+    }
   }
   else if (genreMatch) {
     data.details = `${t(strings, 'genreLabel', 'Genre')}: ${prettifySlug(genreMatch[1])}`
@@ -301,8 +326,14 @@ presence.on('UpdateData', async () => {
     if (showTimestamp)
       data.startTimestamp = browsingTimestamp
 
-    if (showButtons)
-      data.buttons = [{ label: t(strings, 'genreLabel', 'Genre'), url: `${SITE_URL}${path}` }]
+    if (showButtons) {
+      data.buttons = [
+        {
+          label: t(strings, 'genreLabel', 'Genre'),
+          url: `${SITE_URL}${path}`,
+        },
+      ]
+    }
   }
   else if (seasonMatch) {
     data.details = `${t(strings, 'seasonLabel', 'Season')}: ${prettifySlug(seasonMatch[1])}`
@@ -311,8 +342,14 @@ presence.on('UpdateData', async () => {
     if (showTimestamp)
       data.startTimestamp = browsingTimestamp
 
-    if (showButtons)
-      data.buttons = [{ label: t(strings, 'seasonLabel', 'Season'), url: `${SITE_URL}${path}` }]
+    if (showButtons) {
+      data.buttons = [
+        {
+          label: t(strings, 'seasonLabel', 'Season'),
+          url: `${SITE_URL}${path}`,
+        },
+      ]
+    }
   }
   else {
     const staticRoute = STATIC_ROUTES.find(route => route.pattern.test(path))
@@ -336,10 +373,12 @@ presence.on('UpdateData', async () => {
       && staticRoute.key !== 'home'
       && staticRoute.key !== 'social'
     ) {
-      data.buttons = [{
-        label: t(strings, staticRoute.key, 'Open Page'),
-        url: document.location.href,
-      }]
+      data.buttons = [
+        {
+          label: t(strings, staticRoute.key, 'Open Page'),
+          url: document.location.href,
+        },
+      ]
     }
   }
 
