@@ -11,7 +11,7 @@ async function setting(id: string): Promise<boolean> {
   }
 }
 
-const DEFAULT_IMAGE = ''
+const DEFAULT_IMAGE = 'https://i.imgur.com/Imn9pvj.png'
 const HOME_URL = 'https://3cat.cat'
 const STATE_TEXT = '3cat'
 
