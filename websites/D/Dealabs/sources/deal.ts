@@ -11,7 +11,9 @@ const dealResolver: Resolver = {
     let title = document.querySelector('h1')?.textContent?.trim()
     if (!title) {
       const metaTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-      title = metaTitle ? ((metaTitle.split(' - Dealabs')[0] ?? metaTitle).trim()) : t.detail
+      title = metaTitle
+        ? ((metaTitle.split(' - Dealabs')[0] ?? metaTitle).trim())
+        : t.detail
     }
     return title
   },
@@ -54,7 +56,9 @@ const dealResolver: Resolver = {
     if (price)
       parts.push(price)
 
-    return parts.length > 0 ? parts.join(' • ') : t.viewDeal
+    return parts.length > 0
+      ? parts.join(' • ')
+      : t.viewDeal
   },
 
   getLargeImage: () => {
@@ -65,7 +69,9 @@ const dealResolver: Resolver = {
     return image || undefined
   },
 
-  getButtons: (t: Translation) => [{ label: t.viewPage, url: document.location.href }] as ButtonArray,
+  getButtons: (t: Translation) => [
+    { label: t.viewPage, url: document.location.href },
+  ] as ButtonArray,
 }
 
 export default dealResolver

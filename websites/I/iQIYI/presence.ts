@@ -203,7 +203,9 @@ presence.on('UpdateData', async () => {
 
     if (result) {
       presenceData.state = `${result} matching ${
-        Number.parseInt(result, 10) > 1 ? 'results' : 'result'
+        Number.parseInt(result, 10) > 1
+          ? 'results'
+          : 'result'
       }`
     }
     else {

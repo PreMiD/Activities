@@ -23,13 +23,17 @@ presence.on('UpdateData', async () => {
           presenceData.state = document.querySelector(
             'span.ipsType_break > span:nth-child(1)',
           )
-          presenceData.buttons = [{ label: 'View Topic', url: href }]
+          presenceData.buttons = [
+            { label: 'View Topic', url: href },
+          ]
           break
         }
         case 'forum': {
           presenceData.details = 'On Forum:'
           presenceData.state = document.querySelector('.ipsType_pageTitle')
-          presenceData.buttons = [{ label: 'View Forum', url: href }]
+          presenceData.buttons = [
+            { label: 'View Forum', url: href },
+          ]
           break
         }
         case 'profile': {
@@ -51,7 +55,9 @@ presence.on('UpdateData', async () => {
           if (pathname.split('/')[2] === 'image') {
             presenceData.details = 'Viewing Image:'
             presenceData.state = document.querySelector('span.ipsContained')
-            presenceData.buttons = [{ label: 'View Image', url: href }]
+            presenceData.buttons = [
+              { label: 'View Image', url: href },
+            ]
           }
           else {
             presenceData.details = 'On Gallery page'
@@ -68,7 +74,9 @@ presence.on('UpdateData', async () => {
             presenceData.state = document.querySelector(
               'h1.ipsType_pageTitle > span:nth-child(1)',
             )
-            presenceData.buttons = [{ label: 'View File', url: href }]
+            presenceData.buttons = [
+              { label: 'View File', url: href },
+            ]
           }
           else {
             presenceData.details = 'Viewing Files page'

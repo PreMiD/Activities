@@ -55,7 +55,9 @@ presence.on('UpdateData', async () => {
     case 'banners': {
       presenceData.details = 'Viewing a Banner'
       presenceData.state = document.querySelector('h1')
-      presenceData.buttons = [{ label: 'View Banner', url: href }]
+      presenceData.buttons = [
+        { label: 'View Banner', url: href },
+      ]
       break
     }
     case 'hall-of-fame': {
@@ -64,7 +66,9 @@ presence.on('UpdateData', async () => {
     }
     case 'gallery': {
       presenceData.details = `Browsing ${document.querySelector('#gallery ul li[class*=py-1]')?.textContent} Gallery`
-      presenceData.buttons = [{ label: 'View Gallery', url: href }]
+      presenceData.buttons = [
+        { label: 'View Gallery', url: href },
+      ]
       if (pathList[1] === 'skins') {
         const skins = document.querySelectorAll('.card')
         for (const skin of skins) {
@@ -95,7 +99,9 @@ presence.on('UpdateData', async () => {
       if (editorImage) {
         presenceData.smallImageKey = captureImage(document.querySelector<HTMLCanvasElement>('#skin_container'))
       }
-      presenceData.buttons = [{ label: 'View Skin', url: href }]
+      presenceData.buttons = [
+        { label: 'View Skin', url: href },
+      ]
       break
     }
     case 'users': {
@@ -111,7 +117,9 @@ presence.on('UpdateData', async () => {
             document.querySelector<HTMLCanvasElement>('#skin_container'),
           )
         }
-        presenceData.buttons = [{ label: 'View Profile', url: href }]
+        presenceData.buttons = [
+          { label: 'View Profile', url: href },
+        ]
       }
     }
   }

@@ -12,7 +12,7 @@
   },
   "url": "jam-club.tv",
   "regExp": "^https?[:][/][/](www[.])?jam-club[.]tv[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JAM%20Club/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JAM%20Club/assets/thumbnail.jpg",
   "color": "#1a1a2e",

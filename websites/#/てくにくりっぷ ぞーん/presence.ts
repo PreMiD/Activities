@@ -36,8 +36,12 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = videoTitle || '動画を視聴中'
     presenceData.state = authorName || 'てくにくりっぷ ぞーん'
-    presenceData.smallImageKey = player && player.paused ? Assets.Pause : Assets.Play
-    presenceData.smallImageText = player && player.paused ? '一時停止中' : '再生中'
+    presenceData.smallImageKey = player && player.paused
+      ? Assets.Pause
+      : Assets.Play
+    presenceData.smallImageText = player && player.paused
+      ? '一時停止中'
+      : '再生中'
 
     // Playback time tracking
     if (player && !player.paused) {
@@ -54,7 +58,9 @@ presence.on('UpdateData', async () => {
   // Search page
   else if (pathname.startsWith('/search')) {
     const query = new URLSearchParams(document.location.search).get('q')
-    presenceData.details = query ? `「${query}」を検索中` : '検索ページを閲覧中'
+    presenceData.details = query
+      ? `「${query}」を検索中`
+      : '検索ページを閲覧中'
     presenceData.state = 'てくにくりっぷ ぞーん'
   }
   // Other pages (Home, etc)

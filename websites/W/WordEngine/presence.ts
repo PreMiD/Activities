@@ -65,8 +65,12 @@ function loadCache(): void {
     const parsed = JSON.parse(raw) as { day?: StoredProgressCache | null, week?: StoredProgressCache | null }
     const currentDayKey = getDayKey()
     const currentWeekKey = getWeekKey()
-    cachedDay = parsed.day?.key === currentDayKey ? parsed.day.data : null
-    cachedWeek = parsed.week?.key === currentWeekKey ? parsed.week.data : null
+    cachedDay = parsed.day?.key === currentDayKey
+      ? parsed.day.data
+      : null
+    cachedWeek = parsed.week?.key === currentWeekKey
+      ? parsed.week.data
+      : null
   }
   catch {
   }
@@ -94,8 +98,18 @@ function saveLanguageCache(value: boolean): void {
 function saveCache(): void {
   try {
     const payload = JSON.stringify({
-      day: cachedDay ? { data: cachedDay, key: getDayKey() } : null,
-      week: cachedWeek ? { data: cachedWeek, key: getWeekKey() } : null,
+      day: cachedDay
+        ? {
+            data: cachedDay,
+            key: getDayKey(),
+          }
+        : null,
+      week: cachedWeek
+        ? {
+            data: cachedWeek,
+            key: getWeekKey(),
+          }
+        : null,
     })
     localStorage.setItem(cacheKey, payload)
   }
@@ -122,8 +136,12 @@ function getWeekKey(date = new Date()): string {
 function loadStartTimestamp(): number | null {
   try {
     const raw = sessionStorage.getItem(timestampKey)
-    const parsed = raw ? Number(raw) : Number.NaN
-    return Number.isFinite(parsed) ? parsed : null
+    const parsed = raw
+      ? Number(raw)
+      : Number.NaN
+    return Number.isFinite(parsed)
+      ? parsed
+      : null
   }
   catch {
     return null
@@ -154,7 +172,9 @@ function extractNumber(text: string | null): string | null {
     return null
   const cleaned = text.replace(/[,\s]/g, '')
   const m = cleaned.match(/\d+/)
-  return m ? m[0] : cleaned || null
+  return m
+    ? m[0]
+    : cleaned || null
 }
 
 function queryProgress(goalSelectors: string[], currentSelectors: string[]): ProgressCache {
@@ -249,7 +269,9 @@ presence.on('UpdateData', async () => {
       if (!value)
         return null
       const parsed = Number(value)
-      return Number.isFinite(parsed) ? parsed : null
+      return Number.isFinite(parsed)
+        ? parsed
+        : null
     }
     const currentCount = parseCount(current)
     const goalCount = parseCount(goal)
@@ -269,8 +291,12 @@ presence.on('UpdateData', async () => {
     }
 
     const unitFor = (value: string | null): string => {
-      const parsed = value ? Number(value) : Number.NaN
-      return Number.isFinite(parsed) && parsed === 1 ? 'Word' : 'Words'
+      const parsed = value
+        ? Number(value)
+        : Number.NaN
+      return Number.isFinite(parsed) && parsed === 1
+        ? 'Word'
+        : 'Words'
     }
 
     if (hasCurrent && hasGoal) {
@@ -311,8 +337,12 @@ presence.on('UpdateData', async () => {
 
   saveCache()
 
-  const weekText = cachedWeek ? formatProgress(weekLabel, cachedWeek.current, cachedWeek.goal, isJa) : null
-  const dayText = cachedDay ? formatProgress(todayLabel, cachedDay.current, cachedDay.goal, isJa) : null
+  const weekText = cachedWeek
+    ? formatProgress(weekLabel, cachedWeek.current, cachedWeek.goal, isJa)
+    : null
+  const dayText = cachedDay
+    ? formatProgress(todayLabel, cachedDay.current, cachedDay.goal, isJa)
+    : null
 
   if (isStudyPage()) {
     const courseName = getCourseName()

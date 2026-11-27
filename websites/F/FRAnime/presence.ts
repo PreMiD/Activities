@@ -23,7 +23,9 @@ presence.on('UpdateData', async () => {
   const scriptElement = document.querySelector<HTMLScriptElement>(
     'script[type="application/ld+json"]',
   )
-  const jsonLD = scriptElement ? JSON.parse(scriptElement.textContent || '') : null
+  const jsonLD = scriptElement
+    ? JSON.parse(scriptElement.textContent || '')
+    : null
 
   // Home page
   if (pathname === '/') {

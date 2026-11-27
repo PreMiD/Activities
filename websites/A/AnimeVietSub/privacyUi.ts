@@ -114,7 +114,9 @@ function getDirectControl(
 ): HTMLElement | null {
   while (control?.parentElement && control.parentElement !== controls)
     control = control.parentElement
-  return control?.parentElement === controls ? control : null
+  return control?.parentElement === controls
+    ? control
+    : null
 }
 
 function mountPrivacyButton(
@@ -162,10 +164,12 @@ function syncPrivacyButtonAppearance(
     .filter(className => className && !actionControlClass.test(className))
     ?? []
 
-  button.className = [...new Set([
-    ...nativeClasses,
-    'pmd-avs-privacy-button',
-  ])].join(' ')
+  button.className = [
+    ...new Set([
+      ...nativeClasses,
+      'pmd-avs-privacy-button',
+    ]),
+  ].join(' ')
 }
 
 export function setPrivacyButtonState(button: HTMLButtonElement, privateMode: boolean): void {

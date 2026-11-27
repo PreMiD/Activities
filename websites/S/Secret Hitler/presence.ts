@@ -31,7 +31,9 @@ presence.on('UpdateData', async () => {
         case 'profile': {
           presenceData.details = 'Viewing profile'
           presenceData.state = document.querySelector('.profile.header')
-          presenceData.buttons = [{ label: 'View Profile', url: href }]
+          presenceData.buttons = [
+            { label: 'View Profile', url: href },
+          ]
           break
         }
         case 'table': {
@@ -70,7 +72,9 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = 'Private game'
           }
           if (!document.querySelector('.option-icons .lock.green')) {
-            presenceData.buttons = [{ label: 'View Table', url: href }]
+            presenceData.buttons = [
+              { label: 'View Table', url: href },
+            ]
           }
           else {
             presenceData.smallImageKey = ActivityAssets.Unlisted
@@ -93,7 +97,9 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = 'Private game'
           }
           if (!document.querySelector('.option-icons .lock.green')) {
-            presenceData.buttons = [{ label: 'View Replay', url: href }]
+            presenceData.buttons = [
+              { label: 'View Replay', url: href },
+            ]
           }
           else {
             presenceData.smallImageKey = ActivityAssets.Unlisted
@@ -110,7 +116,9 @@ presence.on('UpdateData', async () => {
         case 'profile': {
           presenceData.details = 'Viewing profile'
           presenceData.state = document.querySelector('.profile.header')
-          presenceData.buttons = [{ label: 'View Profile', url: href }]
+          presenceData.buttons = [
+            { label: 'View Profile', url: href },
+          ]
           break
         }
         case 'table': {
@@ -129,7 +137,9 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = 'Private game'
           }
           if (!document.querySelector('.option-icons .lock.green')) {
-            presenceData.buttons = [{ label: 'View Table', url: href }]
+            presenceData.buttons = [
+              { label: 'View Table', url: href },
+            ]
           }
           else {
             presenceData.smallImageKey = ActivityAssets.Unlisted
@@ -152,7 +162,9 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = 'Private game'
           }
           if (!document.querySelector('.option-icons .lock.green')) {
-            presenceData.buttons = [{ label: 'View Replay', url: href }]
+            presenceData.buttons = [
+              { label: 'View Replay', url: href },
+            ]
           }
           else {
             presenceData.smallImageKey = ActivityAssets.Unlisted

@@ -71,13 +71,26 @@ const PANEL: Record<string, string> = {
 }
 
 // Rutas que nunca se describen ni se enlazan.
-const PRIVADAS = new Set(['cuenta', 'social', 'colabora', 'ops', 'admin', 'v2', 'c', 'api'])
+const PRIVADAS = new Set([
+  'cuenta',
+  'social',
+  'colabora',
+  'ops',
+  'admin',
+  'v2',
+  'c',
+  'api',
+])
 
 function texto(el: Element | null | undefined): string | undefined {
   return el?.textContent?.replace(/\s+/g, ' ').trim() || undefined
 }
 
-const recorta = (s: string, n = 120) => (s.length > n ? `${s.slice(0, n - 1)}…` : s)
+function recorta(s: string, n = 120) {
+  return s.length > n
+    ? `${s.slice(0, n - 1)}…`
+    : s
+}
 
 function visible(el: Element | null | undefined): boolean {
   return !!el && (el as HTMLElement).offsetParent !== null && el.getClientRects().length > 0
@@ -118,7 +131,9 @@ function territorioMapa(): string | undefined {
   if (!visible(tag))
     return undefined
   const ultimo = texto(tag)?.split('·').pop()?.trim()
-  return ultimo && ultimo !== 'Estado español' ? ultimo : undefined
+  return ultimo && ultimo !== 'Estado español'
+    ? ultimo
+    : undefined
 }
 
 interface Item {
@@ -135,7 +150,9 @@ function itemActivo(): Item | undefined {
     return undefined
   try {
     const v = JSON.parse(crudo) as Partial<Item>
-    const limpio = (x: unknown) => typeof x === 'string' ? x.replace(/\s+/g, ' ').trim() || undefined : undefined
+    const limpio = (x: unknown) => typeof x === 'string'
+      ? x.replace(/\s+/g, ' ').trim() || undefined
+      : undefined
     const seccion = limpio(v.seccion)
     const titulo = limpio(v.titulo)
     if (!seccion || !titulo)
@@ -147,7 +164,12 @@ function itemActivo(): Item | undefined {
       if (u.origin === SITIO && !PRIVADAS.has(primero))
         url = u.href
     }
-    return { seccion: recorta(seccion, 60), titulo, detalle: limpio(v.detalle), url }
+    return {
+      seccion: recorta(seccion, 60),
+      titulo,
+      detalle: limpio(v.detalle),
+      url,
+    }
   }
   catch {
     return undefined
@@ -172,7 +194,9 @@ function tiempos(valor: string | null | undefined): [number, number] | undefined
     return undefined
   const a = timestampFromFormat(m[1]!)
   const b = timestampFromFormat(m[2]!)
-  return b > 0 ? [a, b] : undefined
+  return b > 0
+    ? [a, b]
+    : undefined
 }
 
 /** Lo que suena en el reproductor de Audiovisual o en el mini-reproductor global. */
@@ -193,7 +217,14 @@ function piezaEnReproduccion(): Pieza | undefined {
         if (m && Number.isFinite(m.duration) && m.duration > 0)
           t = [m.currentTime, m.duration]
       }
-      return { titulo, autor, video: plyr.classList.contains('plyr--video'), sonando, actual: t?.[0], total: t?.[1] }
+      return {
+        titulo,
+        autor,
+        video: plyr.classList.contains('plyr--video'),
+        sonando,
+        actual: t?.[0],
+        total: t?.[1],
+      }
     }
   }
 
@@ -201,7 +232,9 @@ function piezaEnReproduccion(): Pieza | undefined {
   const g = document.querySelector('section[class*="global-audio-player_player"]')
   if (g && (g as HTMLElement).style.display !== 'none') {
     const propio = texto(g.querySelector('[class*="meta"] strong'))
-    const t = propio && propio !== 'Reproductor' ? propio : ultimaPieza?.titulo
+    const t = propio && propio !== 'Reproductor'
+      ? propio
+      : ultimaPieza?.titulo
     if (t) {
       const seek = g.querySelector<HTMLInputElement>('input[aria-label="Posición"]')
       const actual = Number(seek?.value)
@@ -209,11 +242,17 @@ function piezaEnReproduccion(): Pieza | undefined {
       const sonando = g.querySelector('[aria-label="Pausar"]') !== null
       return {
         titulo: t,
-        autor: propio && propio !== 'Reproductor' ? texto(g.querySelector('[class*="meta"] small')) : ultimaPieza?.autor,
+        autor: propio && propio !== 'Reproductor'
+          ? texto(g.querySelector('[class*="meta"] small'))
+          : ultimaPieza?.autor,
         video: false,
         sonando,
-        actual: Number.isFinite(actual) ? actual : undefined,
-        total: Number.isFinite(total) && total > 0 ? total : undefined,
+        actual: Number.isFinite(actual)
+          ? actual
+          : undefined,
+        total: Number.isFinite(total) && total > 0
+          ? total
+          : undefined,
       }
     }
   }
@@ -258,7 +297,9 @@ presence.on('UpdateData', async () => {
       icono = ic
       datos.details = n
       enlace = `${SITIO}/${clave}`
-      const sub = segmentos[0] === clave ? segmentos.slice(1) : []
+      const sub = segmentos[0] === clave
+        ? segmentos.slice(1)
+        : []
 
       if (conDetalle) {
         const h1 = () => texto(document.querySelector('main h1:not(.sr-only)') ?? document.querySelector('h1'))
@@ -295,7 +336,9 @@ presence.on('UpdateData', async () => {
           icono = ic
         datos.details = item.seccion
         datos.state = recorta(item.titulo)
-        datos.largeImageText = recorta(item.detalle ? `${item.detalle} · ${PIE}` : `${nombre} · ${PIE}`, 128)
+        datos.largeImageText = recorta(item.detalle
+          ? `${item.detalle} · ${PIE}`
+          : `${nombre} · ${PIE}`, 128)
         if (item.url)
           enlace = item.url
       }
@@ -307,7 +350,9 @@ presence.on('UpdateData', async () => {
       if (p && (p.sonando || clave === 'audiovisual')) {
         datos.details = recorta(p.titulo, 128)
         datos.state = p.sonando
-          ? recorta(p.autor ? `${p.autor} · ${nombre}` : nombre)
+          ? recorta(p.autor
+              ? `${p.autor} · ${nombre}`
+              : nombre)
           : `En pausa · ${nombre}`
         datos.largeImageText = `${p.video ? 'Vídeo' : 'Audio'} en ${PIE}`
         if (p.sonando) {
@@ -333,8 +378,11 @@ presence.on('UpdateData', async () => {
   }
 
   // Botón con la sección o ficha concreta (nunca la portada)
-  if (boton && describe && enlace)
-    datos.buttons = [{ label: 'Abrir esta sección', url: enlace }]
+  if (boton && describe && enlace) {
+    datos.buttons = [
+      { label: 'Abrir esta sección', url: enlace },
+    ]
+  }
 
   presence.setActivity(datos)
 })

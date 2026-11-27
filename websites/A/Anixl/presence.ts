@@ -27,7 +27,9 @@ async function getVideoInformation() {
     [currentTime, totalDuration] = timeText.split(' / ').map(s => s.trim())
   }
 
-  const isPlaying = videoEl ? !videoEl.paused && !videoEl.ended : false
+  const isPlaying = videoEl
+    ? !videoEl.paused && !videoEl.ended
+    : false
 
   let startTs: number | undefined, endTs: number | undefined
   if (videoEl && isPlaying && !Number.isNaN(videoEl.duration)) {
@@ -187,7 +189,9 @@ presence.on('UpdateData', async () => {
       if (animeName) {
         presenceData.state = animeName
         presenceData.details = 'Browsing Anime'
-        presenceData.largeImageKey = banner?.startsWith('http') ? banner! : `https://anixl.to${banner}`
+        presenceData.largeImageKey = banner?.startsWith('http')
+          ? banner!
+          : `https://anixl.to${banner}`
         presenceData.largeImageText = animeName
       }
     }

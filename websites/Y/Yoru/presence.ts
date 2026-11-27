@@ -26,18 +26,24 @@ function audioLabel(type: string | null | undefined): string {
 
 // Discord caps the details and state rows at 128 characters.
 function clamp(text: string): string {
-  return text.length > 128 ? `${text.slice(0, 127)}…` : text
+  return text.length > 128
+    ? `${text.slice(0, 127)}…`
+    : text
 }
 
 function textOf(selector: string): string {
   const text = document.querySelector(selector)?.textContent?.trim() ?? ''
   // Empty fields on Yoru render as an em dash placeholder until data arrives.
-  return text === '—' ? '' : text
+  return text === '—'
+    ? ''
+    : text
 }
 
 function coverOf(selector: string): string | null {
   const source = document.querySelector<HTMLImageElement>(selector)?.src
-  return source?.startsWith('https://') ? source : null
+  return source?.startsWith('https://')
+    ? source
+    : null
 }
 
 // "/watch/one-piece-episode-12" and "/watch/one-piece/" both point at the
@@ -74,7 +80,9 @@ presence.on('UpdateData', async () => {
       ?? document.querySelector<HTMLElement>('#type-pills .type-pill.active')?.dataset.type,
     )
 
-    presenceData.details = privacy || !title ? 'Watching an anime' : clamp(title)
+    presenceData.details = privacy || !title
+      ? 'Watching an anime'
+      : clamp(title)
 
     if (!privacy) {
       const state = [episode, audio].filter(Boolean).join(' • ')
@@ -82,7 +90,9 @@ presence.on('UpdateData', async () => {
       if (state)
         presenceData.state = clamp(state)
 
-      const cover = showCover ? coverOf('#watch-info-cover') : null
+      const cover = showCover
+        ? coverOf('#watch-info-cover')
+        : null
 
       if (cover) {
         presenceData.largeImageKey = cover
@@ -120,7 +130,9 @@ presence.on('UpdateData', async () => {
             { label: 'Watch Episode', url: href },
             { label: 'View Anime', url: `${origin}/anime/${slug}` },
           ]
-        : [{ label: 'Watch Episode', url: href }]
+        : [
+            { label: 'Watch Episode', url: href },
+          ]
     }
   }
   else if (pathname.startsWith('/anime/')) {
@@ -132,7 +144,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = clamp(title)
       presenceData.detailsUrl = href
 
-      const cover = showCover ? coverOf('#detail-cover') : null
+      const cover = showCover
+        ? coverOf('#detail-cover')
+        : null
 
       if (cover) {
         presenceData.largeImageKey = cover
@@ -143,8 +157,11 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = 'Yoru'
       }
 
-      if (showButtons)
-        presenceData.buttons = [{ label: 'View Anime', url: href }]
+      if (showButtons) {
+        presenceData.buttons = [
+          { label: 'View Anime', url: href },
+        ]
+      }
     }
   }
   else if (pathname.startsWith('/user/')) {

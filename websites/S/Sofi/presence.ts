@@ -119,7 +119,9 @@ presence.on('UpdateData', async () => {
     ) {
       const isOwnProfile = pathname === 'profile'
       const data = document.querySelector('title')
-      const title = data ? data.textContent?.replace(' Profile', '') : null
+      const title = data
+        ? data.textContent?.replace(' Profile', '')
+        : null
 
       presenceData.details = 'Viewing Profile'
       presenceData.state = isOwnProfile
@@ -127,7 +129,9 @@ presence.on('UpdateData', async () => {
         : `Of ${title?.slice(0, title.length - 2)}`
       presenceData.buttons = [
         {
-          label: isOwnProfile ? 'View Profile' : `View ${title} Profile`,
+          label: isOwnProfile
+            ? 'View Profile'
+            : `View ${title} Profile`,
           url: href,
         },
       ]
@@ -175,8 +179,12 @@ presence.on('UpdateData', async () => {
     }
 
     for (const [path, data] of Object.entries(pages)) {
-      if (pathname.includes(path))
-        presenceData = { ...presenceData, ...data } as PresenceData
+      if (pathname.includes(path)) {
+        presenceData = {
+          ...presenceData,
+          ...data,
+        } as PresenceData
+      }
     }
   }
   else if (host === 'gems.sofi.gg') {

@@ -177,7 +177,12 @@ function getPageDetails(pathname: string): PageDetails {
         if (game)
           return { details: 'Casino', state: game }
       }
-      return { details: 'Casino', state: segments[1] ? slugToDisplay(segments[1]) : undefined }
+      return {
+        details: 'Casino',
+        state: segments[1]
+          ? slugToDisplay(segments[1])
+          : undefined,
+      }
     }
 
     // ── Racebook ────────────────────────────────────────────────────────────
@@ -207,7 +212,9 @@ function getPageDetails(pathname: string): PageDetails {
       const coin = segments[1]
       return {
         details: 'Crypto',
-        state: coin ? `${slugToDisplay(coin)} Gambling` : undefined,
+        state: coin
+          ? `${slugToDisplay(coin)} Gambling`
+          : undefined,
       }
     }
 
@@ -254,8 +261,11 @@ presence.on('UpdateData', async () => {
   if (showTimestamp)
     presenceData.startTimestamp = browsingTimestamp
 
-  if (showButtons)
-    presenceData.buttons = [{ label: 'View on BetOnline', url: href }]
+  if (showButtons) {
+    presenceData.buttons = [
+      { label: 'View on BetOnline', url: href },
+    ]
+  }
 
   if (presenceData.details)
     presence.setActivity(presenceData)

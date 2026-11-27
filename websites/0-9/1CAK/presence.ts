@@ -128,8 +128,12 @@ presence.on('UpdateData', async () => {
       },
     }
     for (const [path, data] of Object.entries(pages)) {
-      if (pathname.replace(/_/g, '').includes(path))
-        presenceData = { ...presenceData, ...data } as PresenceData
+      if (pathname.replace(/_/g, '').includes(path)) {
+        presenceData = {
+          ...presenceData,
+          ...data,
+        } as PresenceData
+      }
     }
   }
 

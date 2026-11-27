@@ -65,7 +65,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = document.querySelector(
         '[class="mt-4 sm:ml-4 sm:mt-0  "] > p',
       )?.textContent
-      presenceData.buttons = [{ label: 'Ler mangá', url: href }]
+      presenceData.buttons = [
+        { label: 'Ler mangá', url: href },
+      ]
       break
     }
 
@@ -81,7 +83,10 @@ presence.on('UpdateData', async () => {
       presenceData.details = chapterInfo?.split('/')[0]?.trim()
       presenceData.state = chapterInfo?.split('/')[1]?.trim()
       presenceData.buttons = [
-        { label: 'Ler capítulo', url: href.replace(/\/[^/]*$/, '') },
+        {
+          label: 'Ler capítulo',
+          url: href.replace(/\/[^/]*$/, ''),
+        },
         {
           label: 'Ler mangá',
           url: document.querySelector<HTMLAnchorElement>(

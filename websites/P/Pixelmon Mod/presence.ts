@@ -80,10 +80,16 @@ presence.on('UpdateData', async () => {
                 .querySelector('[class="image"] > img')
                 ?.getAttribute('src') ?? ActivityAssets.Logo,
             )
-        presenceData.largeImageKey = image === 0 ? img : ActivityAssets.Logo
-        presenceData.smallImageKey = image === 0 || image === 2 ? Assets.Reading : img ?? Assets.Reading
+        presenceData.largeImageKey = image === 0
+          ? img
+          : ActivityAssets.Logo
+        presenceData.smallImageKey = image === 0 || image === 2
+          ? Assets.Reading
+          : img ?? Assets.Reading
 
-        presenceData.buttons = [{ label: 'Read Wiki Page', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Wiki Page', url: href },
+        ]
       }
       else {
         presenceData.details = 'Reading the wiki'
@@ -101,7 +107,9 @@ presence.on('UpdateData', async () => {
     case pathname.includes('viewtopic.php'): {
       presenceData.details = 'Viewing post'
       presenceData.state = title?.textContent
-      presenceData.buttons = [{ label: 'Read Post', url: href }]
+      presenceData.buttons = [
+        { label: 'Read Post', url: href },
+      ]
       break
     }
     case pathname.includes('team.php'): {
@@ -129,7 +137,9 @@ presence.on('UpdateData', async () => {
         : title?.textContent
       presenceData.state = document.querySelectorAll('[class="side-segment"]')?.[1]?.textContent
         ?? ''
-      presenceData.buttons = [{ label: 'View Bug Report', url: href }]
+      presenceData.buttons = [
+        { label: 'View Bug Report', url: href },
+      ]
       break
     }
     case !!document.querySelector(

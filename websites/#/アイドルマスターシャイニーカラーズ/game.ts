@@ -81,7 +81,9 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
       if (!node || node.visible === false || node.renderable === false)
         continue
 
-      const title = node._header?.visible === false ? null : node._header?.text?.text
+      const title = node._header?.visible === false
+        ? null
+        : node._header?.text?.text
       if (typeof title === 'string' && title.trim())
         return title.trim()
 
@@ -108,7 +110,12 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
         || typeof event.name !== 'string' || !event.name.trim()) {
         return []
       }
-      return [{ id: event.id, name: event.name.trim().replace(/\s+/g, ' ') }]
+      return [
+        {
+          id: event.id,
+          name: event.name.trim().replace(/\s+/g, ' '),
+        },
+      ]
     })
     Object.defineProperty(window, eventNamesKey, { value: eventNames, configurable: true })
     break
@@ -122,14 +129,20 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
         parentId: 'gameEventId' as const,
         lists: [
           { ...scene?._params?.gameEvent, communications: scene?._params?.releasedCommunications },
-          ...(Array.isArray(album?.gameEvents) ? album.gameEvents : []),
-          ...(Array.isArray(album?.collaborationGameEvents) ? album.collaborationGameEvents : []),
+          ...(Array.isArray(album?.gameEvents)
+            ? album.gameEvents
+            : []),
+          ...(Array.isArray(album?.collaborationGameEvents)
+            ? album.collaborationGameEvents
+            : []),
         ],
       },
       {
         category: 'special_communications',
         parentId: 'specialCommunicationListId' as const,
-        lists: Array.isArray(album?.specialEvents) ? album.specialEvents : [],
+        lists: Array.isArray(album?.specialEvents)
+          ? album.specialEvents
+          : [],
       },
     ]
     const events = sources.flatMap(({ category, parentId, lists }) => lists.flatMap((event) => {
@@ -145,17 +158,21 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
           || typeof communication.title !== 'string' || !communication.title.trim()) {
           return []
         }
-        return [{
-          id: communication.id,
-          chapter: communication.name.trim(),
-          title: communication.title.trim(),
-        }]
+        return [
+          {
+            id: communication.id,
+            chapter: communication.name.trim(),
+            title: communication.title.trim(),
+          },
+        ]
       })
-      return [{
-        category,
-        event: event.name.trim().replace(/\s+/g, ' '),
-        episodes,
-      }]
+      return [
+        {
+          category,
+          event: event.name.trim().replace(/\s+/g, ' '),
+          episodes,
+        },
+      ]
     }))
     if (!events.length)
       continue
@@ -167,10 +184,16 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
 
   const playback = scenes[0]?._params
   const detailScene = scenes[0]
-  const detailTitle = detailScene?._idolDetail ? readHeader(detailScene) : null
+  const detailTitle = detailScene?._idolDetail
+    ? readHeader(detailScene)
+    : null
   const cardName = detailScene?._userIdol?.name ?? detailScene?._userSupportIdol?.name
-  if (detailTitle && typeof cardName === 'string' && cardName.trim())
-    return { page: detailTitle, state: cardName.trim() }
+  if (detailTitle && typeof cardName === 'string' && cardName.trim()) {
+    return {
+      page: detailTitle,
+      state: cardName.trim(),
+    }
+  }
 
   if (route.startsWith('/283Stage')) {
     for (const scene of scenes) {
@@ -178,19 +201,31 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
         && communication.category === playback?.category)
       if (!isProducing && typeof communication?.name === 'string' && communication.name.trim()
         && typeof communication.title === 'string' && communication.title.trim()) {
-        return { stagePage: { section: `${communication.name.trim()} ／ ${communication.title.trim()}` } }
+        return {
+          stagePage: { section: `${communication.name.trim()} ／ ${communication.title.trim()}` },
+        }
       }
     }
 
-    if (!isProducing && playback?.category === 'produce_events')
-      return { stagePage: { section: 'コミュ' } }
+    if (!isProducing && playback?.category === 'produce_events') {
+      return {
+        stagePage: { section: 'コミュ' },
+      }
+    }
 
     const ready = scenes.find(scene => scene?._pokerProduceDeckStore)
     const mode = ready?._mainLayer?._areaSelectLayer?.visible === false
       ? ready._pokerProduceDeckStore?._pokerProduce?.name
       : undefined
     const section = scenes.map(scene => readHeader(scene, true)).find(Boolean) ?? undefined
-    return { stagePage: { mode: typeof mode === 'string' && mode.trim() ? mode.trim() : undefined, section } }
+    return {
+      stagePage: {
+        mode: typeof mode === 'string' && mode.trim()
+          ? mode.trim()
+          : undefined,
+        section,
+      },
+    }
   }
 
   const characterAlbum = playback?.characterAlbum
@@ -265,7 +300,12 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
       communication: {
         name: 'コミュ',
         title: typeof title === 'string' && title.trim()
-          ? [typeof category === 'string' ? category.trim() : '', title.trim()].filter(Boolean).join(' ／ ')
+          ? [
+              typeof category === 'string'
+                ? category.trim()
+                : '',
+              title.trim(),
+            ].filter(Boolean).join(' ／ ')
           : undefined,
       },
     }
@@ -273,15 +313,24 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
 
   if (route === '/characterProfile') {
     const character = scenes.find(scene => scene?._mainLayer?._selectedCharacter)?._mainLayer?._selectedCharacter?.name
-    if (typeof character === 'string' && character.trim())
-      return { miniGame: { route, section: character.trim() } }
+    if (typeof character === 'string' && character.trim()) {
+      return {
+        miniGame: {
+          route,
+          section: character.trim(),
+        },
+      }
+    }
   }
 
   if (route === '/miniGamePortal') {
     const ready = scenes.find(scene => Array.isArray(scene?._params?.daifugoCourses)
       && scene.visible !== false && scene.renderable !== false)
-    if (ready)
-      return { miniGame: { route: '/daifugo', section: readHeader(scenes[0] ?? ready, true) ?? 'コース選択' } }
+    if (ready) {
+      return {
+        miniGame: { route: '/daifugo', section: readHeader(scenes[0] ?? ready, true) ?? 'コース選択' },
+      }
+    }
   }
 
   if (route === '/daifugo') {
@@ -299,7 +348,12 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
       return {
         miniGame: {
           route,
-          section: [typeof course === 'string' ? course.trim() : '', phase].filter(Boolean).join(' ／ '),
+          section: [
+            typeof course === 'string'
+              ? course.trim()
+              : '',
+            phase,
+          ].filter(Boolean).join(' ／ '),
         },
       }
     }
@@ -317,7 +371,9 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
     return null
   }
 
-  for (const scene of route === '/produceReady' ? scenes : []) {
+  for (const scene of route === '/produceReady'
+    ? scenes
+    : []) {
     const deck = scene?._mainLayer?._deckEditLayer
     const mode = scene?._store?._selectProduceArea?.produce?.title
     const stage = deck?._commonPartsLayer?._header?.text?.text
@@ -337,7 +393,9 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
     return {
       preparation: {
         mode: mode.trim().replace(/編$/, ''),
-        stage: frontTitle && frontTitle !== stage.trim() ? `${stage.trim()} - ${frontTitle}` : stage.trim(),
+        stage: frontTitle && frontTitle !== stage.trim()
+          ? `${stage.trim()} - ${frontTitle}`
+          : stage.trim(),
       },
     }
   }
@@ -354,9 +412,14 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
     : undefined
 
   let hasProduceScene = false
-  for (const scene of route === '/produce' ? scenes : []) {
-    if (scene?._myPage)
-      return hasProduceScene ? null : { home: true }
+  for (const scene of route === '/produce'
+    ? scenes
+    : []) {
+    if (scene?._myPage) {
+      return hasProduceScene
+        ? null
+        : { home: true }
+    }
 
     if (scene?._produceType || scene?._endingLayer)
       hasProduceScene = true
@@ -368,7 +431,10 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
         return { idol, scenario: 'W.I.N.G.編', stage: concertStage }
     }
 
-    for (const layer of [scene, ...(scene?._frontLayer?.children ?? [])]) {
+    for (const layer of [
+      scene,
+      ...(scene?._frontLayer?.children ?? []),
+    ]) {
       const result = layer?._params
       const produce = result?.userProduce?.produce
       if (result?.userProduce)
@@ -401,7 +467,9 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
 
       const stage = outcome === 'lose'
         ? `${concertStage}敗退`
-        : category === 'final' ? 'W.I.N.G.優勝' : 'W.I.N.G.決勝進出'
+        : category === 'final'
+          ? 'W.I.N.G.優勝'
+          : 'W.I.N.G.決勝進出'
       return { idol, scenario, stage }
     }
 
@@ -443,9 +511,16 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
     }
 
     if (musicList?._isTrialListening === true && title) {
-      const songTitle = typeof song?.songTitle === 'string' ? song.songTitle.trim() : ''
-      const artist = typeof song?.artist === 'string' ? song.artist.trim() : ''
-      const mvPaths = [song?.getMvBgmPath?.(), song?.getFullMvBgmPath?.()]
+      const songTitle = typeof song?.songTitle === 'string'
+        ? song.songTitle.trim()
+        : ''
+      const artist = typeof song?.artist === 'string'
+        ? song.artist.trim()
+        : ''
+      const mvPaths = [
+        song?.getMvBgmPath?.(),
+        song?.getFullMvBgmPath?.(),
+      ]
       const nodes: GameLayer[] = [scene]
       let video: GameVideo | undefined
       while (nodes.length) {
@@ -473,12 +548,29 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
         && loopStart >= 0 && loopEnd > loopStart && position >= loopEnd) {
         position = loopStart + (position - loopEnd) % (loopEnd - loopStart)
       }
-      const playback = (video ? !video.ended : isSong && !sound?.ended)
-        && typeof position === 'number' && Number.isFinite(position) && position >= 0
-        && typeof duration === 'number' && Number.isFinite(duration) && duration > 0 && position < duration
-        ? { type: video ? 'video' as const : 'audio' as const, position, duration, paused: video ? video.paused === true : sound?._paused === true }
+      const playback = (video
+        ? !video.ended
+        : isSong && !sound?.ended)
+      && typeof position === 'number' && Number.isFinite(position) && position >= 0
+      && typeof duration === 'number' && Number.isFinite(duration) && duration > 0 && position < duration
+        ? {
+            type: video ? 'video' as const : 'audio' as const,
+            position,
+            duration,
+            paused: video
+              ? video.paused === true
+              : sound?._paused === true,
+          }
         : undefined
-      return { page: video ? `${title} ／ MV` : title, state: songTitle ? [songTitle, artist].filter(Boolean).join(' ／ ') : undefined, playback }
+      return {
+        page: video
+          ? `${title} ／ MV`
+          : title,
+        state: songTitle
+          ? [songTitle, artist].filter(Boolean).join(' ／ ')
+          : undefined,
+        playback,
+      }
     }
 
     if (scene?._myPage) {
@@ -497,14 +589,24 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
         ?? scene._awakeIdolSelectLayer?._characterList?._selectedCharacter?.name
         ?? slotIdol?.idol?.name
         : undefined
-      return { page: title, state: typeof idolName === 'string' && idolName.trim() ? idolName.trim() : undefined }
+      return {
+        page: title,
+        state: typeof idolName === 'string' && idolName.trim()
+          ? idolName.trim()
+          : undefined,
+      }
     }
 
     const storedEvent = scene?._mainLayer?._store?._gameEvent
     const eventName = scene?._params?.gameEvent?.name
-      ?? (typeof storedEvent?.id === 'string' && storedEvent.id === scene?._gameEventId ? storedEvent.name : undefined)
-    if (typeof eventName === 'string' && eventName.trim())
-      return { event: eventName.trim().replace(/\s+/g, ' ') }
+      ?? (typeof storedEvent?.id === 'string' && storedEvent.id === scene?._gameEventId
+        ? storedEvent.name
+        : undefined)
+    if (typeof eventName === 'string' && eventName.trim()) {
+      return {
+        event: eventName.trim().replace(/\s+/g, ' '),
+      }
+    }
 
     const cachedEvent = eventNames?.find(event => event.id === scene?._gameEventId)
     if (cachedEvent)

@@ -38,8 +38,12 @@ presence.on('UpdateData', async () => {
   const currentPath = iframeState?.pathname ?? parentPath
   const currentHash = iframeState?.hash ?? parentHash
 
-  const cleanHash = currentHash.startsWith('#/') ? currentHash.split('?')[0] : ''
-  const currentRoute = (cleanHash && cleanHash.length > 1) ? cleanHash.substring(1) : currentPath
+  const cleanHash = currentHash.startsWith('#/')
+    ? currentHash.split('?')[0]
+    : ''
+  const currentRoute = (cleanHash && cleanHash.length > 1)
+    ? cleanHash.substring(1)
+    : currentPath
   const idolPage = getIdolPageDetails(currentRoute)
   const routeDisplay = getRouteDisplay(currentRoute)
 
@@ -59,14 +63,18 @@ presence.on('UpdateData', async () => {
     state = status.album
   }
   else if (status && 'page' in status) {
-    let section = idolPage && status.page.startsWith(idolPage) ? status.page.slice(idolPage.length).trim() : status.page
+    let section = idolPage && status.page.startsWith(idolPage)
+      ? status.page.slice(idolPage.length).trim()
+      : status.page
     if (idolPage && status.state && section === 'アイドル選択')
       section = ''
     const isRoutePage = routeDisplay.state && !status.state
       && (status.page === routeDisplay.details || status.page === routeDisplay.state
         || routeDisplay.details === pageLabels.fes || routeDisplay.details === pageLabels.matchLive)
     if (idolPage) {
-      details = status.state && section ? `${idolPage} ／ ${section}` : idolPage
+      details = status.state && section
+        ? `${idolPage} ／ ${section}`
+        : idolPage
       state = status.state || section || undefined
     }
     else {
@@ -88,8 +96,12 @@ presence.on('UpdateData', async () => {
     state = status.profilePage
   }
   else if (status && 'stagePage' in status) {
-    details = status.stagePage.mode ? `${pageLabels.stage} ／ ${status.stagePage.mode}` : pageLabels.stage
-    state = status.stagePage.section === pageLabels.stage ? undefined : status.stagePage.section
+    details = status.stagePage.mode
+      ? `${pageLabels.stage} ／ ${status.stagePage.mode}`
+      : pageLabels.stage
+    state = status.stagePage.section === pageLabels.stage
+      ? undefined
+      : status.stagePage.section
   }
   else if (status && 'preparation' in status) {
     details = `${pageLabels.preparation} ／ ${status.preparation.mode}`
@@ -110,10 +122,16 @@ presence.on('UpdateData', async () => {
     state = `${status.idol} ／ ${status.stage}`
   }
 
-  const playback = status && 'page' in status ? status.playback : undefined
+  const playback = status && 'page' in status
+    ? status.playback
+    : undefined
   const presenceData: PresenceData = {
     name: 'シャニマス',
-    type: playback ? (playback.type === 'video' ? ActivityType.Watching : ActivityType.Listening) : undefined,
+    type: playback
+      ? (playback.type === 'video'
+          ? ActivityType.Watching
+          : ActivityType.Listening)
+      : undefined,
     details,
     state,
     largeImageKey: logo,

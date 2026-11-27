@@ -102,8 +102,12 @@ async function updatePresence() {
           presenceData.details += ` | ${result.lines.length} lines`
           presenceData.largeImageText = result.metadata.title
 
-          presenceData.largeImageKey = result.audioSource?.kind === 'file' ? ActivityAssets.Logo : result.metadata.thumbnailDataUrl
-          presenceData.smallImageKey = result.audioSource?.kind === 'file' ? Assets.Writing : ActivityAssets.Logo
+          presenceData.largeImageKey = result.audioSource?.kind === 'file'
+            ? ActivityAssets.Logo
+            : result.metadata.thumbnailDataUrl
+          presenceData.smallImageKey = result.audioSource?.kind === 'file'
+            ? Assets.Writing
+            : ActivityAssets.Logo
         }
       }
     }

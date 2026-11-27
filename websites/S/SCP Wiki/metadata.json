@@ -26,7 +26,6 @@
     "fondazionescp.wikidot.com",
     "ja.scp-wiki.net",
     "ko.scp-wiki.net",
-    "scp-wiki.net.pl",
     "scp-pt-br.wikidot.com",
     "scpfoundation.net",
     "scp-es.com",
@@ -37,7 +36,7 @@
     "www.scpwiki.com"
   ],
   "regExp": "^https?[:][/][/]((scp-wiki|scp-wiki-cn|scp-cs|fondationscp|scp-wiki-de|scp-int|fondazionescp|scp-pt-br|scp-th|scpclassic|scpexplained|scp-sandbox-3)[.]wikidot[.]com|(ja|ko)[.]scp-wiki[.]net|(scp-wiki)[.]net[.]pl|scpfoundation[.]net|scp-es[.]com|(www)[.]scpwiki[.]com)[/]",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SCP%20Wiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SCP%20Wiki/assets/thumbnail.png",
   "color": "#BB0011",

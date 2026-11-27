@@ -16,7 +16,7 @@
   },
   "url": "wowtv.de",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wowtv[.]de[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WOW%20TV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WOW%20TV/assets/thumbnail.png",
   "color": "#00818a",

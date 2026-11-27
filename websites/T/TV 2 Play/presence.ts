@@ -97,7 +97,9 @@ function isAudibleTrailer(video: HTMLVideoElement): boolean {
 }
 
 function largestVideo(root: ParentNode = document): HTMLVideoElement | null {
-  return [...root.querySelectorAll('video')]
+  return [
+    ...root.querySelectorAll('video'),
+  ]
     .filter(video =>
       video.isConnected
       && !video.ended
@@ -124,7 +126,9 @@ function largestVideo(root: ParentNode = document): HTMLVideoElement | null {
 }
 
 function unique(values: string[]): string[] {
-  return [...new Set(values.map(clean).filter(Boolean))]
+  return [
+    ...new Set(values.map(clean).filter(Boolean)),
+  ]
 }
 
 function readPlayerMeta(player: Element | null): string[] {
@@ -149,7 +153,9 @@ function readPlayerMeta(player: Element | null): string[] {
 
   const preferred = unique(
     preferredSelectors.flatMap(selector =>
-      [...meta.querySelectorAll(selector)]
+      [
+        ...meta.querySelectorAll(selector),
+      ]
         .filter(isVisible)
         .map(element => clean(element.textContent)),
     ),
@@ -159,7 +165,9 @@ function readPlayerMeta(player: Element | null): string[] {
     return preferred
 
   return unique(
-    [...meta.querySelectorAll('span, p, div')]
+    [
+      ...meta.querySelectorAll('span, p, div'),
+    ]
       .filter(element => element.children.length === 0)
       .filter(isVisible)
       .map(element => clean(element.textContent)),

@@ -84,11 +84,9 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     name: 'THE IDOLM@STER',
-    type: ActivityType.Watching,
+    type: ActivityType.Playing,
     largeImageKey: LOGO,
-    largeImageText: 'THE IDOLM@STER',
     startTimestamp: browsingTimestamp,
-    smallImageKey: Assets.Reading,
   }
   const { hostname, pathname, href } = document.location
   const parts = pathname.split('/').filter(Boolean)
@@ -100,18 +98,24 @@ presence.on('UpdateData', async () => {
       // 「相川 千夏（あいかわ ちなつ）」→「相川 千夏」
       const name = pageTitle().replace(/（.*）$/, '').trim()
       const brand = BRANDS_BY_ID[id.charAt(0)]
-      presenceData.details = showTitle && name ? `${name} のプロフィール` : 'アイドルのプロフィールを閲覧中'
+      presenceData.details = showTitle && name
+        ? `${name} のプロフィール`
+        : 'アイドルのプロフィールを閲覧中'
       if (brand)
         presenceData.state = brand
-      const image = showIdolImage ? ogImage() : null
+      const image = showIdolImage
+        ? ogImage()
+        : null
       if (image && image.includes('/character_main/')) {
         presenceData.largeImageKey = image
-        presenceData.largeImageText = name || 'アイドル名鑑'
         presenceData.smallImageKey = LOGO
         presenceData.smallImageText = 'アイドル名鑑'
       }
-      if (buttons)
-        presenceData.buttons = [{ label: 'プロフィールを見る', url: href }]
+      if (buttons) {
+        presenceData.buttons = [
+          { label: 'プロフィールを見る', url: href },
+        ]
+      }
     }
     else if (parts[0] === 'search') {
       presenceData.details = 'アイドル名鑑で検索中'
@@ -142,7 +146,9 @@ presence.on('UpdateData', async () => {
       const key = archive.split('/')[0] ?? ''
       presenceData.details = 'THE IDOLM@STER WEB（旧公式サイト）'
       const title = document.title.replace(/^THE IDOLM@STER WEB\s*/, '').trim()
-      presenceData.state = ARCHIVE_SECTIONS[key] ?? (title || (key === '' || key === 'index.htm' ? 'トップページ' : '閲覧中'))
+      presenceData.state = ARCHIVE_SECTIONS[key] ?? (title || (key === '' || key === 'index.htm'
+        ? 'トップページ'
+        : '閲覧中'))
     }
     else {
       // 「THE IDOLM@STER [トップページ]」→「トップページ」
@@ -160,18 +166,31 @@ presence.on('UpdateData', async () => {
   const brand = BRANDS[first]
   const section = SECTIONS[first] ?? (parts[1] ? SECTIONS[parts[1]] : undefined)
 
+  // サイト内検索 (/search?q=...)
+  if (first === 'search') {
+    presenceData.details = 'ポータルで検索中'
+    presenceData.smallImageKey = Assets.Search
+  }
   // 記事ページ (/news/01_20212 など)
-  if ((first === 'news' || first === 'information') && parts[1]) {
+  else if ((first === 'news' || first === 'information') && parts[1]) {
     presenceData.details = section ?? 'ニュース'
     const title = pageTitle()
-    if (showTitle && title)
-      presenceData.state = title.length > 120 ? `${title.slice(0, 120)}…` : title
-    if (buttons)
-      presenceData.buttons = [{ label: '記事を読む', url: href }]
+    if (showTitle && title) {
+      presenceData.state = title.length > 120
+        ? `${title.slice(0, 120)}…`
+        : title
+    }
+    if (buttons) {
+      presenceData.buttons = [
+        { label: '記事を読む', url: href },
+      ]
+    }
   }
   // ブランドページ (/cinderellagirls、/cinderellagirls/news など)
   else if (brand) {
-    presenceData.details = `${brand}${section ? ` の${section}` : ''}`
+    presenceData.details = `${brand}${section
+      ? ` の${section}`
+      : ''}`
     presenceData.state = 'ブランドページを閲覧中'
   }
   // 各コーナー
@@ -184,7 +203,9 @@ presence.on('UpdateData', async () => {
   }
   else {
     const title = pageTitle()
-    presenceData.details = title && !title.startsWith('【公式】') ? title : 'ポータルを閲覧中'
+    presenceData.details = title && !title.startsWith('【公式】')
+      ? title
+      : 'ポータルを閲覧中'
   }
   presence.setActivity(presenceData)
 })

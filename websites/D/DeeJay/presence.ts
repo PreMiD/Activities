@@ -11,7 +11,9 @@ enum ActivityAssets {
 }
 
 function truncate(text: string, max = 128): string {
-  return text.length > max ? `${text.slice(0, max - 3)}...` : text
+  return text.length > max
+    ? `${text.slice(0, max - 3)}...`
+    : text
 }
 
 function getPaginationState(pathname: string): string | undefined {
@@ -195,7 +197,9 @@ presence.on('UpdateData', async () => {
       }
       else if (section === 'playlist') {
         const isPlaylistDetail = subPath[1] === 'dettaglio'
-        const playlistDate = isPlaylistDetail ? getPlaylistDate(pathname) : undefined
+        const playlistDate = isPlaylistDetail
+          ? getPlaylistDate(pathname)
+          : undefined
 
         presenceData.details = `${strings.viewingPlaylist} ${program.name}`
         presenceData.state = playlistDate ?? getPaginationState(pathname)
@@ -227,7 +231,9 @@ presence.on('UpdateData', async () => {
         ? `${articleTitle.slice(0, 25)}...`
         : articleTitle
       presenceData.details = `${strings.readingArticle} ${shortArticleTitle}`
-      presenceData.state = articleSubtitle ? truncate(articleSubtitle) : undefined
+      presenceData.state = articleSubtitle
+        ? truncate(articleSubtitle)
+        : undefined
     }
     else {
       presenceData.details = strings.viewingArticles

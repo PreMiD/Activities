@@ -12,7 +12,7 @@
   },
   "url": "funpay.com",
   "regExp": "^https?[:][/][/](www[.])?funpay[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FunPay/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FunPay/assets/thumbnail.jpg",
   "color": "#4054b2",

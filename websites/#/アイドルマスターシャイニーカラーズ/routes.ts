@@ -48,8 +48,14 @@ const pageGroups: { details: string, sections: Record<string, string> }[] = [
       '/shop/shiny_passport': 'シャイニーパスショップ',
     },
   },
-  { details: pageLabels.producerDesk, sections: { '/producerDeskShop': 'Pレベルショップ' } },
-  { details: pageLabels.miniGame, sections: { '/daifugo': '大富豪', '/characterProfile': 'プロフィール' } },
+  {
+    details: pageLabels.producerDesk,
+    sections: { '/producerDeskShop': 'Pレベルショップ' },
+  },
+  {
+    details: pageLabels.miniGame,
+    sections: { '/daifugo': '大富豪', '/characterProfile': 'プロフィール' },
+  },
 ]
 
 const pageNames: Record<string, string> = {
@@ -102,7 +108,9 @@ export function getRouteDisplay(route: string): { details?: string, state?: stri
     ? 'エリア選択'
     : route.startsWith('/matchLiveStageSelect/')
       ? 'ステージ選択'
-      : route === '/matchLiveConcert' ? 'プレイ中' : undefined
+      : route === '/matchLiveConcert'
+        ? 'プレイ中'
+        : undefined
   if (matchLiveSection)
     return { details: pageLabels.matchLive, state: matchLiveSection }
 
@@ -114,5 +122,9 @@ export function getRouteDisplay(route: string): { details?: string, state?: stri
   if (prefix !== undefined)
     return { details: pagePrefixes[prefix] }
 
-  return { details: route.startsWith('/idolAlbum/') ? pageLabels.album : undefined }
+  return {
+    details: route.startsWith('/idolAlbum/')
+      ? pageLabels.album
+      : undefined,
+  }
 }

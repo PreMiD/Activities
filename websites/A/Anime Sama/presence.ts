@@ -58,7 +58,9 @@ presence.on('UpdateData', async () => {
         ?.textContent
         ?.trim()}`
       : 'Regarde la page du manga'
-    presenceData.buttons = [{ label: 'Voir la page', url: href }]
+    presenceData.buttons = [
+      { label: 'Voir la page', url: href },
+    ]
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
       ?.content ?? ActivityAssets.Logo
     if (privacyMode) {
@@ -78,11 +80,16 @@ presence.on('UpdateData', async () => {
     const now = Math.floor(Date.now() / 1000)
     const startTimestamp = now - Math.floor(video.currentTime ?? 0)
     const endTimestamp = startTimestamp + Math.floor(video.duration ?? 0)
-    presenceData.largeImageText = `${season ? `${season}, ` : ''}${
+    presenceData.largeImageText = `${season
+      ? `${season}, `
+      : ''}${
       selectEps?.options[selectEps.selectedIndex]?.value ?? ''
     }`
 
-    presenceData.buttons = [{ label: 'Regarder', url: href }, { label: 'À propos de l\'anime', url: `${document.location.origin}/catalogue/${pathArr[2]}` }]
+    presenceData.buttons = [
+      { label: 'Regarder', url: href },
+      { label: 'À propos de l\'anime', url: `${document.location.origin}/catalogue/${pathArr[2]}` },
+    ]
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = selectLecteur?.options[selectLecteur.selectedIndex]?.value ?? ''
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
@@ -122,7 +129,10 @@ presence.on('UpdateData', async () => {
     const selectLecteur = document.querySelector<HTMLSelectElement>('#selectLecteurs')
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = selectLecteur?.options[selectLecteur.selectedIndex]?.value ?? ''
-    presenceData.buttons = [{ label: 'Lire le scan', url: href }, { label: 'À propos du manga', url: `${document.location.origin}/catalogue/${pathArr[2]}` }]
+    presenceData.buttons = [
+      { label: 'Lire le scan', url: href },
+      { label: 'À propos du manga', url: `${document.location.origin}/catalogue/${pathArr[2]}` },
+    ]
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
       ?.content ?? ActivityAssets.Logo
     if (privacyMode) {
@@ -132,7 +142,9 @@ presence.on('UpdateData', async () => {
     }
   }
   else {
-    presenceData.details = !privacyMode ? 'Page inconnue' : 'Navigue..'
+    presenceData.details = !privacyMode
+      ? 'Page inconnue'
+      : 'Navigue..'
   }
 
   if (!showButtons || privacyMode)
@@ -145,5 +157,5 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = ActivityAssets.Logo
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

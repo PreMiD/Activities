@@ -72,7 +72,9 @@ presence.on('UpdateData', async () => {
 
     presenceData.name = animeName
     presenceData.details = `Assistindo: ${animeName}`
-    presenceData.state = episodeNumber ? `Episódio ${episodeNumber}` : 'Episódio'
+    presenceData.state = episodeNumber
+      ? `Episódio ${episodeNumber}`
+      : 'Episódio'
     presenceData.buttons = [
       {
         label: 'Assistir Junto',

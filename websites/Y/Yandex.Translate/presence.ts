@@ -20,7 +20,9 @@ presence.on('UpdateData', async () => {
     }
     case '/translate':
     case '/doc': {
-      typet = document.location.pathname === '/translate' ? 'Website' : 'Document'
+      typet = document.location.pathname === '/translate'
+        ? 'Website'
+        : 'Document'
       from = document.querySelector(
         '#srcLangButton > #sourceLangText',
       )?.textContent

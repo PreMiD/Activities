@@ -66,8 +66,11 @@ presence.on('UpdateData', async () => {
       presenceData.endTimestamp = data.end
   }
   // Opens the song that's playing (not the front page)
-  if (data.button?.url)
-    presenceData.buttons = [{ label: 'Listen to Song', url: data.button.url }]
+  if (data.button?.url) {
+    presenceData.buttons = [
+      { label: 'Listen to Song', url: data.button.url },
+    ]
+  }
 
   presence.setActivity(presenceData)
 })

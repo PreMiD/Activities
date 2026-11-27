@@ -48,7 +48,9 @@ presence.on('UpdateData', () => {
     presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
       'a.image-popup-vertical-fit.misc-click > img',
     )?.src
-    presenceData.buttons = [{ label: 'View Skin', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Skin', url: document.URL },
+    ]
   }
   else if (path.startsWith('/weapon')) {
     presenceData.details = 'Browsing weapon skins'
@@ -66,7 +68,9 @@ presence.on('UpdateData', () => {
     presenceData.details = `Viewing case: ${shortTitle}`
     presenceData.state = priceMiddle?.textContent
     presenceData.largeImageKey = leftImage?.src
-    presenceData.buttons = [{ label: 'View Case', url: document.URL }]
+    presenceData.buttons = [
+      { label: 'View Case', url: document.URL },
+    ]
   }
   else if (path.startsWith('/containers')) {
     presenceData.details = 'Browsing containers'
@@ -93,7 +97,9 @@ presence.on('UpdateData', () => {
       presenceData.details = `Viewing the ${shortTitle}`
       presenceData.state = priceMiddle?.textContent
       presenceData.largeImageKey = leftImage?.src
-      presenceData.buttons = [{ label: 'View Capsule', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Capsule', url: document.URL },
+      ]
     }
     else if (path.startsWith('/sticker/regular')) {
       presenceData.details = 'Browsing stickers'
@@ -104,7 +110,9 @@ presence.on('UpdateData', () => {
       presenceData.largeImageKey = middleImage?.src
       presenceData.smallImageKey = ActivityAssets.Sticker
       presenceData.smallImageText = 'Viewing stickers'
-      presenceData.buttons = [{ label: 'View Sticker', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Sticker', url: document.URL },
+      ]
     }
   }
   else if (path.startsWith('/glove')) {
@@ -119,7 +127,9 @@ presence.on('UpdateData', () => {
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
         'div.well.result-box.nomargin > img',
       )?.src
-      presenceData.buttons = [{ label: 'View Glove', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Glove', url: document.URL },
+      ]
     }
   }
   else if (path.startsWith('/agent')) {
@@ -134,7 +144,9 @@ presence.on('UpdateData', () => {
       presenceData.details = `Viewing agent: ${shortTitle}`
       presenceData.state = `Steam price: ${steamPrice?.textContent}`
       presenceData.largeImageKey = middleImage?.src
-      presenceData.buttons = [{ label: 'View Agent', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Agent', url: document.URL },
+      ]
     }
   }
   else if (path.startsWith('/patch')) {
@@ -146,7 +158,9 @@ presence.on('UpdateData', () => {
       presenceData.details = `Viewing patch: ${shortTitle}`
       presenceData.state = `Steam price: ${steamPrice?.textContent}`
       presenceData.largeImageKey = middleImage?.src
-      presenceData.buttons = [{ label: 'View Patch', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Patch', url: document.URL },
+      ]
     }
   }
   else if (path.startsWith('/graffiti')) {
@@ -173,7 +187,9 @@ presence.on('UpdateData', () => {
       presenceData.details = `Viewing graffiti: ${shortTitle}`
       presenceData.state = `Steam price: ${steamPrice?.textContent}`
       presenceData.largeImageKey = middleImage?.src
-      presenceData.buttons = [{ label: 'View Graffiti', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Graffiti', url: document.URL },
+      ]
     }
   }
   else if (path.startsWith('/item')) {
@@ -186,7 +202,9 @@ presence.on('UpdateData', () => {
       presenceData.details = `Viewing item: ${shortTitle}`
       presenceData.state = `Steam price: ${steamPrice?.textContent}`
       presenceData.largeImageKey = middleImage?.src
-      presenceData.buttons = [{ label: 'View Item', url: document.URL }]
+      presenceData.buttons = [
+        { label: 'View Item', url: document.URL },
+      ]
     }
   }
   else if (path.includes('google-search')) {

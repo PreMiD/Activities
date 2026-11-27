@@ -129,7 +129,9 @@ presence.on('UpdateData', async () => {
         }
         case 'asset': {
           presenceData.details = `Viewing ${
-            pathname.includes('/tv/') ? 'tv show' : 'movie'
+            pathname.includes('/tv/')
+              ? 'tv show'
+              : 'movie'
           }`
           presenceData.details = pathname.includes('/tv/')
             ? privacy

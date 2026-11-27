@@ -18,8 +18,11 @@ import { getJsonPosition } from '../util/getJsonPosition.js'
 import { error, exit, prefix } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
 import { addSarifLog, SarifRuleId, writeSarifLog } from '../util/sarif.js'
+import { ActivityTester, findTestFiles } from './ActivityTester.js'
 import { AssetsManager } from './AssetsManager.js'
 import { DependenciesManager } from './DependenciesManager.js'
+import { DevTestLoop, listenForKeys } from './testing/DevTestLoop.js'
+import { createReporter } from './testing/reporter.js'
 import { TypescriptCompiler } from './TypescriptCompiler.js'
 import { WebSocketServer } from './WebSocketServer.js'
 
@@ -41,6 +44,7 @@ export class ActivityCompiler {
   dependencies: DependenciesManager
   ts: TypescriptCompiler
   ws: WebSocketServer | undefined
+  tests: DevTestLoop | undefined
   assetsManager: AssetsManager
 
   constructor(
@@ -97,7 +101,11 @@ export class ActivityCompiler {
     await build({
       entryPoints: [
         resolve(this.cwd, 'presence.ts'),
-        ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : []),
+        ...(hasIframe
+          ? [
+              resolve(this.cwd, 'iframe.ts'),
+            ]
+          : []),
       ],
       outdir: resolve(this.cwd, 'dist'),
       bundle: true,
@@ -123,7 +131,19 @@ export class ActivityCompiler {
   async watch({ validate, zip, sarif }: { validate: boolean, zip: boolean, sarif: boolean }) {
     await this.dependencies.installDependencies()
 
-    this.ws = new WebSocketServer(this.cwd)
+    const ws = new WebSocketServer(this.cwd)
+    this.ws = ws
+
+    this.tests = new DevTestLoop({
+      service: this.activity.service,
+      send: async () => {
+        await ws.send()
+      },
+      tester: new ActivityTester(this.cwd, this.activity.service, ws, createReporter(this.activity.service)),
+      hasTests: async () => (await findTestFiles(this.cwd)).length > 0,
+      log: line => console.log(line),
+    })
+    listenForKeys(this.tests)
 
     watch(this.cwd, {
       depth: 0,
@@ -172,11 +192,16 @@ export class ActivityCompiler {
   }
 
   private async compileAndSend({ validate, zip, sarif }: { validate: boolean, zip: boolean, sarif: boolean }) {
-    await this.compile({ validate, zip, preCheck: false, kill: false })
+    await this.compile({
+      validate,
+      zip,
+      preCheck: false,
+      kill: false,
+    })
     if (sarif) {
       await writeSarifLog()
     }
-    await this.ws?.send()
+    this.tests?.onBuild()
   }
 
   private async validate({ kill }: { kill: boolean }): Promise<boolean> {
@@ -199,7 +224,9 @@ export class ActivityCompiler {
       return false
     }
 
-    const libraryVersion: ActivityMetadata | null = await fetch(`https://api.premid.app/v6/activities${this.versionized ? `/v${metadata.apiVersion}` : ''}/${encodeURIComponent(metadata.service)}/metadata.json`).then(res => res.json()).catch(() => null)
+    const libraryVersion: ActivityMetadata | null = await fetch(`https://api.premid.app/v6/activities${this.versionized
+      ? `/v${metadata.apiVersion}`
+      : ''}/${encodeURIComponent(metadata.service)}/metadata.json`).then(res => res.json()).catch(() => null)
 
     let serviceFolder: string
     if (this.versionized) {
@@ -436,7 +463,9 @@ export class ActivityCompiler {
       valid = false
     }
 
-    const urls = Array.isArray(metadata.url) ? metadata.url : [metadata.url]
+    const urls = Array.isArray(metadata.url)
+      ? metadata.url
+      : [metadata.url]
 
     // regExp validation for URLs
     {

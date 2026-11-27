@@ -96,7 +96,9 @@ function normalizeText(value: string | null | undefined) {
   }
 
   const text = value.replace(/\s+/g, ' ').trim()
-  return text.length > 0 ? text : null
+  return text.length > 0
+    ? text
+    : null
 }
 
 function clampText(value: string | null | undefined, maxLength = 128) {
@@ -318,7 +320,9 @@ function getVideoTimestamps(video: HTMLVideoElement) {
 }
 
 function resolveLanguage(languageSetting: string | null | undefined): SupportedLanguage {
-  return languageSetting?.toLowerCase().startsWith('ja') ? 'ja' : 'en'
+  return languageSetting?.toLowerCase().startsWith('ja')
+    ? 'ja'
+    : 'en'
 }
 
 async function getCommonStrings(fallbackLanguage: SupportedLanguage) {
@@ -349,7 +353,9 @@ async function buildLessonPresence(route: LessonRoute, context: PresenceContext)
 
   const [topicContents, courseDetails] = await Promise.all([
     getTopicContents(route.topicId),
-    courseId ? getCourseDetails(courseId) : Promise.resolve(null),
+    courseId
+      ? getCourseDetails(courseId)
+      : Promise.resolve(null),
   ])
 
   const matchedBundle = findBundleForTopic(courseDetails, route.topicId)
@@ -425,7 +431,9 @@ function buildGenericPresence(context: PresenceContext) {
   const presenceData: PresenceData = {
     name: ACTIVITY_NAME,
     details: getGenericDetails(context.texts),
-    detailsUrl: isLearningHost() ? DASHBOARD_URL : window.location.origin,
+    detailsUrl: isLearningHost()
+      ? DASHBOARD_URL
+      : window.location.origin,
     state: ACTIVITY_NAME,
     stateUrl: window.location.href,
     statusDisplayType: StatusDisplayType.Name,

@@ -57,17 +57,23 @@ function clean(text: string | undefined, fallback = ''): string {
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, 100)
-  return out.length >= 2 ? out : fallback
+  return out.length >= 2
+    ? out
+    : fallback
 }
 
 function songLine(title?: string, artist?: string): string {
   const t = clean(title, 'Unknown Song')
   const a = clean(artist)
-  return a ? `${t} - ${a}` : t
+  return a
+    ? `${t} - ${a}`
+    : t
 }
 
 function num(value: number | undefined, fallback = 0): number {
-  return typeof value === 'number' && Number.isFinite(value) ? value : fallback
+  return typeof value === 'number' && Number.isFinite(value)
+    ? value
+    : fallback
 }
 
 // Keep the countdown stable: only move the end time when it drifts > 3s.
@@ -249,7 +255,9 @@ presence.on('UpdateData', async () => {
 
   const bridge = readBridge()
   const isOnlinePage = !!document.getElementById('room-grid')
-  const data = isOnlinePage ? buildOnline(bridge) : buildSolo(bridge)
+  const data = isOnlinePage
+    ? buildOnline(bridge)
+    : buildSolo(bridge)
 
   presence.setActivity({ largeImageKey: LOGO, ...data })
 })

@@ -26,7 +26,9 @@ export interface MediaDataGetter {
 function getTextContent(selector: string): string | undefined {
   const text = document.querySelector(selector)?.textContent?.trim()
 
-  return text && text.length > 0 ? text : undefined
+  return text && text.length > 0
+    ? text
+    : undefined
 }
 
 function getValidImageSource(...selectors: string[]): string | undefined {
@@ -41,7 +43,7 @@ function getValidImageSource(...selectors: string[]): string | undefined {
 function getPlayerLinks(): HTMLAnchorElement[] {
   return [
     ...document.querySelectorAll<HTMLAnchorElement>(
-      '.byline.ytmusic-player-bar a, ytmusic-player-bar .subtitle a',
+      '.byline.ytmusic-player-bar a, ytmusic-player-bar .subtitle a, .ytmusicTrackInfoByline a[href]',
     ),
   ]
 }
@@ -55,13 +57,42 @@ function firstNonEmpty(...values: (string | null | undefined)[]): string | undef
   return undefined
 }
 
+// 2026 mini player has only one byline element ("Artist • Album • Year"), no artist/album anchors
+function parseCompactByline(): { artist?: string, album?: string } {
+  const raw = document.querySelector('.ytmusicTrackInfoByline')?.textContent?.trim()
+  if (!raw)
+    return {}
+
+  const parts = raw.split('•').map(part => part.trim()).filter(Boolean)
+  if (parts.length === 0)
+    return {}
+
+  const last = parts.at(-1)
+  if (parts.length > 1 && last && /^\d{4}$/.test(last))
+    parts.pop()
+
+  return { artist: parts[0], album: parts[1] }
+}
+
+function getSelectedQueueItem(): HTMLElement | null {
+  return document.querySelector<HTMLElement>('ytmusic-player-queue-item[selected]')
+}
+
+function getDocumentTitle(): string | undefined {
+  return document.title?.replace(/\s*\|\s*YouTube Music\s*$/, '').trim() || undefined
+}
+
 function getPlaybackStateFromControls(): MediaData['playbackState'] {
   const playPauseButton = document.querySelector<HTMLElement>('#play-pause-button')
+  const miniPlayerButton = document.querySelector<HTMLElement>(
+    '.ytmusicPlayerControlsPlayPauseButton button',
+  )
   const label = [
     playPauseButton?.getAttribute('title'),
     playPauseButton?.getAttribute('aria-label'),
     playPauseButton?.querySelector('button')?.getAttribute('title'),
     playPauseButton?.querySelector('button')?.getAttribute('aria-label'),
+    miniPlayerButton?.getAttribute('aria-label'),
   ].find(Boolean)?.toLowerCase()
 
   if (label === 'pause')
@@ -99,11 +130,21 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   getMediaData(): MediaData {
     const mediaSessionState = this.mediaSession?.playbackState
     const videoElement = this.getVideoElement()
-    const title = getTextContent('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')
+    const byline = parseCompactByline()
+    const title = getTextContent(
+      '.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title, .ytmusicTrackInfoTitle',
+    )
     const artistElements = getPlayerLinks()
     const artistElement = artistElements[0]
-    const albumElement = artistElements.length > 1 ? artistElements[1] : null
-    const artwork = getValidImageSource('ytmusic-player-bar img.image', '#song-image img', 'ytmusic-player-bar img#img')
+    const albumElement = artistElements.length > 1
+      ? artistElements[1]
+      : null
+    const artwork = getValidImageSource(
+      'ytmusic-player-bar img.image',
+      '#song-image img',
+      'ytmusic-player-bar img#img',
+      '.ytmusicTrackInfoThumbnail',
+    )
 
     const complexInfo = document.querySelector('.complex-string.ytmusic-player-bar')
     const albumFromElement = albumElement?.textContent?.trim()
@@ -114,9 +155,18 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
           ? albumFromComplex
           : undefined
 
+    const queueItem = getSelectedQueueItem()
+    const queueTitle = queueItem?.querySelector('.song-title')?.textContent?.trim()
+    const queueByline = queueItem?.querySelector('.byline')?.textContent?.trim()
+
     const metadata = this.mediaSession?.metadata
-    const mergedTitle = firstNonEmpty(metadata?.title, title)
-    const mergedArtist = firstNonEmpty(metadata?.artist, artistElement?.textContent)
+    const mergedTitle = firstNonEmpty(metadata?.title, title, queueTitle, getDocumentTitle())
+    const mergedArtist = firstNonEmpty(
+      metadata?.artist,
+      artistElement?.textContent,
+      byline.artist,
+      queueByline,
+    )
     const hasMediaDetails = Boolean(mergedTitle || mergedArtist)
 
     let playbackState = getPlaybackStateFromVideo(videoElement, hasMediaDetails)
@@ -133,7 +183,7 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
       playbackState,
       title: mergedTitle,
       artist: mergedArtist,
-      album: firstNonEmpty(metadata?.album, album),
+      album: firstNonEmpty(metadata?.album, album, byline.album),
       artwork: firstNonEmpty(metadata?.artwork?.at(-1)?.src, artwork),
       duration: videoElement?.duration,
     }
@@ -152,15 +202,35 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getRepeatMode(): string | null {
-    return document
+    const fromBar = document
       .querySelector('ytmusic-player-bar[slot="player-bar"]')
-      ?.getAttribute('repeat-mode') ?? null
+      ?.getAttribute('repeat-mode')
+    if (fromBar)
+      return fromBar
+
+    const label = document
+      .querySelector<HTMLElement>('.ytmusicPlayerControlsRepeatButton button')
+      ?.getAttribute('aria-label')
+      ?.toLowerCase()
+
+    if (!label)
+      return null
+    if (label.includes('off'))
+      return 'NONE'
+    if (label.includes('one'))
+      return 'ONE'
+    if (label.includes('all'))
+      return 'ALL'
+
+    return null
   }
 
   getVideoElement(): HTMLMediaElement | null {
     return document.querySelector<HTMLMediaElement>('.html5-main-video')
       ?? document.querySelector<HTMLMediaElement>('.video-stream')
-      ?? [...document.querySelectorAll<HTMLMediaElement>('video, audio')]
+      ?? [
+        ...document.querySelectorAll<HTMLMediaElement>('video, audio'),
+      ]
         .find(media => media.currentSrc && Number.isFinite(media.duration) && media.duration > 0)
         ?? null
   }
@@ -182,13 +252,16 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
 
   getCurrentAndTotalTime(): [string, string] | null {
     const timeText = document
-      .querySelector<HTMLSpanElement>('#left-controls > span')
+      .querySelector<HTMLSpanElement>('#left-controls > span, .ytMusicMiniPlayerTimeInfo')
       ?.textContent
       ?.trim()
 
     const times = timeText?.split(' / ') ?? []
     if (times.length === 2 && times[0] && times[1]) {
-      return [times[0].trim(), times[1].trim()]
+      return [
+        times[0].trim(),
+        times[1].trim(),
+      ]
     }
 
     const progressBar = document.querySelector('.time-info')
@@ -204,17 +277,52 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getPlaybackTimes(): [number, number] | null {
-    const media = this.getVideoElement()
-    if (media && Number.isFinite(media.duration) && media.duration > 0)
-      return [media.currentTime, media.duration]
+    const progressBar = document.querySelector<HTMLElement>('#progress-bar')
+    const current = Number(progressBar?.getAttribute('aria-valuenow'))
+    const total = Number(progressBar?.getAttribute('aria-valuemax'))
 
-    const times = this.getCurrentAndTotalTime()
-    if (!times)
-      return null
+    if (Number.isFinite(current) && Number.isFinite(total) && total > 0 && current >= 0 && current <= total)
+      return [current, total]
 
-    const current = timestampFromFormat(times[0])
-    const total = timestampFromFormat(times[1])
-    return total > 0 ? [current, total] : null
+    const miniPlayerSlider = document.querySelector<HTMLInputElement>(
+      'input.ytMusicMiniPlayerProgressBar',
+    )
+    if (miniPlayerSlider) {
+      const miniCurrent = Number(miniPlayerSlider.value)
+      const miniTotal = Number(miniPlayerSlider.max)
+      if (
+        Number.isFinite(miniCurrent)
+        && Number.isFinite(miniTotal)
+        && miniTotal > 0
+        && miniCurrent >= 0
+        && miniCurrent <= miniTotal
+      ) {
+        return [miniCurrent, miniTotal]
+      }
+    }
+
+    // DASH duration disagrees with the UI and keeps growing, displayed times should be a lot more reliable
+    const textTimes = this.getCurrentAndTotalTime()
+    if (textTimes) {
+      const parsed: [number, number] = [
+        timestampFromFormat(textTimes[0]),
+        timestampFromFormat(textTimes[1]),
+      ]
+      if (parsed[1] > 0)
+        return parsed
+    }
+
+    const videoElement = this.getVideoElement()
+    if (
+      videoElement
+      && Number.isFinite(videoElement.currentTime)
+      && Number.isFinite(videoElement.duration)
+      && videoElement.duration > 0
+    ) {
+      return [videoElement.currentTime, videoElement.duration]
+    }
+
+    return null
   }
 
   hasValidPlaybackState(): boolean {

@@ -289,7 +289,9 @@ presence.on('UpdateData', async () => {
     if (roundElement && roundElement.textContent) {
       const roundNum = Number(roundElement.textContent.replace(/\D/g, ''))
       // +1 because the post-round screen shows the round just completed
-      currentDuelRound = roundNum ? `Round ${roundNum + 1}` : null
+      currentDuelRound = roundNum
+        ? `Round ${roundNum + 1}`
+        : null
     }
 
     const healthUI = document.querySelectorAll('[class^="health-bar-2_barLabel__"], [class^="health-bar_barLabel__"]')

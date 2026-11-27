@@ -12,7 +12,7 @@
   },
   "url": "plus2tele.com",
   "regExp": "^https?[:][/][/](www[.])?plus2tele[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%2B2T%C3%A9l%C3%A9/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%2B2T%C3%A9l%C3%A9/assets/thumbnail.png",
   "color": "#5073D4",

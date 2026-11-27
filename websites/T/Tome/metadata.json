@@ -14,7 +14,7 @@
     "www.tome.qzz.io"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tome[.]qzz[.]io[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tome/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tome/assets/thumbnail.png",
   "color": "#e5a93b",

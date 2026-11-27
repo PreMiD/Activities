@@ -103,7 +103,9 @@ async function addStatSlides(card: HTMLDivElement, presenceData: PresenceData) {
   }
 
   const data: PresenceData = cloneData(presenceData)
-  data.largeImageKey = thumbnail ? await squareImage(thumbnail) : ActivityAssets.Logo
+  data.largeImageKey = thumbnail
+    ? await squareImage(thumbnail)
+    : ActivityAssets.Logo
   data.state = `${name?.textContent} - LV${levelInput?.value}`
   data.smallImageKey = Assets.Question
   for (const stat of stats) {
@@ -168,7 +170,9 @@ presence.on('UpdateData', async () => {
     case 'comparecats': {
       useSlideshow = true
       presenceData.details = strings.compareCat
-      presenceData.buttons = [{ label: strings.buttonViewComparison, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewComparison, url: href },
+      ]
       const rows = document.querySelectorAll<HTMLTableRowElement>('.ant-table-body > table > tbody tr')
       registerSlideshowKey()
       for (const row of rows) {
@@ -185,7 +189,9 @@ presence.on('UpdateData', async () => {
     case 'catinfo': {
       useSlideshow = true
       presenceData.details = strings.viewCat
-      presenceData.buttons = [{ label: strings.buttonViewCat, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewCat, url: href },
+      ]
       const catEvolutions = document.querySelectorAll<HTMLDivElement>('.ant-card')
       registerSlideshowKey()
       for (const evolutionCard of catEvolutions) {
@@ -196,7 +202,9 @@ presence.on('UpdateData', async () => {
     case 'enemyinfo': {
       useSlideshow = true
       presenceData.details = strings.viewEnemy
-      presenceData.buttons = [{ label: strings.buttonViewEnemy, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewEnemy, url: href },
+      ]
       registerSlideshowKey()
       const card = document.querySelector<HTMLDivElement>('.ant-card')
       if (card) {
@@ -210,7 +218,9 @@ presence.on('UpdateData', async () => {
     case 'stageinfo': {
       presenceData.details = strings.viewStage
       presenceData.state = document.querySelector<HTMLDivElement>('.ant-descriptions-title')
-      presenceData.buttons = [{ label: strings.buttonViewStage, url: href }]
+      presenceData.buttons = [
+        { label: strings.buttonViewStage, url: href },
+      ]
       break
     }
     default: {

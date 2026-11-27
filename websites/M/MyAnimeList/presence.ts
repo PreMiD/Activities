@@ -57,7 +57,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing a club'
       if (!privacy) {
         presenceData.state = document.querySelector('.h1')?.textContent
-        presenceData.buttons = [{ label: 'View Club', url: href }]
+        presenceData.buttons = [
+          { label: 'View Club', url: href },
+        ]
       }
     }
     else if (
@@ -94,7 +96,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing an article'
       if (!privacy) {
         presenceData.state = document.querySelector('.title')?.textContent
-        presenceData.buttons = [{ label: 'Read Article', url: href }]
+        presenceData.buttons = [
+          { label: 'Read Article', url: href },
+        ]
       }
     }
   }
@@ -108,7 +112,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = document
           .querySelector('.title-name')
           ?.textContent
-        presenceData.buttons = [{ label: 'View Person', url: href }]
+        presenceData.buttons = [
+          { label: 'View Person', url: href },
+        ]
       }
     }
   }
@@ -122,7 +128,9 @@ presence.on('UpdateData', async () => {
         presenceData.state = document
           .querySelectorAll('.normal_header')[2]
           ?.textContent
-        presenceData.buttons = [{ label: 'View Character', url: href }]
+        presenceData.buttons = [
+          { label: 'View Character', url: href },
+        ]
       }
     }
   }
@@ -130,7 +138,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing a profile'
     if (!privacy) {
       presenceData.state = pathname.split('/')[2]
-      presenceData.buttons = [{ label: 'View Profile', url: href }]
+      presenceData.buttons = [
+        { label: 'View Profile', url: href },
+      ]
 
       if (cover) {
         const userImage = document.querySelector<HTMLImageElement>('.user-image img')
@@ -144,14 +154,18 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing an anime list'
     if (!privacy) {
       presenceData.state = pathname.split('/')[2]
-      presenceData.buttons = [{ label: 'View List', url: href }]
+      presenceData.buttons = [
+        { label: 'View List', url: href },
+      ]
     }
   }
   else if (pathname.startsWith('/mangalist')) {
     presenceData.details = 'Viewing a manga list'
     if (!privacy) {
       presenceData.state = pathname.split('/')[2]
-      presenceData.buttons = [{ label: 'View List', url: href }]
+      presenceData.buttons = [
+        { label: 'View List', url: href },
+      ]
     }
   }
   else if (pathname.startsWith('/anime')) {
@@ -162,8 +176,12 @@ presence.on('UpdateData', async () => {
         const englishTitle = document.querySelector('.title-english')?.textContent
         presenceData.state = `${
           document.querySelector('.title-name')?.textContent
-        } ${englishTitle ? `| ${englishTitle}` : ''}`.trim()
-        presenceData.buttons = [{ label: 'View Anime', url: href }]
+        } ${englishTitle
+          ? `| ${englishTitle}`
+          : ''}`.trim()
+        presenceData.buttons = [
+          { label: 'View Anime', url: href },
+        ]
 
         if (cover) {
           const coverImg = document.querySelector<HTMLImageElement>('img[itemprop="image"]')?.src
@@ -184,8 +202,12 @@ presence.on('UpdateData', async () => {
         const englishTitle = document.querySelector('.title-english')?.textContent
         presenceData.state = `${
           document.querySelector('span[itemprop="name"]')?.firstChild?.textContent
-        } ${englishTitle ? ` | ${englishTitle}` : ''}`.trim()
-        presenceData.buttons = [{ label: 'View Manga', url: href }]
+        } ${englishTitle
+          ? ` | ${englishTitle}`
+          : ''}`.trim()
+        presenceData.buttons = [
+          { label: 'View Manga', url: href },
+        ]
 
         if (cover) {
           const coverImg = document.querySelector<HTMLImageElement>('img[itemprop="image"]')?.src

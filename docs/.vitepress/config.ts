@@ -15,7 +15,12 @@ const versions: VersionItem[] = [
 export default defineConfig({
   title: 'PreMiD',
   description: 'Documentation for developing PreMiD Activities',
-  head: [['link', { rel: 'icon', href: 'https://cdn.rcd.gg/PreMiD.png', type: 'image/png' }]],
+  head: [
+    [
+      'link',
+      { rel: 'icon', href: 'https://cdn.rcd.gg/PreMiD.png', type: 'image/png' },
+    ],
+  ],
   themeConfig: {
     search: {
       provider: 'local',
@@ -58,6 +63,8 @@ export default defineConfig({
             { text: 'Dependencies', link: '/v1/guide/dependencies' },
             { text: 'Loading Activities', link: '/v1/guide/loading-activities' },
             { text: 'Developer Tools', link: '/v1/guide/developer-tools' },
+            { text: 'Testing', link: '/v1/guide/testing' },
+            { text: 'MCP Server', link: '/v1/guide/mcp' },
           ],
         },
         {

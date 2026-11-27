@@ -29,7 +29,9 @@ presence.on('UpdateData', async () => {
     case 'Mangalist':
     case 'Latest_Releases':
       presenceData.details = `Browsing mangas ${
-        page === 'Mangalist' ? 'mangas' : 'latest releases'
+        page === 'Mangalist'
+          ? 'mangas'
+          : 'latest releases'
       }`
       presenceData.state = `Page ${
         document.querySelector<HTMLLinkElement>('a.active')?.textContent
@@ -37,12 +39,16 @@ presence.on('UpdateData', async () => {
       break
     case 'Genre':
       presenceData.details = 'Browsing mangas by genre'
-      presenceData.details = pageDetails === '' ? 'All' : pageDetails
+      presenceData.details = pageDetails === ''
+        ? 'All'
+        : pageDetails
       break
     case 'History':
     case 'Bookmark':
       presenceData.details = `Viewing their ${
-        page === 'History' ? 'history' : 'bookmarks'
+        page === 'History'
+          ? 'history'
+          : 'bookmarks'
       }`
       break
     case 'Search':
@@ -60,7 +66,9 @@ presence.on('UpdateData', async () => {
         '.manga_series_image > img',
       )?.src
 
-      presenceData.buttons = [{ label: 'View Manga', url: href }]
+      presenceData.buttons = [
+        { label: 'View Manga', url: href },
+      ]
       break
     }
     default:
@@ -82,7 +90,9 @@ presence.on('UpdateData', async () => {
           ?.split(' ')[1]
       }`
 
-      presenceData.buttons = [{ label: 'Read Chapter', url: href }]
+      presenceData.buttons = [
+        { label: 'Read Chapter', url: href },
+      ]
   }
 
   if (!time)

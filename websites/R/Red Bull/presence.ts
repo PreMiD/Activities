@@ -103,7 +103,9 @@ presence.on('UpdateData', async () => {
     || pathname.includes('live')
   ) {
     const container = document.querySelector('.rbPlyr-container')
-    const video = container ? container.querySelector('video') : null
+    const video = container
+      ? container.querySelector('video')
+      : null
     const heading = document.querySelector<HTMLHeadingElement>('h1.tv-hero__title')
       || document.querySelector<HTMLHeadingElement>('h2.rbPlyr-headline')
     const subheading = document.querySelector<HTMLHeadingElement>('h2.tv-hero__subheading')
