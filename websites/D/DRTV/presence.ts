@@ -24,16 +24,16 @@ async function getStrings() {
 }
 
 enum ActivityAssets {
-  'DRTV' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567306342195003476.png',
-  'DR1' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567303667898650705.png',
-  'DR2' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567304723508240466.png',
-  'P3' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567372675188396132.png',
-  'DR Minisjang' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567373345991819304.png',
-  'DR Ramasjang' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567307279923945543.png',
-  'DR Ultra' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567308017840685116.png',
-  'TVA' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567308533668515930.png',
-  'DRTV Ekstra' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567320193544487054.png',
-  'DR Gensyn' = 'https://cdn.discordapp.com/app-assets/1567024687127470111/1567373120761761812.png',
+  'DRTV' = 'https://i.imgur.com/6u7cW8Z.png',
+  'DR1' = 'https://i.imgur.com/TRW8PoU.png',
+  'DR2' = 'https://i.imgur.com/Yrd7f2z.png',
+  'P3' = 'https://i.imgur.com/zM2jlnL.png',
+  'DR Minisjang' = 'https://i.imgur.com/OFjbT46.png',
+  'DR Ramasjang' = 'https://i.imgur.com/DazDSly.png',
+  'DR Ultra' = 'https://i.imgur.com/gPFRbbe.png',
+  'TVA' = 'https://i.imgur.com/uutKhqP.png',
+  'DRTV Ekstra' = 'https://i.imgur.com/zLYdpY1.png',
+  'DR Gensyn' = 'https://i.imgur.com/kfAwYqJ.png',
 }
 
 presence.on('UpdateData', async () => {
