@@ -1,0 +1,30 @@
+{
+  "phasmaanime.browsingAnime": {
+    "description": "Shown while looking through the anime catalogue (Browse page)",
+    "message": "Browsing anime"
+  },
+  "phasmaanime.latestEpisodes": {
+    "description": "Shown on the page that lists the newest episodes",
+    "message": "Latest episodes"
+  },
+  "phasmaanime.animeMovies": {
+    "description": "Shown on the page that lists anime movies",
+    "message": "Anime movies"
+  },
+  "phasmaanime.seasonalAnime": {
+    "description": "Shown on the page that lists this season's anime",
+    "message": "Seasonal anime"
+  },
+  "phasmaanime.airingSchedule": {
+    "description": "Shown on the page with the airing times of upcoming episodes",
+    "message": "Airing schedule"
+  },
+  "phasmaanime.community": {
+    "description": "Shown in the community forum (not inside a thread)",
+    "message": "Community"
+  },
+  "phasmaanime.watchTogether": {
+    "description": "Shown on the page for watching anime together with friends",
+    "message": "Watch together"
+  }
+}
