@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "sanakyds",
+    "id": "730993114206044201"
+  },
+  "service": "Mimo",
+  "description": {
+    "en": "Mimo teaches coding through short, interactive lessons in Python, JavaScript, HTML, CSS, SQL and more, with coding challenges, projects and an AI tutor.",
+    "es": "Mimo enseña a programar con lecciones cortas e interactivas de Python, JavaScript, HTML, CSS, SQL y más, con retos de código, proyectos y un tutor con IA."
+  },
+  "url": "mimo.org",
+  "regExp": "^https?[:][/][/](www[.])?mimo[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/dizzi1222/premid-activities/premid-assets/Mimo/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/dizzi1222/premid-activities/premid-assets/Mimo/thumbnail.png",
+  "color": "#7e4bde",
+  "category": "other",
+  "tags": [
+    "coding",
+    "programming",
+    "learning",
+    "education",
+    "python",
+    "javascript"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Elapsed Time",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-link",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

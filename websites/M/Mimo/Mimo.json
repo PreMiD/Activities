@@ -1,0 +1,110 @@
+{
+  "mimo.courses": {
+    "description": "Shown when browsing the list of courses",
+    "message": "Browsing courses"
+  },
+  "mimo.course": {
+    "description": "Shown when viewing the page of a course (e.g. Python, Full-Stack Development)",
+    "message": "Viewing a course"
+  },
+  "mimo.path": {
+    "description": "Shown when viewing the learning path (the sections of a course) in the web app",
+    "message": "Viewing their learning path"
+  },
+  "mimo.lesson": {
+    "description": "Shown when taking a lesson in the web app",
+    "message": "Taking a lesson"
+  },
+  "mimo.challenge": {
+    "description": "Shown when solving a coding challenge (an exercise checked with tests)",
+    "message": "Solving a coding challenge"
+  },
+  "mimo.aiTutor": {
+    "description": "Shown when chatting with Mimo's AI tutor during a lesson",
+    "message": "Learning with the AI tutor"
+  },
+  "mimo.projects": {
+    "description": "Shown when browsing the user's own coding projects",
+    "message": "Browsing their projects"
+  },
+  "mimo.project": {
+    "description": "Shown when working on a coding project in the editor",
+    "message": "Building a project"
+  },
+  "mimo.sharedProject": {
+    "description": "Shown when viewing a project that someone shared",
+    "message": "Viewing a shared project"
+  },
+  "mimo.practice": {
+    "description": "Shown when practicing (reviewing what was learned)",
+    "message": "Practicing"
+  },
+  "mimo.library": {
+    "description": "Shown when browsing the library of courses in the web app",
+    "message": "Browsing the library"
+  },
+  "mimo.leaderboard": {
+    "description": "Shown when viewing the leaderboard (weekly ranking of learners)",
+    "message": "Checking the leaderboard"
+  },
+  "mimo.streak": {
+    "description": "Shown when viewing the learning streak (consecutive days learning)",
+    "message": "Checking their streak"
+  },
+  "mimo.dailyGoal": {
+    "description": "Shown when choosing how much to learn every day",
+    "message": "Setting a daily goal"
+  },
+  "mimo.gettingStarted": {
+    "description": "Shown during the onboarding of a new user",
+    "message": "Getting started"
+  },
+  "mimo.pro": {
+    "description": "Shown when viewing Mimo Pro, the paid subscription",
+    "message": "Checking out Mimo Pro"
+  },
+  "mimo.glossary": {
+    "description": "Shown when browsing the glossary of a programming language",
+    "message": "Browsing the glossary"
+  },
+  "mimo.glossaryTerm": {
+    "description": "Shown when reading a glossary entry (a programming term or concept)",
+    "message": "Reading the glossary"
+  },
+  "mimo.tutorials": {
+    "description": "Shown when browsing the tutorials of a programming language",
+    "message": "Browsing tutorials"
+  },
+  "mimo.tutorial": {
+    "description": "Shown when reading a tutorial",
+    "message": "Reading a tutorial"
+  },
+  "mimo.blog": {
+    "description": "Shown when browsing the blog",
+    "message": "Browsing the blog"
+  },
+  "mimo.compilers": {
+    "description": "Shown when browsing the online code compilers",
+    "message": "Browsing online compilers"
+  },
+  "mimo.compiler": {
+    "description": "Shown when using an online code compiler (an editor that runs code in the browser)",
+    "message": "Using an online compiler"
+  },
+  "mimo.certifications": {
+    "description": "Shown when viewing Mimo's programming certifications",
+    "message": "Viewing certifications"
+  },
+  "mimo.learnerStories": {
+    "description": "Shown when reading stories of people who learned to code with Mimo",
+    "message": "Reading learner stories"
+  },
+  "mimo.buttonViewCourse": {
+    "description": "Button label that opens the page of a course",
+    "message": "View Course"
+  },
+  "mimo.buttonViewProject": {
+    "description": "Button label that opens a shared coding project",
+    "message": "View Project"
+  }
+}
