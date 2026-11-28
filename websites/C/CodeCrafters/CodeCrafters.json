@@ -1,0 +1,70 @@
+{
+  "codecrafters.catalog": {
+    "description": "Shown when the user is browsing the catalog of challenges.",
+    "message": "Browsing challenges"
+  },
+  "codecrafters.challenge": {
+    "description": "Shown when the user is viewing the overview of a challenge (e.g. Build your own Redis).",
+    "message": "Viewing a challenge"
+  },
+  "codecrafters.solvingChallenge": {
+    "description": "Shown in privacy mode when the user is working on a stage of a challenge.",
+    "message": "Solving a challenge"
+  },
+  "codecrafters.solvingStage": {
+    "description": "Shown when the user is working on a stage whose name couldn't be read.",
+    "message": "Solving a stage"
+  },
+  "codecrafters.settingUp": {
+    "description": "Shown when the user is setting up the repository of a challenge (language and git setup).",
+    "message": "Setting up the repository"
+  },
+  "codecrafters.completed": {
+    "description": "Shown when the user has just completed a challenge or one of its extensions.",
+    "message": "Challenge completed!"
+  },
+  "codecrafters.tracks": {
+    "description": "Shown when the user is browsing the list of language tracks.",
+    "message": "Browsing language tracks"
+  },
+  "codecrafters.track": {
+    "description": "Shown when the user is viewing a language track (e.g. Rust).",
+    "message": "Viewing a language track"
+  },
+  "codecrafters.leaderboard": {
+    "description": "Shown when the user is viewing the leaderboard of a language.",
+    "message": "Viewing a leaderboard"
+  },
+  "codecrafters.concepts": {
+    "description": "Shown when the user is browsing the concepts (short interactive articles).",
+    "message": "Browsing concepts"
+  },
+  "codecrafters.walkthrough": {
+    "description": "Shown when the user is reading a code walkthrough.",
+    "message": "Reading a code walkthrough"
+  },
+  "codecrafters.contests": {
+    "description": "Shown when the user is viewing the contests.",
+    "message": "Viewing contests"
+  },
+  "codecrafters.roadmap": {
+    "description": "Shown when the user is voting on upcoming challenges in the roadmap.",
+    "message": "Voting on the roadmap"
+  },
+  "codecrafters.membership": {
+    "description": "Shown when the user is viewing the membership plans, gifts or perks.",
+    "message": "Viewing membership plans"
+  },
+  "codecrafters.badges": {
+    "description": "Shown when the user is viewing the badges they can earn.",
+    "message": "Viewing badges"
+  },
+  "codecrafters.buttonViewChallenge": {
+    "description": "Button that opens the overview of the challenge being solved or viewed.",
+    "message": "View Challenge"
+  },
+  "codecrafters.buttonViewTrack": {
+    "description": "Button that opens the language track being viewed.",
+    "message": "View Track"
+  }
+}

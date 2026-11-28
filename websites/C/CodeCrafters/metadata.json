@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "sanakyds",
+    "id": "730993114206044201"
+  },
+  "service": "CodeCrafters",
+  "description": {
+    "en": "CodeCrafters offers programming challenges for experienced engineers: build your own Redis, Git, SQLite, Shell, Interpreter and more from scratch, in the language of your choice.",
+    "es": "CodeCrafters ofrece retos de programación para ingenieros con experiencia: construye desde cero tu propio Redis, Git, SQLite, Shell, intérprete y más, en el lenguaje que elijas."
+  },
+  "url": "app.codecrafters.io",
+  "regExp": "^https?[:][/][/]app[.]codecrafters[.]io[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/dizzi1222/premid-activities/premid-assets/CodeCrafters/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/dizzi1222/premid-activities/premid-assets/CodeCrafters/thumbnail.png",
+  "color": "#14b8a6",
+  "category": "other",
+  "tags": [
+    "coding",
+    "programming",
+    "challenges",
+    "education",
+    "rust",
+    "go"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Elapsed Time",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-link",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
