@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "KERIA",
+    "id": "1571883155588386826"
+  },
+  "service": "Wavve",
+  "altnames": [
+    "웨이브"
+  ],
+  "description": {
+    "en": "Wavve is a South Korean streaming service offering dramas, variety shows, movies, and live TV.",
+    "ko": "웨이브는 드라마, 예능, 영화, 실시간 TV를 제공하는 국내 OTT 서비스입니다."
+  },
+  "url": "www.wavve.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wavve[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.postimg.cc/W3ywPFxH/channels4-profile.jpg",
+  "thumbnail": "https://i.postimg.cc/3RwQcVT5/seukeulinsyas-2026-11-22-214212.png",
+  "color": "#1ECFFF",
+  "category": "videos",
+  "tags": [
+    "ott",
+    "video",
+    "streaming",
+    "korea"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "description": "Hide the title and only show that you are watching something"
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show the remaining time of the video while it is playing"
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover Image",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Show the thumbnail of the content you are watching instead of the logo"
+    },
+    {
+      "id": "browsing",
+      "title": "Show Browsing Status",
+      "icon": "fas fa-search",
+      "value": true,
+      "description": "Show an activity while you browse Wavve without watching anything"
+    }
+  ]
+}
