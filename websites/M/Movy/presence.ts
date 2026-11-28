@@ -136,6 +136,8 @@ presence.on('UpdateData', async () => {
 
   // --------------------------------------------------
   // Poster
+  //
+  // Supports absolute and relative image URLs.
   // --------------------------------------------------
 
   const currentPoster = document
@@ -143,12 +145,23 @@ presence.on('UpdateData', async () => {
     ?.getAttribute('content')
     ?.trim()
 
-  if (
-    !isHome
-    && currentPoster
-    && /^https?:\/\//i.test(currentPoster)
-  ) {
-    cachedPoster = currentPoster
+  if (!isHome && currentPoster) {
+    try {
+      const posterUrl = new URL(
+        currentPoster,
+        document.location.href,
+      )
+
+      if (
+        posterUrl.protocol === 'https:'
+        || posterUrl.protocol === 'http:'
+      ) {
+        cachedPoster = posterUrl.href
+      }
+    }
+    catch {
+      // Keep the previously cached poster if invalid.
+    }
   }
 
   // --------------------------------------------------
