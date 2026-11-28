@@ -1,0 +1,22 @@
+{
+  "cryptozombies.lesson": {
+    "description": "Shown when the user is taking a lesson. {0} is the lesson number and {1} its title (e.g. Lesson 1: Making the Zombie Factory).",
+    "message": "Lesson {0}: {1}"
+  },
+  "cryptozombies.lessonNumber": {
+    "description": "Shown when the user is taking a lesson whose title couldn't be read. {0} is the lesson number.",
+    "message": "Lesson {0}"
+  },
+  "cryptozombies.takingLesson": {
+    "description": "Shown in privacy mode when the user is taking a lesson.",
+    "message": "Taking a lesson"
+  },
+  "cryptozombies.courses": {
+    "description": "Shown when the user is browsing the available courses.",
+    "message": "Browsing courses"
+  },
+  "cryptozombies.buttonViewLesson": {
+    "description": "Button that opens the first chapter of the lesson being taken.",
+    "message": "View Lesson"
+  }
+}
