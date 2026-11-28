@@ -230,6 +230,65 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
+  // Route: FumoCards
+  else if (pathname.startsWith('/fumocards')) {
+    presenceData.details = 'Browsing FumoCards'
+    presenceData.state = 'Collecting & Trading'
+
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'Open FumoCards', url: href },
+      ]
+    }
+  }
+  // Route: Calendar
+  else if (pathname.startsWith('/calendar')) {
+    presenceData.details = 'Viewing Calendar'
+    presenceData.state = 'Preorders & Releases'
+
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'Open Calendar', url: href },
+      ]
+    }
+  }
+  // Route: Notifications
+  else if (pathname.startsWith('/notifications')) {
+    presenceData.details = 'Checking Notifications'
+  }
+  // Route: Upload
+  else if (pathname.startsWith('/upload')) {
+    presenceData.details = 'Uploading a Photo'
+  }
+  // Route: Saved Posts
+  else if (pathname.startsWith('/saved')) {
+    presenceData.details = 'Viewing Saved Posts'
+  }
+  // Route: FumoPlace
+  else if (pathname.startsWith('/fumoplace')) {
+    presenceData.details = 'Exploring FumoPlace'
+    presenceData.state = 'Fumo Spots & Places'
+
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'Open FumoPlace', url: href },
+      ]
+    }
+  }
+  // Route: Guidelines
+  else if (pathname.startsWith('/guidelines')) {
+    presenceData.details = 'Reading Guidelines'
+    presenceData.state = 'Community Tips & Etiquette'
+  }
+  // Route: Publishing
+  else if (pathname.startsWith('/publishing')) {
+    presenceData.details = 'Reading Publishing Info'
+    presenceData.state = 'How Publishing Works'
+  }
+  // Route: Credits
+  else if (pathname.startsWith('/credits')) {
+    presenceData.details = 'Viewing Credits'
+  }
   // Route: Rules
   else if (pathname.startsWith('/rules')) {
     presenceData.details = 'Reading Community Rules'
