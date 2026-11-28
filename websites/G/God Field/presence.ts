@@ -99,6 +99,7 @@ function loadTexts(): Promise<void> {
 
 const strip = (s: string) => s.replace(/<br>/g, '\n').trim()
 const has = (body: string, pick: (t: Texts) => string) => texts.find(t => body.includes(strip(pick(t))))
+const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 // 「預言者 {{count}} 人」のような文言から人数を読み取る
 function readCount(body: string, pick: (t: Texts) => string): number | null {
@@ -106,7 +107,6 @@ function readCount(body: string, pick: (t: Texts) => string): number | null {
     const [before, after] = pick(t).split('{{count}}')
     if (before === undefined || after === undefined)
       continue
-    const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
     const m = body.match(new RegExp(`${escape(before.trim())}\\s*(\\d+)\\s*${escape(after.trim())}`))
     if (m)
       return Number(m[1])
@@ -115,12 +115,8 @@ function readCount(body: string, pick: (t: Texts) => string): number | null {
 }
 
 // 教典 (本家の reference) を開いているかの判定。
-// 見出しの「教典」は開くボタンとして対戦画面に常駐しているため、それだけでは判定できない。
-// 開いている間は左列のタブ名10個が常に見える (閉じた対戦画面では「起こした奇跡」の
-// 「奇跡」しか出ないことを実機で確認済み) ため、タブ名の同時出現数で判定する。
-// あわせて、選択中のタブの注記文が見えている場合も開いているとみなす。
-// 注記はプレースホルダを含まないものだけを使う ({{light}} 等を含む文は
-// ゲーム側で別の文字列に置換されて表示されるため、原文のままでは一致しない)
+// 閉じた対戦画面では「起こした奇跡」の「奇跡」しか出ないことを実機で確認済みなので、
+// 開いている間の左列タブか、選択中のタブ固有の注記文で判定する。
 const REF_TABS: ((t: Texts) => string)[] = [
   t => t.reference.elements,
   t => t.reference.curses,
@@ -150,10 +146,15 @@ const REF_NOTES: ((t: Texts) => string)[] = [
   t => t.reference.guardiansNote,
 ]
 function isReferenceOpen(body: string) {
-  if (!has(body, t => t.reference.reference))
-    return false
-  if (REF_NOTES.some(pick => has(body, pick)))
+  if (REF_NOTES.some(pick => texts.some((t) => {
+    const pattern = strip(pick(t))
+      .split(/\{\{.+?\}\}/)
+      .map(escape)
+      .join('[\\s\\S]*?')
+    return new RegExp(pattern).test(body)
+  }))) {
     return true
+  }
   // タブ名は言語ごとに1組なので、一致した言語での出現数を数える
   return texts.some(t => REF_TABS.filter(pick => body.includes(strip(pick(t)))).length >= 8)
 }
@@ -204,13 +205,12 @@ presence.on('UpdateData', async () => {
     const name = showMode
       ? modeName(inGame)
       : null
-    // 「HP77 MP27」のような表示の数 = 対戦しているプレイヤーの数
-    const alive = (body.match(/HP\s*\d+/g) ?? []).length
-    if (name) {
-      presenceData.state = showCount && alive > 0 && !ended
-        ? `${name}（${alive}人）`
-        : name
-    }
+    // 真剣タイマン以外は「HP77 MP27」のような表示の数 = 対戦しているプレイヤーの数
+    const alive = lastMode === 'duel' ? 2 : (body.match(/HP\s*\d+/g) ?? []).length
+    if (showCount && alive > 0 && !ended)
+      presenceData.state = name ? `${name}（${alive}人）` : `${alive}人`
+    else if (name)
+      presenceData.state = name
     presenceData.smallImageKey = reading ? Assets.Reading : Assets.Play
     presenceData.startTimestamp = battleSince
     presence.setActivity(presenceData)
@@ -239,7 +239,7 @@ presence.on('UpdateData', async () => {
           ...body.matchAll(re),
         ].reduce((sum, m) => sum + Number(m[1]), 0)
         if (total > 0)
-          presenceData.state = `オンライン ${total}人`
+          presenceData.state = `オンライン合計 ${total}人`
       }
     }
     presence.setActivity(presenceData)
@@ -286,15 +286,15 @@ presence.on('UpdateData', async () => {
     const name = showMode
       ? modeName(training || priv)
       : null
-    if (name)
-      presenceData.state = name
     const count = showCount
       ? lastMode === 'private'
         ? readCount(body, t => t.private.userCount)
         : readCount(body, t => t.training.playerCount)
       : null
-    if (count !== null && name)
-      presenceData.state = `${name}（${count}人）`
+    if (count !== null)
+      presenceData.state = name ? `${name}（${count}人）` : `${count}人`
+    else if (name)
+      presenceData.state = name
     presence.setActivity(presenceData)
     return
   }
