@@ -26,9 +26,51 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let player: PlayerData | null = null
 let playerSeen = 0
 
+let iframeVideoId = ''
+let iframeVideoIdAt = 0
+
 presence.on('iFrameData', (data: unknown) => {
   player = data as PlayerData
   playerSeen = Date.now()
+  if (player.videoId && player.videoId !== iframeVideoId) {
+    iframeVideoId = player.videoId
+    iframeVideoIdAt = Date.now()
+  }
+})
+
+/**
+ * zig~zag's YouTube player hides its title link, so the iframe can't always see the video id.
+ * The player also reports what it's playing to zig~zag's page ("infoDelivery" messages), which includes the id.
+ */
+let apiVideoId = ''
+let apiVideoIdAt = 0
+
+function videoIdFromMessage(data: unknown): string {
+  let message = data
+  if (typeof message === 'string') {
+    try {
+      message = JSON.parse(message)
+    }
+    catch {
+      return ''
+    }
+  }
+  const info = (message as { info?: { videoData?: { video_id?: string }, videoUrl?: string } } | null)?.info
+  if (!info)
+    return ''
+  return info.videoData?.video_id
+    || String(info.videoUrl ?? '').match(/[?&]v=([\w-]{11})/)?.[1]
+    || ''
+}
+
+window.addEventListener('message', (event: MessageEvent) => {
+  if (!/^https:\/\/(?:www\.)?youtube(?:-nocookie)?\.com$/.test(event.origin))
+    return
+  const id = videoIdFromMessage(event.data)
+  if (id && id !== apiVideoId) {
+    apiVideoId = id
+    apiVideoIdAt = Date.now()
+  }
 })
 
 const isTimer = (text: string) => /^\d{1,3}(?::\d{2}){1,2}$/.test(text.trim())
@@ -75,7 +117,8 @@ function readBoatParty(): BoatParty | null {
     }
     faces = found
   }
-  if (!faces.length)
+  // just you aboard = solo sailing, not a party
+  if (faces.length < 2)
     return null
 
   const names = faces
@@ -176,14 +219,19 @@ presence.on('UpdateData', async () => {
     song = player.title.slice(sep + 3).trim()
   }
 
+  // both sources can report the video; use whichever saw the newest track first, so the cover changes with the song
+  const videoId = apiVideoIdAt >= iframeVideoIdAt
+    ? apiVideoId || iframeVideoId
+    : iframeVideoId || apiVideoId
+
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
     details: song.slice(0, 128),
     state: artist
       ? `by ${artist}`
       : 'on zig~zag',
-    largeImageKey: player.videoId
-      ? `https://i.ytimg.com/vi/${player.videoId}/hqdefault.jpg`
+    largeImageKey: videoId
+      ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
       : ActivityAssets.Logo,
     largeImageText: 'zig~zag',
   }
@@ -194,7 +242,10 @@ presence.on('UpdateData', async () => {
       const boatName = party.name
         ? `“${party.name}”`
         : 'boat party'
-      presenceData.state = `${presenceData.state} · ⛵ ${boatName} (${party.sailors} aboard)`.slice(0, 128)
+      const aboard = showSailors
+        ? ` (${party.sailors} aboard)`
+        : ''
+      presenceData.state = `${presenceData.state} · ⛵ ${boatName}${aboard}`.slice(0, 128)
       presenceData.smallImageKey = ActivityAssets.Logo
       const crew = showSailors && party.names.length
         ? `sailing with ${party.names.join(', ')}`

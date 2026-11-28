@@ -18,7 +18,7 @@
     "zig-zag.fm"
   ],
   "regExp": "^https?[:][/][/](www[.])?zig-zag[.]fm[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/zig~zag/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/zig~zag/assets/thumbnail.png",
   "color": "#FFFFFF",
