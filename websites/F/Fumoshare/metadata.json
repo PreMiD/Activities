@@ -12,7 +12,7 @@
   },
   "url": "fumoshare.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fumoshare[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fumoshare/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fumoshare/assets/thumbnail.png",
   "color": "#E11D48",
