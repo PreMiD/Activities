@@ -443,7 +443,9 @@ interface LogoTarget {
 }
 
 function resolveLogo(target: LogoTarget, all: ServiceInfo[]): string | null {
-  const candidates = [logoKey(target.id)]
+  const candidates = [
+    logoKey(target.id),
+  ]
   const name = normalizeName(target.name)
   // 地域局の NHK は同梱ロゴに無いことがあるため、全国共通のロゴへフォールバックする
   if (target.type !== 'BS' && target.type !== 'CS' && target.type !== 'SKY' && name.startsWith('NHK総合'))
@@ -451,7 +453,18 @@ function resolveLogo(target: LogoTarget, all: ServiceInfo[]): string | null {
   if (target.type !== 'BS' && target.type !== 'CS' && target.type !== 'SKY' && name.startsWith('NHKEテレ'))
     candidates.push('NID32737-SID1032')
   // ケーブルテレビのコミュニティチャンネルは地域ごとに ID が違うため、チャンネル名で決め打ち
-  const community = ['J:COMテレビ', 'J:COMチャンネル', 'イッツコムch10', 'イッツコムch11', 'スカパー！ナビ1', 'スカパー！ナビ2', 'eo光チャンネル', 'ZTV', 'BaycomCH', 'ベイコム12CH']
+  const community = [
+    'J:COMテレビ',
+    'J:COMチャンネル',
+    'イッツコムch10',
+    'イッツコムch11',
+    'スカパー！ナビ1',
+    'スカパー！ナビ2',
+    'eo光チャンネル',
+    'ZTV',
+    'BaycomCH',
+    'ベイコム12CH',
+  ]
     .find(n => name.startsWith(n))
   if (community)
     return `${LOGO_BASE}community-channels/${encodeURIComponent(community.replace(':', '：'))}.png`
@@ -474,7 +487,9 @@ function resolveLogo(target: LogoTarget, all: ServiceInfo[]): string | null {
       candidates.push(logoKey(s.id))
   }
   const hit = candidates.find(key => BUNDLED.has(key))
-  return hit ? `${LOGO_BASE}${hit}.png` : null
+  return hit
+    ? `${LOGO_BASE}${hit}.png`
+    : null
 }
 
 function getLogo(target: LogoTarget, all: ServiceInfo[]): string | null {
@@ -529,8 +544,12 @@ function findServiceBySid(sid: number): ServiceInfo | null {
 function readLiveServiceIdFromDom(): number | null {
   const el = document.querySelector('[data-testid="live-channel"][data-current="true"]')
   const v = el?.getAttribute('data-service')
-  const id = v ? Number(v) : Number.NaN
-  return Number.isInteger(id) && id > 0 ? id : null
+  const id = v
+    ? Number(v)
+    : Number.NaN
+  return Number.isInteger(id) && id > 0
+    ? id
+    : null
 }
 
 async function resolveLiveService(param: number): Promise<ServiceInfo | null> {
@@ -614,7 +633,9 @@ presence.on('UpdateData', async () => {
       ? formatProgramTitle(prog.title)
       : 'ライブ視聴中'
     presenceData.state = service?.name ?? 'ライブ'
-    const liveLogo = service ? getLogo(service, servicesCache) : null
+    const liveLogo = service
+      ? getLogo(service, servicesCache)
+      : null
     if (liveLogo) {
       presenceData.largeImageKey = liveLogo
       presenceData.largeImageText = service?.name ?? 'denpa'
@@ -633,7 +654,9 @@ presence.on('UpdateData', async () => {
   const rec = pathname.match(/^\/watch\/(\d+)/)
   if (rec) {
     const recording = await getRecording(Number(rec[1]!))
-    const service = recording ? await getService(recording.serviceId) : null
+    const service = recording
+      ? await getService(recording.serviceId)
+      : null
     presenceData.details = showProgram && recording
       ? formatProgramTitle(recording.title)
       : '録画番組を視聴中'
@@ -659,7 +682,9 @@ presence.on('UpdateData', async () => {
   const chase = pathname.match(/^\/chase\/(\d+)/)
   if (chase) {
     const recording = await getRecording(Number(chase[1]!))
-    const service = recording ? await getService(recording.serviceId) : null
+    const service = recording
+      ? await getService(recording.serviceId)
+      : null
     presenceData.details = showProgram && recording
       ? formatProgramTitle(recording.title)
       : '追っかけ再生中'
@@ -689,7 +714,9 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  presenceData.details = pathname.startsWith('/settings') ? '設定' : (pageNames[pathname] ?? 'ブラウジング中')
+  presenceData.details = pathname.startsWith('/settings')
+    ? '設定'
+    : (pageNames[pathname] ?? 'ブラウジング中')
   if (pathname === '/search') {
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = '検索中'
