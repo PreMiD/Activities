@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "sanakyds",
+    "id": "730993114206044201"
+  },
+  "service": "Exercism",
+  "description": {
+    "en": "Exercism is a free, not-for-profit platform to get really good at programming in 85+ languages, with practice exercises, concepts and human mentoring.",
+    "es": "Exercism es una plataforma gratuita y sin ánimo de lucro para dominar la programación en más de 85 lenguajes, con ejercicios prácticos, conceptos y mentoría humana."
+  },
+  "url": "exercism.org",
+  "regExp": "^https?[:][/][/](www[.])?exercism[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/dizzi1222/premid-activities/premid-assets/Exercism/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/dizzi1222/premid-activities/premid-assets/Exercism/thumbnail.png",
+  "color": "#604fcd",
+  "category": "other",
+  "tags": [
+    "programming",
+    "coding",
+    "learning",
+    "education",
+    "mentoring"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "trackIcon",
+      "title": "Show Track Icon",
+      "icon": "fad fa-code",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Elapsed Time",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-link",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
