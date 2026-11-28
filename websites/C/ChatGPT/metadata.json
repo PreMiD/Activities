@@ -26,9 +26,9 @@
   },
   "url": "chatgpt.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*chatgpt[.]com[/]",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ChatGPT/assets/logo.png",
-  "thumbnail": "https://cdn.openai.com/chatgpt/share-og.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ChatGPT/assets/thumbnail.png",
   "color": "#FFFFFF",
   "category": "other",
   "tags": [
