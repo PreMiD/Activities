@@ -206,11 +206,21 @@ presence.on('UpdateData', async () => {
       ? modeName(inGame)
       : null
     // 真剣タイマン以外は「HP77 MP27」のような表示の数 = 対戦しているプレイヤーの数
-    const alive = lastMode === 'duel' ? 2 : (body.match(/HP\s*\d+/g) ?? []).length
-    if (showCount && alive > 0 && !ended)
-      presenceData.state = name ? `${name}（${alive}人）` : `${alive}人`
-    else if (name)
+    let alive = (body.match(/HP\s*\d+/g) ?? []).length
+    if (lastMode === 'duel') {
+      alive = 2
+    }
+    if (showCount && alive > 0 && !ended) {
+      if (name) {
+        presenceData.state = `${name}（${alive}人）`
+      }
+      else {
+        presenceData.state = `${alive}人`
+      }
+    }
+    else if (name) {
       presenceData.state = name
+    }
     presenceData.smallImageKey = reading ? Assets.Reading : Assets.Play
     presenceData.startTimestamp = battleSince
     presence.setActivity(presenceData)
@@ -291,10 +301,17 @@ presence.on('UpdateData', async () => {
         ? readCount(body, t => t.private.userCount)
         : readCount(body, t => t.training.playerCount)
       : null
-    if (count !== null)
-      presenceData.state = name ? `${name}（${count}人）` : `${count}人`
-    else if (name)
+    if (count !== null) {
+      if (name) {
+        presenceData.state = `${name}（${count}人）`
+      }
+      else {
+        presenceData.state = `${count}人`
+      }
+    }
+    else if (name) {
       presenceData.state = name
+    }
     presence.setActivity(presenceData)
     return
   }
