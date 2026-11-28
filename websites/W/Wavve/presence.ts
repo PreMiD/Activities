@@ -7,14 +7,10 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-/**
- * 웨이브 로고 이미지 주소를 여기에 넣으세요. (https:// 로 시작하는 png/jpg 직접 주소)
- * 비워두면 웨이브 페이지가 가진 아이콘을 자동으로 찾아서 쓰고,
- * 그것도 없으면 PreMiD 기본 로고를 써요.
- */
-const WAVVE_LOGO_URL = 'https://i.postimg.cc/W3ywPFxH/channels4-profile.jpg'
-
-const FALLBACK_LOGO = 'https://cdn.rcd.gg/PreMiD.png'
+enum ActivityAssets {
+  // metadata.json 의 "logo" 와 같은 이미지 주소(i.imgur.com)를 넣어요.
+  Logo = 'https://i.postimg.cc/W3ywPFxH/channels4-profile.jpg',
+}
 
 /**
  * 웨이브 재생 화면 구조. 실제 화면에서 확인한 값이에요.
@@ -47,9 +43,6 @@ async function getStrings() {
     watchingLive: 'general.watchingLive',
   })
 }
-
-let oldLang: string | null = null
-let strings: Awaited<ReturnType<typeof getStrings>>
 
 type PlayerKind = 'vod' | 'movie' | 'live' | 'clip'
 
@@ -96,15 +89,6 @@ function toAbsoluteUrl(value: string | null | undefined): string {
   catch {
     return ''
   }
-}
-
-/** 웨이브 로고: 직접 지정한 주소 > 페이지 아이콘 > PreMiD 기본 로고 순서 */
-function getLogo(): string {
-  if (WAVVE_LOGO_URL)
-    return WAVVE_LOGO_URL
-
-  const icon = document.querySelector<HTMLLinkElement>('link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]')
-  return toAbsoluteUrl(icon?.getAttribute('href')) || FALLBACK_LOGO
 }
 
 /** 주소의 영상 번호. 예: ?contentid=M_EP202207227706.1 → M_EP202207227706 */
@@ -196,25 +180,21 @@ function getTitles(): { title: string, episode: string } {
 }
 
 presence.on('UpdateData', async () => {
-  const [lang, privacy, showTimestamp, showBrowsing, showCover] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [privacy, showTimestamp, showBrowsing, showCover] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('browsing'),
     presence.getSetting<boolean>('cover'),
   ])
 
-  // 언어 설정이 바뀌었을 때만 문구를 다시 가져와요.
-  if (oldLang !== lang) {
-    strings = await getStrings()
-    oldLang = lang
-  }
+  // 확장 프로그램이 언어 설정에 맞는 문구를 알아서 효율적으로 가져와 줘요.
+  const strings = await getStrings()
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     // 디스코드 맨 윗줄에 표시되는 플랫폼 이름
     name: 'Wavve',
-    largeImageKey: getLogo(),
+    largeImageKey: ActivityAssets.Logo,
   }
 
   const { pathname } = document.location

@@ -14,7 +14,7 @@
     "ko": "웨이브는 드라마, 예능, 영화, 실시간 TV를 제공하는 국내 OTT 서비스입니다."
   },
   "url": "www.wavve.com",
-  "regExp": "([a-z0-9-]+[.])*wavve[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wavve[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.postimg.cc/W3ywPFxH/channels4-profile.jpg",
   "thumbnail": "https://i.postimg.cc/3RwQcVT5/seukeulinsyas-2026-11-22-214212.png",
