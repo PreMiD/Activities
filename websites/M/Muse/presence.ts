@@ -19,7 +19,7 @@ const TALKING_ICON = 'https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/0.png'
 function isGenerating(): boolean {
   return Boolean(
     document.querySelector(
-      '[data-is-streaming="true"], [data-streaming="true"], button[aria-label*="Stop"], button[aria-label*="停止"]',
+      'button[aria-label="Stop"], button[aria-label="停止"]',
     ),
   )
 }
@@ -39,6 +39,36 @@ function isTyping(): boolean {
   }
   return false
 }
+function countWords(text: string | null | undefined): number {
+  const trimmed = text?.trim()
+  return trimmed
+    ? Array.from(
+      new Intl.Segmenter(undefined, { granularity: 'word' }).segment(
+        trimmed,
+      ),
+    ).filter(segment => segment.isWordLike).length
+    : 0
+}
+
+function getConversationStats(): string | null {
+  const userMessages = document.querySelectorAll<HTMLElement>(
+    '[data-message-item][data-message-side="user"]',
+  )
+  if (!userMessages.length)
+    return null
+  let wordCount = 0
+  for (const el of userMessages) {
+    const clone = el.cloneNode(true) as HTMLElement
+    clone
+      .querySelectorAll(
+        '[data-message-accessibility-surrogate], [data-message-search-surrogate]',
+      )
+      .forEach(node => node.remove())
+    wordCount += countWords(clone.textContent)
+  }
+  return `asked ${userMessages.length} times | ${wordCount} words`
+}
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let chatKey = ''
@@ -104,7 +134,7 @@ presence.on('UpdateData', async () => {
 
   // クイック検索 (コマンドパレット) が開いている間は検索中表示にする。
   // URL は変わらないため、スクリム要素の data-state で判定する (2026-11-11 実機確認)
-  if (document.querySelector('[data-slot="quick-search-scrim"][data-state="open"]')) {
+  if (document.querySelector('[data-testid="hatch-quick-search-frame"][data-state="open"]')) {
     presenceData.details = strings.search
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = strings.search
@@ -159,7 +189,12 @@ presence.on('UpdateData', async () => {
     if (showTimestamp)
       presenceData.startTimestamp = chatSince
     // 状態は 生成中 → 入力中 → 通常 の優先順で切り替える
+    // タイトルが「Muse」単体でないときはチャットタイトルとして使う
+    const title = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
     let chatState: string = 'Chatting'
+    let chatDetails = showTitle && title && title !== 'Muse'
+      ? title
+      : 'Chatting with Muse'
     if (isGenerating()) {
       presenceData.smallImageKey = TALKING_ICON
       presenceData.smallImageText = 'Generating a response...'
@@ -173,12 +208,9 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.smallImageKey = Assets.Writing
       presenceData.smallImageText = 'Chatting'
+      chatDetails = getConversationStats() ?? chatDetails
     }
-    // タイトルが「Muse」単体でないときはチャットタイトルとして使う
-    const title = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
-    presenceData.details = showTitle && title && title !== 'Muse'
-      ? title
-      : 'Chatting with Muse'
+    presenceData.details = chatDetails
     presenceData.state = chatState
   }
   else {
