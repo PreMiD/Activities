@@ -68,7 +68,9 @@ function cleanTitle(raw: string | null | undefined): string {
     .replace(/\s*[-|·:]\s*(?:wavve|웨이브).*$/i, '')
     .replace(/\s+/g, ' ')
     .trim()
-  return /^(?:wavve|웨이브)(?:\s*\(.*\))?$/i.test(title) ? '' : title
+  if (/^(?:wavve|웨이브)(?:\s*\(.*\))?$/i.test(title))
+    return ''
+  return title
 }
 
 function textOf(element: Element | null | undefined): string {
@@ -76,7 +78,9 @@ function textOf(element: Element | null | undefined): string {
 }
 
 function truncate(text: string, max = 120): string {
-  return text.length > max ? `${text.slice(0, max - 1)}…` : text
+  if (text.length <= max)
+    return text
+  return `${text.slice(0, max - 1)}…`
 }
 
 function toAbsoluteUrl(value: string | null | undefined): string {
@@ -84,7 +88,9 @@ function toAbsoluteUrl(value: string | null | undefined): string {
     return ''
   try {
     const url = new URL(value, document.location.href)
-    return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : ''
+    if (url.protocol === 'https:' || url.protocol === 'http:')
+      return url.href
+    return ''
   }
   catch {
     return ''
@@ -104,7 +110,9 @@ function getContentId(): string {
  */
 function getCurrentEpisodeItem(contentId: string, topNumber: string): Element | null {
   const items = [...document.querySelectorAll(SELECTORS.currentEpisode)]
-  const byId = contentId ? items.find(item => item.innerHTML.includes(contentId)) : undefined
+  const byId = contentId
+    ? items.find(item => item.innerHTML.includes(contentId))
+    : undefined
   if (byId)
     return byId
   return items.find(item => topNumber && textOf(item.querySelector(SELECTORS.episodeNumber)).startsWith(topNumber)) ?? null
@@ -171,7 +179,9 @@ function getTitles(): { title: string, episode: string } {
   }
 
   // 2) 이미 한 번 읽은 에피소드면 기억해 둔 값을 써요.
-  const cached = contentId ? episodeCache.get(contentId) : undefined
+  const cached = contentId
+    ? episodeCache.get(contentId)
+    : undefined
   if (cached)
     return { title, episode: cached }
 
@@ -204,7 +214,9 @@ presence.on('UpdateData', async () => {
     const video = document.querySelector<HTMLVideoElement>(SELECTORS.video)
     const titles = getTitles()
     // 클립은 페이지 제목이 이전 화면 값으로 남아 있을 수 있어서, 위쪽 제목 줄의 제목을 써요.
-    const clipTitle = kind === 'clip' ? textOf(document.querySelector(SELECTORS.topInfo)) : ''
+    const clipTitle = kind === 'clip'
+      ? textOf(document.querySelector(SELECTORS.topInfo))
+      : ''
     const title = clipTitle ? truncate(clipTitle) : titles.title
     const episode = titles.episode
 
