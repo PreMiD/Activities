@@ -18,5 +18,9 @@
   "deepSeek.askingQuestion": {
     "description": "Displayed when the user is asking a question.",
     "message": "Asking a question..."
+  },
+  "deepSeek.conversationStats": {
+    "description": "Displayed to show the number of times the user asked a question and total words used, e.g., 'asked 3 times | 150 words'.",
+    "message": "asked {0} times | {1} words"
   }
 }

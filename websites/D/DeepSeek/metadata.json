@@ -5,13 +5,19 @@
     "id": "1167417152664522764",
     "name": "Kaktuswerk"
   },
+  "contributors": [
+    {
+      "id": "754572586914021468",
+      "name": "0120r"
+    }
+  ],
   "service": "DeepSeek",
   "description": {
     "en": "DeepSeek-V3 achieves a significant breakthrough in inference speed over previous models. It tops the leaderboard among open-source models and rivals the most advanced closed-source models globally."
   },
   "url": "chat.deepseek.com",
   "regExp": "^https?[:][/][/]chat[.]deepseek[.]com[/]",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/thumbnail.png",
   "color": "#2885d1",
